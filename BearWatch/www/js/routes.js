@@ -9,12 +9,58 @@ angular.module('app.routes', ['ionicUIRouter'])
   $stateProvider
     
   
+  .state('scanningTabsController', {
+    url: '/page1',
+    templateUrl: 'templates/scanningTabsController.html',
+    abstract:true
+  })
 
-      .state('tabsController.camera', {
+  .state('scanningTabsController.bear', {
+    url: '/page40',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/scanningBear.html',
+        controller: 'focalCtrl'
+      }
+    }
+  })
+  
+  .state('scanningTabsController.human', {
+    url: '/page41',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/scanningHuman.html',
+        controller: 'humanCtrl'
+      }
+    }
+  })
+  
+  .state('scanningTabsController.environment', {
+    url: '/page42',
+    views: {
+      'tab3': {
+        templateUrl: 'templates/scanningEnvironment.html',
+        controller: 'environmentCtrl'
+      }
+    }
+  })
+  
+  .state('scanningTabsController.camera', {
+    url: '/page43',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/scanningCamera.html',
+        controller: 'cameraCtrl'
+      }
+    }
+  })
+
+  
+  .state('focalTabsController.camera', {
     url: '/page10',
     views: {
       'tab1': {
-        templateUrl: 'templates/camera.html',
+        templateUrl: 'templates/focalCamera.html',
         controller: 'cameraCtrl'
       }
     }
@@ -26,19 +72,19 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'log41245PictureTakenCtrl'
   })
 
-  .state('tabsController.environment', {
+  .state('focalTabsController.environment', {
     url: '/page3',
     views: {
       'tab3': {
-        templateUrl: 'templates/environment.html',
+        templateUrl: 'templates/focalEnvironment.html',
         controller: 'environmentCtrl'
       }
     }
   })
 
-  .state('tabsController', {
+  .state('focalTabsController', {
     url: '/page1',
-    templateUrl: 'templates/tabsController.html',
+    templateUrl: 'templates/focalTabsController.html',
     abstract:true
   })
 
@@ -76,9 +122,9 @@ angular.module('app.routes', ['ionicUIRouter'])
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
       1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.reviewSession'
+        ui-sref='focalTabsController.reviewSession'
       2) Using $state.go programatically:
-        $state.go('tabsController.reviewSession');
+        $state.go('focalTabsController.reviewSession');
     This allows your app to figure out which Tab to open this page in on the fly.
     If you're setting a Tabs default page or modifying the .otherwise for your app and
     must use a URL, use one of the following:
@@ -86,7 +132,7 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab4/page14
       /page1/tab3/page14
   */
-  .state('tabsController.reviewSession', {
+  .state('focalTabsController.reviewSession', {
     url: '/page14',
     views: {
       'tab2': {
@@ -134,7 +180,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'newSessionObserverSVisibilityCtrl'
   })
 
-  .state('tabsController.bear1Specifications', {
+  .state('focalTabsController.bear1Specifications', {
     url: '/page23',
     views: {
       'tab2': {
@@ -144,7 +190,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  .state('tabsController.addNewBear', {
+  .state('focalTabsController.addNewBear', {
     url: '/page22',
     views: {
       'tab2': {
@@ -172,17 +218,17 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'additionalObserversCtrl'
   })
 
-  .state('tabsController.focal', {
+  .state('focalTabsController.focal', {
     url: '/page21',
     views: {
       'tab2': {
-        templateUrl: 'templates/focal.html',
+        templateUrl: 'templates/focalBear.html',
         controller: 'focalCtrl'
       }
     }
   })
 
-  .state('tabsController.feedingForaging', {
+  .state('focalTabsController.feedingForaging', {
     url: '/page13',
     views: {
       'tab2': {
@@ -192,7 +238,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  .state('tabsController.nonInteractive', {
+  .state('focalTabsController.nonInteractive', {
     url: '/page24',
     views: {
       'tab2': {
@@ -202,7 +248,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  .state('tabsController.bearBearInteraction', {
+  .state('focalTabsController.bearBearInteraction', {
     url: '/page26',
     views: {
       'tab2': {
@@ -212,7 +258,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  .state('tabsController.bearHumanInteraction', {
+  .state('focalTabsController.bearHumanInteraction', {
     url: '/page27',
     views: {
       'tab2': {
@@ -222,11 +268,11 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  .state('tabsController.human', {
+  .state('focalTabsController.human', {
     url: '/page28',
     views: {
       'tab4': {
-        templateUrl: 'templates/human.html',
+        templateUrl: 'templates/focalHuman.html',
         controller: 'humanCtrl'
       }
     }
@@ -237,6 +283,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     templateUrl: 'templates/page.html',
     controller: 'pageCtrl'
   })
+  
 
 $urlRouterProvider.otherwise('/page2')
 
