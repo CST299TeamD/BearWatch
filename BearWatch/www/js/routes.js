@@ -7,8 +7,13 @@ angular.module('app.routes', ['ionicUIRouter'])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-    
-  
+   
+   .state('app', {
+	  url: "/page1",
+	  abstract: true,
+	  templateUrl: "templates/menu.html",
+	})
+
   .state('scanningTabsController', {
     url: '/page1',
     templateUrl: 'templates/scanningTabsController.html',
@@ -55,6 +60,25 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
+  .state('scanningTabsController.comment', {
+    url: '/page45',
+    views: {
+      'tab5': {
+        templateUrl: 'templates/scanningComment.html',
+        controller: 'cameraCtrl'
+      }
+    }
+  })
+
+  .state('focalTabsController.comment', {
+    url: '/page46',
+    views: {
+      'tab5': {
+        templateUrl: 'templates/focalComment.html',
+        controller: 'cameraCtrl'
+      }
+    }
+  })
   
   .state('focalTabsController.camera', {
     url: '/page10',
