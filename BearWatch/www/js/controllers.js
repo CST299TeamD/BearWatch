@@ -27,3 +27,8 @@ angular.module('app.controllers', [])
 .controller('focalHumanCtrl', function($scope) {
 
 })
+
+.controller( 'dbTest', function ($scope){
+            $scope.data = "myName";
+            
+})

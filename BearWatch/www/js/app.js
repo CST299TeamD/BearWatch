@@ -18,5 +18,20 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+                       
+                       db = $cordovaSQLite.openDB("BW.db");
+                       $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS sessions ("
+                                              + "session_id       INTEGER PRIMARY KEY NOT NULL, "
+                                              + "protocol          TEXT    NOT NULL, "
+                                              + "collection_mode   TEXT    NOT NULL, "
+                                              + "park              TEXT    NOT NULL, "
+                                              + "water_body text   TEXT    NOT NULL, "
+                                              + "flow              TEXT    NOT NULL, "
+                                              + "start_time        TEXT    NOT NULL, "
+                                              + "finish_time       TEXT    NOT NULL, "
+                                              + "water_clarity     TEXT    NOT NULL, "
+                                              + "water_temp        TEXT    NOT NULL, "
+                                              + "Observers         TEXT    NOT NULL);")
+                        
   });
 })
