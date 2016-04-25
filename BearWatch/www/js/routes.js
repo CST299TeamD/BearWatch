@@ -89,6 +89,17 @@ angular.module('app.routes', ['ionicUIRouter'])
       }
     }
   })
+	
+  .state('focalTab.camera', {
+    url: '/focalCamera',
+    views: {
+      'tab5': {
+        templateUrl: 'templates/focalTabCamera.html',
+        controller: 'focalTabCameraCtrl'
+      }
+    }
+  })
+  
     
  $urlRouterProvider.otherwise('/home')
 
