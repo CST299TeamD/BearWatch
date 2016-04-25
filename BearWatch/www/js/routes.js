@@ -70,6 +70,15 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })  
 
+  .state('focalTab.environment', {
+    url: '/focalEnvironment',
+    views: {
+      'tab3': {
+        templateUrl: 'templates/focalEnvironment.html',
+        controller: 'focalEnvironmentCtrl'
+      }
+    }
+  })
  $urlRouterProvider.otherwise('/home')
 
 });

@@ -31,4 +31,8 @@ angular.module('app.controllers', [])
 .controller( 'dbTest', function ($scope){
             $scope.data = "myName";
             
+})})
+
+.controller('focalEnvironmentCtrl', function($scope) {
+
 })
