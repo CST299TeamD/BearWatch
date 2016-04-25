@@ -31,3 +31,7 @@ angular.module('app.controllers', [])
 .controller('focalEnvironmentCtrl', function($scope) {
 
 })
+
+.controller('focalTabCommentCtrl', function($scope) {
+
+})
