@@ -27,3 +27,7 @@ angular.module('app.controllers', [])
 .controller('focalHumanCtrl', function($scope) {
 
 })
+
+.controller('focalEnvironmentCtrl', function($scope) {
+
+})
