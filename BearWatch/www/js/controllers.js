@@ -28,11 +28,11 @@ angular.module('app.controllers', [])
 
 })
 
+.controller('focalEnvironmentCtrl', function($scope) {
+
+})
+
 .controller( 'dbTest', function ($scope){
             $scope.data = "myName";
             
-})})
-
-.controller('focalEnvironmentCtrl', function($scope) {
-
 })
