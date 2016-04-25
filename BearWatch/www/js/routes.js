@@ -100,7 +100,36 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
   
+  
+  .state('scanningTab', {
+    url: '/scanning',
+    templateUrl: 'templates/scanningTab.html',
+    abstract:true
+  })
+
+
+  .state('scanningTab.bear', {
+    url: '/ScanningBear',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/scanningBear.html',
+        controller: 'scanningBearCtrl'
+      }
+    }
+  })  
+  
     
+  .state('scanningTab.human', {
+    url: '/ScanningHuman',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/scanningHuman.html',
+        controller: 'scanningHumanCtrl'
+      }
+    }
+  })  
+	
+	
  $urlRouterProvider.otherwise('/home')
 
 });

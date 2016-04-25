@@ -44,3 +44,12 @@ angular.module('app.controllers', [])
 .controller('focalTabCameraCtrl', function($scope) {
 
 })
+
+.controller('scanningBearCtrl', function($scope) {
+
+})
+
+
+.controller('scanningHumanCtrl', function($scope) {
+
+})
