@@ -79,6 +79,17 @@ angular.module('app.routes', ['ionicUIRouter'])
       }
     }
   })
+
+  .state('focalTab.comment', {
+    url: '/focalComment',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/focalTabComment.html',
+        controller: 'focalTabCommentCtrl'
+      }
+    }
+  })
+    
  $urlRouterProvider.otherwise('/home')
 
 });

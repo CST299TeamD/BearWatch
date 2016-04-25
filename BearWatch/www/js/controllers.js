@@ -36,3 +36,6 @@ angular.module('app.controllers', [])
             $scope.data = "myName";
             
 })
+.controller('focalTabCommentCtrl', function($scope) {
+
+})
