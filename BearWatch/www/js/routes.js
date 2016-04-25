@@ -39,36 +39,98 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
 
 
+<<<<<<< HEAD
   .state('focalTab.bear', {
     url: '/focalBear',
     views: {
       'tab1': {
+=======
+  .state('focalTabsController.focal', {
+    url: '/page21',
+    views: {
+      'tab2': {
+>>>>>>> 56d809fa6402ddec8182e0884066cd049badada3
         templateUrl: 'templates/focalBear.html',
         controller: 'focalCtrl'
       }
     }
   })
 
+<<<<<<< HEAD
   .state('focalTab.addNewBear', {
     url: '/addNewBear',
     views: {
       'tab1': {
         templateUrl: 'templates/focalAddNewBear.html',
         controller: 'addNewBearCtrl'
+=======
+  .state('focalTabsController.feedingForaging', {
+    url: '/page13',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/feedingForaging.html',
+        controller: 'feedingForagingCtrl'
       }
     }
   })
 
+  .state('focalTabsController.nonInteractive', {
+    url: '/page24',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/nonInteractive.html',
+        controller: 'nonInteractiveCtrl'
+>>>>>>> 56d809fa6402ddec8182e0884066cd049badada3
+      }
+    }
+  })
+
+<<<<<<< HEAD
 
   .state('focalTab.human', {
     url: '/focalHuman',
+=======
+  .state('focalTabsController.bearBearInteraction', {
+    url: '/page26',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/bearBearInteraction.html',
+        controller: 'bearBearInteractionCtrl'
+      }
+    }
+  })
+
+  .state('focalTabsController.bearHumanInteraction', {
+    url: '/page27',
+>>>>>>> 56d809fa6402ddec8182e0884066cd049badada3
     views: {
       'tab2': {
         templateUrl: 'templates/focalHuman.html',
         controller: 'focalHumanCtrl'
       }
     }
+<<<<<<< HEAD
   })  
+=======
+  })
+
+  .state('focalTabsController.human', {
+    url: '/page28',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/focalHuman.html',
+        controller: 'humanCtrl'
+      }
+    }
+  })
+
+  .state('page', {
+    url: '/page19',
+    templateUrl: 'templates/page.html',
+    controller: 'pageCtrl'
+  })
+  
+>>>>>>> 56d809fa6402ddec8182e0884066cd049badada3
 
  $urlRouterProvider.otherwise('/home')
 
