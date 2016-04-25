@@ -1,0 +1,30 @@
+<ion-view style="" title="Human">
+    <ion-content class="has-header" overflow-scroll="true" padding="true">
+        <form style="" class="list">
+            <label style="" class="item item-input">
+                <span class="input-label">Number of Humans</span>
+                <input placeholder="" type="number">
+            </label>
+            <div style="width: 283px; height: 37px;" class="spacer"></div>
+            <ion-item style="" class="item-divider">Reaction to Bear(s)</ion-item>
+            <label style="" class="item item-select">
+                <span class="input-label">Behaviour</span>
+                <select>
+                    <option>Quietly observing minimal movement</option>
+                    <option>Loud Disturbance with minimal movement</option>
+                    <option>Quietly observing but excessive movement</option>
+                    <option>Loud disturbance &amp; excessive movement</option>
+                    <option>Approach bear(s) intentionally</option>
+                    <option>Move away from bear intentionally</option>
+                    <option>Angling</option>
+                    <option>Other</option>
+                </select>
+            </label>
+            <label style="" class="item item-input">
+                <span class="input-label">Comment</span><textarea placeholder=""> </textarea>
+            </label>
+        </form>
+        <button class="button button-positive  button-block" id="human-button32">Record Behaviour</button>
+        <a class="button button-assertive  button-block icon ion-android-exit" id="human-button44" ui-sref="focalTabsController.reviewSession">&nbsp;End Session</a>
+    </ion-content>
+</ion-view>
