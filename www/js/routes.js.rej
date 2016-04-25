@@ -1,0 +1,9 @@
+diff a/BearWatch/www/js/routes.js b/BearWatch/www/js/routes.js	(rejected hunks)
+@@ -39,6 +39,7 @@
+   })
+ 
+ 
++<<<<<<< HEAD
+   .state('focalTab.bear', {
+     url: '/focalBear',
+     views: {
