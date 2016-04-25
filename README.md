@@ -1,2 +1,0 @@
-# BearWatch
-School Project
