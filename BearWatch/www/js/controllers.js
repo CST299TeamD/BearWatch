@@ -53,3 +53,20 @@ angular.module('app.controllers', [])
 .controller('scanningHumanCtrl', function($scope) {
 
 })
+
+.controller('scanningEnvironmentCtrl', function($scope) {
+
+})
+
+
+.controller('scanningCommentCtrl', function($scope) {
+
+})
+
+.controller('scanningCameraCtrl', function($scope) {
+
+})
+
+.controller('reviewListCtrl', function($scope) {
+
+})
