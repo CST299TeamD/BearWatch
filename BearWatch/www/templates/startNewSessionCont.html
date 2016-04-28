@@ -20,9 +20,7 @@
                 <select>
                     <option>Not Selected</option>
                     <option>High</option>
-                    <option>Medium-High</option>
                     <option>Medium</option>
-                    <option>Medium-Low</option>
                     <option>Low</option>
                 </select>
             </label>
@@ -38,7 +36,17 @@
                 </select>
             </label>
 			
-			<div style="width: 283px; height: 10px;" class="spacer"></div>
+			<label style="" class="item item-select">
+                <span class="input-label">Water Clarity</span>
+                <select>
+                    <option>Not Selected</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                </select>
+            </label>			
+			
+			<div style="width: 283px; height: 20px;" class="spacer"></div>
 			<ion-item style="" class="item-divider">Weather</ion-item>
             <label style="" class="item item-select">
                 <span class="input-label">Sky</span>
@@ -64,8 +72,32 @@
                     <option>Strong Wind</option>
                 </select>
             </label>
-			
+            <label style="" class="item item-select">
+                <span class="input-label">Wind direction</span>
+                <select>
+                    <option>N</option>
+                    <option>S</option>
+                    <option>E</option>
+					<option>W</option>
+                    <option>NW</option>
+                    <option>NE</option>
+		            <option>SE</option>
+                    <option>SW</option>			
+					<option>NNW</option>
+                    <option>NNE</option>
+		            <option>SSE</option>
+                    <option>SSW</option>
+					<option>WNW</option>
+                    <option>ENE</option>
+		            <option>WSW</option>
+                    <option>ESE</option>					
+                </select>
+            </label>			
+			<label style="" class="item item-input">
+              <span class="input-label">Temperature</span>
+              <input placeholder=" C" type="text">
 			<div style="width: 283px; height: 15px;" class="spacer"></div>
+			</label>
 			<h2 style="">Visibility</h2>
             <label style="" class="item item-select">
                 <span class="input-label">Area Visibility</span>
@@ -99,6 +131,7 @@
                     <option>Fish</option>
                     <option>Berries</option>
                     <option>Green Vegetation</option>
+					<option>Other</option>
                 </select>
             </label>
             <label style="" class="item item-select">
@@ -109,10 +142,7 @@
                     <option>Low</option>
                 </select>
             </label>
-            <label style="" class="item item-input">
-                <span class="input-label">Information Source</span>
-                <input placeholder="" type="text">
-            </label>
+            
             <label style="" class="item item-input">
                 <span class="input-label">Comment</span>
                 <input placeholder="Note Species " type="text">
