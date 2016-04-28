@@ -24,42 +24,17 @@
 			<label style="" class="item item-input">
                 <span class="input-label">Park/Area:</span>
                 <input placeholder="" type="text">
-            </label>       
-	
-		<div style="width: 283px; height: 30px;" class="spacer"></div>
-		<h2 style="">Add Zones</h2>
-		<ion-item style="" class="item-divider">Zones</ion-item>
-            <label style="" class="item item-select">
-                <span class="input-label">Zone</span>
-                <select>
-                    <option>Not Selected</option>
-                    <option>Zone 1</option>
-                    <option>Zone 2</option>
-					<option>Zone 3</option>
-					<option>Zone 4</option>
-					<option>Zone 5</option>
-					<option>Zone 6</option>
-					<option>Zone 7</option>
-					<option>Zone 8</option>
-					<option>Zone 9</option>
-				</select>
             </label>
-		<label style="" class="item item-input">
-			<span class="input-label">Add your own zone:</span>
-			<input placeholder="Zone #" type="text">
-        </label>
-		<label style="" class="item item-input">
-                <span class="input-label">Description:</span>
-                <input placeholder="Zone Description(optional)" type="text">
-        </label>
-	   <button style="" class="button button-balanced  button-block icon ion-plus" id="newSessionObservers-button6">&nbsp; Add Zone</button>
-		
-	   
+
 	   	<div style="width: 283px; height: 30px;" class="spacer"></div>
-        <h2 style="">Protocol</h2>
-		
+        <h2 style="">Viewing Area</h2>
+        <form style="" class="list">
+            <ion-item style="" class="item-divider">Select Mode</ion-item>
+            <ion-radio style="">Stationary</ion-radio>
+            <ion-radio style="">Mobile</ion-radio>
+        </form>		
 	   <label style="" class="item item-select">
-                <span class="input-label">Select Protocol</span>
+                <span class="input-label">Viewing Area</span>
                 <select>
                     <option>Not Selected</option>
                     <option>Platform</option>
@@ -67,12 +42,32 @@
                     <option>Blind</option>
 					<option>Other</option>
                 </select>
+        </label>		
+	
+		<div style="width: 283px; height: 30px;" class="spacer"></div>
+		<h2 style="">Zone Type</h2>
+		<ion-item style="" class="item-divider">Zone</ion-item>
+            <label style="" class="item item-select">
+                <span class="input-label">View Type</span>
+                <select>
+                    <option>Not Selected</option>
+                    <option>River</option>
+                    <option>Estuary</option>
+					<option>Terrestrial</option>
+				</select>
+            </label>
+		<label style="" class="item item-input">
+			<span class="input-label">Describe a Zone(optional)</span>
+			<input placeholder="Zone Name" type="text">
         </label>
-		
+		<label style="" class="item item-input">
+                <span class="input-label">Description:</span>
+                <input placeholder="Zone Description(optional)" type="text">
+        </label>
+	   <button style="" class="button button-balanced  button-block icon ion-plus" id="newSessionObservers-button6">&nbsp; Add Description</button>
 
-			
-			<div style="width: 283px; height: 10px;" class="spacer"></div>
-			<ion-item style="" class="item-divider">Noise</ion-item>
+			<div style="width: 283px; height: 20px;" class="spacer"></div>
+			<ion-item style="" class="item-divider">Environmental Noise</ion-item>
             <label style="" class="item item-select">
                 <span class="input-label">Noise level</span>
                 <select>

@@ -127,9 +127,48 @@ angular.module('app.routes', ['ionicUIRouter'])
         controller: 'scanningHumanCtrl'
       }
     }
+  })
+
+	
+  .state('scanningTab.environment', {
+    url: '/ScanningEnvironment',
+    views: {
+      'tab3': {
+        templateUrl: 'templates/scanningEnvironment.html',
+        controller: 'scanningEnvironmentCtrl'
+      }
+    }
+  })	
+  
+  .state('scanningTab.comment', {
+    url: '/ScanningComment',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/scanningComment.html',
+        controller: 'scanningCommentCtrl'
+      }
+    }
+  })  
+
+  .state('scanningTab.camera', {
+    url: '/ScanningCamera',
+    views: {
+      'tab5': {
+        templateUrl: 'templates/scanningCamera.html',
+        controller: 'scanningCameraCtrl'
+      }
+    }
   })  
 	
 	
+
+  .state('reviewList', {
+    url: '/ReviewList',
+    templateUrl: 'templates/reviewList.html',
+    controller: 'reviewListCtrl'
+  })  
+  
  $urlRouterProvider.otherwise('/home')
 
 });
+
