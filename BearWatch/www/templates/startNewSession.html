@@ -5,10 +5,15 @@
             <div ng-controller="dbTest">
                 <label style="" class="item item-input">
                     <span class="input-label" >Name:</span>
-                    <input placeholder="First Initial &amp; Surname" type="text" ng-model="data">
-                        <br/><br/>
-                        {{ data }}
+                    <input placeholder="First Initial &amp; Surname" type="text" ng-model="data">                       
                 </label>
+				<br/><br/>
+				Result: {{ data }}
+				<br/><br/>
+                <button class="button" ng-click="insert('{{data}}')">insert</button>
+				<button class="button" ng-click="select('{{data}}')">select</button>
+				<br/><br/>
+				Result: {{ result }}
             </div>
             <div style="width: 283px; height: 30px;" class="spacer"></div>
             <button style="" class="button button-balanced  button-block icon ion-plus" id="newSessionObservers-button6">&nbsp; Add Observer</button>
