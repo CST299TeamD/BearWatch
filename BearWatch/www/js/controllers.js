@@ -34,7 +34,8 @@ angular.module('app.controllers', [])
 
 .controller( 'dbTest', function ($scope, $cordovaSQLite){
 	
-	window.sqlitePlugin.deleteDatabase({name: 'my.db', location: 'default'});
+    $scope.result = "TEST INITIALIZED";
+            
 	var db = window.sqlitePlugin.openDatabase({name: 'bw.db', location: 'default'});
 
 	db.transaction(function(tx) {
@@ -55,6 +56,8 @@ angular.module('app.controllers', [])
 	});
 	
 	$scope.insert = function(name) {
+            console.log("MAC INSERT HAPPENING");
+            $scope.result = "MAC INSERT HAPPENING";
 		db.transaction(function(tx) {
 			tx.executeSql("INSERT INTO sessions (observers) VALUES (?)", [name], function(tx, res) {
 				console.log("BW insert happening");
@@ -67,6 +70,8 @@ angular.module('app.controllers', [])
 	}
 	
     $scope.select = function(name) {
+            console.log("MAC SELECT HAPPENING");
+            $scope.result = "MAC SELECT HAPPENING";
 		db.transaction(function(tx) {
 			tx.executeSql("select count(observers) as cnt from sessions;", [], function(tx, res) {
 				console.log("BW select happening");
