@@ -35,10 +35,13 @@ angular.module('app.controllers', [])
 .controller( 'dbTest', function ($scope, $cordovaSQLite){
 	
     $scope.result = "TEST INITIALIZED";
-            
+    
+	//open datbase example
 	var db = window.sqlitePlugin.openDatabase({name: 'bw.db', location: 'default'});
-
+	
+	//Table creation - dropping old table for testing
 	db.transaction(function(tx) {
+		tx.executeSql("DROP TABLE IF EXISTS sessions;")
 		tx.executeSql(
 			"CREATE TABLE IF NOT EXISTS sessions ("
 			+ "session_id       INTEGER PRIMARY KEY NOT NULL, "
@@ -55,39 +58,35 @@ angular.module('app.controllers', [])
 		);
 	});
 	
-	$scope.insert = function(name) {
-            console.log("MAC INSERT HAPPENING");
+	//var for tracking current insert for selecting
+	var insId;
+	
+	//insert example
+	$scope.insert = function() {			
 		db.transaction(function(tx) {
-			tx.executeSql("INSERT INTO sessions (observers) VALUES (?)", [name], function(tx, res) {
-				console.log("BW insert happening");
-                          $scope.result = "MAC INSERT HAPPENING: ";
-                          for (var key in tx){
-                            $scope.result += key + " : " + tx[key];
-                          }
-				console.log("insertId: " + res.insertId + " -- probably 1");
-				console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");				
+			tx.executeSql("INSERT INTO sessions (observers) VALUES (?)", [$scope.data], function(tx, res) {
+				console.log("insertId: " + res.insertId);
+				$scope.result = $scope.data + " inserted to BW Database";
+				insId = res.insertId;				
 			});
 		}, function(e) {
-			console.log("ERROR: " + e.message);
-                       $scope.result = "ERROR " + e.message;
+			console.log("ERROR: " + e.message);                      
+			$scope.result = "ERROR: " + e.message;
 		});
 	}
 	
-    $scope.select = function(name) {
-            console.log("MAC SELECT HAPPENING");
+	//select example
+    $scope.select = function() {
 		db.transaction(function(tx) {
-			tx.executeSql("select observers from sessions;", [], function(tx, res) {
-				console.log("BW select happening");
-                          $scope.result = "MAC SELECT HAPPENING ";
-                          for (var key in res){
-                          $scope.result += key + " : " + res[key];
-                          }
-				console.log("res.rows.length: " + res.rows.length + " -- should be 1");
-                          $scope.result += " Result: " + res.rows.item(1).session_id;
+			tx.executeSql("SELECT * FROM sessions WHERE session_id = (?)", [insId], function(tx, res) {
+				if(res.rows.length > 0){
+					$scope.result = res.rows.item(0).observers;
+					console.log("observers " + res.rows.item(0).observers)
+				}
 			});
 		}, function(e) {
 			console.log("ERROR: " + e.message);
-                       $scope.result = "ERROR: " + e.message;
+            $scope.result = "ERROR: " + e.message;
 		});
     }      
 })
@@ -96,7 +95,47 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('focalTabCameraCtrl', function($scope) {
+.controller('focalTabCameraCtrl', function($scope, $cordovaCamera) {
+	$scope.takePhoto = function () {
+                  var options = {
+                    quality: 75,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    allowEdit: true,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 300,
+                    targetHeight: 300,
+                    popoverOptions: CameraPopoverOptions,
+                    saveToPhotoAlbum: false
+                };
+   
+                    $cordovaCamera.getPicture(options).then(function (imageData) {
+                        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+                    }, function (err) {
+                        // An error occured. Show a message to the user
+                    });
+                }
+                
+                $scope.choosePhoto = function () {
+                  var options = {
+                    quality: 75,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                    allowEdit: true,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 300,
+                    targetHeight: 300,
+                    popoverOptions: CameraPopoverOptions,
+                    saveToPhotoAlbum: false
+                };
+   
+                    $cordovaCamera.getPicture(options).then(function (imageData) {
+                        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+                    }, function (err) {
+                        // An error occured
+						console.log("Camera error: " + err.message)
+                    });
+                }
 
 })
 
