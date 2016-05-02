@@ -8,7 +8,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'app.services', 'app.directives'])
 
-.run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera) {
+.run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
