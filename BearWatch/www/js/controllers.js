@@ -95,52 +95,47 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('focalTabCameraCtrl', function($scope, $cordovaCamera, $cordovaFile) {
-	
-	//function for taking picture using device camera
+.controller('focalTabCameraCtrl', function($scope, $cordovaCamera) {
 	$scope.takePhoto = function () {
-		console.log("taking photo")
-		var options = {
-		quality: 75,
-		destinationType: Camera.DestinationType.DATA_URL,
-		sourceType: Camera.PictureSourceType.CAMERA,
-		allowEdit: true,
-		encodingType: Camera.EncodingType.JPEG,
-		targetWidth: 300,
-		targetHeight: 300,
-		popoverOptions: CameraPopoverOptions,
-		saveToPhotoAlbum: false
-	};
-
-		$cordovaCamera.getPicture(options).then(function (imageData) {
-			console.log("taking photo pt.2")
-			$scope.imgURI = "data:image/jpeg;base64," + imageData;
-			$scope.imageInfo = imageData;
-		}, function (err) {
-			// An error occured
-			console.log("Camera error: " + err.message);
-		});
-	}
-	
-	//save photo to session
-	$scope.choosePhoto = function () {
-		
-		$scope.fileName = "Not Saved"
-		var sourcePath = $scope.imageInfo;
-		var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
-		var sourceFileName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1, sourcePath.length);
-
-		console.log("Copying from : " + sourceDirectory + sourceFileName);
-		console.log("Copying to : " + cordova.file.dataDirectory + sourceFileName);
-		
-		$cordovaFile.copyFile(sourceDirectory, sourceFileName, cordova.file.dataDirectory, sourceFileName).then(function(success) {
-			$scope.fileName = cordova.file.dataDirectory + sourceFileName;
-			console.log("fileName: " + cordova.file.dataDirectory + sourceFileName);
-		}, function(error) {
-			console.log(error);
-		});
-
-	}
+                  var options = {
+                    quality: 75,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    allowEdit: true,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 300,
+                    targetHeight: 300,
+                    popoverOptions: CameraPopoverOptions,
+                    saveToPhotoAlbum: false
+                };
+   
+                    $cordovaCamera.getPicture(options).then(function (imageData) {
+                        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+                    }, function (err) {
+                        // An error occured. Show a message to the user
+                    });
+                }
+                
+                $scope.choosePhoto = function () {
+                  var options = {
+                    quality: 75,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                    allowEdit: true,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 300,
+                    targetHeight: 300,
+                    popoverOptions: CameraPopoverOptions,
+                    saveToPhotoAlbum: false
+                };
+   
+                    $cordovaCamera.getPicture(options).then(function (imageData) {
+                        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+                    }, function (err) {
+                        // An error occured
+						console.log("Camera error: " + err.message)
+                    });
+                }
 
 })
 
@@ -167,17 +162,5 @@ angular.module('app.controllers', [])
 })
 
 .controller('reviewListCtrl', function($scope) {
-
-})
-
-.controller('reviewSaveCSV', function($scope) {
-
-})
-
-.controller('reviewSaveZIP', function($scope) {
-
-})
-
-.controller('reviewSendEmail', function($scope) {
 
 })

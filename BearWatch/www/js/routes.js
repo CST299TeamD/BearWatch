@@ -15,7 +15,7 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
   
   .state('startNewSession', {
-    url: '/startNewSession',
+    url: '/srartNewSession',
     templateUrl: 'templates/startNewSession.html',
     controller: 'startNewSessionCtrl'
   })

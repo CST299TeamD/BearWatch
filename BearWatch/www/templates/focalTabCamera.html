@@ -1,13 +1,4 @@
 <ion-view style="" title="Camera">
-    <ion-content class="has-header" overflow-scroll="true" padding="true" ng-controller="focalTabCameraCtrl">
-        <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
-        <img ng-show="imgURI === undefined" ng-src="img/pic_placeholder.png">
-        <br/>
-        <br/>
-        <button class="button" ng-click="takePhoto()">Take Picture</button>
-        <button class="button" ng-click="choosePhoto()">Save to Session</button>
-        <br/>
-        <br/>
-        Saved to : {{fileName}}
+    <ion-content class="has-header" overflow-scroll="true" padding="true">
     </ion-content>
 </ion-view>
