@@ -164,3 +164,15 @@ angular.module('app.controllers', [])
 .controller('reviewListCtrl', function($scope) {
 
 })
+
+.controller('reviewSaveCSV', function($scope) {
+
+})
+
+.controller('reviewSaveZIP', function($scope) {
+
+})
+
+.controller('reviewSendEmail', function($scope) {
+
+})
