@@ -1,13 +1,20 @@
 <ion-view style="" title="Camera">
     <ion-content class="has-header" overflow-scroll="true" padding="true" ng-controller="focalTabCameraCtrl">
-        <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
-        <img ng-show="imgURI === undefined" ng-src="img/pic_placeholder.png">
-        <br/>
-        <br/>
-        <button class="button" ng-click="takePhoto()">Take Picture</button>
-        <button class="button" ng-click="choosePhoto()">Save to Session</button>
+        <div style="text-align: center;">
+            <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+            <img ng-show="imgURI === undefined" ng-src="img/pic_placeholder.png">
+        </div>
         <br/>
         <br/>
         Saved to : {{fileName}}
+        <br/>
+        Result: {{cameraResult}}
+        <br/>        
+        <form style="" class="list">
+            <ion-item style="" class="item-divider">Subject(s) in Picture</ion-item>
+        </form>
+        <button style="" ng-show="imgURI === undefined" ng-click="takePhoto()" class="button button-stable  button-icon icon-left ion-ios-camera-outline" id="camera-button1">Take Picture</button>
+        <button style="" ng-show="imgURI !== undefined" ng-click="discardPhoto()" class="button button-stable  button-icon icon-left ion-trash-a" id="camera-button2">Erase Picture</button>
+        <button style="" ng-show="imgURI !== undefined" ng-click="choosePhoto()" class="button button-stable  button-icon icon-left ion-archive" id="camera-button3">Record Picture</button>
     </ion-content>
 </ion-view>
