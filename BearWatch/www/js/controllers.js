@@ -87,8 +87,17 @@ angular.module('app.controllers', [])
 		}, function(e) {
 			console.log("ERROR: " + e.message);
             $scope.result = "ERROR: " + e.message;
-		});
+		});	
     }      
+    var internet = "not set";
+	if(window.Connection){
+		internet = navigator.connection.type;
+	}else {
+		internet = "It doesn't work";
+	}
+
+	$scope.internet = internet;
+
 })
 
 .controller('focalTabCommentCtrl', function($scope) {
