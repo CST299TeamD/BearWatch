@@ -154,7 +154,9 @@ angular.module('app.controllers', [])
 	
 	//discard photo
 	$scope.discardPhoto = function () {
-		$scope.imgURI = null;
+		$scope.imgURI;
+		$scope.cameraResult = "Clearing photo - reloading screen";
+		$state.go($state.current, {}, {reload: true});
 	}
 
 })
