@@ -96,10 +96,12 @@ angular.module('app.controllers', [])
 })
 
 .controller('focalTabCameraCtrl', function($scope, $cordovaCamera, $cordovaFile) {
-	
+	$scope.camResult = "Photo page initialized";
+            
 	//function for taking picture using device camera
 	$scope.takePhoto = function () {
-		console.log("taking photo")
+            console.log("taking photo");
+            $scope.camResult = "taking photo";
 		var options = {
 		quality: 75,
 		destinationType: Camera.DestinationType.DATA_URL,
@@ -113,12 +115,13 @@ angular.module('app.controllers', [])
 	};
 
 		$cordovaCamera.getPicture(options).then(function (imageData) {
-			console.log("taking photo pt.2")
+                                                $scope.camResult = "taking photo pt.2";
 			$scope.imgURI = "data:image/jpeg;base64," + imageData;
 			$scope.imageInfo = imageData;
 		}, function (err) {
 			// An error occured
 			console.log("Camera error: " + err.message);
+                                                $scope.camResult = "Camera error: " + err.message;
 		});
 	}
 	
