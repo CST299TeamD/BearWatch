@@ -87,8 +87,17 @@ angular.module('app.controllers', [])
 		}, function(e) {
 			console.log("ERROR: " + e.message);
             $scope.result = "ERROR: " + e.message;
-		});
+		});	
     }      
+    var internet = "not set";
+	if(window.Connection){
+		internet = navigator.connection.type;
+	}else {
+		internet = "It doesn't work";
+	}
+
+	$scope.internet = internet;
+
 })
 
 .controller('focalTabCommentCtrl', function($scope) {
@@ -100,8 +109,8 @@ angular.module('app.controllers', [])
             
 	//function for taking picture using device camera
 	$scope.takePhoto = function () {
-            console.log("taking photo");
-            $scope.camResult = "taking photo";
+		$scope.cameraResult = "taking photo";
+		
 		var options = {
 		quality: 75,
 		destinationType: Camera.DestinationType.DATA_URL,
@@ -112,16 +121,15 @@ angular.module('app.controllers', [])
 		targetHeight: 300,
 		popoverOptions: CameraPopoverOptions,
 		saveToPhotoAlbum: false
-	};
+		};
 
 		$cordovaCamera.getPicture(options).then(function (imageData) {
-                                                $scope.camResult = "taking photo pt.2";
+			$scope.cameraResult ="taking photo pt.2";
 			$scope.imgURI = "data:image/jpeg;base64," + imageData;
 			$scope.imageInfo = imageData;
 		}, function (err) {
 			// An error occured
-			console.log("Camera error: " + err.message);
-                                                $scope.camResult = "Camera error: " + err.message;
+			$scope.cameraResult = "Camera error: " + err;
 		});
 	}
 	
@@ -129,7 +137,7 @@ angular.module('app.controllers', [])
 	$scope.choosePhoto = function () {
 		
 		$scope.fileName = "Not Saved"
-		var sourcePath = $scope.imageInfo;
+		var sourcePath = $scope.imgURI;
 		var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
 		var sourceFileName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1, sourcePath.length);
 
@@ -140,9 +148,16 @@ angular.module('app.controllers', [])
 			$scope.fileName = cordova.file.dataDirectory + sourceFileName;
 			console.log("fileName: " + cordova.file.dataDirectory + sourceFileName);
 		}, function(error) {
-			console.log(error);
+			console.log(error.message);
 		});
 
+	}
+	
+	//discard photo
+	$scope.discardPhoto = function () {
+		$scope.imgURI;
+		$scope.cameraResult = "Clearing photo - reloading screen";
+		$state.go($state.current, {}, {reload: true});
 	}
 
 })
