@@ -105,7 +105,8 @@ angular.module('app.controllers', [])
 })
 
 .controller('focalTabCameraCtrl', function($scope, $cordovaCamera, $cordovaFile) {
-	
+	$scope.camResult = "Photo page initialized";
+            
 	//function for taking picture using device camera
 	$scope.takePhoto = function () {
 		$scope.cameraResult = "taking photo";
