@@ -1,11 +1,15 @@
 <ion-view style="" title="Observation Mode">
     <ion-content class="has-header" overflow-scroll="true" padding="true">
         <h2 style="">Observation Mode</h2>
-        <form style="" class="list"></form>
-        <form style="" class="list">
+        
+		<form style="" class="list">
             <ion-item style="" class="item-divider">Select Mode</ion-item>
+            <ion-radio style="">Focal</ion-radio>
+            <ion-radio style="">Scanning</ion-radio>
+			<ion-radio style="">Opertunistic</ion-radio>
         </form>
-        <a class="button button-positive  button-block" id="newSessionMode-button34" ui-sref="focalTab.bear">Focal</a>
-        <button class="button button-positive  button-block" id="newSessionMode-button35" ui-sref="scanningTab.bear">Scanning</button>
+        <a class="button button-positive  button-block" id="newSessionMode-button34">Focal</a>
+        <button class="button button-positive  button-block" id="newSessionMode-button35">Scanning</button>
+		<button style="" class="button button-balanced  button-block icon ion-plus" ui-sref="focalTab.bear">&nbsp; Start Session</button>
     </ion-content>
 </ion-view>
