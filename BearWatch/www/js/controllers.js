@@ -214,5 +214,20 @@ angular.module('app.controllers', [])
 })
 
 .controller('bearInfoCtrl', function($scope) {
+            var bear ={
+                       name:"Bear 1",
+                       location: "Zone5",
+                       species: "Black",
+                       habituationLevel: "Habituated",
+                       gender: "Male",
+                       age: "Adult",
+                       markDesc: "Unknown",
+                       furColour:"pink"
+            };
+            $scope.bear = bear;
+})
+
+.controller('bearSpecCtrl', function($scope) {
+            
             
 })

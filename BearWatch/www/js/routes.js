@@ -179,6 +179,18 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
         
+  .state('focalTab.changeSpecs', {
+    url: '/BearSpecs',
+      views: {
+        'tab1': {
+          templateUrl: 'templates/bearSpecifications.html',
+          controller: 'bearSpecCtrl'
+        }
+      }
+  })
+
+
+        
  $urlRouterProvider.otherwise('/home')
 
 });
