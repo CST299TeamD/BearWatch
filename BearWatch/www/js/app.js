@@ -10,6 +10,11 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
 
 .run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile) {
   $ionicPlatform.ready(function() {
+                       //global scope variables
+                       
+                       //set true for debugging
+                       $scope.debug = false;
+                       
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if(window.cordova && window.cordova.plugins.Keyboard) {

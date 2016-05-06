@@ -5,6 +5,19 @@ angular.module('app.controllers', [])
 })
 
 .controller('startNewSessionCtrl', function($scope) {
+            
+            //function to change zoning schema picture
+            $scope.showZoneSchema = function(zoningSchemaSelect){
+                if(zoningSchemaSelect == "River"){
+                    $scope.zoningSchemaPic = '<br/> <h3>River Zone Map</h3> <br/> <img src="img/river.png"> <br/><br/>';
+                } else if(zoningSchemaSelect == "Estuary"){
+                    $scope.zoningSchemaPic = '<br/> <h3>Esturary Zone Map</h3> <br/> <img src="img/estuary.png"> <br/><br/>';
+                } else if(zoningSchemaSelect == "Terrestrial"){
+                    $scope.zoningSchemaPic = '<br/> <h3>Terrestrial Zone Map</h3> <br/> <img src="img/terrestrial.png"> <br/><br/>';
+                } else {
+                    $scope.zoningSchemaPic = '';
+                }
+            }
 
 })
 

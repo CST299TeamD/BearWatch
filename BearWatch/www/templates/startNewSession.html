@@ -7,19 +7,24 @@
                     <span class="input-label" >Name:</span>
                     <input placeholder="First Initial &amp; Surname" type="text" ng-model="data">                       
                 </label>
-				<br/><br/>
-                Internet Connection:
-                {{ internet }}
-                <br>
-				Result: {{ result }}
-				<br/><br/>
-                <button class="button" ng-click="insert()">insert</button>
-				<button class="button" ng-click="select()">select</button>
-				<br/><br/>
+                
+                <!--debug div-->
+                <div ng-show="debug === true">
+                    <br/><br/>
+                    Internet Connection:
+                    {{ internet }}
+                    <br>
+                    Result: {{ result }}
+                    <br/><br/>
+                    <button class="button" ng-click="insert()">insert</button>
+                    <button class="button" ng-click="select()">select</button>
+                    <br/><br/>
+                </div><!--end debug-->
+            
             </div>
             <div style="width: 283px; height: 30px;" class="spacer"></div>
             <button style="" class="button button-balanced  button-block icon ion-plus" id="newSessionObservers-button6">&nbsp; Add Observer</button>
- <!--           <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" id="newSessionObservers-button5" ui-sref="newSessionLocation">Next</a>-->
+
             
 			<div style="width: 283px; height: 30px;" class="spacer"></div>
             <h2 style="">Location</h2>
@@ -34,11 +39,6 @@
 			
 	   	<div style="width: 283px; height: 30px;" class="spacer"></div>
         <h2 style="">Viewing Area</h2>
-        <form style="" class="list">
-            <ion-item style="" class="item-divider">Select Mode</ion-item>
-            <ion-radio style="">Stationary</ion-radio>
-            <ion-radio style="">Mobile</ion-radio>
-        </form>		
 	   <label style="" class="item item-select">
                 <span class="input-label">Viewing Area</span>
                 <select>
@@ -48,20 +48,28 @@
                     <option>Blind</option>
 					<option>Other</option>
                 </select>
-        </label>		
+        </label>
+       <form style="" class="list">
+           <ion-item style="" class="item-divider">Select Mode</ion-item>
+           <ion-radio style="">Stationary</ion-radio>
+           <ion-radio style="">Mobile</ion-radio>
+       </form>
 	
 		<div style="width: 283px; height: 30px;" class="spacer"></div>
 		<h2 style="">Zone Type</h2>
 		<ion-item style="" class="item-divider">Zone</ion-item>
             <label style="" class="item item-select">
                 <span class="input-label">View Type</span>
-                <select>
+                <select ng-model="zoningSchemaSelect" ng-change="showZoneSchema(zoningSchemaSelect)">
                     <option>Not Selected</option>
                     <option>River</option>
                     <option>Estuary</option>
 					<option>Terrestrial</option>
 				</select>
             </label>
+            <div ng-bind-html="zoningSchemaPic" style="text-align: center;">
+            </div>
+            
 		<label style="" class="item item-input">
 			<span class="input-label">Comment</span>
 			<input placeholder="" type="text">
