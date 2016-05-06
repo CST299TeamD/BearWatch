@@ -166,8 +166,19 @@ angular.module('app.routes', ['ionicUIRouter'])
     url: '/ReviewList',
     templateUrl: 'templates/reviewList.html',
     controller: 'reviewListCtrl'
-  })  
-  
+  })
+
+
+  .state('focalTab.bearInfo', {
+    url: '/BearInfo',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/bearInfo.html',
+        controller: 'bearInfoCtrl'
+      }
+    }
+  })
+        
  $urlRouterProvider.otherwise('/home')
 
 });

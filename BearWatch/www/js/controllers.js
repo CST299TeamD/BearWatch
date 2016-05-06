@@ -212,3 +212,7 @@ angular.module('app.controllers', [])
 .controller('reviewSendEmail', function($scope) {
 
 })
+
+.controller('bearInfoCtrl', function($scope) {
+            
+})
