@@ -1,10 +1,13 @@
 <ion-view style="" title="Bear Watch">
     <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <div style="text-align: center;">
-            <img src="img/home.jpg" height="90%" width="90%">
-        </div>
-        <button class="button button-positive  button-block button-outline icon ion-arrow-return-right" >&nbsp;Continue Session</button>
-        <a style="" class="button button-balanced  button-block button-outline icon ion-android-create" id="start-button3"  ui-sref="startNewSession">&nbsp;New Session</a>
-        <a style="" class="button button-royal  button-block button-outline icon ion-eye" ui-sref="reviewList">&nbsp; Review Session</a>
+        <div>
+            <div style="text-align: center; height: 60%;">
+                <img src="img/home.jpg" height="90%" width="90%">
+            </div>
+            <div class="button-bar">
+                <a class="button button-positive button-outline icon ion-arrow-return-right" >&nbsp;Continue Session</a>
+                <a class="button button-balanced button-outline icon ion-android-create" id="start-button3" ui-sref="startNewSession">&nbsp;New Session</a>
+                <a class="button button-royal button-outline icon ion-eye" ui-sref="reviewList">&nbsp; Review Session</a>
+            </div>
     </ion-content>
 </ion-view>

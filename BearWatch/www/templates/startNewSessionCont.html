@@ -27,54 +27,71 @@
             <label style="" class="item item-select">
                 <span class="input-label">Water Flow</span>
                 <select>
-                    <option>Not Selected</option>
-                    <option>Fast</option>
-                    <option>Medium-Fast</option>
-                    <option>Medium</option>
-                    <option>Medium-Slow</option>
-                    <option>Slow</option>
+                    <option>Not selected</option>
+                    <option>Cascade</option>
+                    <option>Rapid</option>
+                    <option>Riffle</option>
+                    <option>Glide</option>
+                    <option>Pool</option>
+                    <option>Woody debris jam</option>
                 </select>
             </label>
 			
 			<label style="" class="item item-select">
                 <span class="input-label">Water Clarity</span>
                 <select>
-                    <option>Not Selected</option>
-                    <option>A</option>
-                    <option>B</option>
-                    <option>C</option>
+                    <option>Not selected</option>
+                    <option value="0">Sparkling clear</option>
+                    <option value="1">Water appears dull, slight discoloration</option>
+                    <option value="2">Bottom visible to approx. 3ft, but not distinct</option>
+                    <option value="3">Bottom visible to approx. 1ft, but not distinct</option>
+                    <option value="4">Cannot see bottom</option>
                 </select>
             </label>			
 			
 			<div style="width: 283px; height: 20px;" class="spacer"></div>
 			<ion-item style="" class="item-divider">Weather</ion-item>
             <label style="" class="item item-select">
-                <span class="input-label">Sky</span>
+                <span class="input-label">Cloud Cover</span>
                 <select>
-                    <option>Clear</option>
-                    <option>Partly Cloudy</option>
-                    <option>Heavy Clouds</option>
+                    <option selected disabled>Not selected</option>
+                    <option>0%</option>
+                    <option>1% - 50%</option>
+                    <option>51% - 99%</option>
+                    <option>100%</option>
                 </select>
             </label>
             <label style="" class="item item-select">
                 <span class="input-label">Precipitation</span>
                 <select>
-                    <option>Dry</option>
-                    <option>Light Rain</option>
+                    <option selected disabled>Not Selected</option>
+                    <option>None</option>
+                    <option>Light drizzle</option>
+                    <option>Rain</option>
                     <option>Heavy Rain</option>
                 </select>
             </label>
             <label style="" class="item item-select">
                 <span class="input-label">Wind</span>
                 <select>
+                    <option selected disabled>Not selected</option>
                     <option>Calm</option>
-                    <option>Light Wind</option>
-                    <option>Strong Wind</option>
+                    <option>Light air</option>
+                    <option>Light breeze</option>
+                    <option>Gentle breeze</option>
+                    <option>Moderate breeze</option>
+                    <option>Fresh breeze</option>
+                    <option>Strong breeze</option>
+                    <option>High wind moderate gale</option>
+                    <option>Gale</option>
+                    <option>Strong/severe gale</option>
+                    <option>Storm</option>
                 </select>
             </label>
             <label style="" class="item item-select">
                 <span class="input-label">Wind direction</span>
                 <select>
+                    <option selected disbaled>Not selected</option>
                     <option>N</option>
                     <option>S</option>
                     <option>E</option>
@@ -95,32 +112,42 @@
             </label>			
 			<label style="" class="item item-input">
               <span class="input-label">Temperature</span>
-              <input placeholder=" C" type="text">
-			<div style="width: 283px; height: 15px;" class="spacer"></div>
+              <input placeholder="&#176;C" type="number">
 			</label>
+            <label style="" class="item item-input">
+                <span class="input-label">Humidity</span>
+                <input placeholder="0 - 100%" type="number">
+            </label>
+            <div style="width: 283px; height: 15px;" class="spacer"></div>
+            
 			<h2 style="">Visibility</h2>
             <label style="" class="item item-select">
                 <span class="input-label">Area Visibility</span>
-                <select>
+                <select ng-model="visibilitySelect" ng-change="showObscuredSelect(visibilitySelect)">
+                    <option selected disabled>Not selected</option>
                     <option>Excellent</option>
                     <option>Good</option>
-                    <option>Partly Obscured</option>
-                    <option>Mostly Obscured</option>
+                    <option>Partly obscured</option>
+                    <option>Mostly obscured</option>
                 </select>
             </label>
-            <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <h5 style="">If Obscured Specify Reason</h5>
-            <label style="" class="item item-select">
-                <span class="input-label">Reason</span>
-                <select>
-                    <option>None</option>
-                    <option>Dust-vehicles</option>
-                    <option>Human obstruction</option>
-                    <option>Fog/Nature</option>
-                </select>
-            </label>
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
             
+            <div ng-show="obscured" ng-model="obscuredDiv">
+                <div style="width: 283px; height: 20px;" class="spacer"></div>
+                <h3 style="">If Obscured, Specify Reason</h5>
+                <label style="" class="item item-select">
+                    <span class="input-label">Reason</span>
+                    <select ng-model="obscuredSelect" ng-change="showNSCTextBox('obscuredSelect', obscuredSelect)">
+                        <option>None</option>
+                        <option>Dust-vehicles</option>
+                        <option>Human obstruction</option>
+                        <option>Fog/Nature</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+                <div ng-bind-html="obscuredOther"></div>
+            </div>
+            <div style="width: 283px; height: 30px;" class="spacer"></div>
 			<h2 style="">Food Sources</h2>
 			
 			
@@ -128,6 +155,7 @@
             <label style="" class="item item-select">
                 <span class="input-label">Food Source</span>
                 <select>
+                    <option selected disabled>Not selected</option>
                     <option>Fish</option>
                     <option>Berries</option>
                     <option>Green Vegetation</option>
@@ -137,15 +165,16 @@
             <label style="" class="item item-select">
                 <span class="input-label">Availability</span>
                 <select>
-                    <option>High</option>
-                    <option>Medium</option>
+                    <option>None</option>
                     <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
                 </select>
             </label>
             
             <label style="" class="item item-input">
-                <span class="input-label">Comment</span>
-                <input placeholder="Note Species " type="text">
+                <span class="input-label">Comment:</span>
+                <input placeholder="Note species and/or describe other" type="text">
             </label>
             <button class="button button-balanced  button-block icon ion-plus" id="newSessionFoodSources-button15">&nbsp;Add Food Source</button>
 			

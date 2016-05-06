@@ -8,8 +8,12 @@
             <ion-radio style="">Scanning</ion-radio>
 			<ion-radio style="">Opertunistic</ion-radio>
         </form>
-        <a class="button button-positive  button-block" id="newSessionMode-button34">Focal</a>
-        <button class="button button-positive  button-block" id="newSessionMode-button35">Scanning</button>
+        
+        <div ng-show="debug">
+            <a class="button button-positive  button-block" id="newSessionMode-button34">Focal</a>
+            <button class="button button-positive  button-block" id="newSessionMode-button35">Scanning</button>
+        </div><!--end debug-->
+        
 		<button style="" class="button button-balanced  button-block icon ion-plus" ui-sref="focalTab.bear">&nbsp; Start Session</button>
     </ion-content>
 </ion-view>
