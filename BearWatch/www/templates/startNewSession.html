@@ -9,7 +9,7 @@
                 </label>
                 
                 <!--debug div-->
-                <div ng-show="debug === true">
+                <div ng-show="debug">
                     <br/><br/>
                     Internet Connection:
                     {{ internet }}
@@ -41,14 +41,15 @@
         <h2 style="">Viewing Area</h2>
 	   <label style="" class="item item-select">
                 <span class="input-label">Viewing Area</span>
-                <select>
-                    <option>Not Selected</option>
+                <select ng-model="viewingAreaSelect" ng-change="showNSTextBox('viewingArea', viewingAreaSelect)">
+                    <option selected disabled>Not selected</option>
                     <option>Platform</option>
                     <option>Boating</option>
                     <option>Blind</option>
 					<option>Other</option>
                 </select>
         </label>
+       <div ng-bind-html="viewingAreaOther"></div>
        <form style="" class="list">
            <ion-item style="" class="item-divider">Select Mode</ion-item>
            <ion-radio style="">Stationary</ion-radio>
@@ -61,7 +62,7 @@
             <label style="" class="item item-select">
                 <span class="input-label">View Type</span>
                 <select ng-model="zoningSchemaSelect" ng-change="showZoneSchema(zoningSchemaSelect)">
-                    <option>Not Selected</option>
+                    <option selected disabled>Not selected</option>
                     <option>River</option>
                     <option>Estuary</option>
 					<option>Terrestrial</option>
@@ -75,16 +76,16 @@
 			<input placeholder="" type="text">
         </label>
 
-	   <button style="" class="button button-balanced  button-block icon ion-plus" id="newSessionObservers-button6">&nbsp; Add Description</button>
-
 			<div style="width: 283px; height: 20px;" class="spacer"></div>
 			<ion-item style="" class="item-divider">Environmental Noise</ion-item>
             <label style="" class="item item-select">
                 <span class="input-label">Noise level</span>
                 <select>
-                    <option>Not Selected</option>
+                    <option selected disabled>Not Selected</option>
                     <option>Low</option>
+                    <option>Low-Medium</option>
                     <option>Medium</option>
+                    <option>Medium-High</option>
 					<option>High</option>
 				</select>
             </label>

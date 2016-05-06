@@ -6,6 +6,15 @@ angular.module('app.controllers', [])
 
 .controller('startNewSessionCtrl', function($scope) {
             
+            //function to add text box for "other" selections
+            $scope.showNSTextBox = function(selectModel, value){
+                if(selectModel == "viewingArea" && value == "Other"){
+                    $scope.viewingAreaOther = '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
+                } else {
+                    $scope.viewingAreaOther = '';
+                }
+            }
+            
             //function to change zoning schema picture
             $scope.showZoneSchema = function(zoningSchemaSelect){
                 if(zoningSchemaSelect == "River"){
@@ -22,6 +31,26 @@ angular.module('app.controllers', [])
 })
 
 .controller('startNewSessionContCtrl', function($scope) {
+            
+            //function to add text box for "other" selections
+            $scope.showNSCTextBox = function(selectModel, value){
+                if(selectModel == "obscuredSelect" && value == "Other"){
+                    $scope.obscuredOther= '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
+                } else {
+                    $scope.obscuredOther = '';
+                }
+            }
+            
+            //function to show obscured reason select box if visibility is obscured
+            $scope.showObscuredSelect = function(visibilitySelect){
+                if(visibilitySelect == 'Partly obscured' || visibilitySelect == 'Mostly obscured'){
+                    $scope.obscured = true;
+                } else {
+                    $scope.obscured = false;
+                }
+            }
+            
+            
 
 })
 
