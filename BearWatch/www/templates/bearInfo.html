@@ -19,7 +19,12 @@
         <ion-item style="" class="item-divider">Ongoing Behaviour</ion-item>
 
         <div style="width: 283px; height: 30px;" class="spacer"></div>
-        <ion-item style="" class="item-divider">Movements</ion-item>
+        <ion-item style="" class="item-divider">Movements
+            <div style="width: 283px; height: 10px;" class="spacer"></div>
+            <lable ng-repeat="movement in movements">
+                <button>{{ movement }}</button>
+            </lable>
+        </ion-item>
 
         <div style="width: 283px; height: 30px;" class="spacer"></div>
         <ion-item style="" class="item-divider">Actions</ion-item>

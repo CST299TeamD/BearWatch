@@ -225,6 +225,11 @@ angular.module('app.controllers', [])
                        furColour:"pink"
             };
             $scope.bear = bear;
+            
+            var movements = ["Unknow", "Walking", "Wading", "Standing", "Laying dowm","Sitting", "Running", "Swimming","Climbing",];
+            
+            var actions = ["Unknown","Fishing","Watching Bears"];
+            $scope.movements = movements;
 })
 
 .controller('bearSpecCtrl', function($scope) {
