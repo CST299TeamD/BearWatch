@@ -274,8 +274,14 @@ angular.module('app.controllers', [])
             
             var movements = ["Unknow", "Walking", "Wading", "Standing", "Laying dowm","Sitting", "Running", "Swimming","Climbing",];
             
-            var actions = ["Unknown","Fishing","Watching Bears"];
+            var actions = ["Unknown","Fishing","Watching Bears", "Watching humans", "Consuming", "Interacting with humans","Interacting with Bears", "Grooming", "Sleeping", "Vigilant", "Fighting"];
+            
+            var attitudes = ["Unknown", "Avoiding Humans","Avoiding Bears","Socializing","Aggresive","Passive","Alert","Enticing"];
+            
             $scope.movements = movements;
+            $scope.actions = actions;
+            $scope.attitudes = attitudes;
+            
 })
 
 .controller('bearSpecCtrl', function($scope) {

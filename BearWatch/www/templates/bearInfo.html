@@ -27,10 +27,20 @@
         </ion-item>
 
         <div style="width: 283px; height: 30px;" class="spacer"></div>
-        <ion-item style="" class="item-divider">Actions</ion-item>
+        <ion-item style="" class="item-divider">Actions
+            <div style="width: 283px; height: 10px;" class="spacer"></div>
+            <lable ng-repeat="action in actions">
+                <button>{{ action }}</button>
+            </lable>
+        </ion-item>
 
         <div style="width: 283px; height: 30px;" class="spacer"></div>
-        <ion-item style="" class="item-divider">Attitude</ion-item>
+        <ion-item style="" class="item-divider">Attitude
+            <div style="width: 283px; height: 10px;" class="spacer"></div>
+            <lable ng-repeat="attitude in attitudes">
+                <button>{{ attitude }}</button>
+            </lable>
+        </ion-item>
 
 
 
