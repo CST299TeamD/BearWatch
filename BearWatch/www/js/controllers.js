@@ -71,6 +71,23 @@ angular.module('app.controllers', [])
 })
 
 .controller('focalEnvironmentCtrl', function($scope) {
+            //function to add text box for "other" selections
+            $scope.showNSCTextBox = function(selectModel, value){
+                if(selectModel == "obscuredSelect" && value == "Other"){
+                    $scope.obscuredOther= '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
+                } else {
+                    $scope.obscuredOther = '';
+                }
+            }
+            
+            //function to show obscured reason select box if visibility is obscured
+            $scope.showObscuredSelect = function(visibilitySelect){
+                if(visibilitySelect == 'Partly obscured' || visibilitySelect == 'Mostly obscured'){
+                    $scope.obscured = true;
+                } else {
+                    $scope.obscured = false;
+                }
+            }
 
 })
 

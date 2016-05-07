@@ -1,9 +1,7 @@
 <ion-view style="" title="Set Session Variables Cont">
     <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <form style="" class="list"></form>
+        
         <form style="" class="list">
-			
-					
         <h2 style="">Environment Variables</h2>
 		<ion-item style="" class="item-divider">Water</ion-item>
             <label style="" class="item item-select">
@@ -147,10 +145,23 @@
                 </label>
                 <div ng-bind-html="obscuredOther"></div>
             </div>
+            
+            <div style="width: 283px; height: 20px;" class="spacer"></div>
+            <ion-item style="" class="item-divider">Environmental Noise</ion-item>
+            <label style="" class="item item-select">
+                <span class="input-label">Noise level</span>
+                <select>
+                    <option selected disabled>Not Selected</option>
+                    <option>Low</option>
+                    <option>Low-Medium</option>
+                    <option>Medium</option>
+                    <option>Medium-High</option>
+                    <option>High</option>
+                </select>
+            </label>
+            
             <div style="width: 283px; height: 30px;" class="spacer"></div>
 			<h2 style="">Food Sources</h2>
-			
-			
 			<ion-item style="" class="item-divider">Add Food Source</ion-item>
             <label style="" class="item item-select">
                 <span class="input-label">Food Source</span>
