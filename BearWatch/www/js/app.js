@@ -8,7 +8,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'app.services', 'app.directives'])
 
-.run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile) {
+.run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaFileTransfer) {
   $ionicPlatform.ready(function() {
                        //global scope variables
                        

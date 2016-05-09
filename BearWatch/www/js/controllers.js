@@ -249,19 +249,193 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('reviewListCtrl', function($scope) {
+//Controller loaded when "Review Sessions" is selected"
+.controller('reviewListCtrl', function($scope, $cordovaEmailComposer) {
+	
+	console.log('starting reviewListCtrl');
+	document.addEventListener("deviceready", onDeviceReady, false);
 
-})
+	function onDeviceReady() {
+		console.log('dataDirectory: '+cordova.file.dataDirectory);
+	}
+	
+	//Test function to save a zip file
+	$scope.reviewSaveZip = function (){
+		console.log("Starting review save zip...");
+	}
+	
+	
+	//Test function to save a file locally
+	$scope.reviewSaveSendCSV = function () {
+		console.log('starting reviewSaveCSV');
+		
+		/*
+		function readTextFile(fileEntry) {
+			fileEntry.file(function (file) {
+				var reader = new FileReader();
 
-.controller('reviewSaveCSV', function($scope) {
+				reader.onloadend = function() {
+					console.log("Successful file read: " + this.result);
+					//displayFileData(fileEntry.fullPath + ": " + this.result);
+				};
 
-})
+				reader.readAsText(file);
 
-.controller('reviewSaveZIP', function($scope) {
+			}, null);
+		}
+		function readFile(fileEntry) {
+			console.log("fileEntry.fullPath: " + fileEntry.fullPath);
+			fileEntry.file(function (file) {
+				var reader = new FileReader();
 
-})
+				reader.onloadend = function() {
+					console.log("Successful file read: " + this.result);
+					//displayFileData(fileEntry.fullPath + ": " + this.result);
+				};
+				
 
-.controller('reviewSendEmail', function($scope) {
+				reader.readAsDataURL(file);
+
+			}, function(evt){
+				console.log("Failed to read file. Error: " + evt);
+			});
+		}
+		
+		function writeFile(fileEntry, dataObj) {
+			// Create a FileWriter object for our FileEntry (log.txt).
+			fileEntry.createWriter(function (fileWriter) {
+
+				fileWriter.onwriteend = function() {
+					console.log("Successful file read...");
+					readFile(fileEntry);
+				};
+
+				fileWriter.onerror = function (e) {
+					console.log("Failed file read: " + e.toString());
+				};
+
+				// If data object is not passed in,
+				// create a new Blob instead.
+				if (!dataObj) {
+					dataObj = new Blob(['some file data'], { type: 'text/plain' });
+				}
+
+				fileWriter.write(dataObj);
+				console.log("Wrote Data: " + dataObj);
+			});
+		}
+	
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
+
+			console.log('file system open: ' + fs.name);
+			fs.root.getFile("testtext.txt", { create: false, exclusive: false }, function (fileEntry) {
+
+				console.log("fileEntry is file? " + fileEntry.isFile.toString());
+*/				// fileEntry.name == 'someFile.txt'
+//				fileEntry.fullPath = cordova.file.dataDirectory/*.replace('file://', '')*/ 
+//				+ 'files/testtext.txt'
+//				console.log("Saving to: " + fileEntry.fullPath);
+				//writeFile(fileEntry, null);
+				
+				//readFile(fileEntry);
+				
+				/* Email test start! */
+				
+//				console.log("attempting to send email...");
+				/*console.log('base64:text.txt//'+'helloworld');
+				console.log('base64:text.txt//'+btoa('helloworld'));
+				console.log('base64:picture.png//'+btoa(readFile(fileEntry)));
+				console.log('base64:picture.png//'+readFile(fileEntry));				
+				console.log('base64:picture.png//'+readTextFile(fileEntry));
+				*/
+/*				$cordovaEmailComposer.isAvailable().then(function() {
+					console.log("Email is available");
+					var email = {
+						to: 'cobbsworth@outlook.com',
+						cc: '',
+						attachments: [
+						'base64:text.txt//'+btoa('helloworld'),
+						'base64:picture.png//'+btoa(readFile(fileEntry)),
+					
+						],
+						subject: 'Cordova Email',
+						body: 'How are you? Nice greetings from Leipzig',
+						isHtml: false
+					};
+
+					$cordovaEmailComposer.open(email).then(null, function () {
+					   console.log("Email Cancelled");
+					});
+				}, function () {
+				   console.log("Email is unavailable");
+				});
+*/				
+				/* Email test end! */
+/*				
+				
+			}, function(){
+				console.log("Failed to getFile()");
+			});
+
+<<<<<<< HEAD
+		}, function(){
+			console.log("Failed to RequestFileSystem");
+		});
+*/
+
+		window.resolveLocalFileSystemURL(cordova.file.dataDirectory + "files/bear1.png", gotFile, fail);
+			
+		function fail(e){
+			console.log("Error: " + e);
+		}
+			
+		function gotFile(fileEntry){
+			fileEntry.file(function(file){
+				var reader = new FileReader();
+				
+				reader.onloadend = function(e){
+					console.log("Text is: "+this.result);
+					mail(this.result);
+					
+				}
+				reader.readAsBinary(file);
+			});
+		}
+		
+		function mail(pictomail){
+			console.log("attempting to send email...");
+			console.log("message: "+pictomail);
+			
+			/*console.log('base64:text.txt//'+'helloworld');
+			console.log('base64:text.txt//'+btoa('helloworld'));
+			console.log('base64:picture.png//'+btoa(readFile(fileEntry)));
+			console.log('base64:picture.png//'+readFile(fileEntry));				
+			console.log('base64:picture.png//'+readTextFile(fileEntry));
+			*/
+			$cordovaEmailComposer.isAvailable().then(function() {
+				console.log("Email is available");
+				var email = {
+					to: 'cobbsworth@outlook.com',
+					cc: '',
+					attachments: [
+					'base64:helloworld.png//'+pictomail
+					//'base64:text.txt//'+btoa("Hello World")
+					//'base64:picture.png//'+btoa(readFile(fileEntry)),
+				
+					],
+					subject: 'Cordova Email',
+					body: '',
+					isHtml: false
+				};
+
+				$cordovaEmailComposer.open(email).then(null, function () {
+				   console.log("Email Cancelled");
+				});
+			}, function () {
+			   console.log("Email is unavailable");
+			});
+		}
+	};
 
 })
 
@@ -278,7 +452,7 @@ angular.module('app.controllers', [])
             };
             $scope.bear = bear;
             
-            var movements = ["Unknow", "Walking", "Wading", "Standing", "Laying dowm","Sitting", "Running", "Swimming","Climbing",];
+            var movements = ["Unknown", "Walking", "Wading", "Standing", "Laying dowm","Sitting", "Running", "Swimming","Climbing",];
             
             var actions = ["Unknown","Fishing","Watching Bears", "Watching humans", "Consuming", "Interacting with humans","Interacting with Bears", "Grooming", "Sleeping", "Vigilant", "Fighting"];
             
