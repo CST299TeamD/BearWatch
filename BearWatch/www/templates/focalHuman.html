@@ -1,12 +1,157 @@
 <ion-view style="" title="Human">
     <ion-content class="has-header" overflow-scroll="true" padding="true">
         <form style="" class="list">
-            <label style="" class="item item-input">
-                <span class="input-label">Number of Humans</span>
-                <input placeholder="" type="number">
+            <h3>Humans in each Zone</h3>
+            <ion-item style="" class="item-divider">Zone-Matrix</ion-item>
+            <div class="item item-checkbox">
+                <span ng-hide="showZoneMatrix">Show input options</span>
+                <span ng-show="showZoneMatrix">Hide input options</span>
+            <label class="checkbox">
+                <input type="checkbox" ng-model="showZoneMatrix">
             </label>
+            </div>
+            <div ng-show="showZoneMatrix">
+                <ion-list>
+                    <ion-item ng-repeat="zone in zones">
+                        <label style="" class="item item-input">
+                            <span class="input-label">Zone: {{zone}}</span>
+                            <input placeholder="# of Humans" type="number">
+                        </label>
+                    </ion-item>
+                </ion-list>
+            </div>
+            <div class="item item-checkbox">
+                <span ng-hide="showZoneSchema">Show Zone Scheme</span>
+                <span ng-show="showZoneSchema">Hide Zone Scheme</span>
+            <label class="checkbox">
+                <input type="checkbox" ng-model="showZoneSchema">
+            </label>
+            </div>
+            <div ng-show="showZoneSchema" class="center" style="text-align: center;">
+                <img ng-src="{{zoneImgURI}}">
+            </div>            
+            
             <div style="width: 283px; height: 37px;" class="spacer"></div>
-            <ion-item style="" class="item-divider">Reaction to Bear(s)</ion-item>
+            <ion-item style="" class="item-divider">Human Activities Occuring</ion-item>
+            <ion-toggle ng-model="motorizedHuman" toggle-class="toggle-calm">Motorized</ion-toggle>
+            <div ng-show="motorizedHuman">
+                <ion-checkbox ng-model="aircraft">Aircraft</ion-checkbox>
+                <div ng-show="aircraft">
+                    <label style="" class="item item-select">
+                        <span class="input-label">Aircraft Classification</span>
+                        <select>
+                            <option selected disabled></option>
+                            <option>Small (e.g. Super Cub)</option>
+                            <option>Medium (e.g. Cessna180, Beaver)</option>
+                            <option>Large (e.g. Caravan, Helecopter)</option>                
+                        </select>
+                    </label>
+                    <label style="" class="item item-select">
+                        <span class="input-label">Aircraft Elevation (closest point to the bear)</span>
+                        <select>
+                            <option selected disabled></option>
+                            <option>&lt;100 m</option>
+                            <option>100-200 m</option>
+                            <option>200-300 m</option>
+                            <option>&gt;300 m</option>                
+                        </select>
+                    </label>
+                    <label style="" class="item item-select">
+                        <span class="input-label">Landing Spot (if applicable)</span>
+                        <select>
+                            <option selected disabled></option>
+                            <option>On River</option>
+                            <option>On Land</option>
+                            <option>Did Not Land</option>                
+                        </select>
+                    </label>
+                    <label style="" class="item item-input">
+                        <span class="input-label">UTM: </span>
+                        <input placeholder="Landing Spot UTM" type="text">
+                    </label>
+                    <div style="width: 283px; height: 37px;" class="spacer"></div>
+                </div>
+                <ion-checkbox ng-model="atv">ATV</ion-checkbox>
+                <div ng-show="atv">
+                    <label style="" class="item item-input">
+                        <span class="input-label">Number of ATV's</span>
+                        <input placeholder="Total all ATVs'" type="number">
+                    </label>
+                    <label style="" class="item item-input">
+                        <span class="input-label">Approximate Speed (km/h)</span>
+                        <input placeholder="Average Speed of all ATVs" type="number">
+                    </label>
+                    <label style="" class="item item-input">
+                        <span class="input-label">Closest Distance to Bear(s) in Meters</span>
+                        <input placeholder="" type="number">
+                    </label>
+                    <div style="width: 283px; height: 37px;" class="spacer"></div>
+                </div>
+                <ion-checkbox ng-model="jetBoat">Jet Boats</ion-checkbox>
+                <div ng-show="jetBoat">
+                    <label style="" class="item item-input">
+                        <span class="input-label">Concurrent Number on River</span>
+                        <input placeholder="Total'" type="number">
+                    </label>
+                    <label style="" class="item item-input">
+                        <span class="input-label">Approximate Speed (km/h)</span>
+                        <input placeholder="Average Speed of all Jet Boats" type="number">
+                    </label>
+                    <label style="" class="item item-input">
+                        <span class="input-label">Access Route</span>
+                        <input placeholder="" type="text">
+                    </label>
+                    <ion-item style="" class="item-divider">Jet Boat Type</ion-item>
+                    <ion-radio ng-model="jetBoatType" ng-value="'Private'">Private</ion-radio>
+                    <ion-radio ng-model="jetBoatType" ng-value="'Commercial'">Commercial</ion-radio>
+                    <ion-radio ng-model="jetBoatType" ng-value="'Both'">Both</ion-radio>
+                    <div style="width: 283px; height: 37px;" class="spacer"></div>
+                </div>
+                <ion-checkbox ng-model="vehicle">Vehicles</ion-checkbox>
+                <div ng-show="vehicle">
+                    <ion-list>
+                        <ion-item ng-repeat="zone in zones">
+                            <label style="" class="item item-input">
+                                <span class="input-label">Zone: {{zone}}</span>
+                                <input placeholder="# of Vehicles (running)" type="number">
+                            </label>
+                        </ion-item>
+                    </ion-list>
+                    <ion-toggle ng-model="vehicleVisibility" toggle-class="toggle-calm">Vehicle Dust Limits Visibility</ion-toggle>
+                    <div ng-show="vehicleVisibility">
+                        <label style="" class="item item-input">
+                            <span class="input-label">Current Visibility in Meters</span>
+                            <input placeholder="" type="number">
+                        </label>
+                    </div>
+                </div>
+                <div style="width: 283px; height: 37px;" class="spacer"></div>
+            </div>
+            <!--non-motorized-->
+            <ion-toggle ng-model="nonMotorizedHuman" toggle-class="toggle-calm">Non-Motorized</ion-toggle>
+            <div ng-show="nonMotorizedHuman">
+                <ion-checkbox ng-model="Personnel">Official or Agency Personnel</ion-checkbox>
+                <ion-checkbox ng-model="Angler">Angler</ion-checkbox>
+                <ion-checkbox ng-model="Kayaking_canoeing">Kayaking/canoeing</ion-checkbox>
+                <ion-checkbox ng-model="Hike_Walk">Hike/Walk</ion-checkbox>
+                <ion-checkbox ng-model="Run">Run</ion-checkbox>
+                <ion-checkbox ng-model="Picnic">Picnic</ion-checkbox>
+                <ion-checkbox ng-model="Photography">Photography</ion-checkbox>
+                <ion-checkbox ng-model="Playing">Playing</ion-checkbox>
+                <ion-checkbox ng-model="Wildlife_Viewing">Wildlife Viewing</ion-checkbox>
+                <ion-checkbox ng-model="Biking">Biking</ion-checkbox>
+                <ion-checkbox ng-model="Unobservable">Unobservable</ion-checkbox>
+                <ion-checkbox ng-model="nonMotoOther">Other</ion-checkbox>                
+                <div ng-show="nonMotoOther">
+                    <label style="" class="item item-input">
+                        <span class="input-label">Other Non-Motorized</span>
+                        <input placeholder="Description" type="text">
+                    </label>
+                </div>
+            </div>
+                        
+            <div style="width: 283px; height: 37px;" class="spacer"></div>
+            <ion-item style="" class="item-divider">Reaction to Bear(s) - Worst Behaving Human</ion-item>
             <label style="" class="item item-select">
                 <span class="input-label">Behaviour</span>
                 <select>
@@ -20,11 +165,11 @@
                     <option>Other</option>
                 </select>
             </label>
+            
+            <div style="width: 283px; height: 37px;" class="spacer"></div>
             <label style="" class="item item-input">
                 <span class="input-label">Comment</span><textarea placeholder=""> </textarea>
             </label>
         </form>
-        <button class="button button-positive  button-block" id="human-button32">Record Behaviour</button>
-        <a class="button button-assertive  button-block icon ion-android-exit" id="human-button44" ui-sref="focalTabsController.reviewSession">&nbsp;End Session</a>
-    </ion-content>
+      </ion-content>
 </ion-view>

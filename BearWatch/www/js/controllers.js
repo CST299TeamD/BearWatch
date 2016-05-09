@@ -67,6 +67,12 @@ angular.module('app.controllers', [])
 })
 
 .controller('focalHumanCtrl', function($scope) {
+	//test data for zone matrix - to do: dynamically attribute from zone selection
+	//estuary hard-coded
+	$scope.zones = ["+1", "1", "4", "7", "7+", "2+", "2", "5", "8", "8+", "6"];
+	
+	//esturary zone image - hard coded, needs to be dynamically
+	$scope.zoneImgURI = "img/estuary.png"
 
 })
 
