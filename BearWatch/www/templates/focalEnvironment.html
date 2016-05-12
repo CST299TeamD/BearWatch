@@ -10,19 +10,17 @@
     <ion-content class="has-header" overflow-scroll="true" padding="true">
         <form style="" class="list">
             <h2 style="">Environment Variables</h2>
-            <ion-item style="" class="item-divider">Water</ion-item>
-            <div class="item item-checkbox">
-                <span ng-hide="showWater">Show input options</span>
-                <span ng-show="showWater">Hide input options</span>
-            <label class="checkbox">
-                <input type="checkbox" ng-model="showWater">
-            </label>
+            <div style="border: 0.5px groove;" class="row item-divider">
+                <div class="col col-center"><h4>Water</h4></div>
+                <div class="col col-center text-right">
+                    <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showWater, 'button button-small button-icon icon ion-ios-minus-outline':showWater}" ng-click="showWater=!showWater"></a>
+                </div>
             </div>
-            <div ng-show="showWater">
+            <div ng-model="showWater" ng-show="showWater">
             <label style="" class="item item-select">
                 <span class="input-label">Water Body</span>
                 <select>
-                    <option>Not Selected</option>
+                    <option selected disabled></option>
                     <option>River</option>
                     <option>Lake</option>
                     <option>Estuary</option>
@@ -31,7 +29,7 @@
             <label style="" class="item item-select">
                 <span class="input-label">Water Level</span>
                 <select>
-                    <option>Not Selected</option>
+                    <option selected disabled></option>
                     <option>High</option>
                     <option>Medium</option>
                     <option>Low</option>
@@ -40,7 +38,7 @@
             <label style="" class="item item-select">
                 <span class="input-label">Water Flow</span>
                 <select>
-                    <option>Not selected</option>
+                    <option selected disabled></option>
                     <option>Cascade</option>
                     <option>Rapid</option>
                     <option>Riffle</option>
@@ -53,7 +51,7 @@
             <label style="" class="item item-select">
                 <span class="input-label">Water Clarity</span>
                 <select>
-                    <option>Not selected</option>
+                    <option selected disabled></option>
                     <option value="0">Sparkling clear</option>
                     <option value="1">Water appears dull, slight discoloration</option>
                     <option value="2">Bottom visible to approx. 3ft, but not distinct</option>
@@ -64,20 +62,17 @@
             </div><!--end water options-->
             
             <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <ion-item style="" class="item-divider">Weather</ion-item>
-            <div class="item item-checkbox">
-                <span ng-hide="showWeather">Show input options</span>
-                <span ng-show="showWeather">Hide input options</span>
-                <label class="checkbox">
-                    <input type="checkbox" ng-model="showWeather">
-                </label>
-            </div>
-            
-            <div ng-show="showWeather">
+            <div style="border: 0.5px groove;" class="row item-divider">
+                <div class="col col-center"><h4>Weather</h4></div>
+                <div class="col col-center text-right">
+                    <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showWeather, 'button button-small button-icon icon ion-ios-minus-outline':showWeather}" ng-click="showWeather=!showWeather"></a>
+                </div>
+            </div>           
+            <div ng-model="showWeather" ng-show="showWeather">
             <label style="" class="item item-select">
                 <span class="input-label">Cloud Cover</span>
                 <select>
-                    <option selected disabled>Not selected</option>
+                    <option selected disabled></option>
                     <option>0%</option>
                     <option>1% - 50%</option>
                     <option>51% - 99%</option>
@@ -87,7 +82,7 @@
             <label style="" class="item item-select">
                 <span class="input-label">Precipitation</span>
                 <select>
-                    <option selected disabled>Not Selected</option>
+                    <option selected disabled></option>
                     <option>None</option>
                     <option>Light drizzle</option>
                     <option>Rain</option>
@@ -97,7 +92,7 @@
             <label style="" class="item item-select">
                 <span class="input-label">Wind</span>
                 <select>
-                    <option selected disabled>Not selected</option>
+                    <option selected disabled></option>
                     <option>Calm</option>
                     <option>Light air</option>
                     <option>Light breeze</option>
@@ -114,7 +109,7 @@
             <label style="" class="item item-select">
                 <span class="input-label">Wind direction</span>
                 <select>
-                    <option selected disbaled>Not selected</option>
+                    <option selected disbaled></option>
                     <option>N</option>
                     <option>S</option>
                     <option>E</option>
@@ -142,35 +137,32 @@
                 <input placeholder="0 - 100%" type="number">
             </label>
             </div><!--end weather options-->
-            <div style="width: 283px; height: 15px;" class="spacer"></div>
-            
-            <ion-item style="" class="item-divider">Visibility</ion-item>
-            <div class="item item-checkbox">
-                <span ng-hide="showVisibility">Show input options</span>
-                <span ng-show="showVisibility">Hide input options</span>
-                <label class="checkbox">
-                    <input type="checkbox" ng-model="showVisibility">
-                </label>
-            </div>
-            
-            <div ng-show="showVisibility">
-            <label style="" class="item item-select">
-                <span class="input-label">Area Visibility</span>
-                <select ng-model="visibilitySelect" ng-change="showObscuredSelect(visibilitySelect)">
-                    <option selected disabled>Not selected</option>
-                    <option>Excellent</option>
-                    <option>Good</option>
-                    <option>Partly obscured</option>
-                    <option>Mostly obscured</option>
-                </select>
-            </label>
-            
-            <div ng-show="obscured" ng-model="obscuredDiv">
-                <div style="width: 283px; height: 20px;" class="spacer"></div>
-                <h3 style="">If Obscured, Specify Reason</h5>
+
+            <div style="width: 283px; height: 20px;" class="spacer"></div>         
+            <div style="border: 0.5px groove;" class="row item-divider">
+                <div class="col col-center"><h4>Visibility</h4></div>
+                <div class="col col-center text-right">
+                    <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showVisibility, 'button button-small button-icon icon ion-ios-minus-outline':showVisibility}" ng-click="showVisibility=!showVisibility"></a>
+                </div>
+            </div>             
+            <div ng-model="showVisibility" ng-show="showVisibility">
+                <label style="" class="item item-select">
+                    <span class="input-label">Area Visibility</span>
+                    <select ng-model="visibilitySelect" ng-change="showObscuredSelect(visibilitySelect)">
+                        <option selected disabled></option>
+                        <option>Excellent</option>
+                        <option>Good</option>
+                        <option>Partly obscured</option>
+                        <option>Mostly obscured</option>
+                    </select>
+                </label>       
+                <div ng-show="obscured" ng-model="obscuredDiv">
+                    <div style="width: 283px; height: 20px;" class="spacer"></div>
+                    <h3 style="">If Obscured, Specify Reason</h3>
                     <label style="" class="item item-select">
                         <span class="input-label">Reason</span>
                         <select ng-model="obscuredSelect" ng-change="showNSCTextBox('obscuredSelect', obscuredSelect)">
+                            <option selected disabled></option>
                             <option>None</option>
                             <option>Dust-vehicles</option>
                             <option>Human obstruction</option>
@@ -179,7 +171,7 @@
                         </select>
                     </label>
                     <div ng-bind-html="obscuredOther"></div>
-            </div>
+                </div>
             </div><!--end visibility options-->
             
             <div style="width: 283px; height: 20px;" class="spacer"></div>
@@ -187,7 +179,7 @@
             <label style="" class="item item-select">
                 <span class="input-label">Noise level</span>
                 <select>
-                    <option selected disabled>Not Selected</option>
+                    <option selected disabled></option>
                     <option>Low</option>
                     <option>Low-Medium</option>
                     <option>Medium</option>
@@ -195,18 +187,16 @@
                     <option>High</option>
                 </select>
             </label>
+            <!--end noise options-->
             
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
-            <ion-item style="" class="item-divider">Food Sources</ion-item>
-            <div class="item item-checkbox">
-                <span ng-hide="showFoodSource">Show input options</span>
-                <span ng-show="showFoodSource">Hide input options</span>
-                <label class="checkbox">
-                    <input type="checkbox" ng-model="showFoodSource">
-                </label>
-            </div>
-            
-            <div ng-show="showFoodSource"
+            <div style="width: 283px; height: 20px;" class="spacer"></div>          
+            <div style="border: 0.5px groove;" class="row item-divider">
+                <div class="col col-center"><h4>Food Sources</h4></div>
+                <div class="col col-center text-right">
+                    <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showFoodSource, 'button button-small button-icon icon ion-ios-minus-outline':showFoodSource}" ng-click="showFoodSource=!showFoodSource"></a>
+                </div>
+            </div>            
+            <div ng-model="showFoodSource" ng-show="showFoodSource"
             <label style="" class="item item-select">
                 <span class="input-label">Food Source</span>
                 <select>
@@ -225,14 +215,14 @@
                     <option>Medium</option>
                     <option>High</option>
                 </select>
-            </label>
-            
+            </label>            
             <label style="" class="item item-input">
                 <span class="input-label">Comment:</span>
                 <input placeholder="Note species and/or describe other" type="text">
                     </label>
             <button class="button button-balanced  button-block icon ion-plus" id="newSessionFoodSources-button15">&nbsp;Add Food Source</button>
             </div><!--end foodSources-->
+
         </form>
     </ion-content>
 </ion-view>

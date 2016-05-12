@@ -97,6 +97,7 @@ angular.module('app.controllers', [])
 })
 
 .controller('focalEnvironmentCtrl', function($scope) {
+            
             //function to add text box for "other" selections
             $scope.showNSCTextBox = function(selectModel, value){
                 if(selectModel == "obscuredSelect" && value == "Other"){
