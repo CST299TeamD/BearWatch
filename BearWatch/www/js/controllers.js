@@ -58,9 +58,12 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('focalCtrl', function($scope, $ionicPopup, $state, $location) {
+.controller('focalCtrl', function($scope) {
             
-            
+})
+
+.controller('dashCtrl', function($scope, $ionicPopup, $state, $location) {
+
             $scope.showConfirm = function() {
             var confirmPopup = $ionicPopup.confirm({
                                                    title: 'End Session',
@@ -76,6 +79,8 @@ angular.module('app.controllers', [])
                               });
             }
 })
+
+
 
 .controller('addNewBearCtrl', function($scope) {
 
