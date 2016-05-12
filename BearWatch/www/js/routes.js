@@ -35,7 +35,8 @@ angular.module('app.routes', ['ionicUIRouter'])
   .state('focalTab', {
     url: '/focal',
     templateUrl: 'templates/focalTab.html',
-    abstract:true
+    abstract:true,
+    controller: 'dashCtrl'
   })
 
 
