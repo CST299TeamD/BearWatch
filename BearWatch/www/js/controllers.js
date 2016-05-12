@@ -58,8 +58,23 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('focalCtrl', function($scope) {
-
+.controller('focalCtrl', function($scope, $ionicPopup, $state, $location) {
+            
+            
+            $scope.showConfirm = function() {
+            var confirmPopup = $ionicPopup.confirm({
+                                                   title: 'End Session',
+                                                   template: 'Are you sure?'
+                                                   });
+            confirmPopup.then(function(res) {
+                              if(res) {
+                              console.log('Sure!');
+                              $location.path("/ReviewList");
+                              } else {
+                              console.log('Not sure!');
+                              }
+                              });
+            }
 })
 
 .controller('addNewBearCtrl', function($scope) {
