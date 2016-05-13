@@ -270,18 +270,14 @@ angular.module('app.controllers', [])
 
 	function onDeviceReady() {
 		console.log('dataDirectory: '+cordova.file.dataDirectory);
-	}
-	
-	//Test function to save a zip file
-	$scope.reviewSaveZip = function (){
-		console.log("Starting review save zip...");
-	}
-	
+		
+	}	
 	
 	//Test function to save a file locally
 	$scope.reviewSaveSendCSV = function () {
 		console.log('starting reviewSaveCSV');
 		
+        //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
 		/*
 		function readTextFile(fileEntry) {
 			fileEntry.file(function (file) {
@@ -396,24 +392,112 @@ angular.module('app.controllers', [])
 		});
 */
 
-		window.resolveLocalFileSystemURL(cordova.file.dataDirectory + "files/bear1.png", gotFile, fail);
-			
-		function fail(e){
-			console.log("Error: " + e);
+/*		function gotFS(fileSystem) {
+			console.log("getFS"+fileSystem);
+			fileSystem.root.getFile("files/bear1.jpg", null, gotFileEntry, fail);
 		}
+*/
+
+		function gotFileEntry(fileEntry) {
+			console.log("gotFileEntry: "+fileEntry.name);
+			console.log("fileEntry fullpath: "+fileEntry.fullPath);
+			fileEntry.file(gotFile, fail);
+		}
+
+		function gotFile(file){
+			console.log("Got the File");
+			console.log("Type: " + file.type);
+			console.log("Path: " + file.fullPath);
+			//manually set path?
+			//file.fullPath = fullPath = cordova.file.dataDirectory.replace('file://', '') + 'files/' + file.name;
+			file.fullPath = fullPath = cordova.file.dataDirectory + 'files/' + file.name;
+			console.log("Path: " + file.fullPath);
+			console.log("Bytes: " + file.size);
 			
-		function gotFile(fileEntry){
-			fileEntry.file(function(file){
-				var reader = new FileReader();
-				
-				reader.onloadend = function(e){
-					console.log("Text is: "+this.result);
-					mail(this.result);
+			console.log("called the file func on the file ob");
+			var reader = new FileReader();
+			reader.onloadend = function(evt) {
+					console.log('Reader status "onloadend": '+reader.readyState);
+					console.log(reader.result);
 					
-				}
-				reader.readAsBinary(file);
-			});
+					//mail(reader.result);
+					
+					var filename         = "bear1.jpg";
+					var attachmentBase64 = reader.result; // This should be your base64-string
+
+					var base64parts = attachmentBase64.split(',');
+					base64parts[0] = "base64:" + escape(filename) + "//";
+					var compatibleAttachment =  base64parts.join("");
+
+					mail(reader.result);
+					//window.plugin.email.open({
+					//	attachments: [compatibleAttachment]
+					//});
+					
+			};
+			reader.onerror = function(e) {
+                console.log('Error.code: '+reader.error.code)
+                console.log('Error.message: '+reader.error.message)
+            }
+			console.log("Reader status before: "+reader.readyState);
+			reader.readAsDataURL(file);
+			console.log("Reader status after: "+reader.readyState);
+			reader.readAsText(file);
+			//readDataUrl(file);
 		}
+/*
+		function readDataUrl(file) {
+			console.log("readDataURL - size: "+file.size);
+			var reader = new FileReader();
+			reader.onloadend = function(evt) {
+				console.log("Read as data URL");
+				console.log("Reader Status: "+reader.readyState);
+				console.log("Reader Error: "+reader.error.code);
+				if (reader.error.code == reader.error.NOT_FOUND_ERR){
+					console.log("File not found error");
+				}
+				console.log("Result 1: "+evt.target.result);
+				console.log("Result 2: "+this.result);
+				console.log("Result 3: "+reader.result);
+				//mail(this.result);
+			};
+			console.log("file: " + file.type);
+			reader.readAsDataURL(file);
+			reader.onload = mail("hello world");
+			
+		}
+*/		
+
+		
+		function fail(evt) {
+			console.log("Error occurred...");
+			console.log(this.error.code);
+		}
+		
+		
+		var filePath = cordova.file.dataDirectory + "files/bear1.jpg";
+		window.resolveLocalFileSystemURL(filePath, gotFileEntry, fail);
+		
+		/*
+		window.resolveLocalFileSystemURI(filePath,
+			// success callback; generates the FileEntry object needed to convert to Base64 string
+			function (fileEntry) {
+				// convert to Base64 string
+				function win(file) {
+					var reader = new FileReader();
+					reader.onloadend = function (evt) {
+						var obj = evt.target.result; // this is your Base64 string
+						console.log("evt.target.result: "+obj);
+					};
+					reader.readAsDataURL(file);
+				};
+				var fail = function (evt) { };
+				fileEntry.file(win, fail);
+			},
+			// error callback
+			function () { }
+		);*/
+
 		
 		function mail(pictomail){
 			console.log("attempting to send email...");
@@ -427,15 +511,16 @@ angular.module('app.controllers', [])
 			*/
 			$cordovaEmailComposer.isAvailable().then(function() {
 				console.log("Email is available");
+				console.log('base64:bear1.jpg//'+pictomail.replace("data:image/jpeg;base64,/",""));
 				var email = {
 					to: 'cobbsworth@outlook.com',
 					cc: '',
-					attachments: [
-					'base64:helloworld.png//'+pictomail
+					attachments: 
+					('base64:bear1.jpg//'+pictomail.replace("data:image/jpeg;base64,",""))
 					//'base64:text.txt//'+btoa("Hello World")
 					//'base64:picture.png//'+btoa(readFile(fileEntry)),
 				
-					],
+					,
 					subject: 'Cordova Email',
 					body: '',
 					isHtml: false
