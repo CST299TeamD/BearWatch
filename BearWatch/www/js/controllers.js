@@ -253,12 +253,14 @@ angular.module('app.controllers', [])
 	document.addEventListener("deviceready", onDeviceReady, false);
 
 	function onDeviceReady() {
+		$scope.result = "Starting test...";
 		console.log('dataDirectory: '+cordova.file.dataDirectory);
 		
 	}	
 	
 	//Test function to save a file locally
 	$scope.reviewSaveSendCSV = function () {
+		$scope.result += "Starting SaveSendCSV...";
 		console.log('starting reviewSaveCSV');
 		
         //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
@@ -381,6 +383,7 @@ angular.module('app.controllers', [])
 			fileSystem.root.getFile("files/bear1.jpg", null, gotFileEntry, fail);
 		}
 */
+/*
 
 		function gotFileEntry(fileEntry) {
 			console.log("gotFileEntry: "+fileEntry.name);
@@ -429,6 +432,7 @@ angular.module('app.controllers', [])
 			reader.readAsText(file);
 			//readDataUrl(file);
 		}
+		*/
 /*
 		function readDataUrl(file) {
 			console.log("readDataURL - size: "+file.size);
@@ -452,7 +456,7 @@ angular.module('app.controllers', [])
 		}
 */		
 
-		
+		/*
 		function fail(evt) {
 			console.log("Error occurred...");
 			console.log(this.error.code);
@@ -460,7 +464,8 @@ angular.module('app.controllers', [])
 		
 		
 		var filePath = cordova.file.dataDirectory + "files/bear1.jpg";
-		window.resolveLocalFileSystemURL(filePath, gotFileEntry, fail);
+		window.resolveLocalFileSystemURL(filePath, gotFileEntry, fail);*/
+		mail("");
 		
 		/*
 		window.resolveLocalFileSystemURI(filePath,
@@ -484,7 +489,7 @@ angular.module('app.controllers', [])
 
 		
 		function mail(pictomail){
-			console.log("attempting to send email...");
+			$scope.result += ("attempting to send email...");
 			console.log("message: "+pictomail);
 			
 			/*console.log('base64:text.txt//'+'helloworld');
@@ -495,16 +500,16 @@ angular.module('app.controllers', [])
 			*/
 			$cordovaEmailComposer.isAvailable().then(function() {
 				console.log("Email is available");
-				console.log('base64:bear1.jpg//'+pictomail.replace("data:image/jpeg;base64,/",""));
+				//console.log('base64:bear1.jpg//'+pictomail.replace("data:image/jpeg;base64,/",""));
 				var email = {
 					to: 'cobbsworth@outlook.com',
 					cc: '',
-					attachments: 
-					('base64:bear1.jpg//'+pictomail.replace("data:image/jpeg;base64,",""))
-					//'base64:text.txt//'+btoa("Hello World")
+					attachments: [
+					//('base64:bear1.jpg//'+pictomail.replace("data:image/jpeg;base64,",""))
+					'base64:text.txt//'+btoa("Hello World")
 					//'base64:picture.png//'+btoa(readFile(fileEntry)),
 				
-					,
+					],
 					subject: 'Cordova Email',
 					body: '',
 					isHtml: false
