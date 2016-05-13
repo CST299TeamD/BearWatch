@@ -67,7 +67,7 @@ angular.module('app.controllers', [])
             $scope.showConfirm = function() {
             var confirmPopup = $ionicPopup.confirm({
                                                    title: 'End Session',
-                                                   template: 'Are you sure?'
+                                                   template: 'Once a session is closed it cannot be re-opened. Continue closing session?'
                                                    });
             confirmPopup.then(function(res) {
                               if(res) {
