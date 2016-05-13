@@ -1,16 +1,23 @@
 <ion-view style="" title="Human">
+    <div style="">
+        <ion-nav-bar class="bar-stable">
+            <ion-nav-buttons side="right">
+                <a class="button button-icon icon-left ion-ios-close" ng-click = "showConfirm()">End Session</a>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view animation="slide-left-right" ></ion-nav-view>
+    </div>
     <ion-content class="has-header" overflow-scroll="true" padding="true">
         <form style="" class="list">
             <h3>Humans in each Zone</h3>
-            <ion-item style="" class="item-divider">Zone-Matrix</ion-item>
-            <div class="item item-checkbox">
-                <span ng-hide="showZoneMatrix">Show input options</span>
-                <span ng-show="showZoneMatrix">Hide input options</span>
-            <label class="checkbox">
-                <input type="checkbox" ng-model="showZoneMatrix">
-            </label>
+
+            <div style="border: 0.5px groove;" class="row item-divider">
+                <div class="col col-center"><h4>Human-Zone Matrix</h4></div>
+                <div class="col col-center text-right">
+                    <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showZoneMatrix, 'button button-small button-icon icon ion-ios-minus-outline':showZoneMatrix}" ng-click="showZoneMatrix=!showZoneMatrix"></a>
+                </div>
             </div>
-            <div ng-show="showZoneMatrix">
+            <div ng-model="showZoneMatrix" ng-show="showZoneMatrix">
                 <ion-list>
                     <ion-item ng-repeat="zone in zones">
                         <label style="" class="item item-input">
@@ -19,19 +26,20 @@
                         </label>
                     </ion-item>
                 </ion-list>
+            </div><!--end zoneMatrix-->
+            
+            <div style="width: 283px; height: 20px;" class="spacer"></div>
+            <div style="border: 0.5px groove;" class="row item-divider">
+                <div class="col col-center"><h4>Zone Mapping</h4></div>
+                <div class="col col-center text-right">
+                    <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showZoneSchema, 'button button-small button-icon icon ion-ios-minus-outline':showZoneSchema}" ng-click="showZoneSchema=!showZoneSchema"></a>
+                </div>
             </div>
-            <div class="item item-checkbox">
-                <span ng-hide="showZoneSchema">Show Zone Scheme</span>
-                <span ng-show="showZoneSchema">Hide Zone Scheme</span>
-            <label class="checkbox">
-                <input type="checkbox" ng-model="showZoneSchema">
-            </label>
-            </div>
-            <div ng-show="showZoneSchema" class="center" style="text-align: center;">
-                <img ng-src="{{zoneImgURI}}">
+            <div ng-model="showZoneSchema" ng-show="showZoneSchema" class="center" style="text-align: center;">
+                <img style="padding-top: 20px;" ng-src="{{zoneImgURI}}">
             </div>            
             
-            <div style="width: 283px; height: 37px;" class="spacer"></div>
+            <div style="width: 283px; height: 20px;" class="spacer"></div>
             <ion-item style="" class="item-divider">Human Activities Occuring</ion-item>
             <ion-toggle ng-model="motorizedHuman" toggle-class="toggle-calm">Motorized</ion-toggle>
             <div ng-show="motorizedHuman">
@@ -69,7 +77,7 @@
                         <span class="input-label">UTM: </span>
                         <input placeholder="Landing Spot UTM" type="text">
                     </label>
-                    <div style="width: 283px; height: 37px;" class="spacer"></div>
+                    <div style="width: 283px; height: 20px;" class="spacer"></div>
                 </div>
                 <ion-checkbox ng-model="atv">ATV</ion-checkbox>
                 <div ng-show="atv">
@@ -85,7 +93,7 @@
                         <span class="input-label">Closest Distance to Bear(s) in Meters</span>
                         <input placeholder="" type="number">
                     </label>
-                    <div style="width: 283px; height: 37px;" class="spacer"></div>
+                    <div style="width: 283px; height: 20px;" class="spacer"></div>
                 </div>
                 <ion-checkbox ng-model="jetBoat">Jet Boats</ion-checkbox>
                 <div ng-show="jetBoat">
@@ -105,7 +113,7 @@
                     <ion-radio ng-model="jetBoatType" ng-value="'Private'">Private</ion-radio>
                     <ion-radio ng-model="jetBoatType" ng-value="'Commercial'">Commercial</ion-radio>
                     <ion-radio ng-model="jetBoatType" ng-value="'Both'">Both</ion-radio>
-                    <div style="width: 283px; height: 37px;" class="spacer"></div>
+                    <div style="width: 283px; height: 20px;" class="spacer"></div>
                 </div>
                 <ion-checkbox ng-model="vehicle">Vehicles</ion-checkbox>
                 <div ng-show="vehicle">
@@ -125,7 +133,7 @@
                         </label>
                     </div>
                 </div>
-                <div style="width: 283px; height: 37px;" class="spacer"></div>
+                <div style="width: 283px; height: 20px;" class="spacer"></div>
             </div>
             <!--non-motorized-->
             <ion-toggle ng-model="nonMotorizedHuman" toggle-class="toggle-calm">Non-Motorized</ion-toggle>
@@ -150,11 +158,12 @@
                 </div>
             </div>
                         
-            <div style="width: 283px; height: 37px;" class="spacer"></div>
+            <div style="width: 283px; height: 20px;" class="spacer"></div>
             <ion-item style="" class="item-divider">Reaction to Bear(s) - Worst Behaving Human</ion-item>
             <label style="" class="item item-select">
                 <span class="input-label">Behaviour</span>
                 <select>
+                    <option selected disabled></option>
                     <option>Quietly observing, minimal movement</option>
                     <option>Loud disturbance, minimal movement</option>
                     <option>Quietly observing, excessive movement</option>
@@ -166,7 +175,7 @@
                 </select>
             </label>
             
-            <div style="width: 283px; height: 37px;" class="spacer"></div>
+            <div style="width: 283px; height: 20px;" class="spacer"></div>
             <label style="" class="item item-input">
                 <span class="input-label">Comment</span><textarea placeholder=""> </textarea>
             </label>
