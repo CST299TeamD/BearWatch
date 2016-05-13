@@ -15,7 +15,7 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
   
   .state('startNewSession', {
-    url: '/srartNewSession',
+    url: '/startNewSession',
     templateUrl: 'templates/startNewSession.html',
     controller: 'startNewSessionCtrl'
   })
@@ -32,137 +32,76 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'observationModeCtrl'
   })
 
-  .state('focalTab', {
-    url: '/focal',
-    templateUrl: 'templates/focalTab.html',
+  .state('tab', {
+    url: '/tab',
+    templateUrl: 'templates/tab.html',
     abstract:true,
     controller: 'dashCtrl'
   })
 
 
-  .state('focalTab.bear', {
-    url: '/focalBear',
+  .state('tab.bear', {
+    url: '/Bear',
     views: {
       'tab1': {
-        templateUrl: 'templates/focalBear.html',
-        controller: 'focalCtrl'
+        templateUrl: 'templates/bear.html',
+        controller: 'bearCtrl'
       }
     }
   })
 
-  .state('focalTab.addNewBear', {
-    url: '/addNewBear',
+  .state('tab.addBear', {
+    url: '/addBear',
     views: {
       'tab1': {
-        templateUrl: 'templates/focalAddNewBear.html',
-        controller: 'addNewBearCtrl'
+        templateUrl: 'templates/addBear.html',
+        controller: 'addBearCtrl'
       }
     }
   })
 
 
-  .state('focalTab.human', {
-    url: '/focalHuman',
+  .state('tab.human', {
+    url: '/Human',
     views: {
       'tab2': {
-        templateUrl: 'templates/focalHuman.html',
-        controller: 'focalHumanCtrl'
+        templateUrl: 'templates/human.html',
+        controller: 'humanCtrl'
       }
     }
   })  
 
-  .state('focalTab.environment', {
-    url: '/focalEnvironment',
+  .state('tab.environment', {
+    url: '/Environment',
     views: {
       'tab3': {
-        templateUrl: 'templates/focalEnvironment.html',
-        controller: 'focalEnvironmentCtrl'
+        templateUrl: 'templates/environment.html',
+        controller: 'environmentCtrl'
       }
     }
   })
 
-  .state('focalTab.comment', {
-    url: '/focalComment',
+  .state('tab.comment', {
+    url: '/Comment',
     views: {
       'tab4': {
-        templateUrl: 'templates/focalTabComment.html',
-        controller: 'focalTabCommentCtrl'
+        templateUrl: 'templates/tabComment.html',
+        controller: 'tabCommentCtrl'
       }
     }
   })
 	
-  .state('focalTab.camera', {
-    url: '/focalCamera',
+  .state('tab.camera', {
+    url: '/Camera',
     views: {
       'tab5': {
-        templateUrl: 'templates/focalTabCamera.html',
-        controller: 'focalTabCameraCtrl'
+        templateUrl: 'templates/tabCamera.html',
+        controller: 'tabCameraCtrl'
       }
     }
   })
   
-  
-  .state('scanningTab', {
-    url: '/scanning',
-    templateUrl: 'templates/scanningTab.html',
-    abstract:true
-  })
-
-
-  .state('scanningTab.bear', {
-    url: '/ScanningBear',
-    views: {
-      'tab1': {
-        templateUrl: 'templates/scanningBear.html',
-        controller: 'scanningBearCtrl'
-      }
-    }
-  })  
-  
-    
-  .state('scanningTab.human', {
-    url: '/ScanningHuman',
-    views: {
-      'tab2': {
-        templateUrl: 'templates/scanningHuman.html',
-        controller: 'scanningHumanCtrl'
-      }
-    }
-  })
-
-	
-  .state('scanningTab.environment', {
-    url: '/ScanningEnvironment',
-    views: {
-      'tab3': {
-        templateUrl: 'templates/scanningEnvironment.html',
-        controller: 'scanningEnvironmentCtrl'
-      }
-    }
-  })	
-  
-  .state('scanningTab.comment', {
-    url: '/ScanningComment',
-    views: {
-      'tab4': {
-        templateUrl: 'templates/scanningComment.html',
-        controller: 'scanningCommentCtrl'
-      }
-    }
-  })  
-
-  .state('scanningTab.camera', {
-    url: '/ScanningCamera',
-    views: {
-      'tab5': {
-        templateUrl: 'templates/scanningCamera.html',
-        controller: 'scanningCameraCtrl'
-      }
-    }
-  })  
-	
-	
-
+ 
   .state('reviewList', {
     url: '/ReviewList',
     templateUrl: 'templates/reviewList.html',
@@ -170,7 +109,7 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
 
 
-  .state('focalTab.bearInfo', {
+  .state('tab.bearInfo', {
     url: '/BearInfo',
     views: {
       'tab1': {
@@ -180,7 +119,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
         
-  .state('focalTab.changeSpecs', {
+  .state('tab.changeSpecs', {
     url: '/BearSpecs',
       views: {
         'tab1': {
