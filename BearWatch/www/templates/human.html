@@ -41,102 +41,42 @@
             
             <div style="width: 283px; height: 20px;" class="spacer"></div>
             <ion-item style="" class="item-divider">Human Activities Occuring</ion-item>
-            <ion-toggle ng-model="motorizedHuman" toggle-class="toggle-calm">Motorized</ion-toggle>
+            <ion-toggle ng-model="motorizedHuman" toggle-class="toggle-balanced">Motorized</ion-toggle>
             <div ng-show="motorizedHuman">
+                <!--div for persisting motorized actions--> 
+                <div ng-bind-html="motorizedAction"></div>
                 <ion-checkbox ng-model="aircraft">Aircraft</ion-checkbox>
                 <div ng-show="aircraft">
-                    <label style="" class="item item-select">
-                        <span class="input-label">Aircraft Classification</span>
-                        <select>
-                            <option selected disabled></option>
-                            <option>Small (e.g. Super Cub)</option>
-                            <option>Medium (e.g. Cessna180, Beaver)</option>
-                            <option>Large (e.g. Caravan, Helecopter)</option>                
-                        </select>
-                    </label>
-                    <label style="" class="item item-select">
-                        <span class="input-label">Aircraft Elevation (closest point to the bear)</span>
-                        <select>
-                            <option selected disabled></option>
-                            <option>&lt;100 m</option>
-                            <option>100-200 m</option>
-                            <option>200-300 m</option>
-                            <option>&gt;300 m</option>                
-                        </select>
-                    </label>
-                    <label style="" class="item item-select">
-                        <span class="input-label">Landing Spot (if applicable)</span>
-                        <select>
-                            <option selected disabled></option>
-                            <option>On River</option>
-                            <option>On Land</option>
-                            <option>Did Not Land</option>                
-                        </select>
-                    </label>
-                    <label style="" class="item item-input">
-                        <span class="input-label">UTM: </span>
-                        <input placeholder="Landing Spot UTM" type="text">
-                    </label>
-                    <div style="width: 283px; height: 20px;" class="spacer"></div>
-                </div>
-                <ion-checkbox ng-model="atv">ATV</ion-checkbox>
-                <div ng-show="atv">
-                    <label style="" class="item item-input">
-                        <span class="input-label">Number of ATV's</span>
-                        <input placeholder="Total all ATVs'" type="number">
-                    </label>
-                    <label style="" class="item item-input">
-                        <span class="input-label">Approximate Speed (km/h)</span>
-                        <input placeholder="Average Speed of all ATVs" type="number">
-                    </label>
-                    <label style="" class="item item-input">
-                        <span class="input-label">Closest Distance to Bear(s) in Meters</span>
-                        <input placeholder="" type="number">
-                    </label>
-                    <div style="width: 283px; height: 20px;" class="spacer"></div>
-                </div>
-                <ion-checkbox ng-model="jetBoat">Jet Boats</ion-checkbox>
-                <div ng-show="jetBoat">
-                    <label style="" class="item item-input">
-                        <span class="input-label">Concurrent Number on River</span>
-                        <input placeholder="Total'" type="number">
-                    </label>
-                    <label style="" class="item item-input">
-                        <span class="input-label">Approximate Speed (km/h)</span>
-                        <input placeholder="Average Speed of all Jet Boats" type="number">
-                    </label>
-                    <label style="" class="item item-input">
-                        <span class="input-label">Access Route</span>
-                        <input placeholder="" type="text">
-                    </label>
-                    <ion-item style="" class="item-divider">Jet Boat Type</ion-item>
-                    <ion-radio ng-model="jetBoatType" ng-value="'Private'">Private</ion-radio>
-                    <ion-radio ng-model="jetBoatType" ng-value="'Commercial'">Commercial</ion-radio>
-                    <ion-radio ng-model="jetBoatType" ng-value="'Both'">Both</ion-radio>
-                    <div style="width: 283px; height: 20px;" class="spacer"></div>
-                </div>
-                <ion-checkbox ng-model="vehicle">Vehicles</ion-checkbox>
-                <div ng-show="vehicle">
-                    <ion-list>
-                        <ion-item ng-repeat="zone in zones">
-                            <label style="" class="item item-input">
-                                <span class="input-label">Zone: {{zone}}</span>
-                                <input placeholder="# of Vehicles (running)" type="number">
-                            </label>
-                        </ion-item>
-                    </ion-list>
-                    <ion-toggle ng-model="vehicleVisibility" toggle-class="toggle-calm">Vehicle Dust Limits Visibility</ion-toggle>
-                    <div ng-show="vehicleVisibility">
-                        <label style="" class="item item-input">
-                            <span class="input-label">Current Visibility in Meters</span>
-                            <input placeholder="" type="number">
+                    <div style="" class="item-text-wrap">Movements
+                        <div style="width: 283px; height: 10px;" class="spacer"></div>
+                        <label ng-repeat="motoAction in motoActions">
+                            <button class="button button-energized button-outline" ng-onclick="recordMoto('aircraft', motoAction)">{{ motoAction }}</button>
                         </label>
                     </div>
-                </div>
-                <div style="width: 283px; height: 20px;" class="spacer"></div>
+                    
+                   <div style="width: 283px; height: 20px;" class="spacer"></div> 
+                </div><!--end aircraft-->
+                
+                <ion-checkbox ng-model="atv">ATV</ion-checkbox>
+                <div ng-show="atv">
+                    
+                    <div style="width: 283px; height: 20px;" class="spacer"></div>
+                </div><!--end ATV-->
+                
+                <ion-checkbox ng-model="jetBoat">Motorized Boat</ion-checkbox>
+                <div ng-show="jetBoat">
+                    
+                    <div style="width: 283px; height: 20px;" class="spacer"></div>
+                </div><!--end jetBoat-->
+                
+                <ion-checkbox ng-model="vehicle">Vehicle</ion-checkbox>
+                <div ng-show="vehicle">
+                    <div style="width: 283px; height: 20px;" class="spacer"></div>
+                </div><!--end vehicle-->
             </div>
+            
             <!--non-motorized-->
-            <ion-toggle ng-model="nonMotorizedHuman" toggle-class="toggle-calm">Non-Motorized</ion-toggle>
+            <ion-toggle ng-model="nonMotorizedHuman" toggle-class="toggle-balanced">Non-Motorized</ion-toggle>
             <div ng-show="nonMotorizedHuman">
                 <ion-checkbox ng-model="Personnel">Official or Agency Personnel</ion-checkbox>
                 <ion-checkbox ng-model="Angler">Angler</ion-checkbox>

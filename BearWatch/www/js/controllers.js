@@ -58,7 +58,7 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('focalCtrl', function($scope) {
+.controller('bearCtrl', function($scope) {
             
 })
 
@@ -82,21 +82,59 @@ angular.module('app.controllers', [])
 
 
 
-.controller('addNewBearCtrl', function($scope) {
+.controller('addBearCtrl', function($scope) {
 
 })
 
-.controller('focalHumanCtrl', function($scope) {
+.controller('humanCtrl', function($scope) {
+	
+	//vars for counting motorized vehicle numbers
+	var aircraftCount = 0;
+	var atvCount = 0;
+	var boatCount = 0;
+	var carCount = 0;
+	
 	//test data for zone matrix - to do: dynamically attribute from zone selection
 	//estuary hard-coded
 	$scope.zones = ["+1", "1", "4", "7", "7+", "2+", "2", "5", "8", "8+", "6"];
 	
 	//esturary zone image - hard coded, needs to be dynamically
 	$scope.zoneImgURI = "img/estuary.png"
+	
+	//motorized observation button list
+	$scope.motoActions = ["Passing through", "Staying in area"];
+	
+	//function to record motorized actions
+	$scope.recordMoto = function(motoType, action){
+		console.log('MotoAction: ' + action);
+		var count;
+		if (action == 'Staying in area'){
+			switch(motoType){
+				case 'aircraft':
+					aircraftCount ++;
+					count = aircraftCount;
+					break;
+				case 'atv':
+					atvCount ++;
+					count = atvCount;
+					break;
+				case 'boat':
+					boatCount ++;
+					count = boatCount;
+					break;
+				case 'car':
+					carCount ++;
+					count = carCount;
+					break;
+			}
+			console.log('New button' + motoType + ' ' + count);			
+			$scope.motorizedAction += '<button class="button button-energized button-outline button-icon icon ion-ios-minus-outline" ng-onclick="">' + motoType + ' ' +  count + '</button>'
+		}
+	}
 
 })
 
-.controller('focalEnvironmentCtrl', function($scope) {
+.controller('environmentCtrl', function($scope) {
             
             //function to add text box for "other" selections
             $scope.showNSCTextBox = function(selectModel, value){
@@ -162,11 +200,11 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('focalTabCommentCtrl', function($scope) {
+.controller('tabCommentCtrl', function($scope) {
 
 })
 
-.controller('focalTabCameraCtrl', function($scope, $cordovaCamera, $cordovaFile) {
+.controller('tabCameraCtrl', function($scope, $cordovaCamera, $cordovaFile) {
 	$scope.camResult = "Photo page initialized";
             
 	//function for taking picture using device camera
@@ -221,28 +259,6 @@ angular.module('app.controllers', [])
 		$scope.cameraResult = "Clearing photo - reloading screen";
 		$state.go($state.current, {}, {reload: true});
 	}
-
-})
-
-.controller('scanningBearCtrl', function($scope) {
-
-})
-
-
-.controller('scanningHumanCtrl', function($scope) {
-
-})
-
-.controller('scanningEnvironmentCtrl', function($scope) {
-
-})
-
-
-.controller('scanningCommentCtrl', function($scope) {
-
-})
-
-.controller('scanningCameraCtrl', function($scope) {
 
 })
 
