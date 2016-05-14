@@ -50,7 +50,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  .state('tab.addBear', {
+  .state('tab.addNewBear', {
     url: '/addBear',
     views: {
       'tab1': {
