@@ -1,11 +1,33 @@
 angular.module('app.controllers', [])
   
-.controller('homeCtrl', function($scope) {
-
+.controller('homeCtrl', function($scope) {	
+	//continue session TODO:
+	//if session is not complete (no observation mode), remove from DB 
+	//disable contiue button if no valid sessions available
 })
 
 .controller('startNewSessionCtrl', function($scope, $cordovaSQLite) {
 	$scope.debug = debug;
+
+	//db insert values
+	$scope.nameResult = [];
+
+	//function for adding obseervers
+	$scope.addObserver = function(observer){
+		$scope.nameResult.push(observer);
+		document.getElementById("observer").value = '';
+	}
+
+	//function to clear observer name from list
+	$scope.clearObserver = function (observer){
+		var index = $scope.nameResult.indexOf(observer);
+  		$scope.nameResult.splice(index, 1); 
+	}
+
+	//DB entry
+
+
+
             
     //function to add text box for "other" selections
     $scope.showNSTextBox = function(selectModel, value){
@@ -156,14 +178,18 @@ angular.module('app.controllers', [])
 
 })
 
+//applicatoin test code and example functions
 .controller( 'dbTest', function ($scope, $cordovaSQLite){
 	
     $scope.result = "TEST INITIALIZED";
+    $scope.success = db_success;
+	$scope.fail = db_error;
+
 
 	$scope.insert = function() {			
-		$cordovaSQLite.execute(db, 'INSERT INTO sessions (observers) VALUES (?)', [$scope.data])
+		$cordovaSQLite.execute(db, 'INSERT INTO bear_logs (bear_name) VALUES (?)', [$scope.data])
         .then(function(result) {
-            $scope.result = "Message saved successful, cheers!";
+            $scope.result = "Bear name saved successful, cheers!";
         }, function(error) {
             $scope.result = "Error on saving: " + error.message;
         })
@@ -172,14 +198,14 @@ angular.module('app.controllers', [])
 	//select example
     $scope.select = function() {
 		// Execute SELECT statement to load message from database.
-        $cordovaSQLite.execute(db, 'SELECT * FROM sessions ORDER BY session_id DESC')
+        $cordovaSQLite.execute(db, 'SELECT * FROM bear_logs ORDER BY bear_log_id DESC')
             .then(
                 function(result) {
 
                     if (result.rows.length > 0) {
 
-                        $scope.status = result.rows.item(0).observers;
-                        $scope.result = "Message loaded successful, cheers!";
+                        $scope.status = result.rows.item(0).bear_name;
+                        $scope.result = "Bear name loaded successful, cheers!";
                     }
                 },
                 function(error) {
