@@ -4,7 +4,7 @@
 var db;
 
 //debugging
-var debug = false;
+var debug = true;
 var db_success = "";
 var db_error = "";
 var db_drop = true;
@@ -27,7 +27,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
 
     //setup database schema
     db = $cordovaSQLite.openDB({name:"bear_watch.db", location:'default'});
-
+    console.log("Finally made it work");
     /***** Lookup Tables ******/
 
     //park names table
@@ -36,9 +36,9 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "park_id       INTEGER PRIMARY KEY NOT NULL, "
       + "park_name         TEXT);"
     ).then(function(result) {
-        db_success += "park_names success, ";
+        db_success += "--park_names success, ";
     }, function(error) {
-        db_error += "Error on park_names: " + error.message + " ";
+        db_error += "--Error on park_names: " + error.message + " ";
     });
 
     /****** Storage Tables ******/
@@ -58,9 +58,9 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "finish_time       TEXT    , "
       + "observation_mode  TEXT);"
     ).then(function(result) {
-        db_success += "sessions success, ";
+        db_success += "--sessions success, ";
     }, function(error) {
-        db_error += "Error on sessions: " + error.message + " ";
+        db_error += "--Error on sessions: " + error.message + " ";
     });
 
     //bear table
@@ -68,51 +68,19 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       "CREATE TABLE IF NOT EXISTS bears ("
       + "bear_id       INTEGER PRIMARY KEY NOT NULL, "
       + "bear_name         TEXT    , "
-      + "habituation_lvl   TEXT    , "
-      + "zone              TEXT    , "
-      + "species           TEXT    , "
+
       + "gender            TEXT    , "
       + "age               TEXT    , "
       + "mark_desc         TEXT    , "
-      + "paw_measure       TEXT    , "
-      + "cubs              TEXT    , "
-      + "cub_fur           TEXT    , "
-      + "comment           TEXT    , "
-      + "behavior          TEXT    , "
-      + "cub_age           TEXT    , "
+      + "comment           TEXT    , "      
       + "session_id        INTEGER , "
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
     ).then(function(result) {
-        db_success += "bear_logs success, ";
+        db_success += "--bears success, ";
     }, function(error) {
-        db_error += "Error on bear_logs: " + error.message + " ";
+        db_error += "--Error on bears: " + error.message + " ";
     });
 
-    //bear_log table
-    $cordovaSQLite.execute(db, 
-      "CREATE TABLE IF NOT EXISTS bear_logs ("
-      + "bear_log_id       INTEGER PRIMARY KEY NOT NULL, "
-      + "timestamp         TEXT    , "
-      + "bear_name         TEXT    , "
-      + "habituation_lvl   TEXT    , "
-      + "zone              TEXT    , "
-      + "species           TEXT    , "
-      + "gender            TEXT    , "
-      + "age               TEXT    , "
-      + "mark_desc         TEXT    , "
-      + "paw_measure       TEXT    , "
-      + "cubs              TEXT    , "
-      + "cub_fur           TEXT    , "
-      + "comment           TEXT    , "
-      + "behavior          TEXT    , "
-      + "cub_age           TEXT    , "
-      + "session_id        INTEGER , "
-      + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
-    ).then(function(result) {
-        db_success += "bear_logs success, ";
-    }, function(error) {
-        db_error += "Error on bear_logs: " + error.message + " ";
-    });
 
     //logs table
     $cordovaSQLite.execute(db, 
@@ -145,13 +113,23 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "human_behavior    TEXT    , "
       + "picture_location  TEXT    , "
       + "picture_subjects  TEXT    , "
-      + "collection_mode  TEXT    , "
+      + "collection_mode   TEXT    , "
+	  +	"bear_id       	   INTEGER , "
+      + "species           TEXT    , "
+	  + "habituation_lvl   TEXT    , "
+      + "bear_zone         TEXT    , "
+      + "paw_measure       TEXT    , "
+      + "cubs              TEXT    , "
+      + "cub_fur           TEXT    , "
+      + "behavior          TEXT    , "
+      + "cub_age           TEXT    , "      
       + "session_id        INTEGER , "
+      + "FOREIGN KEY(bear_id) REFERENCES bears(bear_id),"      
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
     ).then(function(result) {
-        db_success += "logs success, ";
+        db_success += "--logs success, ";
     }, function(error) {
-        db_error += "Error on logs: " + error.message + " ";
+        db_error += "--Error on logs: " + error.message + " ";
     });
 
     //food sources table
@@ -166,9 +144,9 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "FOREIGN KEY(log_id) REFERENCES logs(log_id), "
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
     ).then(function(result) {
-        db_success += "food_sources success, ";
+        db_success += "--food_sources success, ";
     }, function(error) {
-        db_error = "Error on food_sources: " + error.message + " ";
+        db_error = "--Error on food_sources: " + error.message + " ";
     });
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
