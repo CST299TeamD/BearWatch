@@ -6,8 +6,9 @@
             <!--Session observers-->
             <label style="" class="item item-input">
                 <span class="input-label" >Name:</span>
-                <input id="observer" placeholder="First Initial &amp; Surname" type="text" ng-model="observer">                       
+                <input id="observer" placeholder="First Initial &amp; Surname" type="text" ng-model="observer.txt">                       
             </label>
+            <!--show active observer names with remove option-->
             <ion-item ng-show="nameResult.length != 0" class="item-divider">Observers in Session</ion-item>
             <ion-list>
                 <ion-item ng-repeat="name in nameResult" class="item item-button-right">
@@ -44,7 +45,7 @@
             </div><!--end dbtestcontroller-->
 
             <div style="width: 283px; height: 30px;" class="spacer"></div>
-            <button class="button button-balanced button-block icon ion-plus" ng-click="addObserver(observer)">&nbsp; Add Observer</button>
+            <button class="button button-balanced button-block icon ion-plus" ng-click="addObserver(observer.txt)">&nbsp; Add Observer</button>
 
             
 			<div style="width: 283px; height: 30px;" class="spacer"></div>

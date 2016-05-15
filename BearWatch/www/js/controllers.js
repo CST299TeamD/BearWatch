@@ -12,10 +12,15 @@ angular.module('app.controllers', [])
 	//db insert values
 	$scope.nameResult = [];
 
-	//function for adding obseervers
+	//function for adding observers
+	$scope.observer = {};
 	$scope.addObserver = function(observer){
-		$scope.nameResult.push(observer);
-		document.getElementById("observer").value = '';
+		//check for empty string
+		if(observer != '' && observer != null){
+			$scope.nameResult.push(observer);
+			//clear textfield
+			$scope.observer.txt = '';
+		}
 	}
 
 	//function to clear observer name from list
@@ -24,7 +29,7 @@ angular.module('app.controllers', [])
   		$scope.nameResult.splice(index, 1); 
 	}
 
-	//DB entry
+	//TODO: DB entry
 
 
 
@@ -111,46 +116,73 @@ angular.module('app.controllers', [])
 .controller('humanCtrl', function($scope) {
 	
 	//vars for counting motorized vehicle numbers
-	var aircraftCount = 0;
-	var atvCount = 0;
-	var boatCount = 0;
-	var carCount = 0;
+	var aircraftNum = 0;
+	var atvNum = 0;
+	var boatNum = 0;
+	var carNum = 0;
 	
-	//test data for zone matrix - to do: dynamically attribute from zone selection
+	//for input objects for controller manipulation
+	$scope.aircraft = {};
+	$scope.atv = {};
+	$scope.motoBoat = {};
+	$scope.vehicle = {};
+	
+	//test data for zone matrix - TODO: dynamically attribute from zone selection
 	//estuary hard-coded
 	$scope.zones = ["+1", "1", "4", "7", "7+", "2+", "2", "5", "8", "8+", "6"];
 	
-	//esturary zone image - hard coded, needs to be dynamically
+	//esturary zone image - hard coded TODO:needs to be dynamic
 	$scope.zoneImgURI = "img/estuary.png"
 	
 	//motorized observation button list
 	$scope.motoActions = ["Passing through", "Staying in area"];
+	$scope.activeVehicles = [];	
 	
 	//function to record motorized actions
-	$scope.recordMoto = function(motoType, action){
-		console.log('MotoAction: ' + action);
-		var count;
-		if (action == 'Staying in area'){
+	$scope.recordMoto = function(motoType, action, description){
+
+		if(action != 'departed'){
+			//placeholder for vehicle name
+			var time = new Date();
+			var vehicleName = "" + time.toLocaleTimeString() + " ";
+				
+			//update vehicle number
 			switch(motoType){
-				case 'aircraft':
-					aircraftCount ++;
-					count = aircraftCount;
+				case 'Aircraft':
+					aircraftNum ++;
+					vehicleName += motoType + '-' +  aircraftNum;
+					if($scope.aircraft.txt != undefined) $scope.aircraft.txt = '';
 					break;
-				case 'atv':
-					atvCount ++;
-					count = atvCount;
+				case 'ATV':
+					atvNum ++;
+					vehicleName += motoType + '-' +  atvNum;
+					if($scope.atv.txt != undefined) $scope.atv.txt = '';
 					break;
-				case 'boat':
-					boatCount ++;
-					count = boatCount;
+				case 'Boat':
+					boatNum ++;
+					vehicleName += motoType + '-' +  boatNum;
+					if($scope.motoBoat.txt != undefined) $scope.motoBoat.txt = '';
 					break;
-				case 'car':
-					carCount ++;
-					count = carCount;
+				case 'Vehicle':
+					carNum ++;
+					vehicleName += motoType + '-' +  carNum;
+					if($scope.vehicle.txt != undefined) $scope.vehicle.txt = '';
 					break;
 			}
-			console.log('New button' + motoType + ' ' + count);			
-			$scope.motorizedAction += '<button class="button button-energized button-outline button-icon icon ion-ios-minus-outline" ng-onclick="">' + motoType + ' ' +  count + '</button>'
+			//add descrtiptor if available
+			if(description != '' && description != null){
+				vehicleName += ' ' + description;	
+			}
+			
+			if (action == 'Staying in area'){
+				//add to active list
+				$scope.activeVehicles.push(vehicleName);
+			}
+			//TODO: update log table
+		}else{
+			var index = $scope.activeVehicles.indexOf(motoType);
+  			$scope.activeVehicles.splice(index, 1);
+			 //TODO: update database 
 		}
 	}
 
@@ -178,7 +210,8 @@ angular.module('app.controllers', [])
 
 })
 
-//applicatoin test code and example functions
+//TODO: Remove test code before deployment
+//application test code and example functions
 .controller( 'dbTest', function ($scope, $cordovaSQLite){
 	
     $scope.result = "TEST INITIALIZED";
@@ -259,7 +292,7 @@ angular.module('app.controllers', [])
 		});
 	}
 	
-	//save photo to session
+	//save photo to session - not working properly TODO: test with file/io
 	$scope.choosePhoto = function () {
 		
 		$scope.fileName = "Not Saved"
@@ -279,7 +312,7 @@ angular.module('app.controllers', [])
 
 	}
 	
-	//discard photo
+	//discard photo - TODO: fix this...
 	$scope.discardPhoto = function () {
 		$scope.imgURI;
 		$scope.cameraResult = "Clearing photo - reloading screen";
