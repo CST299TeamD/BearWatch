@@ -78,6 +78,20 @@ angular.module('app.controllers', [])
 
 .controller('observationModeCtrl', function($scope) {
 
+	//to enable the start button
+	$scope.enableStart = function(){
+		document.getElementById("startButton").disabled = false;
+	}
+
+	$scope.startSession = function() {			
+		$cordovaSQLite.execute(db, 'INSERT INTO sessions (bear_name) VALUES (?)', [$scope.data])
+        .then(function(result) {
+            $scope.result = "Bear name saved successful, cheers!";
+        }, function(error) {
+            $scope.result = "Error on saving: " + error.message;
+        })
+	}
+
 })
 
 .controller('bearCtrl', function($scope) {
