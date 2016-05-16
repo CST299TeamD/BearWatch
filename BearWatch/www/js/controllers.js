@@ -367,32 +367,35 @@ angular.module('app.controllers', [])
 //Controller loaded when "Review Sessions" is selected"
 .controller('reviewListCtrl', function($scope, $cordovaEmailComposer) {
 	
-	result = '...starting reviewListCtrl';
+	//$scope.result = '...starting reviewListCtrl';
 	document.addEventListener("deviceready", onDeviceReady, false);
 
 	function onDeviceReady() {
-		result += ('...dataDirectory: '+cordova.file.dataDirectory);
+		//$scope.result += ('...dataDirectory: '+cordova.file.dataDirectory);
 		
 	}	
 	
 	//Test function to save a file locally
 	$scope.reviewSaveSendCSV = function () {
-		result += '...starting reviewSaveCSV';
+		//$scope.result += '...starting reviewSaveCSV';
+		mail("hello, world");
+		//$scope.result += '...mail sent'
 		
-		copyToPublic("bear1.jpg");
-		
+		//copyToPublic("bear1.jpg");
+/*		
 		//copyToPublic takes a string name of a file and looks for it in the dataDirectory, then runs sendFileEntryToPublic on it
 		function copyToPublic(fileName){
 			var filePath = cordova.file.dataDirectory + "files/" + fileName;
 			window.resolveLocalFileSystemURL(filePath, sendFileEntryToPublic, fail);
 		}
-
+*/
+/*
 		//sendFileEntryToPublic takes a file and moves it to a public directory
 		function sendFileEntryToPublic(fileEntry) {
-			result += "...gotFileEntry: "+fileEntry.name;
-			result += "...fileEntry fullpath: "+fileEntry.fullPath;			
-			result += "...copying to..." + cordova.file.dataDirectory;		
-			result += "...copying to..." + cordova.file.externalDataDirectory;
+			//$scope.result += "...gotFileEntry: "+fileEntry.name;
+			//$scope.result += "...fileEntry fullpath: "+fileEntry.fullPath;			
+			//$scope.result += "...copying to..." + cordova.file.dataDirectory;		
+			//$scope.result += "...copying to..." + cordova.file.externalDataDirectory;
 			
 			//cordova.file.externalDataDirectory >> cordova.file.documentsDirectory
 			window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory,
@@ -404,7 +407,7 @@ angular.module('app.controllers', [])
 						function() {
 							alert('copying was successful');
 							//chmodRWRWR(fileEntry.name);
-							mailSingle(fileEntry.name);
+							//mailSingle(fileEntry.name);
 						},
 						function() {alert('unsuccessful copying')}
 					);
@@ -412,8 +415,10 @@ angular.module('app.controllers', [])
 				fail);
 
 		}
+*/
+
 		function fail(evt) {
-			result += "..."+evt.target.error.code;
+			//$scope.result += "..."+evt.target.error.code;
 		}
 		
 		/*
@@ -475,17 +480,17 @@ angular.module('app.controllers', [])
 		*/
 		
 		//mailSingle(fileName) takes a single file with the same name as one in the public directory and attaches it to an email.
-		function mailSingle(fileName){ 
-			result += "...attempting to send email";
+		function mail(csv1contents){ 
+			//$scope.result += "...attempting to send email";
 
 			$cordovaEmailComposer.isAvailable().then(function() {
-				result += "...Email is available";
+				//$scope.result += "...Email is available";
 				var email = {
 					to: 'cobbsworth@outlook.com',
 					cc: '',
 					attachments: 
 					[
-					'base64:text.txt//'+btoa("Hello World"),
+					'base64:csv1.csv//'+btoa(csv1contents)
 					//'file://img/logo.png'
 					//cordova.file.dataDirectory + "files/" + fileName
 					],
@@ -495,10 +500,10 @@ angular.module('app.controllers', [])
 				};
 
 				$cordovaEmailComposer.open(email).then(null, function () {
-				   result += "...Email Cancelled";
+				   //$scope.result += "...Email Cancelled";
 				});
 			}, function () {
-			   result += "...Email is unavailable";
+			   //$scope.result += "...Email is unavailable";
 			});
 		}
 	};
