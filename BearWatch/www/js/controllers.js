@@ -339,17 +339,17 @@ angular.module('app.controllers', [])
 //Controller loaded when "Review Sessions" is selected"
 .controller('reviewListCtrl', function($scope, $cordovaEmailComposer) {
 	
-	console.log('starting reviewListCtrl');
+	result = '...starting reviewListCtrl';
 	document.addEventListener("deviceready", onDeviceReady, false);
 
 	function onDeviceReady() {
-		console.log('dataDirectory: '+cordova.file.dataDirectory);
+		result += ('...dataDirectory: '+cordova.file.dataDirectory);
 		
 	}	
 	
 	//Test function to save a file locally
 	$scope.reviewSaveSendCSV = function () {
-		console.log('starting reviewSaveCSV');
+		result += '...starting reviewSaveCSV';
 		
 		copyToPublic("bear1.jpg");
 		
@@ -361,10 +361,10 @@ angular.module('app.controllers', [])
 
 		//sendFileEntryToPublic takes a file and moves it to a public directory
 		function sendFileEntryToPublic(fileEntry) {
-			console.log("gotFileEntry: "+fileEntry.name);
-			console.log("fileEntry fullpath: "+fileEntry.fullPath);			
-			console.log("copying to..." + cordova.file.dataDirectory);		
-			console.log("copying to..." + cordova.file.externalDataDirectory);
+			result += "...gotFileEntry: "+fileEntry.name;
+			result += "...fileEntry fullpath: "+fileEntry.fullPath;			
+			result += "...copying to..." + cordova.file.dataDirectory;		
+			result += "...copying to..." + cordova.file.externalDataDirectory;
 			
 			//cordova.file.externalDataDirectory >> cordova.file.documentsDirectory
 			window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory,
@@ -385,7 +385,7 @@ angular.module('app.controllers', [])
 
 		}
 		function fail(evt) {
-			console.log(evt.target.error.code);
+			result += "..."+evt.target.error.code;
 		}
 		
 		/*
@@ -448,10 +448,10 @@ angular.module('app.controllers', [])
 		
 		//mailSingle(fileName) takes a single file with the same name as one in the public directory and attaches it to an email.
 		function mailSingle(fileName){ 
-			console.log("attempting to send email...");
+			result += "...attempting to send email";
 
 			$cordovaEmailComposer.isAvailable().then(function() {
-				console.log("Email is available");
+				result += "...Email is available";
 				var email = {
 					to: 'cobbsworth@outlook.com',
 					cc: '',
@@ -467,10 +467,10 @@ angular.module('app.controllers', [])
 				};
 
 				$cordovaEmailComposer.open(email).then(null, function () {
-				   console.log("Email Cancelled");
+				   result += "...Email Cancelled";
 				});
 			}, function () {
-			   console.log("Email is unavailable");
+			   result += "...Email is unavailable";
 			});
 		}
 	};
