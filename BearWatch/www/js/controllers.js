@@ -12,10 +12,15 @@ angular.module('app.controllers', [])
 	//db insert values
 	$scope.nameResult = [];
 
-	//function for adding obseervers
+	//function for adding observers
+	$scope.observer = {};
 	$scope.addObserver = function(observer){
-		$scope.nameResult.push(observer);
-		document.getElementById("observer").value = '';
+		//check for empty string
+		if(observer != '' && observer != null){
+			$scope.nameResult.push(observer);
+			//clear textfield
+			$scope.observer.txt = '';
+		}
 	}
 
 	//function to clear observer name from list
@@ -24,7 +29,7 @@ angular.module('app.controllers', [])
   		$scope.nameResult.splice(index, 1); 
 	}
 
-	//DB entry
+	//TODO: DB entry
 
 
 
@@ -146,46 +151,73 @@ angular.module('app.controllers', [])
 .controller('humanCtrl', function($scope) {
 	
 	//vars for counting motorized vehicle numbers
-	var aircraftCount = 0;
-	var atvCount = 0;
-	var boatCount = 0;
-	var carCount = 0;
+	var aircraftNum = 0;
+	var atvNum = 0;
+	var boatNum = 0;
+	var carNum = 0;
 	
-	//test data for zone matrix - to do: dynamically attribute from zone selection
+	//for input objects for controller manipulation
+	$scope.aircraft = {};
+	$scope.atv = {};
+	$scope.motoBoat = {};
+	$scope.vehicle = {};
+	
+	//test data for zone matrix - TODO: dynamically attribute from zone selection
 	//estuary hard-coded
 	$scope.zones = ["+1", "1", "4", "7", "7+", "2+", "2", "5", "8", "8+", "6"];
 	
-	//esturary zone image - hard coded, needs to be dynamically
+	//esturary zone image - hard coded TODO:needs to be dynamic
 	$scope.zoneImgURI = "img/estuary.png"
 	
 	//motorized observation button list
 	$scope.motoActions = ["Passing through", "Staying in area"];
+	$scope.activeVehicles = [];	
 	
 	//function to record motorized actions
-	$scope.recordMoto = function(motoType, action){
-		console.log('MotoAction: ' + action);
-		var count;
-		if (action == 'Staying in area'){
+	$scope.recordMoto = function(motoType, action, description){
+
+		if(action != 'departed'){
+			//placeholder for vehicle name
+			var time = new Date();
+			var vehicleName = "" + time.toLocaleTimeString() + " ";
+				
+			//update vehicle number
 			switch(motoType){
-				case 'aircraft':
-					aircraftCount ++;
-					count = aircraftCount;
+				case 'Aircraft':
+					aircraftNum ++;
+					vehicleName += motoType + '-' +  aircraftNum;
+					if($scope.aircraft.txt != undefined) $scope.aircraft.txt = '';
 					break;
-				case 'atv':
-					atvCount ++;
-					count = atvCount;
+				case 'ATV':
+					atvNum ++;
+					vehicleName += motoType + '-' +  atvNum;
+					if($scope.atv.txt != undefined) $scope.atv.txt = '';
 					break;
-				case 'boat':
-					boatCount ++;
-					count = boatCount;
+				case 'Boat':
+					boatNum ++;
+					vehicleName += motoType + '-' +  boatNum;
+					if($scope.motoBoat.txt != undefined) $scope.motoBoat.txt = '';
 					break;
-				case 'car':
-					carCount ++;
-					count = carCount;
+				case 'Vehicle':
+					carNum ++;
+					vehicleName += motoType + '-' +  carNum;
+					if($scope.vehicle.txt != undefined) $scope.vehicle.txt = '';
 					break;
 			}
-			console.log('New button' + motoType + ' ' + count);			
-			$scope.motorizedAction += '<button class="button button-energized button-outline button-icon icon ion-ios-minus-outline" ng-onclick="">' + motoType + ' ' +  count + '</button>'
+			//add descrtiptor if available
+			if(description != '' && description != null){
+				vehicleName += ' ' + description;	
+			}
+			
+			if (action == 'Staying in area'){
+				//add to active list
+				$scope.activeVehicles.push(vehicleName);
+			}
+			//TODO: update log table
+		}else{
+			var index = $scope.activeVehicles.indexOf(motoType);
+  			$scope.activeVehicles.splice(index, 1);
+			 //TODO: update database 
 		}
 	}
 
@@ -213,7 +245,8 @@ angular.module('app.controllers', [])
 
 })
 
-//applicatoin test code and example functions
+//TODO: Remove test code before deployment
+//application test code and example functions
 .controller( 'dbTest', function ($scope, $cordovaSQLite){
 	
     $scope.result = "TEST INITIALIZED";
@@ -294,7 +327,7 @@ angular.module('app.controllers', [])
 		});
 	}
 	
-	//save photo to session
+	//save photo to session - not working properly TODO: test with file/io
 	$scope.choosePhoto = function () {
 		
 		$scope.fileName = "Not Saved"
@@ -314,7 +347,7 @@ angular.module('app.controllers', [])
 
 	}
 	
-	//discard photo
+	//discard photo - TODO: fix this...
 	$scope.discardPhoto = function () {
 		$scope.imgURI;
 		$scope.cameraResult = "Clearing photo - reloading screen";
@@ -323,6 +356,7 @@ angular.module('app.controllers', [])
 
 })
 
+
 //Controller loaded when "Review Sessions" is selected"
 .controller('reviewListCtrl', function($scope, $cordovaEmailComposer) {
 	
@@ -330,144 +364,70 @@ angular.module('app.controllers', [])
 	document.addEventListener("deviceready", onDeviceReady, false);
 
 	function onDeviceReady() {
-		$scope.result = "Starting test...";
 		console.log('dataDirectory: '+cordova.file.dataDirectory);
 		
 	}	
 	
 	//Test function to save a file locally
 	$scope.reviewSaveSendCSV = function () {
-		$scope.result += "Starting SaveSendCSV...";
 		console.log('starting reviewSaveCSV');
 		
-        //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-		/*
-		function readTextFile(fileEntry) {
-			fileEntry.file(function (file) {
-				var reader = new FileReader();
-
-				reader.onloadend = function() {
-					console.log("Successful file read: " + this.result);
-					//displayFileData(fileEntry.fullPath + ": " + this.result);
-				};
-
-				reader.readAsText(file);
-
-			}, null);
+		copyToPublic("bear1.jpg");
+		
+		//copyToPublic takes a string name of a file and looks for it in the dataDirectory, then runs sendFileEntryToPublic on it
+		function copyToPublic(fileName){
+			var filePath = cordova.file.dataDirectory + "files/" + fileName;
+			window.resolveLocalFileSystemURL(filePath, sendFileEntryToPublic, fail);
 		}
-		function readFile(fileEntry) {
-			console.log("fileEntry.fullPath: " + fileEntry.fullPath);
-			fileEntry.file(function (file) {
-				var reader = new FileReader();
 
-				reader.onloadend = function() {
-					console.log("Successful file read: " + this.result);
-					//displayFileData(fileEntry.fullPath + ": " + this.result);
-				};
-				
+		//sendFileEntryToPublic takes a file and moves it to a public directory
+		function sendFileEntryToPublic(fileEntry) {
+			console.log("gotFileEntry: "+fileEntry.name);
+			console.log("fileEntry fullpath: "+fileEntry.fullPath);			
+			console.log("copying to..." + cordova.file.dataDirectory);		
+			console.log("copying to..." + cordova.file.externalDataDirectory);
+			
+			//cordova.file.externalDataDirectory >> cordova.file.documentsDirectory
+			window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory,
+				function onSuccess(dirEntry)
+				{
+					fileEntry.copyTo(
+						dirEntry, //directory to
+						fileEntry.name, //fileEntry.name keeps the file's name the same, we can change it though
+						function() {
+							alert('copying was successful');
+							//chmodRWRWR(fileEntry.name);
+							mailSingle(fileEntry.name);
+						},
+						function() {alert('unsuccessful copying')}
+					);
+				}, 
+				fail);
 
-				reader.readAsDataURL(file);
-
-			}, function(evt){
-				console.log("Failed to read file. Error: " + evt);
-			});
+		}
+		function fail(evt) {
+			console.log(evt.target.error.code);
 		}
 		
-		function writeFile(fileEntry, dataObj) {
-			// Create a FileWriter object for our FileEntry (log.txt).
-			fileEntry.createWriter(function (fileWriter) {
-
-				fileWriter.onwriteend = function() {
-					console.log("Successful file read...");
-					readFile(fileEntry);
-				};
-
-				fileWriter.onerror = function (e) {
-					console.log("Failed file read: " + e.toString());
-				};
-
-				// If data object is not passed in,
-				// create a new Blob instead.
-				if (!dataObj) {
-					dataObj = new Blob(['some file data'], { type: 'text/plain' });
-				}
-
-				fileWriter.write(dataObj);
-				console.log("Wrote Data: " + dataObj);
-			});
-		}
-	
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
-
-			console.log('file system open: ' + fs.name);
-			fs.root.getFile("testtext.txt", { create: false, exclusive: false }, function (fileEntry) {
-
-				console.log("fileEntry is file? " + fileEntry.isFile.toString());
-*/				// fileEntry.name == 'someFile.txt'
-//				fileEntry.fullPath = cordova.file.dataDirectory/*.replace('file://', '')*/ 
-//				+ 'files/testtext.txt'
-//				console.log("Saving to: " + fileEntry.fullPath);
-				//writeFile(fileEntry, null);
-				
-				//readFile(fileEntry);
-				
-				/* Email test start! */
-				
-//				console.log("attempting to send email...");
-				/*console.log('base64:text.txt//'+'helloworld');
-				console.log('base64:text.txt//'+btoa('helloworld'));
-				console.log('base64:picture.png//'+btoa(readFile(fileEntry)));
-				console.log('base64:picture.png//'+readFile(fileEntry));				
-				console.log('base64:picture.png//'+readTextFile(fileEntry));
-				*/
-/*				$cordovaEmailComposer.isAvailable().then(function() {
-					console.log("Email is available");
-					var email = {
-						to: 'cobbsworth@outlook.com',
-						cc: '',
-						attachments: [
-						'base64:text.txt//'+btoa('helloworld'),
-						'base64:picture.png//'+btoa(readFile(fileEntry)),
-					
-						],
-						subject: 'Cordova Email',
-						body: 'How are you? Nice greetings from Leipzig',
-						isHtml: false
-					};
-
-					$cordovaEmailComposer.open(email).then(null, function () {
-					   console.log("Email Cancelled");
-					});
-				}, function () {
-				   console.log("Email is unavailable");
+		/*
+		function chmodRWRWR(fileName){
+			console.log("Starting chmodRWRWR:var...");
+			var exec = require('child_process').exec, child;
+			
+			console.log("Starting chmodRWRWR:child...");
+			child = exec('ls',
+				function (error, stdout, stderr) {
+					console.log('stdout: ' + stdout);
+					console.log('stderr: ' + stderr);
+					if (error !== null) {
+						 console.log('exec error: ' + error);
+					}
 				});
-*/				
-				/* Email test end! */
-/*				
-				
-			}, function(){
-				console.log("Failed to getFile()");
-			});
-
-<<<<<<< HEAD
-		}, function(){
-			console.log("Failed to RequestFileSystem");
-		});
-*/
-
-/*		function gotFS(fileSystem) {
-			console.log("getFS"+fileSystem);
-			fileSystem.root.getFile("files/bear1.jpg", null, gotFileEntry, fail);
+			child();
 		}
-*/
-/*
-
-		function gotFileEntry(fileEntry) {
-			console.log("gotFileEntry: "+fileEntry.name);
-			console.log("fileEntry fullpath: "+fileEntry.fullPath);
-			fileEntry.file(gotFile, fail);
-		}
-
+		*/
+		
+		/* gotFile just has some code which was useful for the dataStream, might be able to re-use some for the copy-files export method
 		function gotFile(file){
 			console.log("Got the File");
 			console.log("Type: " + file.type);
@@ -493,10 +453,7 @@ angular.module('app.controllers', [])
 					base64parts[0] = "base64:" + escape(filename) + "//";
 					var compatibleAttachment =  base64parts.join("");
 
-					mail(reader.result);
-					//window.plugin.email.open({
-					//	attachments: [compatibleAttachment]
-					//});
+					mail(reader.result)
 					
 			};
 			reader.onerror = function(e) {
@@ -507,85 +464,23 @@ angular.module('app.controllers', [])
 			reader.readAsDataURL(file);
 			console.log("Reader status after: "+reader.readyState);
 			reader.readAsText(file);
-			//readDataUrl(file);
 		}
 		*/
-/*
-		function readDataUrl(file) {
-			console.log("readDataURL - size: "+file.size);
-			var reader = new FileReader();
-			reader.onloadend = function(evt) {
-				console.log("Read as data URL");
-				console.log("Reader Status: "+reader.readyState);
-				console.log("Reader Error: "+reader.error.code);
-				if (reader.error.code == reader.error.NOT_FOUND_ERR){
-					console.log("File not found error");
-				}
-				console.log("Result 1: "+evt.target.result);
-				console.log("Result 2: "+this.result);
-				console.log("Result 3: "+reader.result);
-				//mail(this.result);
-			};
-			console.log("file: " + file.type);
-			reader.readAsDataURL(file);
-			reader.onload = mail("hello world");
-			
-		}
-*/		
+		
+		//mailSingle(fileName) takes a single file with the same name as one in the public directory and attaches it to an email.
+		function mailSingle(fileName){ 
+			console.log("attempting to send email...");
 
-		/*
-		function fail(evt) {
-			console.log("Error occurred...");
-			console.log(this.error.code);
-		}
-		
-		
-		var filePath = cordova.file.dataDirectory + "files/bear1.jpg";
-		window.resolveLocalFileSystemURL(filePath, gotFileEntry, fail);*/
-		mail("");
-		
-		/*
-		window.resolveLocalFileSystemURI(filePath,
-			// success callback; generates the FileEntry object needed to convert to Base64 string
-			function (fileEntry) {
-				// convert to Base64 string
-				function win(file) {
-					var reader = new FileReader();
-					reader.onloadend = function (evt) {
-						var obj = evt.target.result; // this is your Base64 string
-						console.log("evt.target.result: "+obj);
-					};
-					reader.readAsDataURL(file);
-				};
-				var fail = function (evt) { };
-				fileEntry.file(win, fail);
-			},
-			// error callback
-			function () { }
-		);*/
-
-		
-		function mail(pictomail){
-			$scope.result += ("attempting to send email...");
-			console.log("message: "+pictomail);
-			
-			/*console.log('base64:text.txt//'+'helloworld');
-			console.log('base64:text.txt//'+btoa('helloworld'));
-			console.log('base64:picture.png//'+btoa(readFile(fileEntry)));
-			console.log('base64:picture.png//'+readFile(fileEntry));				
-			console.log('base64:picture.png//'+readTextFile(fileEntry));
-			*/
 			$cordovaEmailComposer.isAvailable().then(function() {
 				console.log("Email is available");
-				//console.log('base64:bear1.jpg//'+pictomail.replace("data:image/jpeg;base64,/",""));
 				var email = {
 					to: 'cobbsworth@outlook.com',
 					cc: '',
-					attachments: [
-					//('base64:bear1.jpg//'+pictomail.replace("data:image/jpeg;base64,",""))
-					'base64:text.txt//'+btoa("Hello World")
-					//'base64:picture.png//'+btoa(readFile(fileEntry)),
-				
+					attachments: 
+					[
+					'base64:text.txt//'+btoa("Hello World"),
+					//'file://img/logo.png'
+					//cordova.file.dataDirectory + "files/" + fileName
 					],
 					subject: 'Cordova Email',
 					body: '',
