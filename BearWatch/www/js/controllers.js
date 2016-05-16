@@ -6,20 +6,76 @@ angular.module('app.controllers', [])
 	//disable contiue button if no valid sessions available
 })
 
-.controller('startNewSessionCtrl', function($scope, $cordovaSQLite) {
+//TODO: Remove test code before deployment
+//application test code and example functions
+.controller( 'dbTest', function ($scope, $cordovaSQLite, Session){
+	$scope.Session = Session;
+    $scope.result = "TEST INITIALIZED";
+    $scope.success = db_success;
+	$scope.fail = db_error;
+	$scope.status = "$scope.Session.observerTxt: " + $scope.Session.observerTxt + ", Session.observerTxt: " + Session.observerTxt;
+	
+	$scope.testing = function (){
+		$scope.test = $scope.Session.observerTxt;
+		$scope.Session.observerTxt = '';
+	}
+
+
+	$scope.insert = function() {			
+		$cordovaSQLite.execute(db, 'INSERT INTO sessions (observers) VALUES (?)', [$scope.data])
+        .then(function(result) {
+            $scope.result = "Observer name saved successful, cheers!";
+			$scope.status = "Insert result: " + result;
+        }, function(error) {
+            $scope.result = "Error on saving: " + error.message;
+        })
+	}
+	
+	//select example
+    $scope.select = function() {
+		// Execute SELECT statement to load message from database.
+        $cordovaSQLite.execute(db, 'SELECT * FROM sessions ORDER BY session_id DESC')
+            .then(
+                function(result) {
+
+                    if (result.rows.length > 0) {
+
+                        $scope.status = result.rows.item(0).session_id;
+                        $scope.result = "Observer name loaded successful, cheers!";
+                    }
+                },
+                function(error) {
+                    $scope.result = "Error on loading: " + error.message;
+                }
+            );
+    }
+
+
+    var internet = "not set";
+	if(window.Connection){
+		internet = navigator.connection.type;
+	}else {
+		internet = "It doesn't work";
+	}
+
+	$scope.internet = internet;
+
+})
+
+.controller('startNewSessionCtrl', function($scope, $cordovaSQLite, Session) {
 	$scope.debug = debug;
 
 	//db insert values
 	$scope.nameResult = [];
 
 	//function for adding observers
-	$scope.observer = {};
+	$scope.Session = Session;
 	$scope.addObserver = function(observer){
 		//check for empty string
 		if(observer != '' && observer != null){
 			$scope.nameResult.push(observer);
 			//clear textfield
-			$scope.observer.txt = '';
+			$scope.Session.observerTxt = '';
 		}
 	}
 
@@ -242,55 +298,6 @@ angular.module('app.controllers', [])
                     $scope.obscured = false;
                 }
             }
-
-})
-
-//TODO: Remove test code before deployment
-//application test code and example functions
-.controller( 'dbTest', function ($scope, $cordovaSQLite){
-	
-    $scope.result = "TEST INITIALIZED";
-    $scope.success = db_success;
-	$scope.fail = db_error;
-
-
-	$scope.insert = function() {			
-		$cordovaSQLite.execute(db, 'INSERT INTO bear_logs (bear_name) VALUES (?)', [$scope.data])
-        .then(function(result) {
-            $scope.result = "Bear name saved successful, cheers!";
-        }, function(error) {
-            $scope.result = "Error on saving: " + error.message;
-        })
-	}
-	
-	//select example
-    $scope.select = function() {
-		// Execute SELECT statement to load message from database.
-        $cordovaSQLite.execute(db, 'SELECT * FROM bear_logs ORDER BY bear_log_id DESC')
-            .then(
-                function(result) {
-
-                    if (result.rows.length > 0) {
-
-                        $scope.status = result.rows.item(0).bear_name;
-                        $scope.result = "Bear name loaded successful, cheers!";
-                    }
-                },
-                function(error) {
-                    $scope.result = "Error on loading: " + error.message;
-                }
-            );
-    }
-
-
-    var internet = "not set";
-	if(window.Connection){
-		internet = navigator.connection.type;
-	}else {
-		internet = "It doesn't work";
-	}
-
-	$scope.internet = internet;
 
 })
 

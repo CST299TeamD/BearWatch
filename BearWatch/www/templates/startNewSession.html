@@ -6,7 +6,7 @@
             <!--Session observers-->
             <label style="" class="item item-input">
                 <span class="input-label" >Name:</span>
-                <input id="observer" placeholder="First Initial &amp; Surname" type="text" ng-model="observer.txt">                       
+                <input id="observer" placeholder="First Initial &amp; Surname" type="text" ng-model="Session.observerTxt">                       
             </label>
             <!--show active observer names with remove option-->
             <ion-item ng-show="nameResult.length != 0" class="item-divider">Observers in Session</ion-item>
@@ -20,7 +20,7 @@
             <!--debug div-->
             <div ng-show="debug" ng-controller="dbTest">
                 <label style="" class="item item-input">
-                    <span class="input-label" >Name:</span>
+                    <span class="input-label" >TestName:</span>
                     <input placeholder="First Initial &amp; Surname" type="text" ng-model="data">                       
                 </label>
                 <div>
@@ -36,16 +36,21 @@
                     Result: {{ result }}
                     <br>
                     Status: {{ status }}
-                    <br/><br/>
+                    <br/>
+                    Scope test: {{ test }}
+                    <br/>
+                    Session.observerTxt: {{ Session.observerTxt }}
+                    <br/>
                     <button class="button" ng-click="insert()">insert</button>
                     <button class="button" ng-click="select()">select</button>
+                    <button class="button" ng-click="testing()">Scope Test</button>
                     <br/><br/>
                 </div><!--end debug-->
             
             </div><!--end dbtestcontroller-->
 
             <div style="width: 283px; height: 30px;" class="spacer"></div>
-            <button class="button button-balanced button-block icon ion-plus" ng-click="addObserver(observer.txt)">&nbsp; Add Observer</button>
+            <button class="button button-balanced button-block icon ion-plus" ng-click="addObserver(Session.observerTxt)">&nbsp; Add Observer</button>
 
             
 			<div style="width: 283px; height: 30px;" class="spacer"></div>
