@@ -10,5 +10,14 @@
         </lable>
 
 		<button style="" class="button button-balanced  button-block" ui-sref="tab.bear" disabled="true" id="startButton">&nbsp; Start Session</button>
+        
+        <div>
+        <button ng-click="testInsert()">Test insert</button>
+        <button ng-click="testSelect()">Test select</button>
+        <br><br>
+        Insert Results: {{insertResult}}
+        <br>
+        Select Results: {{selectResult}}
+        </div>
     </ion-content>
 </ion-view>
