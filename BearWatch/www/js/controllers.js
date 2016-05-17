@@ -132,14 +132,18 @@ angular.module('app.controllers', [])
                                                    template: 'Once a session is closed it cannot be re-opened. Continue closing session?'
                                                    });
             confirmPopup.then(function(res) {
-                              if(res) {
-                              console.log('Sure!');
-                              $location.path("/ReviewList");
-                              } else {
-                              console.log('Not sure!');
-                              }
-                              });
+	                		    		        if(res) {
+	             	      		        		   	console.log('Sure!');
+	                              					$location.path("/ReviewList");
+	                            				} else {
+	                            	  				console.log('Not sure!');
+									            }
+								            });
             }
+
+            //get the session id from the factory ---yet to be coded
+            var session_id = 1;
+            $scope.sesion_id = session_id;
 })
 
 
