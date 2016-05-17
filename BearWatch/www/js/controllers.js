@@ -6,20 +6,76 @@ angular.module('app.controllers', [])
 	//disable contiue button if no valid sessions available
 })
 
-.controller('startNewSessionCtrl', function($scope, $cordovaSQLite) {
+//TODO: Remove test code before deployment
+//application test code and example functions
+.controller( 'dbTest', function ($scope, $cordovaSQLite, Session){
+	$scope.Session = Session;
+    $scope.result = "TEST INITIALIZED";
+    $scope.success = db_success;
+	$scope.fail = db_error;
+	$scope.status = "$scope.Session.observerTxt: " + $scope.Session.observerTxt + ", Session.observerTxt: " + Session.observerTxt;
+	
+	$scope.testing = function (){
+		$scope.test = $scope.Session.observerTxt;
+		$scope.Session.observerTxt = '';
+	}
+
+
+	$scope.insert = function() {			
+		$cordovaSQLite.execute(db, 'INSERT INTO sessions (observers) VALUES (?)', [$scope.data])
+        .then(function(result) {
+            $scope.result = "Observer name saved successful, cheers!";
+			$scope.status = "Insert result: " + result;
+        }, function(error) {
+            $scope.result = "Error on saving: " + error.message;
+        })
+	}
+	
+	//select example
+    $scope.select = function() {
+		// Execute SELECT statement to load message from database.
+        $cordovaSQLite.execute(db, 'SELECT * FROM sessions ORDER BY session_id DESC')
+            .then(
+                function(result) {
+
+                    if (result.rows.length > 0) {
+
+                        $scope.status = result.rows.item(0).session_id;
+                        $scope.result = "Observer name loaded successful, cheers!";
+                    }
+                },
+                function(error) {
+                    $scope.result = "Error on loading: " + error.message;
+                }
+            );
+    }
+
+
+    var internet = "not set";
+	if(window.Connection){
+		internet = navigator.connection.type;
+	}else {
+		internet = "It doesn't work";
+	}
+
+	$scope.internet = internet;
+
+})
+
+.controller('startNewSessionCtrl', function($scope, $cordovaSQLite, Session) {
 	$scope.debug = debug;
 
 	//db insert values
 	$scope.nameResult = [];
 
 	//function for adding observers
-	$scope.observer = {};
+	$scope.Session = Session;
 	$scope.addObserver = function(observer){
 		//check for empty string
 		if(observer != '' && observer != null){
 			$scope.nameResult.push(observer);
 			//clear textfield
-			$scope.observer.txt = '';
+			$scope.Session.observerTxt = '';
 		}
 	}
 
@@ -249,55 +305,6 @@ angular.module('app.controllers', [])
 
 })
 
-//TODO: Remove test code before deployment
-//application test code and example functions
-.controller( 'dbTest', function ($scope, $cordovaSQLite){
-	
-    $scope.result = "TEST INITIALIZED";
-    $scope.success = db_success;
-	$scope.fail = db_error;
-
-
-	$scope.insert = function() {			
-		$cordovaSQLite.execute(db, 'INSERT INTO bear_logs (bear_name) VALUES (?)', [$scope.data])
-        .then(function(result) {
-            $scope.result = "Bear name saved successful, cheers!";
-        }, function(error) {
-            $scope.result = "Error on saving: " + error.message;
-        })
-	}
-	
-	//select example
-    $scope.select = function() {
-		// Execute SELECT statement to load message from database.
-        $cordovaSQLite.execute(db, 'SELECT * FROM bear_logs ORDER BY bear_log_id DESC')
-            .then(
-                function(result) {
-
-                    if (result.rows.length > 0) {
-
-                        $scope.status = result.rows.item(0).bear_name;
-                        $scope.result = "Bear name loaded successful, cheers!";
-                    }
-                },
-                function(error) {
-                    $scope.result = "Error on loading: " + error.message;
-                }
-            );
-    }
-
-
-    var internet = "not set";
-	if(window.Connection){
-		internet = navigator.connection.type;
-	}else {
-		internet = "It doesn't work";
-	}
-
-	$scope.internet = internet;
-
-})
-
 .controller('tabCommentCtrl', function($scope) {
 
 })
@@ -364,32 +371,35 @@ angular.module('app.controllers', [])
 //Controller loaded when "Review Sessions" is selected"
 .controller('reviewListCtrl', function($scope, $cordovaEmailComposer) {
 	
-	result = '...starting reviewListCtrl';
+	//$scope.result = '...starting reviewListCtrl';
 	document.addEventListener("deviceready", onDeviceReady, false);
 
 	function onDeviceReady() {
-		result += ('...dataDirectory: '+cordova.file.dataDirectory);
+		//$scope.result += ('...dataDirectory: '+cordova.file.dataDirectory);
 		
 	}	
 	
 	//Test function to save a file locally
 	$scope.reviewSaveSendCSV = function () {
-		result += '...starting reviewSaveCSV';
+		//$scope.result += '...starting reviewSaveCSV';
+		mail("hello, world");
+		//$scope.result += '...mail sent'
 		
-		copyToPublic("bear1.jpg");
-		
+		//copyToPublic("bear1.jpg");
+/*		
 		//copyToPublic takes a string name of a file and looks for it in the dataDirectory, then runs sendFileEntryToPublic on it
 		function copyToPublic(fileName){
 			var filePath = cordova.file.dataDirectory + "files/" + fileName;
 			window.resolveLocalFileSystemURL(filePath, sendFileEntryToPublic, fail);
 		}
-
+*/
+/*
 		//sendFileEntryToPublic takes a file and moves it to a public directory
 		function sendFileEntryToPublic(fileEntry) {
-			result += "...gotFileEntry: "+fileEntry.name;
-			result += "...fileEntry fullpath: "+fileEntry.fullPath;			
-			result += "...copying to..." + cordova.file.dataDirectory;		
-			result += "...copying to..." + cordova.file.externalDataDirectory;
+			//$scope.result += "...gotFileEntry: "+fileEntry.name;
+			//$scope.result += "...fileEntry fullpath: "+fileEntry.fullPath;			
+			//$scope.result += "...copying to..." + cordova.file.dataDirectory;		
+			//$scope.result += "...copying to..." + cordova.file.externalDataDirectory;
 			
 			//cordova.file.externalDataDirectory >> cordova.file.documentsDirectory
 			window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory,
@@ -401,7 +411,7 @@ angular.module('app.controllers', [])
 						function() {
 							alert('copying was successful');
 							//chmodRWRWR(fileEntry.name);
-							mailSingle(fileEntry.name);
+							//mailSingle(fileEntry.name);
 						},
 						function() {alert('unsuccessful copying')}
 					);
@@ -409,8 +419,10 @@ angular.module('app.controllers', [])
 				fail);
 
 		}
+*/
+
 		function fail(evt) {
-			result += "..."+evt.target.error.code;
+			//$scope.result += "..."+evt.target.error.code;
 		}
 		
 		/*
@@ -472,17 +484,17 @@ angular.module('app.controllers', [])
 		*/
 		
 		//mailSingle(fileName) takes a single file with the same name as one in the public directory and attaches it to an email.
-		function mailSingle(fileName){ 
-			result += "...attempting to send email";
+		function mail(csv1contents){ 
+			//$scope.result += "...attempting to send email";
 
 			$cordovaEmailComposer.isAvailable().then(function() {
-				result += "...Email is available";
+				//$scope.result += "...Email is available";
 				var email = {
 					to: 'cobbsworth@outlook.com',
 					cc: '',
 					attachments: 
 					[
-					'base64:text.txt//'+btoa("Hello World"),
+					'base64:csv1.csv//'+btoa(csv1contents)
 					//'file://img/logo.png'
 					//cordova.file.dataDirectory + "files/" + fileName
 					],
@@ -492,10 +504,10 @@ angular.module('app.controllers', [])
 				};
 
 				$cordovaEmailComposer.open(email).then(null, function () {
-				   result += "...Email Cancelled";
+				   //$scope.result += "...Email Cancelled";
 				});
 			}, function () {
-			   result += "...Email is unavailable";
+			   //$scope.result += "...Email is unavailable";
 			});
 		}
 	};
