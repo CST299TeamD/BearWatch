@@ -17,11 +17,18 @@
             <ion-item style="">March 10, 2016, 10:53 S. Schaerer</ion-item>
         </ion-list>
     -->
-	
-		<div ng-controller="reviewListCtrl">
-			<button class="button" ng-click="reviewSaveSendCSV()">Save & Send CSV</button>
-
-            <!--Result: {{ result }}-->
+        <div ng-controller="reviewListCtrl">
+            <br/>
+            Mail Progress: {{mailProgress}}
+            <br/>
+            Delete Result: {{deleteResult}}
+            <br/>
+            Insert Result: {{insertResult}}
+            <br/>
+            Select Result: {{selectResult}}
+            <br/>
+            <button class="button" ng-click="reviewSaveSendCSV()">Save & Send CSV</button>
+            <button class="button" ng-click="reviewSendPicture()">Send a Picture</button>
 		</div>
 	</ion-content>
 </ion-view>
