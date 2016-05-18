@@ -8,16 +8,35 @@ angular.module('app.controllers', [])
 
 //TODO: Remove test code before deployment
 //application test code and example functions
-.controller( 'dbTest', function ($scope, $cordovaSQLite, Session){
+.controller( 'dbTest', function ($scope, $cordovaSQLite, Session, Enviro){
 	$scope.Session = Session;
+	$scope.Enviro = Enviro;
     $scope.result = "TEST INITIALIZED";
     $scope.success = db_success;
 	$scope.fail = db_error;
-	$scope.status = "$scope.Session.observerTxt: " + $scope.Session.observerTxt + ", Session.observerTxt: " + Session.observerTxt;
+	$scope.status = "$scope.Session.nameResult: " + $scope.Session.nameResult;
 	
 	$scope.testing = function (){
-		$scope.test = $scope.Session.observerTxt;
-		$scope.Session.observerTxt = '';
+		$scope.test = "--$scope.Session-- ";
+		for(item in $scope.Session){
+			$scope.test += item + " : ";
+			if(item == 'nameResult'){
+				for(name in $scope.Session[item]){
+					$scope.test += $scope.Session[item][name] + ", ";	
+				}
+			}else{
+				$scope.test += $scope.Session[item] + ", ";
+			}	
+		}
+		 
+	}
+	
+	$scope.enviroTesting = function (){
+		$scope.enviroTest = "--$scope.Enviro-- ";
+		for(item in $scope.Enviro){
+			$scope.enviroTest += item + " : " + $scope.Enviro[item] + ", ";	
+		}
+		 
 	}
 
 
@@ -62,42 +81,28 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('startNewSessionCtrl', function($scope, $cordovaSQLite, Session) {
+.controller('startNewSessionCtrl', function($scope, Session) {
+	//global debug var
 	$scope.debug = debug;
-
-	//db insert values
-	$scope.nameResult = [];
+	
+	//global factory session object
+	$scope.Session = Session;
 
 	//function for adding observers
-	$scope.Session = Session;
 	$scope.addObserver = function(observer){
 		//check for empty string
 		if(observer != '' && observer != null){
-			$scope.nameResult.push(observer);
+			$scope.Session.nameResult.push(observer);
 			//clear textfield
-			$scope.Session.observerTxt = '';
+			$scope.Session.observer = '';
 		}
 	}
 
 	//function to clear observer name from list
 	$scope.clearObserver = function (observer){
-		var index = $scope.nameResult.indexOf(observer);
-  		$scope.nameResult.splice(index, 1); 
+		var index = $scope.Session.nameResult.indexOf(observer);
+  		$scope.Session.nameResult.splice(index, 1); 
 	}
-
-	//TODO: DB entry
-
-
-
-            
-    //function to add text box for "other" selections
-    $scope.showNSTextBox = function(selectModel, value){
-        if(selectModel == "viewingArea" && value == "Other"){
-            $scope.viewingAreaOther = '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
-        } else {
-            $scope.viewingAreaOther = '';
-        }
-    }
     
     //function to change zoning schema picture
     $scope.showZoneSchema = function(zoningSchemaSelect){
@@ -113,32 +118,24 @@ angular.module('app.controllers', [])
     }
 })
 
-.controller('startNewSessionContCtrl', function($scope) {
-            
-            //function to add text box for "other" selections
-            $scope.showNSCTextBox = function(selectModel, value){
-                if(selectModel == "obscuredSelect" && value == "Other"){
-                    $scope.obscuredOther= '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
-                } else {
-                    $scope.obscuredOther = '';
-                }
-            }
-            
-            //function to show obscured reason select box if visibility is obscured
-            $scope.showObscuredSelect = function(visibilitySelect){
-                if(visibilitySelect == 'Partly obscured' || visibilitySelect == 'Mostly obscured'){
-                    $scope.obscured = true;
-                } else {
-                    $scope.obscured = false;
-                }
-            }
-            
-            
-
+.controller('startNewSessionContCtrl', function($scope, Enviro) {
+	
+	//global factory environment object
+	$scope.Enviro = Enviro;
+			            
 })
 
-.controller('observationModeCtrl', function($scope, $cordovaSQLite) {
+.controller('observationModeCtrl', function($scope, $cordovaSQLite, Session, Enviro) {
+	//global debug var
+	$scope.debug = debug;	
+	
+	//global factory session/enviro objects
+	$scope.Session = Session;
+	$scope.Enviro = Enviro;
+	
+	//TODO: DB entry - CC
 
+	/* Preet's Code */
 	//to enable the start button
 	$scope.enableStart = function(){
 		document.getElementById("startButton").disabled = false;
@@ -283,25 +280,27 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('environmentCtrl', function($scope) {
+.controller('environmentCtrl', function($scope, Enviro) {
+	//global factory enviro object
+	$scope.Enviro = Enviro;
             
-            //function to add text box for "other" selections
-            $scope.showNSCTextBox = function(selectModel, value){
-                if(selectModel == "obscuredSelect" && value == "Other"){
-                    $scope.obscuredOther= '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
-                } else {
-                    $scope.obscuredOther = '';
-                }
-            }
-            
-            //function to show obscured reason select box if visibility is obscured
-            $scope.showObscuredSelect = function(visibilitySelect){
-                if(visibilitySelect == 'Partly obscured' || visibilitySelect == 'Mostly obscured'){
-                    $scope.obscured = true;
-                } else {
-                    $scope.obscured = false;
-                }
-            }
+	//function to add text box for "other" selections
+	$scope.showNSCTextBox = function(selectModel, value){
+		if(selectModel == "obscuredSelect" && value == "Other"){
+			$scope.obscuredOther= '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
+		} else {
+			$scope.obscuredOther = '';
+		}
+	}
+	
+	//function to show obscured reason select box if visibility is obscured
+	$scope.showObscuredSelect = function(visibilitySelect){
+		if(visibilitySelect == 'Partly obscured' || visibilitySelect == 'Mostly obscured'){
+			$scope.obscured = true;
+		} else {
+			$scope.obscured = false;
+		}
+	}
 
 })
 
@@ -309,7 +308,8 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('tabCameraCtrl', function($scope, $cordovaCamera, $cordovaFile) {
+.controller('tabCameraCtrl', function($scope, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaSQLite) {
+	$scope.debug = debug;
 	$scope.camResult = "Photo page initialized";
             
 	//function for taking picture using device camera
@@ -331,7 +331,10 @@ angular.module('app.controllers', [])
 		$cordovaCamera.getPicture(options).then(function (imageData) {
 			$scope.cameraResult ="taking photo pt.2";
 			$scope.imgURI = "data:image/jpeg;base64," + imageData;
+
 			$scope.imageInfo = imageData;
+			//$scope.mailProgress ="starting function";
+			//mailSinglePicture(imageData);
 		}, function (err) {
 			// An error occured
 			$scope.cameraResult = "Camera error: " + err;
@@ -341,7 +344,50 @@ angular.module('app.controllers', [])
 	//save photo to session - not working properly TODO: test with file/io
 	$scope.choosePhoto = function () {
 		
-		$scope.fileName = "Not Saved"
+		$scope.insertResult = "Initialized";
+
+/*		//Little chunk of code to clear all logs, was used for testing inserts.
+		$cordovaSQLite.execute(db, 'DELETE FROM logs')
+        .then(function(result) {
+            $scope.deleteResult = "deleted";
+        }, function(error) {
+            $scope.deleteResult = "Error on delete: " + error.message;
+            return;
+        })
+*/
+		//Put a single picture taken into logs table. TODO: Session id, timestamps, GPS
+		$cordovaSQLite.execute(db, 'INSERT INTO logs (picture_data) VALUES (?)', [$scope.imageInfo])
+        .then(function(result) {
+            $scope.insertResult = "Picture insert successful! Probably...";
+        }, function(error) {
+            $scope.insertResult = "Error on saving: " + error.message;
+            return;
+        })
+
+
+		$scope.selectResult = "Initialized";
+        $cordovaSQLite.execute(db, "SELECT log_id, picture_data FROM logs").then(
+            function(result) {
+                //$scope.selectResult = "Select successful!";
+                $scope.selectResult += "...Select successful! Rows length = " + result.rows.length;
+                if (result.rows.length > 0) {
+                    $scope.fileName = "Select successful!";
+                    var i=0;
+                    while(i < result.rows.length){
+                    	$scope.selectResult += "...log_id: "+result.rows.item(i).log_id;//+"...Picture_data: "+result.rows.item(i).picture_data;
+                    	i++;
+                    }
+                } else {
+                	$scope.selectResult += "...No rows found"
+                }
+            },
+            function(error) {
+                $scope.selectResult = "Error on loading: " + error.message;
+            }
+        );
+
+
+		/*
 		var sourcePath = $scope.imgURI;
 		var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
 		var sourceFileName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1, sourcePath.length);
@@ -355,6 +401,7 @@ angular.module('app.controllers', [])
 		}, function(error) {
 			console.log(error.message);
 		});
+		*/
 
 	}
 	
@@ -369,18 +416,80 @@ angular.module('app.controllers', [])
 
 
 //Controller loaded when "Review Sessions" is selected"
-.controller('reviewListCtrl', function($scope, $cordovaEmailComposer) {
+.controller('reviewListCtrl', function($scope, $cordovaEmailComposer, $cordovaSQLite) {
 	
 	//$scope.result = '...starting reviewListCtrl';
 	document.addEventListener("deviceready", onDeviceReady, false);
 
 	function onDeviceReady() {
-		//$scope.result += ('...dataDirectory: '+cordova.file.dataDirectory);
+		$scope.result = ('...dataDirectory: '+cordova.file.dataDirectory);
 		
 	}	
-	
-	//Test function to save a file locally
+
+	//test function to mail pictures
+	$scope.reviewSendPicture = function() {
+
+		//instantiate array to hold all email attachments
+		var emailAttachments = []
+
+		//Attach CSV(s)
+		//place holder -- this should actually be a huge text CSV with an entire session of data
+		var csv1contents = "Hello, World, Of, Bears"
+		emailAttachments.push('base64:csv1.csv//'+btoa(csv1contents));
+
+
+		//Get logs, add to attachment array TODO - specify session
+		$scope.selectResult = "Initialized";
+        $cordovaSQLite.execute(db, "SELECT log_id, picture_data FROM logs").then(
+            function(result) {
+                $scope.selectResult += "...Select successful! Rows length = " + result.rows.length;
+                if (result.rows.length > 0) {
+                    $scope.fileName = "Select successful!";
+                    var i=0;
+                    while(i < result.rows.length){
+                    	$scope.selectResult += "...log_id: "+result.rows.item(i).log_id;
+                    	emailAttachments.push("base64:picture"+i+".jpg//" + result.rows.item(i).picture_data);
+                    	i++;
+                    }
+                } else {
+                	$scope.selectResult += "...No rows found"
+                }
+            },
+            function(error) {
+            	//TODO - GIVE USER FEEDBACK
+                $scope.selectResult = "Error on loading: " + error.message;
+            }
+        );
+
+        //Send/draft email
+		$scope.mailProgress = "...attempting to send email with " + emailAttachments.length + " attachments";
+		try{
+			$cordovaEmailComposer.isAvailable().then(function() {
+				$scope.mailProgress = "...Email is available";
+				var email = {
+					//TODO - set proper email & mail contents
+					to: 'cobbsworth@outlook.com',
+					cc: '',
+					attachments: emailAttachments,
+					subject: 'Cordova Email',
+					body: '',
+					isHtml: false
+				};
+
+				$cordovaEmailComposer.open(email).then(null, function () {
+				   //$scope.mailProgress = "...Email Cancelled";
+				});
+			}, function () {
+			   $scope.mailProgress = "...Email is unavailable";
+			});
+		} catch (exception){
+			$scope.mailProgress = exception.name + " ::: " + exception.message;
+		}
+	}
+
+	//Test function to save mail text
 	$scope.reviewSaveSendCSV = function () {
+
 		//$scope.result += '...starting reviewSaveCSV';
 		mail("hello, world");
 		//$scope.result += '...mail sent'

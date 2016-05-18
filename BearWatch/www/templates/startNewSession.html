@@ -1,24 +1,8 @@
 <ion-view style="" title="Set Sesssion Variables">
 	<ion-content class="has-header" overflow-scroll="true" padding="true">
-		<h2 style="">Add Observer</h2>
-        <form style="" class="list">
-
-            <!--Session observers-->
-            <label style="" class="item item-input">
-                <span class="input-label" >Name:</span>
-                <input id="observer" placeholder="First Initial &amp; Surname" type="text" ng-model="Session.observerTxt">                       
-            </label>
-            <!--show active observer names with remove option-->
-            <ion-item ng-show="nameResult.length != 0" class="item-divider">Observers in Session</ion-item>
-            <ion-list>
-                <ion-item ng-repeat="name in nameResult" class="item item-button-right">
-                    {{name}}
-                    <a class="button button-icon icon ion-close-circled" ng-click="clearObserver(name)"></a>
-                </ion-item>
-            </ion-list>
-
-            <!--debug div-->
+        <!--debug div-->
             <div ng-show="debug" ng-controller="dbTest">
+                <h2 style="">Debug Info</h2>
                 <label style="" class="item item-input">
                     <span class="input-label" >TestName:</span>
                     <input placeholder="First Initial &amp; Surname" type="text" ng-model="data">                       
@@ -37,59 +21,84 @@
                     <br>
                     Status: {{ status }}
                     <br/>
-                    Scope test: {{ test }}
+                    Session test: {{ test }}
                     <br/>
-                    Session.observerTxt: {{ Session.observerTxt }}
+                    Enviro test: {{ enviroTest }}
                     <br/>
+
                     <button class="button" ng-click="insert()">insert</button>
                     <button class="button" ng-click="select()">select</button>
-                    <button class="button" ng-click="testing()">Scope Test</button>
+                    <button class="button" ng-click="testing()">Session Test</button>
+                    <button class="button" ng-click="enviroTesting()">Enviro Test</button>
                     <br/><br/>
-                </div><!--end debug-->
+                </div>
+            </div><!--end debug-->
+        
+		<h2 style="">Add Observer</h2>
+        <form style="" class="list">
+
+            <!--Session observers-->
+            <div class="item item-input-inset">
+                <label class="item item-input-wrapper">		
+                <span class="input-label" >Name:</span>
+                <input placeholder="First Initial &amp; Surname" type="text" ng-model="Session.observer">
+                </label>
+                <button class="button button-balanced icon ion-plus" ng-click="addObserver(Session.observer)">&nbsp; Add Observer</button>
+            </div>
             
-            </div><!--end dbtestcontroller-->
-
+            <!--show active observer names with remove option-->
+            <ion-item ng-show="Session.nameResult.length != 0" class="item-divider">Observers in Session</ion-item>
+            <ion-list>
+                <ion-item ng-repeat="name in Session.nameResult" class="item item-button-right">
+                    {{name}}
+                    <a class="button button-icon icon ion-close-circled" ng-click="clearObserver(name)"></a>
+                </ion-item>
+            </ion-list>
             <div style="width: 283px; height: 30px;" class="spacer"></div>
-            <button class="button button-balanced button-block icon ion-plus" ng-click="addObserver(Session.observerTxt)">&nbsp; Add Observer</button>
-
+            <!--end observers-->
             
 			<div style="width: 283px; height: 30px;" class="spacer"></div>
             <h2 style="">Location</h2>
 			<label style="" class="item item-input">
                 <span class="input-label">Park/Area:</span>
-                <input placeholder="" type="text">
+                <input placeholder="" type="text" ng-model="Session.park">
             </label>
 			<label style="" class="item item-input">
                 <span class="input-label">Site:</span>
-                <input placeholder="" type="text">
+                <input placeholder="" type="text" ng-model="Session.site">
             </label>
 			
 	   	<div style="width: 283px; height: 30px;" class="spacer"></div>
-        <h2 style="">Viewing Area</h2>
-	   <label style="" class="item item-select">
-                <span class="input-label">Viewing Area</span>
-                <select ng-model="viewingAreaSelect" ng-change="showNSTextBox('viewingArea', viewingAreaSelect)">
-                    <option selected disabled>Not selected</option>
+        <h2>Viewing Area</h2>
+	   <label class="item item-select">
+                <span class="input-label">Viewing Area:</span>
+                <select ng-model="Session.viewingArea">
+                    <option selected disabled></option>
                     <option>Platform</option>
                     <option>Boating</option>
                     <option>Blind</option>
 					<option>Other</option>
                 </select>
         </label>
-       <div ng-bind-html="viewingAreaOther"></div>
+       <div ng-show="Session.viewingArea == 'Other'">
+           <label style="" class="item item-input">
+               <span class="input-label">Description:</span>
+               <input ng-model="Session.viewingAreaOther" placeholder="Description" type="text">
+           </label>
+       </div>
        <div class="list">
-           <ion-item style="" class="item-divider">Select Mode</ion-item>
-           <ion-radio style="">Stationary</ion-radio>
-           <ion-radio style="">Mobile</ion-radio>
+           <ion-item class="item-divider">Select Mode:</ion-item>
+           <ion-radio ng-model="Session.stationary" value="Stationary" >Stationary</ion-radio>
+           <ion-radio ng-model="Session.stationary" value="Mobile">Mobile</ion-radio>
        </div>
 	
 		<div style="width: 283px; height: 30px;" class="spacer"></div>
-		<h2 style="">Zone Type</h2>
-		<ion-item style="" class="item-divider">Zone</ion-item>
-            <label style="" class="item item-select">
-                <span class="input-label">View Type</span>
-                <select ng-model="zoningSchemaSelect" ng-change="showZoneSchema(zoningSchemaSelect)">
-                    <option selected disabled>Not selected</option>
+		<h2>Zone Type</h2>
+		<ion-item class="item-divider">Zone</ion-item>
+            <label class="item item-select">
+                <span class="input-label">View Type:</span>
+                <select ng-model="Session.zoneSchema" ng-change="showZoneSchema(Session.zoneSchema)">
+                    <option selected disabled></option>
                     <option>River</option>
                     <option>Estuary</option>
 					<option>Terrestrial</option>
@@ -99,8 +108,8 @@
             </div>
             
 		<label style="" class="item item-input">
-			<span class="input-label">Comment</span>
-			<input placeholder="" type="text">
+			<span class="input-label">Comment:</span>
+			<input ng-model="Session.comment" type="text" placeholder="Additional Zone Information">
         </label>
 
 	   </form>
