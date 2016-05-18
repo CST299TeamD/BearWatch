@@ -7,7 +7,7 @@ var db;
 var debug = true;
 var db_success = "";
 var db_error = "";
-var db_drop = true;
+var db_drop = false;
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -111,7 +111,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "human_type        TEXT    , "
       + "human_type_prsnt  TEXT    , "
       + "human_behavior    TEXT    , "
-      + "picture_location  TEXT    , "
+      + "picture_data      TEXT    , "
       + "picture_subjects  TEXT    , "
       + "collection_mode   TEXT    , "
 	    +	"bear_id       	   INTEGER , "
