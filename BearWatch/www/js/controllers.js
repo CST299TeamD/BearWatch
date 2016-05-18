@@ -8,16 +8,35 @@ angular.module('app.controllers', [])
 
 //TODO: Remove test code before deployment
 //application test code and example functions
-.controller( 'dbTest', function ($scope, $cordovaSQLite, Session){
+.controller( 'dbTest', function ($scope, $cordovaSQLite, Session, Enviro){
 	$scope.Session = Session;
+	$scope.Enviro = Enviro;
     $scope.result = "TEST INITIALIZED";
     $scope.success = db_success;
 	$scope.fail = db_error;
-	$scope.status = "$scope.Session.observerTxt: " + $scope.Session.observerTxt + ", Session.observerTxt: " + Session.observerTxt;
+	$scope.status = "$scope.Session.nameResult: " + $scope.Session.nameResult;
 	
 	$scope.testing = function (){
-		$scope.test = $scope.Session.observerTxt;
-		$scope.Session.observerTxt = '';
+		$scope.test = "--$scope.Session-- ";
+		for(item in $scope.Session){
+			$scope.test += item + " : ";
+			if(item == 'nameResult'){
+				for(name in $scope.Session[item]){
+					$scope.test += $scope.Session[item][name] + ", ";	
+				}
+			}else{
+				$scope.test += $scope.Session[item] + ", ";
+			}	
+		}
+		 
+	}
+	
+	$scope.enviroTesting = function (){
+		$scope.enviroTest = "--$scope.Enviro-- ";
+		for(item in $scope.Enviro){
+			$scope.enviroTest += item + " : " + $scope.Enviro[item] + ", ";	
+		}
+		 
 	}
 
 
@@ -62,42 +81,28 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('startNewSessionCtrl', function($scope, $cordovaSQLite, Session) {
+.controller('startNewSessionCtrl', function($scope, Session) {
+	//global debug var
 	$scope.debug = debug;
-
-	//db insert values
-	$scope.nameResult = [];
+	
+	//global factory session object
+	$scope.Session = Session;
 
 	//function for adding observers
-	$scope.Session = Session;
 	$scope.addObserver = function(observer){
 		//check for empty string
 		if(observer != '' && observer != null){
-			$scope.nameResult.push(observer);
+			$scope.Session.nameResult.push(observer);
 			//clear textfield
-			$scope.Session.observerTxt = '';
+			$scope.Session.observer = '';
 		}
 	}
 
 	//function to clear observer name from list
 	$scope.clearObserver = function (observer){
-		var index = $scope.nameResult.indexOf(observer);
-  		$scope.nameResult.splice(index, 1); 
+		var index = $scope.Session.nameResult.indexOf(observer);
+  		$scope.Session.nameResult.splice(index, 1); 
 	}
-
-	//TODO: DB entry
-
-
-
-            
-    //function to add text box for "other" selections
-    $scope.showNSTextBox = function(selectModel, value){
-        if(selectModel == "viewingArea" && value == "Other"){
-            $scope.viewingAreaOther = '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
-        } else {
-            $scope.viewingAreaOther = '';
-        }
-    }
     
     //function to change zoning schema picture
     $scope.showZoneSchema = function(zoningSchemaSelect){
@@ -113,32 +118,24 @@ angular.module('app.controllers', [])
     }
 })
 
-.controller('startNewSessionContCtrl', function($scope) {
-            
-            //function to add text box for "other" selections
-            $scope.showNSCTextBox = function(selectModel, value){
-                if(selectModel == "obscuredSelect" && value == "Other"){
-                    $scope.obscuredOther= '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
-                } else {
-                    $scope.obscuredOther = '';
-                }
-            }
-            
-            //function to show obscured reason select box if visibility is obscured
-            $scope.showObscuredSelect = function(visibilitySelect){
-                if(visibilitySelect == 'Partly obscured' || visibilitySelect == 'Mostly obscured'){
-                    $scope.obscured = true;
-                } else {
-                    $scope.obscured = false;
-                }
-            }
-            
-            
-
+.controller('startNewSessionContCtrl', function($scope, Enviro) {
+	
+	//global factory environment object
+	$scope.Enviro = Enviro;
+			            
 })
 
-.controller('observationModeCtrl', function($scope, $cordovaSQLite) {
+.controller('observationModeCtrl', function($scope, $cordovaSQLite, Session, Enviro) {
+	//global debug var
+	$scope.debug = debug;	
+	
+	//global factory session/enviro objects
+	$scope.Session = Session;
+	$scope.Enviro = Enviro;
+	
+	//TODO: DB entry - CC
 
+	/* Preet's Code */
 	//to enable the start button
 	$scope.enableStart = function(){
 		document.getElementById("startButton").disabled = false;
@@ -279,25 +276,27 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('environmentCtrl', function($scope) {
+.controller('environmentCtrl', function($scope, Enviro) {
+	//global factory enviro object
+	$scope.Enviro = Enviro;
             
-            //function to add text box for "other" selections
-            $scope.showNSCTextBox = function(selectModel, value){
-                if(selectModel == "obscuredSelect" && value == "Other"){
-                    $scope.obscuredOther= '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
-                } else {
-                    $scope.obscuredOther = '';
-                }
-            }
-            
-            //function to show obscured reason select box if visibility is obscured
-            $scope.showObscuredSelect = function(visibilitySelect){
-                if(visibilitySelect == 'Partly obscured' || visibilitySelect == 'Mostly obscured'){
-                    $scope.obscured = true;
-                } else {
-                    $scope.obscured = false;
-                }
-            }
+	//function to add text box for "other" selections
+	$scope.showNSCTextBox = function(selectModel, value){
+		if(selectModel == "obscuredSelect" && value == "Other"){
+			$scope.obscuredOther= '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
+		} else {
+			$scope.obscuredOther = '';
+		}
+	}
+	
+	//function to show obscured reason select box if visibility is obscured
+	$scope.showObscuredSelect = function(visibilitySelect){
+		if(visibilitySelect == 'Partly obscured' || visibilitySelect == 'Mostly obscured'){
+			$scope.obscured = true;
+		} else {
+			$scope.obscured = false;
+		}
+	}
 
 })
 
