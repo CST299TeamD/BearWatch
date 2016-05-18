@@ -19,37 +19,55 @@
         <div style="width: 283px; height: 30px;" class="spacer"></div>
         <ion-item style="" class="item-text-wrap">Ongoing Behaviour
             <div style="width: 283px; height: 10px;" class="spacer"></div>
-            <button class="button button-energized" >Standing</button>
-            <button class="button button-calm">Watching Bears</button>
-            <button class="button button-royal ">Avoiding Human</button>
-            
         </ion-item>
 
         <div style="width: 283px; height: 30px;" class="spacer"></div>
-        <ion-item style="" class="item-text-wrap">Movements
+        <ion-item style="" class="item-text-wrap">Habituation Level
             <div style="width: 283px; height: 10px;" class="spacer"></div>
-            <lable ng-repeat="movement in movements">
-                <button class="button button-energized button-outline">{{ movement }}</button>
+            <lable ng-repeat="behaviour in habituationLevel">
+                <button class="button button-royal button-outline">{{ behaviour }}</button>
+            </lable>
+        </ion-item>        
+
+        <div style="width: 283px; height: 30px;" class="spacer"></div>
+        <ion-item style="" class="item-text-wrap">Feeding/Foraging
+            <div style="width: 283px; height: 10px;" class="spacer"></div>
+            <lable ng-repeat="behaviour in feeding">
+                <button class="button button-energized button-outline">{{ behaviour }}</button>
             </lable>
         </ion-item>
 
         <div style="width: 283px; height: 30px;" class="spacer"></div>
-        <ion-item style="" class="item-text-wrap">Actions
+        <ion-item style="" class="item-text-wrap">Non-Interactive
             <div style="width: 283px; height: 10px;" class="spacer"></div>
-            <lable ng-repeat="action in actions">
-                <button class="button button-calm button-outline">{{ action }}</button>
+            <lable ng-repeat="behaviour in nonInteractive">
+                <button class="button button-calm button-outline">{{ behaviour }}</button>
             </lable>
         </ion-item>
 
         <div style="width: 283px; height: 30px;" class="spacer"></div>
-        <ion-item style="" class="item-text-wrap">Attitude
+        <ion-item style="" class="item-text-wrap">Bear-bear Interaction
             <div style="width: 283px; height: 10px;" class="spacer"></div>
-            <lable ng-repeat="attitude in attitudes">
-                <button class="button button-royal button-outline">{{ attitude }}</button>
+            <lable ng-repeat="behaviour in bBInteraction">
+                <button class="button button-royal button-outline">{{ behaviour }}</button>
             </lable>
         </ion-item>
 
+        <div style="width: 283px; height: 30px;" class="spacer"></div>
+        <ion-item style="" class="item-text-wrap">Bear-human Interaction
+            <div style="width: 283px; height: 10px;" class="spacer"></div>
+            <lable ng-repeat="behaviour in bHInteraction">
+                <button class="button button-royal button-outline">{{ behaviour }}</button>
+            </lable>
+        </ion-item>
 
+        <div style="width: 283px; height: 30px;" class="spacer"></div>
+        <ion-item style="" class="item-text-wrap">Human-bear Interaction
+            <div style="width: 283px; height: 10px;" class="spacer"></div>
+            <lable ng-repeat="behaviour in hBinteraction">
+                <button class="button button-royal button-outline">{{ behaviour }}</button>
+            </lable>
+        </ion-item>                
 
     </ion-content>
 </ion-view>

@@ -527,6 +527,20 @@ angular.module('app.controllers', [])
             };
             $scope.bear = bear;
             
+            var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Fishing", "Human Food"];
+            var nonInteractive = ["Loafing/Resting", "Sleeping", "Waling", "Running"];
+            var bBInteraction =["Alert/Vigilance", "Playing", "Fighting", "Defense"];
+            var bHInteraction = ["Alert/Vigilance", "Retreat", "Bear Approach"];
+            var hBinteraction = ["Alert/Vigilance", "Retreat", "Approach Bear", "Aggression "];
+            var habituationLevel = ["Habituated", "Non- Habituated", "SUbadult"];
+            
+            $scope.feeding = feeding;
+            $scope.nonInteractive = nonInteractive;
+            $scope.bBInteraction = bBInteraction;
+            $scope.bHInteraction = bHInteraction;
+            $scope.hBinteraction = hBinteraction;
+            $scope.habituationLevel= habituationLevel;
+            
             var movements = ["Unknown", "Walking", "Wading", "Standing", "Laying dowm","Sitting", "Running", "Swimming","Climbing",];
             
             var actions = ["Unknown","Fishing","Watching Bears", "Watching humans", "Consuming", "Interacting with humans","Interacting with Bears", "Grooming", "Sleeping", "Vigilant", "Fighting"];

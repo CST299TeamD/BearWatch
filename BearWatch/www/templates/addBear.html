@@ -3,7 +3,7 @@
         <h3 style="">Bear {{bearName}} Specifications</h3>
         <div>
             Zone : {{bearZone}} <br>
-            Habituation level : {{bearHabituationLevel}} <br>
+            Bear Size : {{bearSize}} <br>
             Bear Species : {{bearSpecies}} <br>
             Bear gender : {{bearGender}} <br>
             Baer Age : {{bearAge}} <br>
@@ -36,12 +36,11 @@
                 </select>
             </label>
 			<label style="" class="item item-select">
-			<span class="input-label">Habituation Level</span>
-                <select ng-model="bearHabituationLevel">
-                    <option>Unknown</option>
-                    <option>Habituated</option>
-                    <option>Non-Habituated</option>
-                    <option>Subadult</option>					
+			<span class="input-label">Size</span>
+                <select ng-model="bearSize">
+                    <option>Small</option>
+                    <option>Medium</option>
+                    <option>Lrage</option>
                 </select>
             </label>				
             <label style="" class="item item-select">
@@ -60,19 +59,16 @@
                     <option>Male</option>
                     <option>Female</option>
                     <option>Female with cubs</option>
-                    
                 </select>
             </label>
+
             <label style="" class="item item-select">
                 <span class="input-label">Bear Age</span>
                 <select ng-model="bearAge">
                     <option>Unkown</option>
 					<option>Adult</option>
                     <option>Subadult</option>
-                    <option>COTY</option>
-                    <option>YRLG</option>
-                    <option>2nd YRLG</option>
-                    
+                    <option>Depandant</option>
                 </select>
             </label>
 			
@@ -81,10 +77,24 @@
                 <input placeholder="optional" type="text" ng-model="markDescription">
             </label>
 			
-			<label style="" class="item item-input">
-                <span class="input-label" >Fur colour</span>
-                <input placeholder="" ng-model="bearFurColour" type="text">
-            </label>			
+
+            <label style="" class="item item-select">
+                <span class="input-label">Fur Colour</span>
+                <select ng-model="bearFurColour" >
+                    <option>Blonde</option>
+                    <option>Light Brown</option>
+                    <option>brown</option>
+                    <option>Dark Brown</option>
+                    <option>Other</option>                    
+                </select>
+            </label>
+            <div ng-show="bearFurColour == 'Other' ">
+                <label style="" class="item item-input">
+                    <span class="input-label">Fur Colour</span>
+                    <input type="text" ng-model="bearFurColour_other">
+                </label>            
+            </div>
+
             <ion-checkbox ng-model="bearPawMeasered">Paw Measurement Taken</ion-checkbox>
 			
 			<div style="width: 283px; height: 30px;" class="spacer"></div>
@@ -99,7 +109,8 @@
                     <option>Unknown</option>
                     <option>COTY</option>
                     <option>YRLG</option>
-                    <option>2nd YRLG</option>					
+                    <option>2nd YRLG</option>
+                    <option>3rd YRLG</option>                    					
                 </select>
             </label>
 			<label style="" class="item item-input">
@@ -113,8 +124,8 @@
             </label>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
-            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button20" ui-sref="focalTab.bear">Add Bear</a>
-            <a style="" class="button button-assertive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button21" ui-sref="focalTab.bear">Cancel</a>
+            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button20" ui-sref="tab.bear" ng-click="addbear()" >Add Bear</a>
+            <a style="" class="button button-assertive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button21" ui-sref="tab.bear">Cancel</a>
         </form>
     </ion-content>
 </ion-view>
