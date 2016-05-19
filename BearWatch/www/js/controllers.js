@@ -53,12 +53,10 @@ angular.module('app.controllers', [])
 	//select example
     $scope.select = function() {
 		// Execute SELECT statement to load message from database.
-        $cordovaSQLite.execute(db, 'SELECT * FROM sessions ORDER BY session_id DESC')
+        $cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)' [Sessions.id])
             .then(
                 function(result) {
-
                     if (result.rows.length > 0) {
-
                         $scope.status = result.rows.item(0).session_id;
                         $scope.result = "Observer name loaded successful, cheers!";
                     }
@@ -135,12 +133,7 @@ angular.module('app.controllers', [])
 	
 	//TODO: DB entry - CC
 
-	/* Preet's Code */
-	//to enable the start button
-	$scope.enableStart = function(){
-		document.getElementById("startButton").disabled = false;
-	}
-
+	
 	var insertResult = "Not initialized";
 	var selectResult = "Not initialized";
 	$scope.insertResult = insertResult;
@@ -148,27 +141,22 @@ angular.module('app.controllers', [])
 
 	$scope.testInsert = function(){
 		$scope.insertResult = "Initialized";
+		$scope.selectResult = Session.save();
 	}
 
 	$scope.testSelect = function(){
-		$scope.selectResult = "Initialized";
-
-		$cordovaSQLite.execute(db, 'INSERT INTO session (bear_name) VALUES (?)', [$scope.data])
-        .then(function(result) {
-            $scope.result = "Bear name saved successful, cheers!";
-        }, function(error) {
-            $scope.result = "Error on saving: " + error.message;
-        })
-
-	}
-
-	$scope.startSession = function() {			
-		$cordovaSQLite.execute(db, 'INSERT INTO sessions (bear_name) VALUES (?)', [$scope.data])
-        .then(function(result) {
-            $scope.result = "Bear name saved successful, cheers!";
-        }, function(error) {
-            $scope.result = "Error on saving: " + error.message;
-        })
+		$scope.insertResult = "Initialized";
+		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [Sessions.id])
+            .then(
+                function(result) {
+                    if (result.rows.length > 0) {
+                        $scope.selectResult = JSON.stringify(result.rows.item(0));
+                    }
+                },
+                function(error) {
+                    $scope.result = "Error on loading: " + error.message;
+                }
+            );
 	}
 
 })

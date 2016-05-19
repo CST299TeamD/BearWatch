@@ -1,15 +1,16 @@
-<ion-view style="" title="Observation Mode">
+<ion-view title="Observation Mode">
     <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <h2 style="">Observation Mode</h2>
+        <h2>Observation Mode</h2>
  
-		<lable style="" class="list">
-            <ion-item style="" class="item-divider">Select Mode</ion-item>
-            <ion-radio style="" ng-click="enableStart()">Focal</ion-radio>
-            <ion-radio style="" ng-click="enableStart()">Scanning</ion-radio>
-			<ion-radio style="" ng-click="enableStart()">Opportunistic</ion-radio>
-        </lable>
+		<label class="list">
+            <ion-item class="item-divider">Select Mode</ion-item>
+            <ion-radio ng-model="Session.observationMode" value="Focal">Focal</ion-radio>
+            <ion-radio ng-model="Session.observationMode" value="Scanning">Scanning</ion-radio>
+			<ion-radio ng-model="Session.observationMode" value="Opportunistic">Opportunistic</ion-radio>
+        </label>
 
-		<button style="" class="button button-balanced  button-block" ui-sref="tab.bear" disabled="true" id="startButton">&nbsp; Start Session</button>
+        <!--ui-sref="tab.bear"-->
+		<button class="button button-balanced  button-block"  ng-click="saveSession()" ng-disabled="Session.observationMode == ''" >&nbsp; Start Session</button>
         
         <div>
         <button ng-click="testInsert()">Test insert</button>
