@@ -41,6 +41,7 @@ angular.module('app.routes', ['ionicUIRouter'])
 
 
   .state('tab.bear', {
+    cache: false,
     url: '/Bear',
     views: {
       'tab1': {

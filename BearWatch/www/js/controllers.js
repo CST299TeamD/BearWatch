@@ -27,9 +27,9 @@ angular.module('app.controllers', [])
 			}else{
 				$scope.test += $scope.Session[item] + ", ";
 			}	
-		}
-		 
+		}	 
 	}
+
 	
 	$scope.enviroTesting = function (){
 		$scope.enviroTest = "--$scope.Enviro-- ";
@@ -161,8 +161,29 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('bearCtrl', function($scope) {
-            
+.controller('bearCtrl', function($scope, $cordovaSQLite, BearList, Bear) {
+	
+	$scope.BearList = BearList;
+	$scope.Baer = Bear;
+
+	$scope.changeBear = function(index){
+		/*var tmp = BearList[index];
+		$scope.Bear.name = tmp.name;
+		$scope.Bear.zone = tmp.location;
+		$scope.Bear.size = tmp.size;
+		$scope.Bear.age = tmp.age;
+		$scope.Bear.gender = tmp.gender;
+		$scope.Bear.species = tmp.species;
+		$scope.Bear.markDescription = tmp.markDescription;
+		$scope.Bear.furColour = tmp.furColour;
+		$scope.Bear.pawMeasered = tmp.pawMeasured;
+		$scope.Bear.cubs = tmp.cubs;
+		$scope.Bear.cubFurColour = tmp.cubFurColour;
+		$scope.Bear.cubAge = tmp.cubAge;
+		$scope.Bear.behaviour = tmp.behaviour;
+		$scope.Bear.comment = tmp.comment;*/
+		$location.path("/BearInfo");		
+	}
 })
 
 .controller('dashCtrl', function($scope, $ionicPopup, $state, $location) {
@@ -179,7 +200,8 @@ angular.module('app.controllers', [])
 	                            				} else {
 	                            	  				console.log('Not sure!');
 									            }
-								            });
+								            }
+							);
             }
 
             //get the session id from the factory ---yet to be coded
@@ -189,8 +211,102 @@ angular.module('app.controllers', [])
 
 
 
-.controller('addBearCtrl', function($scope) {
+.controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList) {
 
+	//fake session id
+   	var session_id = 1; 
+   	$scope.session_id = session_id;
+	$scope.Bear = Bear;
+	$scope.BearList = BearList;
+  	$scope.Bear.name = '';
+    $scope.Bear.zone = '';
+    $scope.Bear.size = '';
+    $scope.Bear.age = '';
+    $scope.Bear.gender = '';
+    $scope.Bear.species = '';
+    $scope.Bear.markDescription = '';
+    $scope.Bear.furColour = '';
+    $scope.Bear.pawMeasered = '';
+    $scope.Bear.cubs = '';
+    $scope.Bear.cubFurColour = '';
+    $scope.Bear.cubAge = '';
+    $scope.Bear.behaviour = [];
+    $scope.Bear.comment = '';
+
+   	var sIdInsertResult = "Not Initialized";
+	var bearInsertResult = "Not Initialized";
+	$scope.bearInsertResult = bearInsertResult;
+	$scope.sIdInsertResult = sIdInsertResult;
+	
+	
+	//insert fake row in the database for session id
+	$scope.testInsert = function(){
+	$scope.sIdInsertResult = "Initialized";
+	$cordovaSQLite.execute(db, 'INSERT INTO sessions (session_id) VALUES (?)', [1])
+    .then(function(result) {
+        $scope.sIdInsertResult = "Session id inserted";
+    }, function(error) {
+        $scope.sIdInsertResult = "Error on inserting: " + error.message;
+    })
+
+	}
+
+	//add bear to fake session id - to be updated
+	$scope.addBear = function(){
+		//insert into bears table
+		$cordovaSQLite.execute(db, 'INSERT INTO bears (bear_name, bear_location, size, age, gender, species, '
+								  +'mark_desc, fur_colour, paw_measure, cubs, cub_fur, cub_age, comment, '
+								  +	'session_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+									[$scope.Bear.name, $scope.Bear.zone, $scope.Bear.size, $scope.Bear.age, $scope.Bear.gender,
+									$scope.Bear.species, $scope.Bear.markDescription, $scope.Bear.furColour, $scope.Bear.pawMeasered,
+									$scope.Bear.cubs, $scope.Bear.cubFurColour, $scope.Bear.cubAge, $scope.bearComment, $scope.session_id])
+	    	.then(function(result) {
+    	    	$scope.bearInsertResult = "Bear inserted";
+    	    	$scope.BearList.add.push({
+    	    		id: result.insertId,
+    	    		name: $scope.Bear.name,
+    	    		location: $scope.Bear.zone,
+    	    		size: $scope.Bear.size,
+    	    		age: $scope.Bear.age,
+    	    		gender: $scope.Bear.gender,
+    	    		species: $scope.Bear.species,
+    	    		markDescription: $scope.Bear.markDescription,
+    	    		behaviour: [],
+    	    		furColour: $scope.Bear.furColour,
+    	    		pawMeasured: $scope.Bear.pawMeasered,
+    	    		cubs: $scope.Bear.cubs,
+    	    		cubFurColour: $scope.Bear.cubFurColour,
+    	    		cubAge: $scope.Bear.cubAge,
+    	    		comment: $scope.bearComment
+    	    	});
+                        
+    		}, function(error) {
+       	 		$scope.bearInsertResult = "Error on inserting Bear: " + error.message;
+    		})
+	}
+   	var numret = 0;
+   	$scope.numret = numret;
+   	//select example
+    $scope.testSessionId = function() {
+    	$scope.result = "Initialized";
+		// Execute SELECT statement to load message from database.
+        $cordovaSQLite.execute(db, 'SELECT bear_name FROM bears WHERE session_id = ?', [1])
+            .then(
+                function(result) {
+                	$scope.result = "Result Positive but no rows";
+                	$scope.rows = result.rows.length;
+             	  	$scope.numret = result.rows.length;
+                    if (result.rows.length > 0) {
+
+                        $scope.status = result.rows.item(0).bear_name;
+                        $scope.result = "Data in bear table - " + $scope.status;
+                    }
+                },
+                function(error) {
+                    $scope.result = "Error on loading: " + error.message;
+                }
+            );
+    }
 })
 
 .controller('humanCtrl', function($scope) {
@@ -611,18 +727,10 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('bearInfoCtrl', function($scope) {
-            var bear ={
-                       name:"Bear 1",
-                       location: "Zone5",
-                       species: "Black",
-                       habituationLevel: "Habituated",
-                       gender: "Male",
-                       age: "Adult",
-                       markDesc: "Unknown",
-                       furColour:"pink"
-            };
-            $scope.bear = bear;
+.controller('bearInfoCtrl', function($scope, Bear) {
+            
+            $scope.Bear = Bear;
+
             
             var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Fishing", "Human Food"];
             var nonInteractive = ["Loafing/Resting", "Sleeping", "Waling", "Running"];

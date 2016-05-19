@@ -1,5 +1,32 @@
 angular.module('app.services', [])
 
+.factory('Bear', [function(){
+    return {
+        name: '',
+        zone: '',
+        size: '',
+        age: '',
+        gender: '',
+        species: '',
+        markDescription: '',
+        furColour: '',
+        pawMeasered: '',
+        cubs: '',
+        cubFurColour: '',
+        cubAge: '',
+        behaviour: [],
+        comment: ''
+    };
+                     
+}])
+
+.factory('BearList', [function(){
+    return {
+        add: [],
+    };
+                  
+}])
+
 .factory('Session', function($cordovaSQLite){
     var Session =  { 
         id: '',

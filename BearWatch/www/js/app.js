@@ -7,7 +7,7 @@ var db;
 var debug = true;
 var db_success = "";
 var db_error = "";
-var db_drop = false;
+var db_drop = true;
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -69,10 +69,18 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       "CREATE TABLE IF NOT EXISTS bears ("
       + "bear_id       INTEGER PRIMARY KEY NOT NULL, "
       + "bear_name         TEXT    , "
-
-      + "gender            TEXT    , "
+      + "bear_location     TEXT    , "
+      + "size              TEXT    , "
       + "age               TEXT    , "
+      + "gender            TEXT    , "
+      + "species           TEXT    , "
       + "mark_desc         TEXT    , "
+      + "fur_colour        TEXT    , "
+      + "paw_measure       TEXT    , "
+      + "cubs              TEXT    , "
+      + "cub_fur           TEXT    , "
+      + "behavior          TEXT    , "
+      + "cub_age           TEXT    , "
       + "comment           TEXT    , "      
       + "session_id        INTEGER , "
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
@@ -115,9 +123,8 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "picture_data      TEXT    , "
       + "picture_subjects  TEXT    , "
       + "collection_mode   TEXT    , "
-	    +	"bear_id       	   INTEGER , "
+      +	"bear_id       	   INTEGER , "
       + "species           TEXT    , "
-	    + "habituation_lvl   TEXT    , "
       + "bear_zone         TEXT    , "
       + "paw_measure       TEXT    , "
       + "cubs              TEXT    , "
