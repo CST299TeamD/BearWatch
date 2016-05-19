@@ -1,16 +1,19 @@
-<ion-view style="" title="Add new Bear">
+<ion-view style="" title="{{Bear.name}} Specifications">
     <ion-content class="has-header" overflow-scroll="true" padding="true">
         <form style="" class="list"></form>
         <h3 style="">Bear Specifications</h3>
+        
         <form style="" class="list">
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <ion-item style="" class="item-divider">Name of Bear</ion-item>
-            <label style="" class="item item-input">
-                <input placeholder="Bear #" type="text">
-                    </label>
+            <label style="" class="item item-input" >
+
+                <input placeholder="Bear #" type="text" ng-model="Bear.name">
+                
+            </label>
             <label style="" class="item item-select">
                 <span class="input-label">Bear Location</span>
-                <select>
+                <select ng-model="Bear.zone">
                     <option>Zone 1</option>
                     <option>Zone 2</option>
                     <option>Zone 3</option>
@@ -19,17 +22,16 @@
                 </select>
             </label>
             <label style="" class="item item-select">
-                <span class="input-label">Habituation Level</span>
-                <select>
-                    <option>Unknown</option>
-                    <option>Habituated</option>
-                    <option>Non-Habituated</option>
-                    <option>Subadult</option>
+            <span class="input-label">Size</span>
+                <select ng-model="Bear.size">
+                    <option>Small</option>
+                    <option>Medium</option>
+                    <option>Lrage</option>
                 </select>
-            </label>
+            </label>                
             <label style="" class="item item-select">
                 <span class="input-label">Bear Species</span>
-                <select>
+                <select ng-model="Bear.species">
                     <option>Unknown</option>
                     <option>Black</option>
                     <option>Grizzly</option>
@@ -37,68 +39,86 @@
             </label>
             <label style="" class="item item-select">
                 <span class="input-label">Bear Gender</span>
-                <select>
+                <select ng-model="Bear.gender">
                     <option>Unknown</option>
                     <option>Large Male</option>
                     <option>Male</option>
                     <option>Female</option>
                     <option>Female with cubs</option>
-                    
                 </select>
             </label>
+
             <label style="" class="item item-select">
                 <span class="input-label">Bear Age</span>
-                <select>
+                <select ng-model="Bear.age">
                     <option>Unkown</option>
                     <option>Adult</option>
                     <option>Subadult</option>
-                    <option>COTY</option>
-                    <option>YRLG</option>
-                    <option>2nd YRLG</option>
-                    
+                    <option>Depandant</option>
                 </select>
             </label>
             
-            
             <label style="" class="item item-input">
                 <span class="input-label">Mark Description</span>
-                <input placeholder="optional" type="text">
-                    </label>
-            
-            <label style="" class="item item-input">
-                <span class="input-label">Fur colour</span>
-                <input placeholder="" type="text">
+                <input placeholder="optional" type="text" ng-model="Bear.markDescription">
             </label>
-            <ion-checkbox>Paw Measurement Taken</ion-checkbox>
+            
+
+            <label style="" class="item item-select">
+                <span class="input-label">Fur Colour</span>
+                <select ng-model="Bear.furColour" >
+                    <option>Blonde</option>
+                    <option>Light Brown</option>
+                    <option>brown</option>
+                    <option>Dark Brown</option>
+                    <option>Other</option>                    
+                </select>
+            </label>
+            <div ng-show="bearFurColour == 'Other' ">
+                <label style="" class="item item-input">
+                    <span class="input-label">Fur Colour</span>
+                    <input type="text" ng-model="Bear.furColour_other">
+                </label>            
+            </div>
+
+            <ion-checkbox ng-model="Bear.pawMeasered">Paw Measurement Taken</ion-checkbox>
             
             <div style="width: 283px; height: 30px;" class="spacer"></div>
             <ion-item style="" class="item-divider">Cubs</ion-item>
             <label style="" class="item item-input">
                 <span class="input-label">Number of cubs</span>
-                <input placeholder="(if present)" type="text">
-                    </label>
+                <input placeholder="(if present)" type="text" ng-model="Bear.cubs">
+            </label>
             <label style="" class="item item-select">
-                <span class="input-label">Age of Cubs</span>
-                <select>
+            <span class="input-label">Age of Cubs</span>
+                <select ng-model="Bear.cubAge">
                     <option>Unknown</option>
                     <option>COTY</option>
                     <option>YRLG</option>
                     <option>2nd YRLG</option>
+                    <option>3rd YRLG</option>                                       
                 </select>
             </label>
-            <label style="" class="item item-input">
+
+
+            <label style="" class="item item-select">
                 <span class="input-label">Cub Fur colour</span>
-                <input placeholder="" type="text">
-                    </label>
-            
+                <select ng-model="Bear.cubFurColour" >
+                    <option>Blonde</option>
+                    <option>Light Brown</option>
+                    <option>brown</option>
+                    <option>Dark Brown</option>
+                    <option>Other</option>                    
+                </select>
+            </label>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <label style="" class="item item-input">
-                <span class="input-label">Comment</span><textarea placeholder=""> </textarea>
+                <span class="input-label">Comment</span><textarea  ng-model="Bear.comment" placeholder=""> </textarea>
             </label>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
-            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button20" ui-sref="focalTab.bearInfo">Update</a>
-            <a style="" class="button button-assertive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button21" ui-sref="focalTab.bearInfo">Cancel</a>
+            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button20" ui-sref="tab.bearInfo">Update</a>
+            <a style="" class="button button-assertive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button21" ui-sref="tab.bearInfo">Cancel</a>
         </form>
     </ion-content>
 </ion-view>

@@ -16,9 +16,10 @@ var db_drop = true;
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngIOS9UIWebViewPatch'])
 
-.run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaFileTransfer, $cordovaGeolocation) {
+.run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaFileTransfer, $q, $cordovaGeolocation) {
   $ionicPlatform.ready(function() {
   
+    console.log("$q.defer()1: " + $q.defer());
     //drop tables for debugging
     if(db_drop == true) {
       $cordovaSQLite.deleteDB({name:"bear_watch.db", location:'default'});
@@ -68,10 +69,18 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       "CREATE TABLE IF NOT EXISTS bears ("
       + "bear_id       INTEGER PRIMARY KEY NOT NULL, "
       + "bear_name         TEXT    , "
-
-      + "gender            TEXT    , "
+      + "bear_location     TEXT    , "
+      + "size              TEXT    , "
       + "age               TEXT    , "
+      + "gender            TEXT    , "
+      + "species           TEXT    , "
       + "mark_desc         TEXT    , "
+      + "fur_colour        TEXT    , "
+      + "paw_measure       TEXT    , "
+      + "cubs              TEXT    , "
+      + "cub_fur           TEXT    , "
+      + "behavior          TEXT    , "
+      + "cub_age           TEXT    , "
       + "comment           TEXT    , "      
       + "session_id        INTEGER , "
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
@@ -103,6 +112,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "temperature       INTEGER , "
       + "humididty         INTEGER , "
       + "visibility        TEXT    , "
+      + "obstruction       TEXT    , "
       + "noise_level       TEXT    , "
       + "zone              TEXT    , "
       + "human_count       TEXT    , "
@@ -111,12 +121,11 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "human_type        TEXT    , "
       + "human_type_prsnt  TEXT    , "
       + "human_behavior    TEXT    , "
-      + "picture_location  TEXT    , "
+      + "picture_data      TEXT    , "
       + "picture_subjects  TEXT    , "
       + "collection_mode   TEXT    , "
-	    +	"bear_id       	   INTEGER , "
+      +	"bear_id       	   INTEGER , "
       + "species           TEXT    , "
-	    + "habituation_lvl   TEXT    , "
       + "bear_zone         TEXT    , "
       + "paw_measure       TEXT    , "
       + "cubs              TEXT    , "
