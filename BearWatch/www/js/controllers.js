@@ -173,34 +173,29 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('bearCtrl', function($scope, $cordovaSQLite, BearList) {
+.controller('bearCtrl', function($scope, $cordovaSQLite, BearList, Bear) {
 	
 	$scope.BearList = BearList;
+	$scope.Baer = Bear;
 
-	var bearlist = "Not initialized";
-	$scope.bearlist = bearlist;
-	var res = "";
-	var status = "";
-	var bearNum = 0;
-	$cordovaSQLite.execute(db, 'SELECT bear_name FROM bears WHERE session_id = ?', [1])
-            .then(
-                function(result) {
-                	$scope.res = "No rows in the table";
-                	$scope.rows = result.rows.length;
-                	$scope.bearNum = result.rows.length;
-                    for (var i = 0; i < result.rows.length;i++) {
-
-                     //   $scope.BearList.add.push(result.rows.item(i).bear_name);
-                        $scope.res = "bears loaded";
-                    }
-                },
-                function(error) {
-                    $scope.res = "Error on loading: " + error.message;
-                }
-            );
-    $scope.bearNum = bearNum;        
-    $scope.res = res;
-	$scope.status = status;
+	$scope.changeBear = function(index){
+		/*var tmp = BearList[index];
+		$scope.Bear.name = tmp.name;
+		$scope.Bear.zone = tmp.location;
+		$scope.Bear.size = tmp.size;
+		$scope.Bear.age = tmp.age;
+		$scope.Bear.gender = tmp.gender;
+		$scope.Bear.species = tmp.species;
+		$scope.Bear.markDescription = tmp.markDescription;
+		$scope.Bear.furColour = tmp.furColour;
+		$scope.Bear.pawMeasered = tmp.pawMeasured;
+		$scope.Bear.cubs = tmp.cubs;
+		$scope.Bear.cubFurColour = tmp.cubFurColour;
+		$scope.Bear.cubAge = tmp.cubAge;
+		$scope.Bear.behaviour = tmp.behaviour;
+		$scope.Bear.comment = tmp.comment;*/
+		$location.path("/BearInfo");		
+	}
 })
 
 .controller('dashCtrl', function($scope, $ionicPopup, $state, $location) {
@@ -235,7 +230,7 @@ angular.module('app.controllers', [])
    	$scope.session_id = session_id;
 	$scope.Bear = Bear;
 	$scope.BearList = BearList;
-  	$scope.Bear.name = "";
+  	$scope.Bear.name = '';
     $scope.Bear.zone = '';
     $scope.Bear.size = '';
     $scope.Bear.age = '';
@@ -279,7 +274,23 @@ angular.module('app.controllers', [])
 									$scope.Bear.cubs, $scope.Bear.cubFurColour, $scope.Bear.cubAge, $scope.bearComment, $scope.session_id])
 	    	.then(function(result) {
     	    	$scope.bearInsertResult = "Bear inserted";
-    	    	$scope.BearList.add.push($scope.Bear.name);
+    	    	$scope.BearList.add.push({
+    	    		id: result.insertId,
+    	    		name: $scope.Bear.name,
+    	    		location: $scope.Bear.zone,
+    	    		size: $scope.Bear.size,
+    	    		age: $scope.Bear.age,
+    	    		gender: $scope.Bear.gender,
+    	    		species: $scope.Bear.species,
+    	    		markDescription: $scope.Bear.markDescription,
+    	    		behaviour: [],
+    	    		furColour: $scope.Bear.furColour,
+    	    		pawMeasured: $scope.Bear.pawMeasered,
+    	    		cubs: $scope.Bear.cubs,
+    	    		cubFurColour: $scope.Bear.cubFurColour,
+    	    		cubAge: $scope.Bear.cubAge,
+    	    		comment: $scope.bearComment
+    	    	});
                         
     		}, function(error) {
        	 		$scope.bearInsertResult = "Error on inserting Bear: " + error.message;
@@ -728,18 +739,10 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('bearInfoCtrl', function($scope) {
-            var bear ={
-                       name:"Bear 1",
-                       location: "Zone5",
-                       species: "Black",
-                       habituationLevel: "Habituated",
-                       gender: "Male",
-                       age: "Adult",
-                       markDesc: "Unknown",
-                       furColour:"pink"
-            };
-            $scope.bear = bear;
+.controller('bearInfoCtrl', function($scope, Bear) {
+            
+            $scope.Bear = Bear;
+
             
             var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Fishing", "Human Food"];
             var nonInteractive = ["Loafing/Resting", "Sleeping", "Waling", "Running"];

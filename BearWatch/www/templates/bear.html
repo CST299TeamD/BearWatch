@@ -10,14 +10,14 @@
     <ion-content class="has-header" overflow-scroll="true" padding="true">
         <ion-list style="" >
             <ion-item style="" class="item-divider">Bears in the Session {{bearNum}}</ion-item>
-            <div ng-repeat="bearId in BearList.add">    
-            <ion-item style="" ui-sref="tab.bearInfo">{{bearId}}</ion-item>
+            <div ng-repeat="(index, Object) in BearList.add">    
+            <ion-item style="" ng-click="changeBear({{index}})">{{Object.name}}</ion-item>
             </div>
         </ion-list>
-
+        <div style="width: 283px; height: 30px;" class="spacer"></div>
         <ion-list style="">
-            <ion-item style="" ui-sref="tab.bearInfo">Bear 1</ion-item>
-            Bears Add Result <br> {{res}}
+                    <ion-item style="" class="item-divider">Test Data</ion-item>
+            <ion-item style="" ui-sref="tab.bearInfo" ng-click="changeBear(0)">Bear 1</ion-item>
         </ion-list>
         <a class="button button-positive  button-block" id="focal-button36" ui-sref="tab.addNewBear">Add Bear</a>
 
