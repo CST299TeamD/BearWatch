@@ -9,5 +9,25 @@
                 <a class="button button-balanced button-outline icon ion-android-create" id="start-button3" ui-sref="startNewSession">&nbsp;New Session</a>
                 <a class="button button-royal button-outline icon ion-eye" ui-sref="reviewList">&nbsp; Review Session</a>
             </div>
+		</div>
+			
+		<div ng-controller="peterTest">
+        		
+				<br/>
+				Message: {{message}}
+				<br/>
+				Longitude : {{longitude}}
+				<br/>
+				Latitude: {{latitude}}
+				<br/>
+				Easting : {{easting}}
+				<br/>
+				Northing : {{northing}}
+				<br/>
+				UTM Block : {{utmBlock}}
+				<br/>        
+				<button style="" ng-click="getUTM()" id="peterTest-button">Get UTM</button>
+		</div>
     </ion-content>
+
 </ion-view>

@@ -298,6 +298,44 @@ angular.module('app.controllers', [])
 
 })
 
+.controller('peterTest', function($scope) {
+	
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+		
+        console.log("navigator.geolocation works well");
+		
+	}	
+	$scope.getUTM = function() {
+		
+		$scope.message = "message";
+		//$scope.longitude = 5+5;
+		//$scope.latitude = "latitude";
+		//$scope.easting = "easting";
+		//$scope.northing = "northing";
+		//$scope.utmBlock = "utmblock";
+		
+		function onSuccess(position) {
+			alert('Latitude: ' + position.coords.latitude +
+				'\nLongitude: ' + position.coords.longitude);
+		}
+
+		// onError Callback receives a PositionError object
+		//
+		function onError(error) {
+			alert('code: '    + error.code    + '\n' +
+				  'message: ' + error.message + '\n');
+		}
+
+		// Options: throw an error if no update is received every 30 seconds.
+		//
+		var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 5000 });
+		$scope.message = watchID;
+		navigator.geolocation.clearWatch(watchID);
+	}
+})
+
 .controller('tabCameraCtrl', function($scope, $cordovaCamera, $cordovaFile) {
 	$scope.camResult = "Photo page initialized";
             
