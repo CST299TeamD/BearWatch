@@ -6,101 +6,42 @@ angular.module('app.controllers', [])
 	//disable contiue button if no valid sessions available
 })
 
-//TODO: Remove test code before deployment
-//application test code and example functions
-.controller( 'dbTest', function ($scope, $cordovaSQLite, Session, Enviro){
-	$scope.Session = Session;
-	$scope.Enviro = Enviro;
-    $scope.result = "TEST INITIALIZED";
-    $scope.success = db_success;
-	$scope.fail = db_error;
-	$scope.status = "$scope.Session.nameResult: " + $scope.Session.nameResult;
-	
-	$scope.testing = function (){
-		$scope.test = "--$scope.Session-- ";
-		for(item in $scope.Session){
-			$scope.test += item + " : ";
-			if(item == 'nameResult'){
-				for(name in $scope.Session[item]){
-					$scope.test += $scope.Session[item][name] + ", ";	
-				}
-			}else{
-				$scope.test += $scope.Session[item] + ", ";
-			}	
-		}	 
-	}
-
-	
-	$scope.enviroTesting = function (){
-		$scope.enviroTest = "--$scope.Enviro-- ";
-		for(item in $scope.Enviro){
-			$scope.enviroTest += item + " : " + $scope.Enviro[item] + ", ";	
-		}
-		 
-	}
-
-
-	$scope.insert = function() {			
-		$cordovaSQLite.execute(db, 'INSERT INTO sessions (observers) VALUES (?)', [$scope.data])
-        .then(function(result) {
-            $scope.result = "Observer name saved successful, cheers!";
-			$scope.status = "Insert result: " + result;
-        }, function(error) {
-            $scope.result = "Error on saving: " + error.message;
-        })
-	}
-	
-	//select example
-    $scope.select = function() {
-		// Execute SELECT statement to load message from database.
-        $cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)' [Sessions.id])
-            .then(
-                function(result) {
-                    if (result.rows.length > 0) {
-                        $scope.status = result.rows.item(0).session_id;
-                        $scope.result = "Observer name loaded successful, cheers!";
-                    }
-                },
-                function(error) {
-                    $scope.result = "Error on loading: " + error.message;
-                }
-            );
-    }
-
-
-    var internet = "not set";
-	if(window.Connection){
-		internet = navigator.connection.type;
-	}else {
-		internet = "It doesn't work";
-	}
-
-	$scope.internet = internet;
-
-})
-
-.controller('startNewSessionCtrl', function($scope, Session) {
-	//global debug var
+.controller('startNewSessionCtrl', function($scope, $cordovaSQLite) {
 	$scope.debug = debug;
-	
-	//global factory session object
-	$scope.Session = Session;
+
+	//db insert values
+	$scope.nameResult = [];
 
 	//function for adding observers
+	$scope.observer = {};
 	$scope.addObserver = function(observer){
 		//check for empty string
 		if(observer != '' && observer != null){
-			$scope.Session.nameResult.push(observer);
+			$scope.nameResult.push(observer);
 			//clear textfield
-			$scope.Session.observer = '';
+			$scope.observer.txt = '';
 		}
 	}
 
 	//function to clear observer name from list
 	$scope.clearObserver = function (observer){
-		var index = $scope.Session.nameResult.indexOf(observer);
-  		$scope.Session.nameResult.splice(index, 1); 
+		var index = $scope.nameResult.indexOf(observer);
+  		$scope.nameResult.splice(index, 1); 
 	}
+
+	//TODO: DB entry
+
+
+
+            
+    //function to add text box for "other" selections
+    $scope.showNSTextBox = function(selectModel, value){
+        if(selectModel == "viewingArea" && value == "Other"){
+            $scope.viewingAreaOther = '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
+        } else {
+            $scope.viewingAreaOther = '';
+        }
+    }
     
     //function to change zoning schema picture
     $scope.showZoneSchema = function(zoningSchemaSelect){
@@ -116,58 +57,57 @@ angular.module('app.controllers', [])
     }
 })
 
-.controller('startNewSessionContCtrl', function($scope, Enviro) {
-	
-	//global factory environment object
-	$scope.Enviro = Enviro;
-			            
+.controller('startNewSessionContCtrl', function($scope) {
+            
+            //function to add text box for "other" selections
+            $scope.showNSCTextBox = function(selectModel, value){
+                if(selectModel == "obscuredSelect" && value == "Other"){
+                    $scope.obscuredOther= '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
+                } else {
+                    $scope.obscuredOther = '';
+                }
+            }
+            
+            //function to show obscured reason select box if visibility is obscured
+            $scope.showObscuredSelect = function(visibilitySelect){
+                if(visibilitySelect == 'Partly obscured' || visibilitySelect == 'Mostly obscured'){
+                    $scope.obscured = true;
+                } else {
+                    $scope.obscured = false;
+                }
+            }
+            
+            
+
 })
 
-.controller('observationModeCtrl', function($scope, $cordovaSQLite, Session, Enviro) {
-	//global debug var
-	$scope.debug = debug;	
-	
-	//global factory session/enviro objects
-	$scope.Session = Session;
-	$scope.Enviro = Enviro;
-	
-	//TODO: DB entry - CC
+.controller('observationModeCtrl', function($scope, $cordovaSQLite) {
 
-	
+	//to enable the start button
+	$scope.enableStart = function(){
+		document.getElementById("startButton").disabled = false;
+	}
+
 	var insertResult = "Not initialized";
 	var selectResult = "Not initialized";
 	$scope.insertResult = insertResult;
 	$scope.selectResult = selectResult;
 
 	$scope.testInsert = function(){
-		$scope.insertResult = "Saving";
-		id = Session.save();
-		if(id != '') {
-			console.log("Trying envirosave with id " + id);
-			//Enviro.save(id);
-		}else{
-			console.log("no id");
-		}
+		$scope.insertResult = "Initialized";
 	}
 
 	$scope.testSelect = function(){
-		$scope.insertResult = "Initialized: Session_id?:  " + Session.id;
-		Enviro.save(Session.id);
-		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [Session.id])
-            .then(
-                function(result) {
-                	$scope.selectResult = "Session = ";
-                    if (result.rows.length > 0) {
-            			for(item in result.rows.item(0)){
-            				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
-            			}
-                    }
-                },
-                function(error) {
-                    $scope.selectResult = "Error on loading: " + error.message;
-                }
-            );
+		$scope.selectResult = "Initialized";
 
+		$cordovaSQLite.execute(db, 'INSERT INTO session (bear_name) VALUES (?)', [$scope.data])
+        .then(function(result) {
+            $scope.result = "Bear name saved successful, cheers!";
+        }, function(error) {
+            $scope.result = "Error on saving: " + error.message;
+        })
+
+<<<<<<< HEAD
         $cordovaSQLite.execute(db, 'SELECT * FROM logs WHERE session_id = (?)', [Session.id])
         .then(
             function(result) {
@@ -203,37 +143,23 @@ angular.module('app.controllers', [])
                 $scope.selectResult = "Error on loading: " + error.message;
             }
         );
+=======
+	}
+
+	$scope.startSession = function() {			
+		$cordovaSQLite.execute(db, 'INSERT INTO sessions (bear_name) VALUES (?)', [$scope.data])
+        .then(function(result) {
+            $scope.result = "Bear name saved successful, cheers!";
+        }, function(error) {
+            $scope.result = "Error on saving: " + error.message;
+        })
+>>>>>>> c08ee19d94f9e50cd1cef6df6f77c3d238020709
 	}
 
 })
 
-.controller('bearCtrl', function($scope, $cordovaSQLite, BearList, Bear, $location) {
-	
-	$scope.BearList = BearList;
-	$scope.Bear = Bear;
-	$scope.bearTest = 55;
-
-	$scope.changeBear = function(index){
-		$scope.bearTest = "Initialized";
-		var tmp = BearList.add[index];
-		$scope.bearTest = "bear name: " + tmp.name;
-		
-		$scope.Bear.name = tmp.name;
-		$scope.Bear.zone = tmp.location;
-		$scope.Bear.size = tmp.size;
-		$scope.Bear.age = tmp.age;
-		$scope.Bear.gender = tmp.gender;
-		$scope.Bear.species = tmp.species;
-		$scope.Bear.markDescription = tmp.markDescription;
-		$scope.Bear.furColour = tmp.furColour;
-		$scope.Bear.pawMeasered = tmp.pawMeasured;
-		$scope.Bear.cubs = tmp.cubs;
-		$scope.Bear.cubFurColour = tmp.cubFurColour;
-		$scope.Bear.cubAge = tmp.cubAge;
-		$scope.Bear.behaviour = tmp.behaviour;
-		$scope.Bear.comment = tmp.comment;
-		//$location.path("/BearInfo");		
-	}
+.controller('bearCtrl', function($scope) {
+            
 })
 
 .controller('dashCtrl', function($scope, $ionicPopup, $state, $location) {
@@ -244,23 +170,19 @@ angular.module('app.controllers', [])
                                                    template: 'Once a session is closed it cannot be re-opened. Continue closing session?'
                                                    });
             confirmPopup.then(function(res) {
-	                		    		        if(res) {
-	             	      		        		   	console.log('Sure!');
-	                              					$location.path("/ReviewList");
-	                            				} else {
-	                            	  				console.log('Not sure!');
-									            }
-								            }
-							);
+                              if(res) {
+                              console.log('Sure!');
+                              $location.path("/ReviewList");
+                              } else {
+                              console.log('Not sure!');
+                              }
+                              });
             }
-
-            //get the session id from the factory ---yet to be coded
-            var session_id = 1;
-            $scope.sesion_id = session_id;
 })
 
 
 
+<<<<<<< HEAD
 .controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session) {
 	//global debug var
 	$scope.debug = debug;
@@ -306,63 +228,10 @@ angular.module('app.controllers', [])
     })
 
 	}
+=======
+.controller('addBearCtrl', function($scope) {
+>>>>>>> c08ee19d94f9e50cd1cef6df6f77c3d238020709
 
-	//add bear to fake session id - to be updated
-	$scope.addBear = function(){
-		//insert into bears table
-		$cordovaSQLite.execute(db, 'INSERT INTO bears (bear_name, bear_location, size, age, gender, species, '
-								  +'mark_desc, fur_colour, paw_measure, cubs, cub_fur, cub_age, comment, '
-								  +	'session_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-									[$scope.Bear.name, $scope.Bear.zone, $scope.Bear.size, $scope.Bear.age, $scope.Bear.gender,
-									$scope.Bear.species, $scope.Bear.markDescription, $scope.Bear.furColour, $scope.Bear.pawMeasered,
-									$scope.Bear.cubs, $scope.Bear.cubFurColour, $scope.Bear.cubAge, $scope.bearComment, $scope.session_id])
-	    	.then(function(result) {
-    	    	$scope.bearInsertResult = "Bear inserted";
-    	    	$scope.BearList.add.push({
-    	    		id: result.insertId,
-    	    		name: $scope.Bear.name,
-    	    		location: $scope.Bear.zone,
-    	    		size: $scope.Bear.size,
-    	    		age: $scope.Bear.age,
-    	    		gender: $scope.Bear.gender,
-    	    		species: $scope.Bear.species,
-    	    		markDescription: $scope.Bear.markDescription,
-    	    		behaviour: [],
-    	    		furColour: $scope.Bear.furColour,
-    	    		pawMeasured: $scope.Bear.pawMeasered,
-    	    		cubs: $scope.Bear.cubs,
-    	    		cubFurColour: $scope.Bear.cubFurColour,
-    	    		cubAge: $scope.Bear.cubAge,
-    	    		comment: $scope.bearComment
-    	    	});
-                        
-    		}, function(error) {
-       	 		$scope.bearInsertResult = "Error on inserting Bear: " + error.message;
-    		})
-	}
-   	var numret = 0;
-   	$scope.numret = numret;
-   	//select example
-    $scope.testSessionId = function() {
-    	$scope.result = "Initialized";
-		// Execute SELECT statement to load message from database.
-        $cordovaSQLite.execute(db, 'SELECT bear_name FROM bears WHERE session_id = ?', [1])
-            .then(
-                function(result) {
-                	$scope.result = "Result Positive but no rows";
-                	$scope.rows = result.rows.length;
-             	  	$scope.numret = result.rows.length;
-                    if (result.rows.length > 0) {
-
-                        $scope.status = result.rows.item(0).bear_name;
-                        $scope.result = "Data in bear table - " + $scope.status;
-                    }
-                },
-                function(error) {
-                    $scope.result = "Error on loading: " + error.message;
-                }
-            );
-    }
 })
 
 .controller('humanCtrl', function($scope) {
@@ -440,27 +309,74 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('environmentCtrl', function($scope, Enviro) {
-	//global factory enviro object
-	$scope.Enviro = Enviro;
+.controller('environmentCtrl', function($scope) {
             
-	//function to add text box for "other" selections
-	$scope.showNSCTextBox = function(selectModel, value){
-		if(selectModel == "obscuredSelect" && value == "Other"){
-			$scope.obscuredOther= '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
-		} else {
-			$scope.obscuredOther = '';
-		}
+            //function to add text box for "other" selections
+            $scope.showNSCTextBox = function(selectModel, value){
+                if(selectModel == "obscuredSelect" && value == "Other"){
+                    $scope.obscuredOther= '<label style="" class="item item-input"><span class="input-label">Description:</span><input placeholder="" type="text"></label>';
+                } else {
+                    $scope.obscuredOther = '';
+                }
+            }
+            
+            //function to show obscured reason select box if visibility is obscured
+            $scope.showObscuredSelect = function(visibilitySelect){
+                if(visibilitySelect == 'Partly obscured' || visibilitySelect == 'Mostly obscured'){
+                    $scope.obscured = true;
+                } else {
+                    $scope.obscured = false;
+                }
+            }
+
+})
+
+//TODO: Remove test code before deployment
+//application test code and example functions
+.controller( 'dbTest', function ($scope, $cordovaSQLite){
+	
+    $scope.result = "TEST INITIALIZED";
+    $scope.success = db_success;
+	$scope.fail = db_error;
+
+
+	$scope.insert = function() {			
+		$cordovaSQLite.execute(db, 'INSERT INTO bear_logs (bear_name) VALUES (?)', [$scope.data])
+        .then(function(result) {
+            $scope.result = "Bear name saved successful, cheers!";
+        }, function(error) {
+            $scope.result = "Error on saving: " + error.message;
+        })
 	}
 	
-	//function to show obscured reason select box if visibility is obscured
-	$scope.showObscuredSelect = function(visibilitySelect){
-		if(visibilitySelect == 'Partly obscured' || visibilitySelect == 'Mostly obscured'){
-			$scope.obscured = true;
-		} else {
-			$scope.obscured = false;
-		}
+	//select example
+    $scope.select = function() {
+		// Execute SELECT statement to load message from database.
+        $cordovaSQLite.execute(db, 'SELECT * FROM bear_logs ORDER BY bear_log_id DESC')
+            .then(
+                function(result) {
+
+                    if (result.rows.length > 0) {
+
+                        $scope.status = result.rows.item(0).bear_name;
+                        $scope.result = "Bear name loaded successful, cheers!";
+                    }
+                },
+                function(error) {
+                    $scope.result = "Error on loading: " + error.message;
+                }
+            );
+    }
+
+
+    var internet = "not set";
+	if(window.Connection){
+		internet = navigator.connection.type;
+	}else {
+		internet = "It doesn't work";
 	}
+
+	$scope.internet = internet;
 
 })
 
@@ -468,8 +384,45 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('tabCameraCtrl', function($scope, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaSQLite) {
-	$scope.debug = debug;
+.controller('peterTest', function($scope) {
+	
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+		
+        console.log("navigator.geolocation works well");
+		
+	}	
+	$scope.getUTM = function() {
+		
+		$scope.message = "message";
+		//$scope.longitude = 5+5;
+		//$scope.latitude = "latitude";
+		//$scope.easting = "easting";
+		//$scope.northing = "northing";
+		//$scope.utmBlock = "utmblock";
+		
+		function onSuccess(position) {
+			alert('Latitude: ' + position.coords.latitude +
+				'\nLongitude: ' + position.coords.longitude);
+		}
+
+		// onError Callback receives a PositionError object
+		//
+		function onError(error) {
+			alert('code: '    + error.code    + '\n' +
+				  'message: ' + error.message + '\n');
+		}
+
+		// Options: throw an error if no update is received every 30 seconds.
+		//
+		var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 5000 });
+		$scope.message = watchID;
+		navigator.geolocation.clearWatch(watchID);
+	}
+})
+
+.controller('tabCameraCtrl', function($scope, $cordovaCamera, $cordovaFile) {
 	$scope.camResult = "Photo page initialized";
             
 	//function for taking picture using device camera
@@ -491,10 +444,7 @@ angular.module('app.controllers', [])
 		$cordovaCamera.getPicture(options).then(function (imageData) {
 			$scope.cameraResult ="taking photo pt.2";
 			$scope.imgURI = "data:image/jpeg;base64," + imageData;
-
 			$scope.imageInfo = imageData;
-			//$scope.mailProgress ="starting function";
-			//mailSinglePicture(imageData);
 		}, function (err) {
 			// An error occured
 			$scope.cameraResult = "Camera error: " + err;
@@ -504,50 +454,7 @@ angular.module('app.controllers', [])
 	//save photo to session - not working properly TODO: test with file/io
 	$scope.choosePhoto = function () {
 		
-		$scope.insertResult = "Initialized";
-
-/*		//Little chunk of code to clear all logs, was used for testing inserts.
-		$cordovaSQLite.execute(db, 'DELETE FROM logs')
-        .then(function(result) {
-            $scope.deleteResult = "deleted";
-        }, function(error) {
-            $scope.deleteResult = "Error on delete: " + error.message;
-            return;
-        })
-*/
-		//Put a single picture taken into logs table. TODO: Session id, timestamps, GPS
-		$cordovaSQLite.execute(db, 'INSERT INTO logs (picture_data) VALUES (?)', [$scope.imageInfo])
-        .then(function(result) {
-            $scope.insertResult = "Picture insert successful! Probably...";
-        }, function(error) {
-            $scope.insertResult = "Error on saving: " + error.message;
-            return;
-        })
-
-
-		$scope.selectResult = "Initialized";
-        $cordovaSQLite.execute(db, "SELECT log_id, picture_data FROM logs").then(
-            function(result) {
-                //$scope.selectResult = "Select successful!";
-                $scope.selectResult += "...Select successful! Rows length = " + result.rows.length;
-                if (result.rows.length > 0) {
-                    $scope.fileName = "Select successful!";
-                    var i=0;
-                    while(i < result.rows.length){
-                    	$scope.selectResult += "...log_id: "+result.rows.item(i).log_id;//+"...Picture_data: "+result.rows.item(i).picture_data;
-                    	i++;
-                    }
-                } else {
-                	$scope.selectResult += "...No rows found"
-                }
-            },
-            function(error) {
-                $scope.selectResult = "Error on loading: " + error.message;
-            }
-        );
-
-
-		/*
+		$scope.fileName = "Not Saved"
 		var sourcePath = $scope.imgURI;
 		var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
 		var sourceFileName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1, sourcePath.length);
@@ -561,7 +468,6 @@ angular.module('app.controllers', [])
 		}, function(error) {
 			console.log(error.message);
 		});
-		*/
 
 	}
 	
@@ -576,80 +482,18 @@ angular.module('app.controllers', [])
 
 
 //Controller loaded when "Review Sessions" is selected"
-.controller('reviewListCtrl', function($scope, $cordovaEmailComposer, $cordovaSQLite) {
+.controller('reviewListCtrl', function($scope, $cordovaEmailComposer) {
 	
 	//$scope.result = '...starting reviewListCtrl';
 	document.addEventListener("deviceready", onDeviceReady, false);
 
 	function onDeviceReady() {
-		$scope.result = ('...dataDirectory: '+cordova.file.dataDirectory);
+		//$scope.result += ('...dataDirectory: '+cordova.file.dataDirectory);
 		
 	}	
-
-	//test function to mail pictures
-	$scope.reviewSendPicture = function() {
-
-		//instantiate array to hold all email attachments
-		var emailAttachments = []
-
-		//Attach CSV(s)
-		//place holder -- this should actually be a huge text CSV with an entire session of data
-		var csv1contents = "Hello, World, Of, Bears"
-		emailAttachments.push('base64:csv1.csv//'+btoa(csv1contents));
-
-
-		//Get logs, add to attachment array TODO - specify session
-		$scope.selectResult = "Initialized";
-        $cordovaSQLite.execute(db, "SELECT log_id, picture_data FROM logs").then(
-            function(result) {
-                $scope.selectResult += "...Select successful! Rows length = " + result.rows.length;
-                if (result.rows.length > 0) {
-                    $scope.fileName = "Select successful!";
-                    var i=0;
-                    while(i < result.rows.length){
-                    	$scope.selectResult += "...log_id: "+result.rows.item(i).log_id;
-                    	emailAttachments.push("base64:picture"+i+".jpg//" + result.rows.item(i).picture_data);
-                    	i++;
-                    }
-                } else {
-                	$scope.selectResult += "...No rows found"
-                }
-            },
-            function(error) {
-            	//TODO - GIVE USER FEEDBACK
-                $scope.selectResult = "Error on loading: " + error.message;
-            }
-        );
-
-        //Send/draft email
-		$scope.mailProgress = "...attempting to send email with " + emailAttachments.length + " attachments";
-		try{
-			$cordovaEmailComposer.isAvailable().then(function() {
-				$scope.mailProgress = "...Email is available";
-				var email = {
-					//TODO - set proper email & mail contents
-					to: 'cobbsworth@outlook.com',
-					cc: '',
-					attachments: emailAttachments,
-					subject: 'Cordova Email',
-					body: '',
-					isHtml: false
-				};
-
-				$cordovaEmailComposer.open(email).then(null, function () {
-				   //$scope.mailProgress = "...Email Cancelled";
-				});
-			}, function () {
-			   $scope.mailProgress = "...Email is unavailable";
-			});
-		} catch (exception){
-			$scope.mailProgress = exception.name + " ::: " + exception.message;
-		}
-	}
-
-	//Test function to save mail text
+	
+	//Test function to save a file locally
 	$scope.reviewSaveSendCSV = function () {
-
 		//$scope.result += '...starting reviewSaveCSV';
 		mail("hello, world");
 		//$scope.result += '...mail sent'
@@ -783,40 +627,32 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('bearInfoCtrl', function($scope, Bear, BearList, Session) {
-            $scope.Session = Session;
-            $scope.session_id = Session.id;
-            $scope.Bear = Bear;
-            $scope.BearList = BearList; 
-
+.controller('bearInfoCtrl', function($scope) {
+            var bear ={
+                       name:"Bear 1",
+                       location: "Zone5",
+                       species: "Black",
+                       habituationLevel: "Habituated",
+                       gender: "Male",
+                       age: "Adult",
+                       markDesc: "Unknown",
+                       furColour:"pink"
+            };
+            $scope.bear = bear;
             
-            var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Fishing", "Human Food"];
-            var nonInteractive = ["Loafing/Resting", "Sleeping", "Waling", "Running"];
-            var bBInteraction =["Alert/Vigilance", "Playing", "Fighting", "Defense"];
-            var bHInteraction = ["Alert/Vigilance", "Retreat", "Bear Approach"];
-            var hBinteraction = ["Alert/Vigilance", "Retreat", "Approach Bear", "Aggression "];
-            var habituationLevel = ["Habituated", "Non- Habituated", "SUbadult"];
+            var movements = ["Unknown", "Walking", "Wading", "Standing", "Laying dowm","Sitting", "Running", "Swimming","Climbing",];
             
-            $scope.feeding = feeding;
-            $scope.nonInteractive = nonInteractive;
-            $scope.bBInteraction = bBInteraction;
-            $scope.bHInteraction = bHInteraction;
-            $scope.hBinteraction = hBinteraction;
-            $scope.habituationLevel = habituationLevel;
-            $scope.test= "No behaviour";
-
-            $scope.addBehaviour = function(type, desc){
-            	Bear.behaviour.push(type + " - " + desc);
-
-            }
-
-
-
+            var actions = ["Unknown","Fishing","Watching Bears", "Watching humans", "Consuming", "Interacting with humans","Interacting with Bears", "Grooming", "Sleeping", "Vigilant", "Fighting"];
+            
+            var attitudes = ["Unknown", "Avoiding Humans","Avoiding Bears","Socializing","Aggresive","Passive","Alert","Enticing"];
+            
+            $scope.movements = movements;
+            $scope.actions = actions;
+            $scope.attitudes = attitudes;
+            
 })
 
-.controller('bearSpecCtrl', function($scope, BearList, Bear) {
-    $scope.BearList = BearList;
-	$scope.Bear = Bear;
-
+.controller('bearSpecCtrl', function($scope) {
+            
             
 })
