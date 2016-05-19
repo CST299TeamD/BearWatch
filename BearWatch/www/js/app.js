@@ -112,6 +112,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "temperature       INTEGER , "
       + "humididty         INTEGER , "
       + "visibility        TEXT    , "
+      + "obstruction       TEXT    , "
       + "noise_level       TEXT    , "
       + "zone              TEXT    , "
       + "human_count       TEXT    , "

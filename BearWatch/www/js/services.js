@@ -44,7 +44,7 @@ angular.module('app.services', [])
     
     //function for saving session state
 	Session.save = function(){      
-        var success = 'here i am';
+        var id = '';
         var protocol = '';
         var time = new Date();
         if(Session.viewingArea == 'Other'){
@@ -57,16 +57,15 @@ angular.module('app.services', [])
             'INSERT INTO sessions '
             + '(observers, park, park_site, protocol, stationary, zone_type, zone_comment, start_time, observation_mode)'
             + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-            [Session.nameResult.toString(), Session.site, protocol, Session.stationary, Session.zoneSchema, Session.comment, 
+            [Session.nameResult.toString(), Session.park, Session.site, protocol, Session.stationary, Session.zoneSchema, Session.comment, 
             time.toLocaleTimeString(), Session.observationMode])
         .then(function(result) {
             console.log("Session save success" + result.insertId);            
-			success = "Session save success" + result.insertId;
-            Session.id = result.insertId;
+            Session.id = id = result.insertId;
+            return id;
         }, function(error) {
-            success = "Error on saving: " + error.message;
+            console.log("Error on saving: " + error.message);
         });
-        return success;
     }
     
     //return session object
@@ -143,7 +142,8 @@ angular.module('app.services', [])
 	};
     
     //function for saving environment state
-	Enviro.save = function(id){      
+	Enviro.save = function(id){ 
+        console.log("Enviro Save activated! id=" + id);
         var success = '';
         var obscurity = '';
         
@@ -155,28 +155,17 @@ angular.module('app.services', [])
         
         $cordovaSQLite.execute(db, 
             'INSERT INTO logs '
-            + '(water_body, water_level, water_flow, water_clarity, cloud_cover, precipitation, wind, wind_direction, temperature, humididty, visibility, noise_level, session_id)'
-            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-            [Session.nameResult.toString(), Session.site, protocol, Session.stationary, Session.zoneSchema, Session.comment, 
-            time.toLocaleTimeString(), Session.observationMode])
+            + '(timestamp, water_body, water_level, water_flow, water_clarity, cloud_cover, precipitation, wind, wind_direction,'
+            + ' temperature, humididty, visibility, obstruction, noise_level, session_id)'
+            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            [time.toLocaleTimeString(), Enviro.waterBody, Enviro.waterLevel, Enviro.waterFlow, Enviro.waterClarity, Enviro.cloudCover, Enviro.precipitation, 
+            Enviro.wind, Enviro.windDirection, Enviro.temp, Enviro.humid, Enviro.visibility, Enviro.obstruction, Enviro.noiseLevel, id])
         .then(function(result) {
-            console.log("Session save success" + result.insertId);            
-			success = "Session save success" + result.insertId;
+            console.log("Enviro save success" + result.insertId);            
         }, function(error) {
-            return "Error on saving: " + error.message;
+            console.log("Error on saving: " + error.message);
         });
         
-        $cordovaSQLite.execute(db, 'SELECT last_insert_rowid')
-        .then(function(result) {
-            if (result.rows.length > 0) {
-                console.log("last_insert_rowid: " + JSON.stringify(result));
-                console.log("result.rows.item(0).session_id: " + result.rows.item(0).session_id);
-                Session.id = result.rows.item(0).session_id;
-            }
-        }, function(error) {
-            return "Error on getting rowid: " + error.message;
-        });
-        return success;
     }
     
     //return environment object

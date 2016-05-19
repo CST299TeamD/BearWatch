@@ -140,19 +140,26 @@ angular.module('app.controllers', [])
 	$scope.selectResult = selectResult;
 
 	$scope.testInsert = function(){
-		$scope.insertResult = "Initialized";
-		$scope.insertResult = Session.save();
+		$scope.insertResult = "Saving";
+		id = Session.save();
+		if(id != '') {
+			console.log("Trying envirosave with id " + id);
+			//Enviro.save(id);
+		}else{
+			console.log("no id");
+		}
 	}
 
 	$scope.testSelect = function(){
-		$scope.selectResult = "Initialized";
-		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [Sessions.id])
+		$scope.insertResult = "Initialized: Session_id?:  " + Session.id;
+		Enviro.save(Session.id);
+		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [Session.id])
             .then(
                 function(result) {
+                	$scope.selectResult = "Session = ";
                     if (result.rows.length > 0) {
-                        $scope.selectResult = "result: " + result.rows.item(0);
             			for(item in result.rows.item(0)){
-            				$scope.selectResult += ", " + item;
+            				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
             			}
                     }
                 },
@@ -160,6 +167,24 @@ angular.module('app.controllers', [])
                     $scope.selectResult = "Error on loading: " + error.message;
                 }
             );
+
+        $cordovaSQLite.execute(db, 'SELECT * FROM logs')
+        .then(
+            function(result) {
+            	$scope.selectResult += "Enviro = ";
+                if (result.rows.length > 0) {
+                	console.log("enviro results returned");
+        			for(item in result.rows.item(0)){
+        				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
+        			}
+                }else{
+                	console.log("No enviro results")
+                }
+            },
+            function(error) {
+                $scope.selectResult = "Error on loading: " + error.message;
+            }
+        );
 	}
 
 })
