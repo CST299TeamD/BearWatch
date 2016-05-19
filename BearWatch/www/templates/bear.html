@@ -8,10 +8,16 @@
         <ion-nav-view animation="slide-left-right" ></ion-nav-view>
     </div>
     <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <ion-list style="">
-            <ion-item style="" class="item-divider">Bears in the Session</ion-item>
-            <ion-item style="" ui-sref="tab.bearInfo">Bear 1</ion-item>
+        <ion-list style="" >
+            <ion-item style="" class="item-divider">Bears in the Session {{bearNum}}</ion-item>
+            <div ng-repeat="bearId in BearList.add">    
+            <ion-item style="" ui-sref="tab.bearInfo">{{bearId}}</ion-item>
+            </div>
+        </ion-list>
 
+        <ion-list style="">
+            <ion-item style="" ui-sref="tab.bearInfo">Bear 1</ion-item>
+            Bears Add Result <br> {{res}}
         </ion-list>
         <a class="button button-positive  button-block" id="focal-button36" ui-sref="tab.addNewBear">Add Bear</a>
 

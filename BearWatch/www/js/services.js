@@ -1,24 +1,32 @@
 angular.module('app.services', [])
 
 .factory('Bear', [function(){
-                     return {
-                     bearName: '',
-                     bearZone: '',
-                     bearSize: '',
-                     bearAge: '',
-                     bearGender: '',
-                     bearSpecies: '',
-                     markDescription: '',
-                     bearFurColour: '',
-                     bearPawMeasered: '',
-                     bearCubs: '',
-                     bearCubFurColour: '',
-                     bearCubAge: '',
-                     bearbehaviour: [],
-                     bearComment: ''
-                     };
+    return {
+        name: '',
+        zone: '',
+        size: '',
+        age: '',
+        gender: '',
+        species: '',
+        markDescription: '',
+        furColour: '',
+        pawMeasered: '',
+        cubs: '',
+        cubFurColour: '',
+        cubAge: '',
+        behaviour: [],
+        comment: ''
+    };
                      
-                     }])
+}])
+
+.factory('BearList', [function(){
+    return {
+        add: [],
+    };
+                  
+}])
+
 
 .factory('Session', [function(){
     return { 

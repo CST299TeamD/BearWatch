@@ -173,8 +173,34 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('bearCtrl', function($scope) {
-            
+.controller('bearCtrl', function($scope, $cordovaSQLite, BearList) {
+	
+	$scope.BearList = BearList;
+
+	var bearlist = "Not initialized";
+	$scope.bearlist = bearlist;
+	var res = "";
+	var status = "";
+	var bearNum = 0;
+	$cordovaSQLite.execute(db, 'SELECT bear_name FROM bears WHERE session_id = ?', [1])
+            .then(
+                function(result) {
+                	$scope.res = "No rows in the table";
+                	$scope.rows = result.rows.length;
+                	$scope.bearNum = result.rows.length;
+                    for (var i = 0; i < result.rows.length;i++) {
+
+                     //   $scope.BearList.add.push(result.rows.item(i).bear_name);
+                        $scope.res = "bears loaded";
+                    }
+                },
+                function(error) {
+                    $scope.res = "Error on loading: " + error.message;
+                }
+            );
+    $scope.bearNum = bearNum;        
+    $scope.res = res;
+	$scope.status = status;
 })
 
 .controller('dashCtrl', function($scope, $ionicPopup, $state, $location) {
@@ -202,12 +228,27 @@ angular.module('app.controllers', [])
 
 
 
-.controller('addBearCtrl', function($scope, $cordovaSQLite) {
+.controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList) {
 
 	//fake session id
    	var session_id = 1; 
    	$scope.session_id = session_id;
-  
+	$scope.Bear = Bear;
+	$scope.BearList = BearList;
+  	$scope.Bear.name = "";
+    $scope.Bear.zone = '';
+    $scope.Bear.size = '';
+    $scope.Bear.age = '';
+    $scope.Bear.gender = '';
+    $scope.Bear.species = '';
+    $scope.Bear.markDescription = '';
+    $scope.Bear.furColour = '';
+    $scope.Bear.pawMeasered = '';
+    $scope.Bear.cubs = '';
+    $scope.Bear.cubFurColour = '';
+    $scope.Bear.cubAge = '';
+    $scope.Bear.behaviour = [];
+    $scope.Bear.comment = '';
 
    	var sIdInsertResult = "Not Initialized";
 	var bearInsertResult = "Not Initialized";
@@ -230,32 +271,36 @@ angular.module('app.controllers', [])
 	//add bear to fake session id - to be updated
 	$scope.addBear = function(){
 		//insert into bears table
-		$cordovaSQLite.execute(db, 'INSERT INTO bears (bearName, bear_location, size, age, gender, species, '
-								  +'mark_desc, fur_colour, paw_measure, cub, cub_fur, cub_age, comment, '
+		$cordovaSQLite.execute(db, 'INSERT INTO bears (bear_name, bear_location, size, age, gender, species, '
+								  +'mark_desc, fur_colour, paw_measure, cubs, cub_fur, cub_age, comment, '
 								  +	'session_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-									[$scope.bearName, $scope.bearZone, $scope.bearSize, $scope.bearAge, $scope.bearGender,
-									$scope.bearSpecies, $scope.markDescription, $scope.bearFurColour, $scope.bearPawMeasered,
-									$scope.bearCubs, $scope.bearCubFurColour, $scope.bearCubAge, $scope.bearComment, $scope.session_id])
+									[$scope.Bear.name, $scope.Bear.zone, $scope.Bear.size, $scope.Bear.age, $scope.Bear.gender,
+									$scope.Bear.species, $scope.Bear.markDescription, $scope.Bear.furColour, $scope.Bear.pawMeasered,
+									$scope.Bear.cubs, $scope.Bear.cubFurColour, $scope.Bear.cubAge, $scope.bearComment, $scope.session_id])
 	    	.then(function(result) {
     	    	$scope.bearInsertResult = "Bear inserted";
+    	    	$scope.BearList.add.push($scope.Bear.name);
+                        
     		}, function(error) {
        	 		$scope.bearInsertResult = "Error on inserting Bear: " + error.message;
     		})
 	}
-   	
+   	var numret = 0;
+   	$scope.numret = numret;
    	//select example
     $scope.testSessionId = function() {
     	$scope.result = "Initialized";
 		// Execute SELECT statement to load message from database.
-        $cordovaSQLite.execute(db, 'SELECT * FROM sessions ORDER BY session_id DESC')
+        $cordovaSQLite.execute(db, 'SELECT bear_name FROM bears WHERE session_id = ?', [1])
             .then(
                 function(result) {
                 	$scope.result = "Result Positive but no rows";
                 	$scope.rows = result.rows.length;
+             	  	$scope.numret = result.rows.length;
                     if (result.rows.length > 0) {
 
-                        $scope.status = result.rows.item(0).session_id;
-                        $scope.result = "Sessions loaded";
+                        $scope.status = result.rows.item(0).bear_name;
+                        $scope.result = "Data in bear table - " + $scope.status;
                     }
                 },
                 function(error) {
