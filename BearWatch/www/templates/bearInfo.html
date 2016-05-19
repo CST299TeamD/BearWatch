@@ -26,6 +26,19 @@
         <div style="width: 283px; height: 30px;" class="spacer"></div>
         <ion-item style="" class="item-text-wrap">Ongoing Behaviour
             <div style="width: 283px; height: 10px;" class="spacer"></div>
+            
+
+            <ion-item class="item-divider">Active Behaviour</ion-item>
+                <div>
+                    <div ng-repeat="activeBehv in Bear.behaviour" class="item item-button-right">
+                        {{activeBehv}}
+                        <a class="button button-icon icon ion-close-circled"></a>
+                    </div>
+                    <div style="width: 283px; height: 20px;" class="spacer"></div>
+                </div>
+
+
+
         </ion-item>
 
         <div style="width: 283px; height: 30px;" class="spacer"></div>
@@ -34,7 +47,7 @@
             <ion-item style="" class="item-text-wrap">Select Habituation Level
                 <div style="width: 283px; height: 10px;" class="spacer"></div>
                 <lable ng-repeat="behaviour in habituationLevel">
-                    <button class="button button-royal button-outline">{{ behaviour }}</button>
+                    <button class="button button-royal button-outline" ng-click="addBehaviour('habituation', '{{behaviour}}')">{{ behaviour }}</button>
                 </lable>
             </ion-item>        
         </div>
@@ -45,7 +58,7 @@
             <ion-item style="" class="item-text-wrap">Description
                 <div style="width: 283px; height: 10px;" class="spacer"></div>
                 <lable ng-repeat="behaviour in feeding">
-                    <button class="button button-energized button-outline">{{ behaviour }}</button>
+                    <button class="button button-energized button-outline"  ng-click="addBehaviour('Feeding or Foraging', '{{behaviour}}')">{{ behaviour }}</button>
                 </lable>
             </ion-item>
         </div>
@@ -56,7 +69,7 @@
             <ion-item style="" class="item-text-wrap">Description
                 <div style="width: 283px; height: 10px;" class="spacer"></div>
                 <lable ng-repeat="behaviour in nonInteractive">
-                    <button class="button button-calm button-outline">{{ behaviour }}</button>
+                    <button class="button button-calm button-outline" ng-click="addBehaviour('Non-Interactive', '{{behaviour}}')">{{ behaviour }}</button>
                 </lable>
             </ion-item>
         </div>
@@ -67,7 +80,7 @@
             <ion-item style="" class="item-text-wrap">Description
                 <div style="width: 283px; height: 10px;" class="spacer"></div>
                 <lable ng-repeat="behaviour in bBInteraction">
-                    <button class="button button-royal button-outline">{{ behaviour }}</button>
+                    <button class="button button-royal button-outline" ng-click="addBehaviour('Bear-Bear Interactive', '{{behaviour}}')">{{ behaviour }}</button>
                 </lable>
             </ion-item>
         </div>
@@ -79,7 +92,7 @@
             <ion-item style="" class="item-text-wrap">Description
                 <div style="width: 283px; height: 10px;" class="spacer"></div>
                 <lable ng-repeat="behaviour in bHInteraction">
-                    <button class="button button-royal button-outline">{{ behaviour }}</button>
+                    <button class="button button-royal button-outline" ng-click="addBehaviour('Bear-human Interaction', '{{behaviour}}')">{{ behaviour }}</button>
                 </lable>
             </ion-item>
         </div>
@@ -91,7 +104,7 @@
             <ion-item style="" class="item-text-wrap">Description
                 <div style="width: 283px; height: 10px;" class="spacer"></div>
                 <lable ng-repeat="behaviour in hBinteraction">
-                    <button class="button button-royal button-outline">{{ behaviour }}</button>
+                    <button class="button button-royal button-outline" ng-click="addBehaviour('Human-bear Interaction', '{{behaviour}}')">{{ behaviour }}</button>
                 </lable>
             </ion-item>                
         </div>

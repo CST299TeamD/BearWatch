@@ -14,7 +14,7 @@ angular.module('app.services', [])
         cubs: '',
         cubFurColour: '',
         cubAge: '',
-        behaviour: [],
+        ba: [],
         comment: ''
     };
                      
