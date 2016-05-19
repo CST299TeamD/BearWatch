@@ -765,7 +765,9 @@ angular.module('app.controllers', [])
             
 })
 
-.controller('bearSpecCtrl', function($scope) {
-            
+.controller('bearSpecCtrl', function($scope, BearList, Bear) {
+    $scope.BearList = BearList;
+	$scope.Bear = Bear;
+
             
 })
