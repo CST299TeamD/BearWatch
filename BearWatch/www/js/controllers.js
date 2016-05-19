@@ -27,9 +27,9 @@ angular.module('app.controllers', [])
 			}else{
 				$scope.test += $scope.Session[item] + ", ";
 			}	
-		}
-		 
+		}	 
 	}
+
 	
 	$scope.enviroTesting = function (){
 		$scope.enviroTest = "--$scope.Enviro-- ";
@@ -191,7 +191,8 @@ angular.module('app.controllers', [])
 	                            				} else {
 	                            	  				console.log('Not sure!');
 									            }
-								            });
+								            }
+							);
             }
 
             //get the session id from the factory ---yet to be coded
@@ -201,8 +202,67 @@ angular.module('app.controllers', [])
 
 
 
-.controller('addBearCtrl', function($scope) {
+.controller('addBearCtrl', function($scope, $cordovaSQLite) {
 
+	//fake session id
+   	var session_id = 1; 
+   	$scope.session_id = session_id;
+  
+
+   	var sIdInsertResult = "Not Initialized";
+	var bearInsertResult = "Not Initialized";
+	$scope.bearInsertResult = bearInsertResult;
+	$scope.sIdInsertResult = sIdInsertResult;
+	
+	
+	//insert fake row in the database for session id
+	$scope.testInsert = function(){
+	$scope.sIdInsertResult = "Initialized";
+	$cordovaSQLite.execute(db, 'INSERT INTO sessions (session_id) VALUES (?)', [1])
+    .then(function(result) {
+        $scope.sIdInsertResult = "Session id inserted";
+    }, function(error) {
+        $scope.sIdInsertResult = "Error on inserting: " + error.message;
+    })
+
+	}
+
+	//add bear to fake session id - to be updated
+	$scope.addBear = function(){
+		//insert into bears table
+		$cordovaSQLite.execute(db, 'INSERT INTO bears (bearName, bear_location, size, age, gender, species, '
+								  +'mark_desc, fur_colour, paw_measure, cub, cub_fur, cub_age, comment, '
+								  +	'session_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+									[$scope.bearName, $scope.bearZone, $scope.bearSize, $scope.bearAge, $scope.bearGender,
+									$scope.bearSpecies, $scope.markDescription, $scope.bearFurColour, $scope.bearPawMeasered,
+									$scope.bearCubs, $scope.bearCubFurColour, $scope.bearCubAge, $scope.bearComment, $scope.session_id])
+	    	.then(function(result) {
+    	    	$scope.bearInsertResult = "Bear inserted";
+    		}, function(error) {
+       	 		$scope.bearInsertResult = "Error on inserting Bear: " + error.message;
+    		})
+	}
+   	
+   	//select example
+    $scope.testSessionId = function() {
+    	$scope.result = "Initialized";
+		// Execute SELECT statement to load message from database.
+        $cordovaSQLite.execute(db, 'SELECT * FROM sessions ORDER BY session_id DESC')
+            .then(
+                function(result) {
+                	$scope.result = "Result Positive but no rows";
+                	$scope.rows = result.rows.length;
+                    if (result.rows.length > 0) {
+
+                        $scope.status = result.rows.item(0).session_id;
+                        $scope.result = "Sessions loaded";
+                    }
+                },
+                function(error) {
+                    $scope.result = "Error on loading: " + error.message;
+                }
+            );
+    }
 })
 
 .controller('humanCtrl', function($scope) {

@@ -1,5 +1,25 @@
 angular.module('app.services', [])
 
+.factory('Bear', [function(){
+                     return {
+                     bearName: '',
+                     bearZone: '',
+                     bearSize: '',
+                     bearAge: '',
+                     bearGender: '',
+                     bearSpecies: '',
+                     markDescription: '',
+                     bearFurColour: '',
+                     bearPawMeasered: '',
+                     bearCubs: '',
+                     bearCubFurColour: '',
+                     bearCubAge: '',
+                     bearbehaviour: [],
+                     bearComment: ''
+                     };
+                     
+                     }])
+
 .factory('Session', [function(){
     return { 
         observer: '',

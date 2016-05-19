@@ -2,6 +2,7 @@
     <ion-content class="has-header" overflow-scroll="true" padding="true">
         <h3 style="">Bear {{bearName}} Specifications</h3>
         <div>
+            Session id : {{session_id}} <br>
             Zone : {{bearZone}} <br>
             Bear Size : {{bearSize}} <br>
             Bear Species : {{bearSpecies}} <br>
@@ -14,6 +15,9 @@
             Bear Cubs Age : {{bearCubAge}} <br>
             Bear Cubs Fur Colour ; {{bearCubFurColour}} <br>
             Bear Comment : {{bearComment}} <br>
+            <br>Seslect session <br>
+            Session id insert : {{sIdInsertResult}} <br>
+            <button ng-click="testInsert()">Insert Session Id</button>
 
 
         </div>
