@@ -10,10 +10,11 @@
         </label>
 
         <!--ui-sref="tab.bear"-->
-		<button class="button button-balanced  button-block"  ng-click="saveSession()" ng-disabled="Session.observationMode == ''" >&nbsp; Start Session</button>
+		<button class="button button-balanced  button-block" ui-sref="tab.bear" ng-disabled="Session.observationMode == ''" >&nbsp; Start Session</button>
         
         <div>
         <button ng-click="testInsert()">Test insert</button>
+        <br/><br/>
         <button ng-click="testSelect()">Test select</button>
         <br><br>
         Insert Results: {{insertResult}}

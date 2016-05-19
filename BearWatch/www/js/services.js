@@ -67,16 +67,6 @@ angular.module('app.services', [])
             return "Error on saving: " + error.message;
         });
         
-        $cordovaSQLite.execute(db, 'SELECT last_insert_rowid')
-        .then(function(result) {
-            if (result.rows.length > 0) {
-                console.log("last_insert_rowid: " + JSON.stringify(result));
-                console.log("result.rows.item(0).session_id: " + result.rows.item(0).session_id);
-                Session.id = result.rows.item(0).session_id;
-            }
-        }, function(error) {
-            return "Error on getting rowid: " + error.message;
-        });
         return success;
     }
     

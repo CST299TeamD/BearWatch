@@ -141,20 +141,23 @@ angular.module('app.controllers', [])
 
 	$scope.testInsert = function(){
 		$scope.insertResult = "Initialized";
-		$scope.selectResult = Session.save();
+		$scope.insertResult = Session.save();
 	}
 
 	$scope.testSelect = function(){
-		$scope.insertResult = "Initialized";
+		$scope.selectResult = "Initialized";
 		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [Sessions.id])
             .then(
                 function(result) {
                     if (result.rows.length > 0) {
-                        $scope.selectResult = JSON.stringify(result.rows.item(0));
+                        $scope.selectResult = "result: " + result.rows.item(0);
+            			for(item in result.rows.item(0)){
+            				$scope.selectResult += ", " + item;
+            			}
                     }
                 },
                 function(error) {
-                    $scope.result = "Error on loading: " + error.message;
+                    $scope.selectResult = "Error on loading: " + error.message;
                 }
             );
 	}
