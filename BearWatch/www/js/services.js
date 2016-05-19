@@ -44,7 +44,7 @@ angular.module('app.services', [])
     
     //function for saving session state
 	Session.save = function(){      
-        var success = '';
+        var success = 'here i am';
         var protocol = '';
         var time = new Date();
         if(Session.viewingArea == 'Other'){
@@ -64,9 +64,8 @@ angular.module('app.services', [])
 			success = "Session save success" + result.insertId;
             Session.id = result.insertId;
         }, function(error) {
-            return "Error on saving: " + error.message;
+            success = "Error on saving: " + error.message;
         });
-        
         return success;
     }
     
