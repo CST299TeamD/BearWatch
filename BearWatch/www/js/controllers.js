@@ -168,7 +168,7 @@ angular.module('app.controllers', [])
                 }
             );
 
-        $cordovaSQLite.execute(db, 'SELECT * FROM logs')
+        $cordovaSQLite.execute(db, 'SELECT * FROM logs WHERE session_id = (?)', [Session.id])
         .then(
             function(result) {
             	$scope.selectResult += "Enviro = ";
@@ -179,6 +179,24 @@ angular.module('app.controllers', [])
         			}
                 }else{
                 	console.log("No enviro results")
+                }
+            },
+            function(error) {
+                $scope.selectResult = "Error on loading: " + error.message;
+            }
+        );
+
+        $cordovaSQLite.execute(db, 'SELECT * FROM food_sources WHERE session_id = (?)', [Session.id])
+        .then(
+            function(result) {
+            	$scope.selectResult += "Food = ";
+                if (result.rows.length > 0) {
+                	console.log("Food results returned");
+        			for(item in result.rows.item(0)){
+        				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
+        			}
+                }else{
+                	console.log("No food results")
                 }
             },
             function(error) {
@@ -244,13 +262,16 @@ angular.module('app.controllers', [])
 
 
 .controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session) {
+	//global debug var
+	$scope.debug = debug;
 
 	//fake session id
-	//$scope.Session = Session;
-	//$scope.session_id = Session.id; 
+	$scope.Session = Session;
+	$scope.session_id = Session.id;
+	console.log($scope.session_id);
    	
-   	var session_id = 1; 
-   	$scope.session_id = session_id;
+   	//var session_id = 1; 
+   	//$scope.session_id = session_id;
 	$scope.Bear = Bear;
 	$scope.BearList = BearList;
   	$scope.Bear.name = '';

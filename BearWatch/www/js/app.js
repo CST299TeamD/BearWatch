@@ -16,10 +16,9 @@ var db_drop = true;
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngIOS9UIWebViewPatch'])
 
-.run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaFileTransfer, $q) {
+.run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaFileTransfer) {
   $ionicPlatform.ready(function() {
   
-    console.log("$q.defer()1: " + $q.defer());
     //drop tables for debugging
     if(db_drop == true) {
       $cordovaSQLite.deleteDB({name:"bear_watch.db", location:'default'});
@@ -148,9 +147,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "food_source       TEXT    , "
       + "availability      TEXT    , "
       + "comment           TEXT    , "
-      + "log_id            INTEGER , "
       + "session_id        INTEGER , "
-      + "FOREIGN KEY(log_id) REFERENCES logs(log_id), "
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
     ).then(function(result) {
         db_success += "--food_sources success, ";

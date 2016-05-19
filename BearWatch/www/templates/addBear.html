@@ -15,15 +15,17 @@
             Bear Cubs Age : {{Bear.cubAge}} <br>
             Bear Cubs Fur Colour ; {{Bear.cubFurColour}} <br>
             Bear Comment : {{Bear.comment}} <br>
-            <br>Seslect session <br>
-            Session id insert : {{sIdInsertResult}} <br>
-            <button ng-click="testInsert()">Insert Session Id</button>
-            <button ng-click="addBear()">Insert Bear</button><br>
-            Adding bear Result : {{bearInsertResult}}
-            <br><br>
-            <button ng-click="testSessionId()">Select from bears table</button><br>
-            Number of rows in bears table : {{ numret }} <br>
-            Result : {{result}} <br>
+            <div ng-show="debug">
+                <br>Select session <br>
+                Session id insert : {{sIdInsertResult}} <br>
+                <button ng-click="testInsert()">Insert Session Id</button>
+                <button ng-click="addBear()">Insert Bear</button><br>
+                Adding bear Result : {{bearInsertResult}}
+                <br><br>
+                <button ng-click="testSessionId()">Select from bears table</button><br>
+                Number of rows in bears table : {{ numret }} <br>
+                Result : {{result}} <br>
+            </div>
 
         </div>
         <form style="" class="list">
