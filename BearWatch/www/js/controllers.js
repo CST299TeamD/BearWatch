@@ -173,13 +173,17 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('bearCtrl', function($scope, $cordovaSQLite, BearList, Bear) {
+.controller('bearCtrl', function($scope, $cordovaSQLite, BearList, Bear, $location) {
 	
 	$scope.BearList = BearList;
-	$scope.Baer = Bear;
+	$scope.Bear = Bear;
+	$scope.bearTest = 55;
 
 	$scope.changeBear = function(index){
-		/*var tmp = BearList[index];
+		$scope.bearTest = "Initialized";
+		var tmp = BearList.add[index];
+		$scope.bearTest = "bear name: " + tmp.name;
+		
 		$scope.Bear.name = tmp.name;
 		$scope.Bear.zone = tmp.location;
 		$scope.Bear.size = tmp.size;
@@ -193,8 +197,8 @@ angular.module('app.controllers', [])
 		$scope.Bear.cubFurColour = tmp.cubFurColour;
 		$scope.Bear.cubAge = tmp.cubAge;
 		$scope.Bear.behaviour = tmp.behaviour;
-		$scope.Bear.comment = tmp.comment;*/
-		$location.path("/BearInfo");		
+		$scope.Bear.comment = tmp.comment;
+		//$location.path("/BearInfo");		
 	}
 })
 
