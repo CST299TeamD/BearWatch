@@ -185,14 +185,18 @@ angular.module('app.controllers', [])
                                                    template: 'Once a session is closed it cannot be re-opened. Continue closing session?'
                                                    });
             confirmPopup.then(function(res) {
-                              if(res) {
-                              console.log('Sure!');
-                              $location.path("/ReviewList");
-                              } else {
-                              console.log('Not sure!');
-                              }
-                              });
+	                		    		        if(res) {
+	             	      		        		   	console.log('Sure!');
+	                              					$location.path("/ReviewList");
+	                            				} else {
+	                            	  				console.log('Not sure!');
+									            }
+								            });
             }
+
+            //get the session id from the factory ---yet to be coded
+            var session_id = 1;
+            $scope.sesion_id = session_id;
 })
 
 
@@ -631,6 +635,20 @@ angular.module('app.controllers', [])
                        furColour:"pink"
             };
             $scope.bear = bear;
+            
+            var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Fishing", "Human Food"];
+            var nonInteractive = ["Loafing/Resting", "Sleeping", "Waling", "Running"];
+            var bBInteraction =["Alert/Vigilance", "Playing", "Fighting", "Defense"];
+            var bHInteraction = ["Alert/Vigilance", "Retreat", "Bear Approach"];
+            var hBinteraction = ["Alert/Vigilance", "Retreat", "Approach Bear", "Aggression "];
+            var habituationLevel = ["Habituated", "Non- Habituated", "SUbadult"];
+            
+            $scope.feeding = feeding;
+            $scope.nonInteractive = nonInteractive;
+            $scope.bBInteraction = bBInteraction;
+            $scope.bHInteraction = bHInteraction;
+            $scope.hBinteraction = hBinteraction;
+            $scope.habituationLevel= habituationLevel;
             
             var movements = ["Unknown", "Walking", "Wading", "Standing", "Laying dowm","Sitting", "Running", "Swimming","Climbing",];
             
