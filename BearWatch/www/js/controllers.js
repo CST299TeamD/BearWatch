@@ -140,26 +140,19 @@ angular.module('app.controllers', [])
 	$scope.selectResult = selectResult;
 
 	$scope.testInsert = function(){
-		$scope.insertResult = "Saving";
-		id = Session.save();
-		if(id != '') {
-			console.log("Trying envirosave with id " + id);
-			//Enviro.save(id);
-		}else{
-			console.log("no id");
-		}
+		$scope.insertResult = "Initialized";
+		$scope.insertResult = Session.save();
 	}
 
 	$scope.testSelect = function(){
-		$scope.insertResult = "Initialized: Session_id?:  " + Session.id;
-		Enviro.save(Session.id);
-		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [Session.id])
+		$scope.selectResult = "Initialized";
+		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [Sessions.id])
             .then(
                 function(result) {
-                	$scope.selectResult = "Session = ";
                     if (result.rows.length > 0) {
+                        $scope.selectResult = "result: " + result.rows.item(0);
             			for(item in result.rows.item(0)){
-            				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
+            				$scope.selectResult += ", " + item;
             			}
                     }
                 },
@@ -167,24 +160,6 @@ angular.module('app.controllers', [])
                     $scope.selectResult = "Error on loading: " + error.message;
                 }
             );
-
-        $cordovaSQLite.execute(db, 'SELECT * FROM logs')
-        .then(
-            function(result) {
-            	$scope.selectResult += "Enviro = ";
-                if (result.rows.length > 0) {
-                	console.log("enviro results returned");
-        			for(item in result.rows.item(0)){
-        				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
-        			}
-                }else{
-                	console.log("No enviro results")
-                }
-            },
-            function(error) {
-                $scope.selectResult = "Error on loading: " + error.message;
-            }
-        );
 	}
 
 })
@@ -199,7 +174,8 @@ angular.module('app.controllers', [])
 		$scope.bearTest = "Initialized";
 		var tmp = BearList.add[index];
 		$scope.bearTest = "bear name: " + tmp.name;
-		
+		$scope.Bear.id = tmp.id;
+		$scope.Bear.index = tmp.index;
 		$scope.Bear.name = tmp.name;
 		$scope.Bear.zone = tmp.location;
 		$scope.Bear.size = tmp.size;
@@ -297,7 +273,9 @@ angular.module('app.controllers', [])
 									$scope.Bear.cubs, $scope.Bear.cubFurColour, $scope.Bear.cubAge, $scope.bearComment, $scope.session_id])
 	    	.then(function(result) {
     	    	$scope.bearInsertResult = "Bear inserted";
+
     	    	$scope.BearList.add.push({
+    	    		index: $scope.BearList.add.length,
     	    		id: result.insertId,
     	    		name: $scope.Bear.name,
     	    		location: $scope.Bear.zone,
