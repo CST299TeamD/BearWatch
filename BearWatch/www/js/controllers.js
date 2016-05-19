@@ -243,9 +243,12 @@ angular.module('app.controllers', [])
 
 
 
-.controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList) {
+.controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session) {
 
 	//fake session id
+	//$scope.Session = Session;
+	//$scope.session_id = Session.id; 
+   	
    	var session_id = 1; 
    	$scope.session_id = session_id;
 	$scope.Bear = Bear;
@@ -274,7 +277,7 @@ angular.module('app.controllers', [])
 	//insert fake row in the database for session id
 	$scope.testInsert = function(){
 	$scope.sIdInsertResult = "Initialized";
-	$cordovaSQLite.execute(db, 'INSERT INTO sessions (session_id) VALUES (?)', [1])
+	$cordovaSQLite.execute(db, 'INSERT INTO sessions (session_id) VALUES (?)', [$scope.session_id])
     .then(function(result) {
         $scope.sIdInsertResult = "Session id inserted";
     }, function(error) {
@@ -759,9 +762,11 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('bearInfoCtrl', function($scope, Bear) {
-            
+.controller('bearInfoCtrl', function($scope, Bear, BearList, Session) {
+            $scope.Session = Session;
+            $scope.session_id = Session.id;
             $scope.Bear = Bear;
+            $scope.BearList = BearList; 
 
             
             var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Fishing", "Human Food"];
@@ -776,18 +781,16 @@ angular.module('app.controllers', [])
             $scope.bBInteraction = bBInteraction;
             $scope.bHInteraction = bHInteraction;
             $scope.hBinteraction = hBinteraction;
-            $scope.habituationLevel= habituationLevel;
-            
-            var movements = ["Unknown", "Walking", "Wading", "Standing", "Laying dowm","Sitting", "Running", "Swimming","Climbing",];
-            
-            var actions = ["Unknown","Fishing","Watching Bears", "Watching humans", "Consuming", "Interacting with humans","Interacting with Bears", "Grooming", "Sleeping", "Vigilant", "Fighting"];
-            
-            var attitudes = ["Unknown", "Avoiding Humans","Avoiding Bears","Socializing","Aggresive","Passive","Alert","Enticing"];
-            
-            $scope.movements = movements;
-            $scope.actions = actions;
-            $scope.attitudes = attitudes;
-            
+            $scope.habituationLevel = habituationLevel;
+            $scope.test= "No behaviour";
+
+            $scope.addBehaviour = function(type, desc){
+            	Bear.behaviour.push(type + " - " + desc);
+
+            }
+
+
+
 })
 
 .controller('bearSpecCtrl', function($scope, BearList, Bear) {
