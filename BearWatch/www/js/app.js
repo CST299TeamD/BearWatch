@@ -16,9 +16,10 @@ var db_drop = false;
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngIOS9UIWebViewPatch'])
 
-.run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaFileTransfer) {
+.run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaFileTransfer, $q) {
   $ionicPlatform.ready(function() {
   
+    console.log("$q.defer()1: " + $q.defer());
     //drop tables for debugging
     if(db_drop == true) {
       $cordovaSQLite.deleteDB({name:"bear_watch.db", location:'default'});
