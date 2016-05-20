@@ -146,7 +146,6 @@ angular.module('app.services', [])
     //function for saving environment state
 	Enviro.save = function(id){ 
         console.log("Enviro Save activated! id=" + id);
-        var success = '';
         var obscurity = '';
         
         if(Enviro.obscuredReason == 'Other'){
@@ -163,10 +162,26 @@ angular.module('app.services', [])
             [time.toLocaleTimeString(), Enviro.waterBody, Enviro.waterLevel, Enviro.waterFlow, Enviro.waterClarity, Enviro.cloudCover, Enviro.precipitation, 
             Enviro.wind, Enviro.windDirection, Enviro.temp, Enviro.humid, Enviro.visibility, Enviro.obstruction, Enviro.noiseLevel, id])
         .then(function(result) {
-            console.log("Enviro save success" + result.insertId);            
+            console.log("Enviro save success" + result.insertId);
         }, function(error) {
             console.log("Error on saving: " + error.message);
         });
+
+        console.log("#in foodSources: " + Enviro.foodSources.length);
+
+        for(food in Enviro.foodSources){
+            console.log("food: " + JSON.stringify(Enviro.foodSources[food]));
+            $cordovaSQLite.execute(db, 
+                'INSERT INTO food_sources '
+                + '(food_source, availability, comment, session_id)'
+                + ' VALUES (?, ?, ?, ?)', 
+                [ Enviro.foodSources[food].src, Enviro.foodSources[food].avail, Enviro.foodSources[food].desc, id])
+            .then(function(result) {
+                console.log("Food_source save success" + result.insertId);
+            }, function(error) {
+                console.log("Error on saving: " + error.message);
+            });
+        }
         
     }
     
