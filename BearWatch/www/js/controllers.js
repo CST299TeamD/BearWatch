@@ -157,13 +157,12 @@ angular.module('app.controllers', [])
 	
 	$scope.BearList = BearList;
 	$scope.Bear = Bear;
-	$scope.bearTest = 55;
 
 	$scope.changeBear = function(index){
-		$scope.bearTest = "Initialized";
-		var tmp = BearList.add[index];
-		$scope.bearTest = "bear name: " + tmp.name;
+
+		var tmp = $scope.BearList.add[index];
 		$scope.Bear.id = tmp.id;
+		console.log("index " + tmp.index)
 		$scope.Bear.index = tmp.index;
 		$scope.Bear.name = tmp.name;
 		$scope.Bear.zone = tmp.location;
@@ -687,32 +686,43 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('bearInfoCtrl', function($scope) {
-            var bear ={
-                       name:"Bear 1",
-                       location: "Zone5",
-                       species: "Black",
-                       habituationLevel: "Habituated",
-                       gender: "Male",
-                       age: "Adult",
-                       markDesc: "Unknown",
-                       furColour:"pink"
-            };
-            $scope.bear = bear;
+.controller('bearInfoCtrl', function($scope, Bear, BearList, Session) {
+            $scope.Session = Session;
+            $scope.session_id = Session.id;
+            $scope.Bear = Bear;
+            $scope.BearList = BearList; 
+
             
-            var movements = ["Unknown", "Walking", "Wading", "Standing", "Laying dowm","Sitting", "Running", "Swimming","Climbing",];
+            var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Fishing", "Human Food"];
+            var nonInteractive = ["Loafing/Resting", "Sleeping", "Walking", "Running"];
+            var bBInteraction =["Alert/Vigilance", "Playing", "Fighting", "Defense"];
+            var bHInteraction = ["Alert/Vigilance", "Retreat", "Bear Approach"];
+            var hBinteraction = ["Alert/Vigilance", "Retreat", "Approach Bear", "Aggression "];
+            var habituationLevel = ["Habituated", "Non- Habituated", "SUbadult"];
             
-            var actions = ["Unknown","Fishing","Watching Bears", "Watching humans", "Consuming", "Interacting with humans","Interacting with Bears", "Grooming", "Sleeping", "Vigilant", "Fighting"];
-            
-            var attitudes = ["Unknown", "Avoiding Humans","Avoiding Bears","Socializing","Aggresive","Passive","Alert","Enticing"];
-            
-            $scope.movements = movements;
-            $scope.actions = actions;
-            $scope.attitudes = attitudes;
-            
+            $scope.feeding = feeding;
+            $scope.nonInteractive = nonInteractive;
+            $scope.bBInteraction = bBInteraction;
+            $scope.bHInteraction = bHInteraction;
+            $scope.hBinteraction = hBinteraction;
+            $scope.habituationLevel = habituationLevel;
+            $scope.test= "No behaviour";
+
+            $scope.addBehaviour = function(type, desc){
+            	Bear.behaviour.push(type + " - " + desc);
+
+            }
+
+
+
 })
 
-.controller('bearSpecCtrl', function($scope) {
-            
+.controller('bearSpecCtrl', function($scope, BearList, Bear) {
+    $scope.BearList = BearList;
+	$scope.Bear = Bear;
+
+	$scope.updateBear = function(index){
+		console.log(BearList.add[index].name);
+	}
             
 })
