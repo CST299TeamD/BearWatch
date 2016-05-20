@@ -722,7 +722,28 @@ angular.module('app.controllers', [])
 	$scope.Bear = Bear;
 
 	$scope.updateBear = function(index){
-		console.log(BearList.add[index].name);
+
+		var tmp = $scope.Bear;
+		//update the local copy of the bear
+		$scope.BearList.add[index].id = tmp.id;
+		$scope.BearList.add[index].index = tmp.index;
+		$scope.BearList.add[index].name = tmp.name;
+		$scope.BearList.add[index].zone = tmp.location;
+		$scope.BearList.add[index].size = tmp.size;
+		$scope.BearList.add[index].age = tmp.age;
+		$scope.BearList.add[index].gender = tmp.gender;
+		$scope.BearList.add[index].species = tmp.species;
+		$scope.BearList.add[index].markDescription = tmp.markDescription;
+		$scope.BearList.add[index].furColour = tmp.furColour;
+		$scope.BearList.add[index].pawMeasered = tmp.pawMeasured;
+		$scope.BearList.add[index].cubs = tmp.cubs;
+		$scope.BearList.add[index].cubFurColour = tmp.cubFurColour;
+		$scope.BearList.add[index].cubAge = tmp.cubAge;
+		$scope.BearList.add[index].behaviour = tmp.behaviour;
+		$scope.BearList.add[index].comment = tmp.comment;
+
+
+		//update the bear in the database
 	}
             
 })
