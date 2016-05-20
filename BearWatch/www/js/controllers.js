@@ -100,14 +100,6 @@ angular.module('app.controllers', [])
 	$scope.testSelect = function(){
 		$scope.selectResult = "Initialized";
 
-		$cordovaSQLite.execute(db, 'INSERT INTO session (bear_name) VALUES (?)', [$scope.data])
-        .then(function(result) {
-            $scope.result = "Bear name saved successful, cheers!";
-        }, function(error) {
-            $scope.result = "Error on saving: " + error.message;
-        })
-
-<<<<<<< HEAD
         $cordovaSQLite.execute(db, 'SELECT * FROM logs WHERE session_id = (?)', [Session.id])
         .then(
             function(result) {
@@ -143,17 +135,6 @@ angular.module('app.controllers', [])
                 $scope.selectResult = "Error on loading: " + error.message;
             }
         );
-=======
-	}
-
-	$scope.startSession = function() {			
-		$cordovaSQLite.execute(db, 'INSERT INTO sessions (bear_name) VALUES (?)', [$scope.data])
-        .then(function(result) {
-            $scope.result = "Bear name saved successful, cheers!";
-        }, function(error) {
-            $scope.result = "Error on saving: " + error.message;
-        })
->>>>>>> c08ee19d94f9e50cd1cef6df6f77c3d238020709
 	}
 
 })
@@ -182,7 +163,6 @@ angular.module('app.controllers', [])
 
 
 
-<<<<<<< HEAD
 .controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session) {
 	//global debug var
 	$scope.debug = debug;
@@ -228,9 +208,6 @@ angular.module('app.controllers', [])
     })
 
 	}
-=======
-.controller('addBearCtrl', function($scope) {
->>>>>>> c08ee19d94f9e50cd1cef6df6f77c3d238020709
 
 })
 
