@@ -2,6 +2,8 @@ angular.module('app.services', [])
 
 .factory('Bear', [function(){
     return {
+        index: -1,
+        id: -1,
         name: '',
         zone: '',
         size: '',

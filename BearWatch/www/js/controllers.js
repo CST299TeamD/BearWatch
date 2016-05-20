@@ -99,6 +99,20 @@ angular.module('app.controllers', [])
 
 	$scope.testSelect = function(){
 		$scope.selectResult = "Initialized";
+		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [Sessions.id])
+            .then(
+                function(result) {
+                    if (result.rows.length > 0) {
+                        $scope.selectResult = "result: " + result.rows.item(0);
+            			for(item in result.rows.item(0)){
+            				$scope.selectResult += ", " + item;
+            			}
+                    }
+                },
+                function(error) {
+                    $scope.selectResult = "Error on loading: " + error.message;
+                }
+            );
 
         $cordovaSQLite.execute(db, 'SELECT * FROM logs WHERE session_id = (?)', [Session.id])
         .then(
@@ -139,8 +153,33 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('bearCtrl', function($scope) {
-            
+.controller('bearCtrl', function($scope, $cordovaSQLite, BearList, Bear, $location) {
+	
+	$scope.BearList = BearList;
+	$scope.Bear = Bear;
+
+	$scope.changeBear = function(index){
+
+		var tmp = $scope.BearList.add[index];
+		$scope.Bear.id = tmp.id;
+		console.log("index " + tmp.index)
+		$scope.Bear.index = tmp.index;
+		$scope.Bear.name = tmp.name;
+		$scope.Bear.zone = tmp.location;
+		$scope.Bear.size = tmp.size;
+		$scope.Bear.age = tmp.age;
+		$scope.Bear.gender = tmp.gender;
+		$scope.Bear.species = tmp.species;
+		$scope.Bear.markDescription = tmp.markDescription;
+		$scope.Bear.furColour = tmp.furColour;
+		$scope.Bear.pawMeasered = tmp.pawMeasured;
+		$scope.Bear.cubs = tmp.cubs;
+		$scope.Bear.cubFurColour = tmp.cubFurColour;
+		$scope.Bear.cubAge = tmp.cubAge;
+		$scope.Bear.behaviour = tmp.behaviour;
+		$scope.Bear.comment = tmp.comment;
+		//$location.path("/BearInfo");		
+	}
 })
 
 .controller('dashCtrl', function($scope, $ionicPopup, $state, $location) {
@@ -160,8 +199,6 @@ angular.module('app.controllers', [])
                               });
             }
 })
-
-
 
 .controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session) {
 	//global debug var
@@ -195,20 +232,65 @@ angular.module('app.controllers', [])
 	var bearInsertResult = "Not Initialized";
 	$scope.bearInsertResult = bearInsertResult;
 	$scope.sIdInsertResult = sIdInsertResult;
-	
-	
-	//insert fake row in the database for session id
-	$scope.testInsert = function(){
-	$scope.sIdInsertResult = "Initialized";
-	$cordovaSQLite.execute(db, 'INSERT INTO sessions (session_id) VALUES (?)', [$scope.session_id])
-    .then(function(result) {
-        $scope.sIdInsertResult = "Session id inserted";
-    }, function(error) {
-        $scope.sIdInsertResult = "Error on inserting: " + error.message;
-    })
 
+	//add bear to fake session id - to be updated
+	$scope.addBear = function(){
+		//insert into bears table
+		$cordovaSQLite.execute(db, 'INSERT INTO bears (bear_name, bear_location, size, age, gender, species, '
+								  +'mark_desc, fur_colour, paw_measure, cubs, cub_fur, cub_age, comment, '
+								  +	'session_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+									[$scope.Bear.name, $scope.Bear.zone, $scope.Bear.size, $scope.Bear.age, $scope.Bear.gender,
+									$scope.Bear.species, $scope.Bear.markDescription, $scope.Bear.furColour, $scope.Bear.pawMeasered,
+									$scope.Bear.cubs, $scope.Bear.cubFurColour, $scope.Bear.cubAge, $scope.bearComment, $scope.session_id])
+	    	.then(function(result) {
+    	    	$scope.bearInsertResult = "Bear inserted";
+
+    	    	$scope.BearList.add.push({
+    	    		index: $scope.BearList.add.length,
+    	    		id: result.insertId,
+    	    		name: $scope.Bear.name,
+    	    		location: $scope.Bear.zone,
+    	    		size: $scope.Bear.size,
+    	    		age: $scope.Bear.age,
+    	    		gender: $scope.Bear.gender,
+    	    		species: $scope.Bear.species,
+    	    		markDescription: $scope.Bear.markDescription,
+    	    		behaviour: [],
+    	    		furColour: $scope.Bear.furColour,
+    	    		pawMeasured: $scope.Bear.pawMeasered,
+    	    		cubs: $scope.Bear.cubs,
+    	    		cubFurColour: $scope.Bear.cubFurColour,
+    	    		cubAge: $scope.Bear.cubAge,
+    	    		comment: $scope.bearComment
+    	    	});
+                        
+    		}, function(error) {
+       	 		$scope.bearInsertResult = "Error on inserting Bear: " + error.message;
+    		})
 	}
+   	var numret = 0;
+   	$scope.numret = numret;
+   	//select example
+    $scope.testSessionId = function() {
+    	$scope.result = "Initialized";
+		// Execute SELECT statement to load message from database.
+        $cordovaSQLite.execute(db, 'SELECT bear_name FROM bears WHERE session_id = ?', [1])
+            .then(
+                function(result) {
+                	$scope.result = "Result Positive but no rows";
+                	$scope.rows = result.rows.length;
+             	  	$scope.numret = result.rows.length;
+                    if (result.rows.length > 0) {
 
+                        $scope.status = result.rows.item(0).bear_name;
+                        $scope.result = "Data in bear table - " + $scope.status;
+                    }
+                },
+                function(error) {
+                    $scope.result = "Error on loading: " + error.message;
+                }
+            );
+    }
 })
 
 .controller('humanCtrl', function($scope) {
@@ -604,32 +686,43 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('bearInfoCtrl', function($scope) {
-            var bear ={
-                       name:"Bear 1",
-                       location: "Zone5",
-                       species: "Black",
-                       habituationLevel: "Habituated",
-                       gender: "Male",
-                       age: "Adult",
-                       markDesc: "Unknown",
-                       furColour:"pink"
-            };
-            $scope.bear = bear;
+.controller('bearInfoCtrl', function($scope, Bear, BearList, Session) {
+            $scope.Session = Session;
+            $scope.session_id = Session.id;
+            $scope.Bear = Bear;
+            $scope.BearList = BearList; 
+
             
-            var movements = ["Unknown", "Walking", "Wading", "Standing", "Laying dowm","Sitting", "Running", "Swimming","Climbing",];
+            var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Fishing", "Human Food"];
+            var nonInteractive = ["Loafing/Resting", "Sleeping", "Walking", "Running"];
+            var bBInteraction =["Alert/Vigilance", "Playing", "Fighting", "Defense"];
+            var bHInteraction = ["Alert/Vigilance", "Retreat", "Bear Approach"];
+            var hBinteraction = ["Alert/Vigilance", "Retreat", "Approach Bear", "Aggression "];
+            var habituationLevel = ["Habituated", "Non- Habituated", "SUbadult"];
             
-            var actions = ["Unknown","Fishing","Watching Bears", "Watching humans", "Consuming", "Interacting with humans","Interacting with Bears", "Grooming", "Sleeping", "Vigilant", "Fighting"];
-            
-            var attitudes = ["Unknown", "Avoiding Humans","Avoiding Bears","Socializing","Aggresive","Passive","Alert","Enticing"];
-            
-            $scope.movements = movements;
-            $scope.actions = actions;
-            $scope.attitudes = attitudes;
-            
+            $scope.feeding = feeding;
+            $scope.nonInteractive = nonInteractive;
+            $scope.bBInteraction = bBInteraction;
+            $scope.bHInteraction = bHInteraction;
+            $scope.hBinteraction = hBinteraction;
+            $scope.habituationLevel = habituationLevel;
+            $scope.test= "No behaviour";
+
+            $scope.addBehaviour = function(type, desc){
+            	Bear.behaviour.push(type + " - " + desc);
+
+            }
+
+
+
 })
 
-.controller('bearSpecCtrl', function($scope) {
-            
+.controller('bearSpecCtrl', function($scope, BearList, Bear) {
+    $scope.BearList = BearList;
+	$scope.Bear = Bear;
+
+	$scope.updateBear = function(index){
+		console.log(BearList.add[index].name);
+	}
             
 })
