@@ -90,7 +90,7 @@ angular.module('app.controllers')
     	    		cubs: $scope.Bear.cubs,
     	    		cubFurColour: $scope.Bear.cubFurColour,
     	    		cubAge: $scope.Bear.cubAge,
-    	    		comment: $scope.bearComment
+    	    		comment: $scope.Bear.comment
     	    	});
                         
     		}, function(error) {
@@ -128,7 +128,7 @@ angular.module('app.controllers')
             $scope.BearList = BearList; 
 
             
-            var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Fishing", "Human Food"];
+            var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Human Food"];
             var nonInteractive = ["Loafing/Resting", "Sleeping", "Walking", "Running"];
             var bBInteraction =["Alert/Vigilance", "Playing", "Fighting", "Defense"];
             var bHInteraction = ["Alert/Vigilance", "Retreat", "Bear Approach"];
