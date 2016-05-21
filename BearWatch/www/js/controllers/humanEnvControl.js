@@ -75,9 +75,10 @@ angular.module('app.controllers')
 
 })
 
-.controller('environmentCtrl', function($scope, Enviro) {
+.controller('environmentCtrl', function($scope, Enviro, Session) {
 	//global factory enviro object
 	$scope.Enviro = Enviro;
+	$scope.Session = Session;
             
 	//function to add text box for "other" selections
 	$scope.showNSCTextBox = function(selectModel, value){
@@ -95,6 +96,29 @@ angular.module('app.controllers')
 		} else {
 			$scope.obscured = false;
 		}
+	}
+
+	//logging test field
+	$scope.testSelect = function(){
+		$scope.insertResult = "Initialized: Session_id?:  " + Session.id;
+
+        $cordovaSQLite.execute(db, 'SELECT * FROM logs WHERE session_id = (?)', [Session.id])
+        .then(
+            function(result) {
+            	$scope.selectResult += "Logs = ";
+                if (result.rows.length > 0) {
+                	console.log("enviro results returned");
+        			for(item in result.rows.item(0)){
+        				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
+        			}
+                }else{
+                	console.log("No enviro results")
+                }
+            },
+            function(error) {
+                $scope.selectResult = "Error on loading: " + error.message;
+            }
+        );
 	}
 
 });

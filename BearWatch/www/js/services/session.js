@@ -1,6 +1,6 @@
 angular.module('app.services')
 
-.factory('Session', function($cordovaSQLite){
+.factory('Session', function($cordovaSQLite, $q){
     var Session =  { 
         id: '',
         observer: '',
@@ -17,28 +17,30 @@ angular.module('app.services')
     
     //function for saving session state
     Session.save = function(){      
-        var id = '';
         var protocol = '';
-        var time = new Date();
         if(Session.viewingArea == 'Other'){
            protocol = Session.viewingAreaOther;
         }else{
             protocol = Session.viewingArea;
         }
-        
+
+        var defer = $q.defer();
+                  
         $cordovaSQLite.execute(db, 
             'INSERT INTO sessions '
             + '(observers, park, park_site, protocol, stationary, zone_type, zone_comment, start_time, observation_mode)'
             + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
             [Session.nameResult.toString(), Session.park, Session.site, protocol, Session.stationary, Session.zoneSchema, Session.comment, 
-            time.toLocaleTimeString(), Session.observationMode])
+            new Date().toLocaleTimeString(), Session.observationMode])
         .then(function(result) {
-            console.log("Session save success" + result.insertId);            
-            Session.id = id = result.insertId;
-            return id;
+            console.log("Session save success" + result.insertId);
+            defer.resolve(result);            
+            Session.id = result.insertId;
         }, function(error) {
             console.log("Error on saving: " + error.message);
+            defer.reject(error);
         });
+        return defer.promise;
     }
     
     //return session object

@@ -10,7 +10,7 @@
         </label>
 
         <!--ui-sref="tab.bear"-->
-		<button class="button button-balanced  button-block" ng-click="Session.save(); Envrio.save()" ui-sref="tab.bear" ng-disabled="Session.observationMode == ''" >&nbsp; Start Session</button>
+		<button class="button button-balanced  button-block" ng-click="saveSession()" ui-sref="tab.bear" ng-disabled="Session.observationMode == ''" >&nbsp; Start Session</button>
         
         <div ng-show="debug">
         <button ng-click="testInsert()">Test insert</button>

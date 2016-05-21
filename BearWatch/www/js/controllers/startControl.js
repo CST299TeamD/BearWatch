@@ -231,4 +231,17 @@ angular.module('app.controllers')
         );
 	}
 
+	$scope.saveSession = function(){
+		//save session THEN save environment using session id
+		Session.save()
+		.then(
+			function(result){
+				Enviro.save(result.insertId);
+			}, 
+			function(error){
+				console.log("saveSession error: " + error.message);
+			}
+		);
+	}
+
 });

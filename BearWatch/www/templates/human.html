@@ -40,7 +40,7 @@
             </div>            
             
             <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <ion-item style="" class="item-divider">Human Activities Occuring</ion-item>
+            <ion-item style="" class="item-divider">Human Activities Occurring</ion-item>
             <ion-toggle ng-model="motorizedHuman" toggle-class="toggle-balanced">Motorized</ion-toggle>
             <div ng-show="motorizedHuman">
                 <!--show active motorized humans with remove option-->
@@ -145,12 +145,11 @@
             <!--non-motorized-->
             <ion-toggle ng-model="nonMotorizedHuman" toggle-class="toggle-balanced">Non-Motorized</ion-toggle>
             <div ng-show="nonMotorizedHuman">
-                <ion-checkbox ng-model="Personnel">Official or Agency Personnel</ion-checkbox>
-                <ion-checkbox ng-model="Angler">Angler</ion-checkbox>
-                <ion-checkbox ng-model="Kayaking_canoeing">Kayaking/canoeing</ion-checkbox>
-                <ion-checkbox ng-model="Hike_Walk">Hike/Walk</ion-checkbox>
-                <ion-checkbox ng-model="Run">Run</ion-checkbox>
-                <ion-checkbox ng-model="Picnic">Picnic</ion-checkbox>
+                <ion-checkbox ng-model="Angler">Angling</ion-checkbox>
+                <ion-checkbox ng-model="Kayaking_canoeing">Boating</ion-checkbox>
+                <ion-checkbox ng-model="Hike_Walk">Hiking/Walking</ion-checkbox>
+                <ion-checkbox ng-model="Run">Running</ion-checkbox>
+                <ion-checkbox ng-model="Picnic">Picnicking</ion-checkbox>
                 <ion-checkbox ng-model="Photography">Photography</ion-checkbox>
                 <ion-checkbox ng-model="Playing">Playing</ion-checkbox>
                 <ion-checkbox ng-model="Wildlife_Viewing">Wildlife Viewing</ion-checkbox>
@@ -166,7 +165,7 @@
             </div>
                         
             <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <ion-item style="" class="item-divider">Reaction to Bear(s) - Worst Behaving Human</ion-item>
+            <ion-item style="" class="item-divider">Human Behaviour (worst in group)</ion-item>
             <label style="" class="item item-select">
                 <span class="input-label">Behaviour</span>
                 <select>
@@ -177,7 +176,6 @@
                     <option>Loud disturbance, excessive movement</option>
                     <option>Approach bear(s) intentionally</option>
                     <option>Move away from bear intentionally</option>
-                    <option>Angling</option>
                     <option>Other</option>
                 </select>
             </label>
