@@ -200,7 +200,7 @@
             <ion-item ng-show="Enviro.foodSources.length > 0" class="item-divider">Available food sources:</ion-item>
             <ion-list>
                 <ion-item ng-repeat="food in Enviro.foodSources" class="item item-button-right">
-                    <p>{{food.added + " " + food.src + ", " + food.avail + "Available"}}</p>
+                    <p>{{food.added + " " + food.src + ", " + food.avail + "-Available"}}</p>
                     <p ng-show="food.desc != ''">{{food.desc}}</p>
                     <a class="button button-icon icon ion-close-circled" ng-click="Enviro.clearFood(food.id)"></a>
                 </ion-item>

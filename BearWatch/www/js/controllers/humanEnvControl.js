@@ -75,7 +75,9 @@ angular.module('app.controllers')
 
 })
 
-.controller('environmentCtrl', function($scope, Enviro, Session) {
+.controller('environmentCtrl', function($scope, Enviro, Session, $cordovaSQLite) {
+	$scope.debug = debug;
+
 	//global factory enviro object
 	$scope.Enviro = Enviro;
 	$scope.Session = Session;
@@ -105,14 +107,38 @@ angular.module('app.controllers')
         $cordovaSQLite.execute(db, 'SELECT * FROM logs WHERE session_id = (?)', [Session.id])
         .then(
             function(result) {
-            	$scope.selectResult += "Logs = ";
+            	$scope.selectResult = "Logs = ";
                 if (result.rows.length > 0) {
                 	console.log("enviro results returned");
-        			for(item in result.rows.item(0)){
-        				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
-        			}
+                	for (var i = 0; i < result.rows.length; i++){
+	        			for(item in result.rows.item(i)){
+	        				$scope.selectResult += item + ": " + result.rows.item(i)[item] + ", ";
+	        			}
+	        			$scope.selectResult += "   *******New Entry******   ";
+	        		}
                 }else{
                 	console.log("No enviro results")
+                }
+            },
+            function(error) {
+                $scope.selectResult = "Error on loading: " + error.message;
+            }
+        );
+
+        $cordovaSQLite.execute(db, 'SELECT * FROM food_sources WHERE session_id = (?)', [Session.id])
+        .then(
+            function(result) {
+            	$scope.foodResult = "food sources = ";
+                if (result.rows.length > 0) {
+                	console.log("enviro results returned");
+                	for (var i = 0; i < result.rows.length; i++){
+	        			for(item in result.rows.item(i)){
+	        				$scope.foodResult += item + ": " + result.rows.item(i)[item] + ", ";
+	        			}
+	        			$scope.foodResult += "   *******New Entry******   ";
+	        		}
+                }else{
+                	console.log("No food source results")
                 }
             },
             function(error) {

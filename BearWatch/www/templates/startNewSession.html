@@ -9,11 +9,6 @@
                 </label>
                 <div>
                     <br/>
-                    DB Success: {{success}}
-                    <br/>
-                    <br/>
-                    DB Failure: {{fail}}
-                    <br/>
                     <br/><br/>
                     Internet Connection: {{ internet }}
                     <br>
@@ -30,6 +25,7 @@
                     <button class="button" ng-click="select()">select</button>
                     <button class="button" ng-click="testing()">Session Test</button>
                     <button class="button" ng-click="enviroTesting()">Enviro Test</button>
+                    <button class="button" ng-click="DB.fail()">DBFail test</button>
                     <br/><br/>
                 </div>
             </div><!--end debug-->

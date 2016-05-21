@@ -1,7 +1,19 @@
 angular.module('app.controllers')
 
-.controller('homeCtrl', function($scope) {	
-	//continue session TODO:
+.controller('homeCtrl', function($scope, $ionicPopup) {	
+	//Warn user if database cannot be created
+    if(db_error == true){
+      var alertPopup = $ionicPopup.alert({
+        title: 'Data Warning',
+        template: 'File save was not initialized - data may not be stored properly. Make sure you have enough free memory and try restarting the application.'
+      });
+
+      alertPopup.then(function(res) {
+        console.log('DB warning issued');
+      });
+    }
+
+   	//continue session TODO:
 	//if session is not complete (no observation mode), remove from DB 
 	//disable contiue button if no valid sessions available
 })
@@ -56,8 +68,6 @@ angular.module('app.controllers')
 	$scope.Session = Session;
 	$scope.Enviro = Enviro;
     $scope.result = "TEST INITIALIZED";
-    $scope.success = db_success;
-	$scope.fail = db_error;
 	$scope.status = "$scope.Session.nameResult: " + $scope.Session.nameResult;
 	
 	$scope.testing = function (){
@@ -123,7 +133,7 @@ angular.module('app.controllers')
 
 })
 
-.controller('startNewSessionCtrl', function($scope, Session) {
+.controller('startNewSessionCtrl', function($scope, Session, DB) {
 	//global debug var
 	$scope.debug = debug;
 	

@@ -244,22 +244,27 @@
             <ion-item ng-show="Enviro.foodSources.length > 0" class="item-divider">Available food sources:</ion-item>
             <ion-list>
                 <ion-item ng-repeat="food in Enviro.foodSources" class="item item-button-right">
-                    <p>{{food.added + " " + food.src + ", " + food.avail + "Available"}}</p>
+                    <p>{{food.added + " " + food.src + ", " + food.avail + "-Available" + " id: " + food.id}}</p>
                     <p ng-show="food.desc != ''">{{food.desc}}</p>
                     <a class="button button-icon icon ion-close-circled" ng-click="Enviro.clearFood(food.id, Session.id)"></a>
                 </ion-item>
             </ion-list>
-
-            <div ng-show="debug">
-            <br/>
-            <button ng-click="testSelect()">Test select</button>
-            <br><br>
-            Insert Results: {{insertResult}}
-            <br>
-            Select Results: {{selectResult}}
             </div>
             <div style="width: 283px; height: 30px;" class="spacer"></div>
             </div><!--end foodSources-->
+
+            <div ng-show="debug">
+                <br><br>
+                <button ng-click="testSelect()">Test select</button>
+                <br><br>
+                Insert Results: {{insertResult}}
+                <br>
+                Enviro Results: {{selectResult}}
+                <br>
+                Food Results: {{foodResult}}
+                <br/>
+                <br/>
+            </div>
 
         </form>
     </ion-content>

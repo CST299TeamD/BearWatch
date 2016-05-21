@@ -2,12 +2,11 @@
 
 //global variables
 var db;
+var db_error = false;
+var db_drop = true;
 
 //debugging
 var debug = true;
-var db_success = "";
-var db_error = "";
-var db_drop = true;
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -18,7 +17,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
 
 .run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaFileTransfer, $cordovaGeolocation) {
   $ionicPlatform.ready(function() {
-  
+
     //drop tables for debugging
     if(db_drop == true) {
       $cordovaSQLite.deleteDB({name:"bear_watch.db", location:'default'});
@@ -36,9 +35,10 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "park_id       INTEGER PRIMARY KEY NOT NULL, "
       + "park_name         TEXT);"
     ).then(function(result) {
-        db_success += "--park_names success, ";
+        console.log("park_names table created");
     }, function(error) {
-        db_error += "--Error on park_names: " + error.message + " ";
+        console.log("Error on park_names: " + error.message);
+        db_error = true;
     });
 
     /****** Storage Tables ******/
@@ -58,9 +58,10 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "finish_time       TEXT    , "
       + "observation_mode  TEXT);"
     ).then(function(result) {
-        db_success += "--sessions success, ";
+        console.log("sessions table created");
     }, function(error) {
-        db_error += "--Error on sessions: " + error.message + " ";
+        console.log("Error on sessions: " + error.message);
+        db_error = true;
     });
 
     //bear table
@@ -84,9 +85,10 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "session_id        INTEGER , "
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
     ).then(function(result) {
-        db_success += "--bears success, ";
+        console.log("bears table created");
     }, function(error) {
-        db_error += "--Error on bears: " + error.message + " ";
+        console.log("Error on bears: " + error.message);
+        db_error = true;
     });
 
 
@@ -112,6 +114,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "humididty         INTEGER , "
       + "visibility        TEXT    , "
       + "obstruction       TEXT    , "
+      + "obstr_desc        TEXT    , "
       + "noise_level       TEXT    , "
       + "zone              TEXT    , "
       + "human_count       TEXT    , "
@@ -135,9 +138,10 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "FOREIGN KEY(bear_id) REFERENCES bears(bear_id),"      
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
     ).then(function(result) {
-        db_success += "--logs success, ";
+        console.log("logs table created");
     }, function(error) {
-        db_error += "--Error on logs: " + error.message + " ";
+        console.log("Error on logs: " + error.message);
+        db_error = true;
     });
 
     //food sources table
@@ -150,9 +154,10 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "session_id        INTEGER , "
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
     ).then(function(result) {
-        db_success += "--food_sources success, ";
+        console.log("food_sources table created");
     }, function(error) {
-        db_error = "--Error on food_sources: " + error.message + " ";
+        console.log("Error on food_sources: " + error.message);
+        db_error = true;
     });
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
