@@ -76,7 +76,7 @@ angular.module('app.controllers')
 })
 
 .controller('environmentCtrl', function($scope, Enviro, Session, $cordovaSQLite) {
-	$scope.debug = debug;
+	$scope.debug = true;
 
 	//global factory enviro object
 	$scope.Enviro = Enviro;

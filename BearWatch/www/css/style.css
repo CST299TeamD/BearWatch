@@ -2,3 +2,8 @@
 .center {
     text-align: center;
 }
+
+.commentPopup {
+	text-align: center;
+	background-color: red;
+}

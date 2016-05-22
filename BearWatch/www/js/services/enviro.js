@@ -2,6 +2,7 @@ angular.module('app.services')
 
 .factory('Enviro', function($cordovaSQLite, $q){
     
+    //Object properties
     var Enviro =  { 
         session_id: '',
         waterBody: '',

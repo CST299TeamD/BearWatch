@@ -1,7 +1,32 @@
 angular.module('app.controllers')
 
-.controller('tabCommentCtrl', function($scope) {
+.controller('tabCommentCtrl', function($scope, Comment, $ionicPopup) {
+	$scope.Comment = Comment;
 
+
+	//function to verify user comment edit (may overwrite unsaved text field)
+	$scope.editRequest = function (id){
+		if(Comment.text != '' && Comment.text != null){
+			var confirmPopup = $ionicPopup.confirm({
+				title: 'Edit Comment',
+				template: '<h1>Warning</h1> <p>Text detected in comment field. Editing this comment will overwrite unsaved text, are you sure?</p>',
+				cssClass: 'commentPopup'
+
+			});
+
+		   confirmPopup.then(function(res) {
+				if(res) {
+					console.log('Comment edit confirmed');
+					Comment.edit(id);
+				} else {
+					console.log('Comment edit aborted');
+				}
+			});
+		}else{
+			console.log('Here we go - Comment edit ' + id);
+			Comment.edit(id);
+		}
+	};
 })
 
 .controller('tabCameraCtrl', function($scope, $cordovaCamera, $cordovaFile, $cordovaSQLite) {

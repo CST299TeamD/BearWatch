@@ -6,7 +6,7 @@ var db_error = false;
 var db_drop = true;
 
 //debugging
-var debug = true;
+var debug = false;
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
