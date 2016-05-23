@@ -15,13 +15,26 @@ angular.module('app.services')
 		pictures: []
 	};
 
+	//function to check if bears are already in picture subjects
+	Picture.subjectsContain = function(id, list){
+		var i;
+		console.log("checking for subject with id: " + id);
+	    for (i = 0; i < list.length; i++) {
+	        if (list[i].id == id) {
+	        	console.log("Bear subject found");
+	            return true;
+	        }
+	    }
+	    return false;
+	};
+
 	//function to capture image
 	Picture.take = function(){
 		
 		var defer = $q.defer();
 
-		//update subject list for checkbox vaules
-		Picture.subjects = [];
+		//update subject list for checkbox values
+		Picture.subjects = [];		
 		for(bear in BearList.add){
 			console.log("bear list value: " + BearList.add[bear].name);
 			var bearObj = {id: BearList.add[bear].id, name: BearList.add[bear].name, selected: false};
@@ -144,6 +157,14 @@ angular.module('app.services')
         if(index > -1){
         	//update picture
             Picture.fileName = Picture.pictures[i].fileName;
+            //update subject list with any added bears		
+			for(bear in BearList.add){
+				if(!Picture.subjectsContain(BearList.add[bear].id, Picture.pictures[i].subjects)){
+					console.log("bear list value: " + BearList.add[bear].name);
+					var bearObj = {id: BearList.add[bear].id, name: BearList.add[bear].name, selected: false};
+					Picture.pictures[i].subjects.push(bearObj);
+				}
+			}
 			Picture.subjects = Picture.pictures[i].subjects;
 			Picture.comment = Picture.pictures[i].comment;
 			Picture.imgURI = Picture.pictures[i].imgURI;
@@ -160,7 +181,7 @@ angular.module('app.services')
 	        }, function(error) {
 	            console.log("Error on picture delete: " + error.message);
 	        });
-	        
+
 			return Picture.imgURI ;
         }else{
         	return "img/pic_placeholder.png";

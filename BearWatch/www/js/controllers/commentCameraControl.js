@@ -52,7 +52,7 @@ angular.module('app.controllers')
 		$scope.insertResult = "Initialized";
 
 		Picture.save().then(function(result){
-			$scope.discardPhoto();
+			$scope.discardPhoto(false);
 		}, function(err){
 			console.log("Photo save error: " + err);
 		});
@@ -83,9 +83,48 @@ angular.module('app.controllers')
 	};
 	
 	//function to discard photo
-	$scope.discardPhoto = function () {
-		$scope.imgURI = undefined;
-		Picture.clear();
+	$scope.discardPhoto = function (confirm) {
+		if(confirm){
+			var confirmPopup = $ionicPopup.confirm({
+				title: 'Discard Photo',
+				template: 'Delete photo and associated data, are you sure?</p>',
+				cssClass: 'commentPopup'
+
+			});
+
+		   confirmPopup.then(function(res) {
+				if(res) {
+					console.log('Photo discard confirmed');
+					$scope.imgURI = undefined;
+					Picture.clear();
+				} else {
+					console.log('Photo discard aborted');
+				}
+			});
+		}else{
+			$scope.imgURI = undefined;
+			Picture.clear();
+		}
+		
+	};
+
+	//function to confirm picture delete
+	$scope.clearConfirm = function(id){
+		var confirmPopup = $ionicPopup.confirm({
+			title: 'Delete Photo',
+			template: '<p>Delete photo and associated data, are you sure?</p>',
+			cssClass: 'commentPopup'
+
+		});
+
+	   confirmPopup.then(function(res) {
+			if(res) {
+				console.log('Photo edit confirmed');
+				Picture.clear(id);
+			} else {
+				console.log('Photo edit aborted');
+			}
+		});
 	};
 
 });

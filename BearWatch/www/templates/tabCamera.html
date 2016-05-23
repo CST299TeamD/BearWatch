@@ -61,10 +61,10 @@
             <button style="" ng-show="imgURI === undefined" ng-click="takePhoto()" class="button button-stable  button-icon icon-left ion-ios-camera-outline" id="camera-button1">Take Picture</button>
         </div>
         <button style="" ng-show="imgURI !== undefined" ng-click="choosePhoto()" class="button button-stable  button-icon icon-left ion-archive" id="camera-button3">Record</button>
-        <button style="" ng-show="imgURI !== undefined" ng-click="discardPhoto()" class="button button-stable  button-icon icon-left ion-trash-a" id="camera-button2">Discard</button>
+        <button style="" ng-show="imgURI !== undefined" ng-click="discardPhoto(true)" class="button button-stable  button-icon icon-left ion-trash-a" id="camera-button2">Discard</button>
         <div style="width: 283px; height: 40px;" class="spacer"></div>
 
-        
+
         <div style="border: 0.5px groove;" class="row item-divider" ng-show="Picture.pictures.length > 0">
             <div class="col col-center"><h4>Session Pictures</h4></div>
             <div class="col col-center text-right">
@@ -83,7 +83,7 @@
                             <div class="col col-center text-right">
                                 <div class="button-bar">
                                     <a class="button button-icon icon ion-edit" ng-click="editPicture(picture.id)"></a>
-                                    <a class="button button-icon icon ion-close-circled" ng-click="Picture.clear(picture.id)"></a>
+                                    <a class="button button-icon icon ion-close-circled" ng-click="clearConfirm(picture.id)"></a>
                                 </div>
                             </div>
                         </div>
