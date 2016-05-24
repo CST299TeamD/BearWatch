@@ -7,3 +7,8 @@
 	text-align: center;
 	background-color: red;
 }
+
+/*improve sho/hide speed fix*/
+.ng-hide.ng-hide-animate{
+     display: none !important;
+}

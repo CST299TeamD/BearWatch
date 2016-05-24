@@ -1,6 +1,9 @@
 angular.module('app.controllers')
 
-.controller('humanCtrl', function($scope) {
+.controller('humanCtrl', function($scope, $ionicModal, Session, Human) {
+
+	$scope.Session = Session;
+	$scope.Human = Human;
 	
 	//vars for counting motorized vehicle numbers
 	var aircraftNum = 0;
@@ -14,12 +17,66 @@ angular.module('app.controllers')
 	$scope.motoBoat = {};
 	$scope.vehicle = {};
 	
-	//test data for zone matrix - TODO: dynamically attribute from zone selection
-	//estuary hard-coded
-	$scope.zones = ["+1", "1", "4", "7", "7+", "2+", "2", "5", "8", "8+", "6"];
-	
-	//esturary zone image - hard coded TODO:needs to be dynamic
-	$scope.zoneImgURI = "img/estuary.png"
+	//determine zone matrix and help image
+	switch(Session.zoneSchema){
+		case "Estuary":
+			Human.zoneMatrix = [{zone: "+1", humans: 0}, {zone: "1", humans: 0}, {zone: "4", humans: 0}, {zone:"7", humans:0}, {zone: "7+", humans: 0}, {zone: "2+", humans: 0}, 
+			{zone:"2", humans: 0}, {zone: "5", humans: 0}, {zone: "8", humans: 0}, {zone: "8+", humans: 0}, {zone: "6", humans: 0}];
+			$scope.zoneImgURI = "img/estuary.png"
+			break;
+		case "River":
+			Human.zoneMatrix = [{zone: "+1", humans: 0}, {zone: "1", humans: 0}, {zone: "4", humans: 0}, {zone:"7", humans:0}, {zone: "7+", humans: 0}, {zone: "2+", humans: 0}, 
+			{zone:"2", humans: 0}, {zone: "5", humans: 0}, {zone: "8", humans: 0}, {zone: "8+", humans: 0}, {zone: "6", humans: 0}, {zone: "9", humans: 0}, {zone: "9+", humans: 0}];
+			$scope.zoneImgURI = "img/river.png"
+			break;
+		case "Terrestrial":
+			Human.zoneMatrix = [{zone: "1b", humans: 0}, {zone: "1a", humans: 0}, {zone: "4+", humans: 0}, {zone: "7a", humans: 0}, {zone: "7b", humans: 0}, {zone: "+1", humans: 0}, 
+			{zone: "1", humans: 0}, {zone: "4", humans: 0}, {zone:"7", humans:0}, {zone: "7+", humans: 0}, {zone: "2+", humans: 0}, {zone:"2", humans: 0}, {zone: "5", humans: 0}, 
+			{zone: "8", humans: 0}, {zone: "8+", humans: 0}, {zone: "6", humans: 0}, {zone: "9", humans: 0}, {zone: "9+", humans: 0}, {zone: "3b", humans: 0}, {zone: "3a", humans: 0}, 
+			{zone: "6+", humans: 0}, {zone: "9a", humans: 0}, {zone: "9b", humans:0}];
+			$scope.zoneImgURI = "img/terrestrial.png"
+			break;
+		default:
+			$scope.zoneImgURI = "img/pic_placeholder.png"
+	}
+
+	//function to show modal for initial zone-matrix population
+	var matrixCompleted = false;
+	$scope.showMatrix = function(){
+		if(matrixCompleted){
+			$scope.showZoneMatrix =! $scope.showZoneMatrix
+		}else{
+			$scope.modal.show();
+		}
+
+	};
+
+	//matrix modal
+	//modal function to confirm edit options
+	$ionicModal.fromTemplateUrl('templates/humanModal.html', {
+	    scope: $scope,
+	    animation: 'slide-in-up',
+	    backdropClickToClose: false
+	}).then(function(modal) {
+		$scope.modal = modal;
+	});
+	$scope.openModal = function() {
+		$scope.modal.show();
+	};
+	$scope.closeModal = function() {
+		$scope.modal.hide();
+	};
+
+	//function to exit modal without saving matrix
+	$scope.matrixClear = function(){
+		$scope.modal.hide();
+	}
+
+	//function to exit modal and edit comment with save
+	$scope.matrixSave = function(){
+		$scope.modal.hide();
+		matrixCompleted = true;
+	}
 	
 	//motorized observation button list
 	$scope.motoActions = ["Passing through", "Staying in area"];
@@ -71,7 +128,7 @@ angular.module('app.controllers')
   			$scope.activeVehicles.splice(index, 1);
 			 //TODO: update database 
 		}
-	}
+	};
 
 })
 
