@@ -8,15 +8,16 @@
         <div class = "row">
             <div class = "col">
             Session id : {{session_id}} <br>
+            Is this focal bear: {{Bear.isFocal}} <br>
             Bear Name: {{Bear.name}} <br>
             Bear Index: {{Bear.index}}<br>
             Zone : {{Bear.zone}} <br>
             Bear Size : {{Bear.size}} <br>
             Bear Species : {{Bear.species}} <br>
             Bear gender : {{Bear.gender}} <br>
-            Baer Age : {{Bear.age}} <br>
             </div>
             <div class = "col">
+            Baer Age : {{Bear.age}} <br>
             MarkDescription : {{Bear.markDescription}} <br>
             Bear Fur Colour : {{Bear.furColour}} <br>
             Bear Paw Measure : {{Bear.pawMeasered}} <br>
@@ -28,87 +29,88 @@
         </div>
         <button class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="tab.changeSpecs" >Modify Bear Specs</button>
         </ion-list>
-        
-        <h2 style="">Behaviour</h2>
-        <div style="width: 283px; height: 30px;" class="spacer"></div>
-        <ion-item style="" class="item-text-wrap">Ongoing Behaviour
-            <div style="width: 283px; height: 10px;" class="spacer"></div>
-                <div>
-                    <lable ng-repeat="activeBehv in Bear.behaviour">
-                        <button class="button button-balanced">{{activeBehv}}</button>
+    <div ng-show="{{Bear.isFocal}}">
+            <h2 style="">Behaviour</h2>
+            <div style="width: 283px; height: 30px;" class="spacer"></div>
+            <ion-item style="" class="item-text-wrap">Ongoing Behaviour
+                <div style="width: 283px; height: 10px;" class="spacer"></div>
+                    <div>
+                        <lable ng-repeat="activeBehv in Bear.behaviour">
+                            <button class="button button-balanced">{{activeBehv}}</button>
+                        </lable>
+                    </div>
+        </ion-item>
+
+            <div style="width: 283px; height: 30px;" class="spacer"></div>
+            <ion-checkbox ng-model="behaviourHabituation.checked">Habituation Level</ion-checkbox>
+            <div ng-show="behaviourHabituation.checked">
+                <ion-item style="" class="item-text-wrap">Select Habituation Level
+                    <div style="width: 283px; height: 10px;" class="spacer"></div>
+                    <lable ng-repeat="behaviour in habituationLevel">
+                        <button class="button button-royal button-outline" ng-click="addBehaviour('Habituation', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
-                </div>
-    </ion-item>
+                </ion-item>
+                <div style="width: 283px; height: 30px;" class="spacer"></div>        
+            </div>
 
+
+            <ion-checkbox ng-model="behaviourFeeding.checked">Feeding/Foraging</ion-checkbox>
+            <div ng-show="behaviourFeeding.checked">
+                <ion-item style="" class="item-text-wrap">Description
+                    <div style="width: 283px; height: 10px;" class="spacer"></div>
+                    <lable ng-repeat="behaviour in feeding">
+                        <button class="button button-energized button-outline"  ng-click="addBehaviour('Feeding or Foraging', '{{behaviour}}')">{{ behaviour }}</button>
+                    </lable>
+                </ion-item>
+                <div style="width: 283px; height: 30px;" class="spacer"></div>
+            </div>
+
+
+            <ion-checkbox ng-model="behaviourNI.checked">Non-Interactive</ion-checkbox>
+            <div ng-show="behaviourNI.checked">
+                <ion-item style="" class="item-text-wrap">Description
+                    <div style="width: 283px; height: 10px;" class="spacer"></div>
+                    <lable ng-repeat="behaviour in nonInteractive">
+                        <button class="button button-calm button-outline" ng-click="addBehaviour('Non-Interactive', '{{behaviour}}')">{{ behaviour }}</button>
+                    </lable>
+                </ion-item>
+                <div style="width: 283px; height: 30px;" class="spacer"></div>
+            </div>
+
+            <ion-checkbox ng-model="behaviournBBI.checked">Bear-Bear Interactive</ion-checkbox>        
+            <div ng-show="behaviournBBI.checked">
+                <ion-item style="" class="item-text-wrap">Description
+                    <div style="width: 283px; height: 10px;" class="spacer"></div>
+                    <lable ng-repeat="behaviour in bBInteraction">
+                        <button class="button button-royal button-outline" ng-click="addBehaviour('Bear-Bear Interactive', '{{behaviour}}')">{{ behaviour }}</button>
+                    </lable>
+                </ion-item>
+                <div style="width: 283px; height: 30px;" class="spacer"></div>
+            </div>
+
+
+            <ion-checkbox ng-model="behaviournBHI.checked">Bear-human Interaction</ion-checkbox>        
+            <div ng-show="behaviournBHI.checked">    
+                <ion-item style="" class="item-text-wrap">Description
+                    <div style="width: 283px; height: 10px;" class="spacer"></div>
+                    <lable ng-repeat="behaviour in bHInteraction">
+                        <button class="button button-royal button-outline" ng-click="addBehaviour('Bear-human Interaction', '{{behaviour}}')">{{ behaviour }}</button>
+                    </lable>
+                </ion-item>
+                <div style="width: 283px; height: 30px;" class="spacer"></div>
+            </div>
+            <ion-checkbox ng-model="behaviournHBI.checked">Human-bear Interaction</ion-checkbox>        
+            <div ng-show="behaviournHBI.checked">
+                <ion-item style="" class="item-text-wrap">Description
+                    <div style="width: 283px; height: 10px;" class="spacer"></div>
+                    <lable ng-repeat="behaviour in hBinteraction">
+                        <button class="button button-royal button-outline" ng-click="addBehaviour('Human-bear Interaction', '{{behaviour}}')">{{ behaviour }}</button>
+                    </lable>
+                </ion-item>                
+            </div>
         <div style="width: 283px; height: 30px;" class="spacer"></div>
-        <ion-checkbox ng-model="behaviourHabituation.checked">Habituation Level</ion-checkbox>
-        <div ng-show="behaviourHabituation.checked">
-            <ion-item style="" class="item-text-wrap">Select Habituation Level
-                <div style="width: 283px; height: 10px;" class="spacer"></div>
-                <lable ng-repeat="behaviour in habituationLevel">
-                    <button class="button button-royal button-outline" ng-click="addBehaviour('Habituation', '{{behaviour}}')">{{ behaviour }}</button>
-                </lable>
-            </ion-item>
-            <div style="width: 283px; height: 30px;" class="spacer"></div>        
-        </div>
-
-
-        <ion-checkbox ng-model="behaviourFeeding.checked">Feeding/Foraging</ion-checkbox>
-        <div ng-show="behaviourFeeding.checked">
-            <ion-item style="" class="item-text-wrap">Description
-                <div style="width: 283px; height: 10px;" class="spacer"></div>
-                <lable ng-repeat="behaviour in feeding">
-                    <button class="button button-energized button-outline"  ng-click="addBehaviour('Feeding or Foraging', '{{behaviour}}')">{{ behaviour }}</button>
-                </lable>
-            </ion-item>
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
-        </div>
-
-
-        <ion-checkbox ng-model="behaviourNI.checked">Non-Interactive</ion-checkbox>
-        <div ng-show="behaviourNI.checked">
-            <ion-item style="" class="item-text-wrap">Description
-                <div style="width: 283px; height: 10px;" class="spacer"></div>
-                <lable ng-repeat="behaviour in nonInteractive">
-                    <button class="button button-calm button-outline" ng-click="addBehaviour('Non-Interactive', '{{behaviour}}')">{{ behaviour }}</button>
-                </lable>
-            </ion-item>
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
-        </div>
-
-        <ion-checkbox ng-model="behaviournBBI.checked">Bear-Bear Interactive</ion-checkbox>        
-        <div ng-show="behaviournBBI.checked">
-            <ion-item style="" class="item-text-wrap">Description
-                <div style="width: 283px; height: 10px;" class="spacer"></div>
-                <lable ng-repeat="behaviour in bBInteraction">
-                    <button class="button button-royal button-outline" ng-click="addBehaviour('Bear-Bear Interactive', '{{behaviour}}')">{{ behaviour }}</button>
-                </lable>
-            </ion-item>
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
-        </div>
-
-
-        <ion-checkbox ng-model="behaviournBHI.checked">Bear-human Interaction</ion-checkbox>        
-        <div ng-show="behaviournBHI.checked">    
-            <ion-item style="" class="item-text-wrap">Description
-                <div style="width: 283px; height: 10px;" class="spacer"></div>
-                <lable ng-repeat="behaviour in bHInteraction">
-                    <button class="button button-royal button-outline" ng-click="addBehaviour('Bear-human Interaction', '{{behaviour}}')">{{ behaviour }}</button>
-                </lable>
-            </ion-item>
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
-        </div>
-        <ion-checkbox ng-model="behaviournHBI.checked">Human-bear Interaction</ion-checkbox>        
-        <div ng-show="behaviournHBI.checked">
-            <ion-item style="" class="item-text-wrap">Description
-                <div style="width: 283px; height: 10px;" class="spacer"></div>
-                <lable ng-repeat="behaviour in hBinteraction">
-                    <button class="button button-royal button-outline" ng-click="addBehaviour('Human-bear Interaction', '{{behaviour}}')">{{ behaviour }}</button>
-                </lable>
-            </ion-item>                
-        </div>
-    <div style="width: 283px; height: 30px;" class="spacer"></div>
-    <div style="width: 283px; height: 30px;" class="spacer"></div>
-    <div style="width: 283px; height: 30px;" class="spacer"></div>
-    </ion-content>
+        <div style="width: 283px; height: 30px;" class="spacer"></div>
+        <div style="width: 283px; height: 30px;" class="spacer"></div>
+        </ion-content>
+    </div>
 </ion-view>

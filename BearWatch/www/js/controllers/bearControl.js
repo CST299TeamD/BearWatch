@@ -11,6 +11,7 @@ angular.module('app.controllers')
 		$scope.Bear.id = tmp.id;
 		console.log("index " + tmp.index)
 		$scope.Bear.index = tmp.index;
+        $scope.Bear.isFocal = tmp.isFocal;
 		$scope.Bear.name = tmp.name;
 		$scope.Bear.zone = tmp.location;
 		$scope.Bear.size = tmp.size;
@@ -29,7 +30,7 @@ angular.module('app.controllers')
 	}
 })
 
-.controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session) {
+.controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session, FBearSet, $ionicPopup, $location, $state) {
 	//global debug var
 	$scope.debug = debug;
 
@@ -38,10 +39,13 @@ angular.module('app.controllers')
 	$scope.session_id = Session.id;
 	console.log($scope.session_id);
    	
+    $scope.FBearSet = FBearSet;
+
    	//var session_id = 1; 
    	//$scope.session_id = session_id;
 	$scope.Bear = Bear;
 	$scope.BearList = BearList;
+    $scope.Bear.isFocal = false;
   	$scope.Bear.name = '';
     $scope.Bear.zone = '';
     $scope.Bear.size = '';
@@ -64,39 +68,83 @@ angular.module('app.controllers')
 
 	//add bear to fake session id - to be updated
 	$scope.addBear = function(){
-		//insert into bears table
-		$cordovaSQLite.execute(db, 'INSERT INTO bears (bear_name, bear_location, size, age, gender, species, '
-								  +'mark_desc, fur_colour, paw_measure, cubs, cub_fur, cub_age, comment, '
-								  +	'session_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-									[$scope.Bear.name, $scope.Bear.zone, $scope.Bear.size, $scope.Bear.age, $scope.Bear.gender,
-									$scope.Bear.species, $scope.Bear.markDescription, $scope.Bear.furColour, $scope.Bear.pawMeasered,
-									$scope.Bear.cubs, $scope.Bear.cubFurColour, $scope.Bear.cubAge, $scope.bearComment, $scope.session_id])
-	    	.then(function(result) {
-    	    	$scope.bearInsertResult = "Bear inserted";
+        var validated = false;
+        var duplicate = false;
 
-    	    	$scope.BearList.add.push({
-    	    		index: $scope.BearList.add.length,
-    	    		id: result.insertId,
-    	    		name: $scope.Bear.name,
-    	    		location: $scope.Bear.zone,
-    	    		size: $scope.Bear.size,
-    	    		age: $scope.Bear.age,
-    	    		gender: $scope.Bear.gender,
-    	    		species: $scope.Bear.species,
-    	    		markDescription: $scope.Bear.markDescription,
-    	    		behaviour: [],
-    	    		furColour: $scope.Bear.furColour,
-    	    		pawMeasured: $scope.Bear.pawMeasered,
-    	    		cubs: $scope.Bear.cubs,
-    	    		cubFurColour: $scope.Bear.cubFurColour,
-    	    		cubAge: $scope.Bear.cubAge,
-    	    		comment: $scope.Bear.comment
-    	    	});
-                        
-    		}, function(error) {
-       	 		$scope.bearInsertResult = "Error on inserting Bear: " + error.message;
-    		})
-	}
+
+        //Autogenrating the bear name
+        if ($scope.Bear.name == '') {
+            $scope.Bear.name = "Bear " + (BearList.add.length + 1);
+        }
+        
+        if ($scope.Bear.isFocal == true) {
+            $scope.Bear.name += " (Focal Bear)";
+        }
+
+        //test for duplicative name
+        for(var n = 0; n < $scope.BearList.add.length; n++) {
+            if($scope.BearList.add[n].name == $scope.Bear.name) {
+                duplicate = true;
+                console.log($scope.BearList.add[n].name + " == " + $scope.Bear.name);
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Duplicate Bear!',
+                    template: 'There is another bear named '+ $scope.BearList.add[n].name +' in this session' 
+                });
+                 alertPopup.then(function(res) {
+                    return;
+                });
+                
+            }
+        }
+
+
+        console.log(duplicate);
+        if(duplicate == false) {
+    		//insert into bears table
+    		$cordovaSQLite.execute(db, 'INSERT INTO bears (bear_name, bear_location, size, age, gender, species, '
+    								  +'mark_desc, fur_colour, paw_measure, cubs, cub_fur, cub_age, comment, '
+    								  +	'session_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+    									[$scope.Bear.name, $scope.Bear.zone, $scope.Bear.size, $scope.Bear.age, $scope.Bear.gender,
+    									$scope.Bear.species, $scope.Bear.markDescription, $scope.Bear.furColour, $scope.Bear.pawMeasered,
+    									$scope.Bear.cubs, $scope.Bear.cubFurColour, $scope.Bear.cubAge, $scope.bearComment, $scope.session_id])
+    	    	.then(function(result) {
+        	    	$scope.bearInsertResult = "Bear inserted";
+                    
+                    //set there is a focal bear in the session
+                    if($scope.FBearSet.isFocalPresent == '' && $scope.Bear.isFocal == true) {
+                        $scope.FBearSet.isFocalPresent = true;
+                    }
+
+        	    	$scope.BearList.add.push({
+        	    		index: $scope.BearList.add.length,
+        	    		id: result.insertId,
+                        isFocal: $scope.Bear.isFocal,
+        	    		name: $scope.Bear.name,
+        	    		location: $scope.Bear.zone,
+        	    		size: $scope.Bear.size,
+        	    		age: $scope.Bear.age,
+        	    		gender: $scope.Bear.gender,
+        	    		species: $scope.Bear.species,
+        	    		markDescription: $scope.Bear.markDescription,
+        	    		behaviour: [],
+        	    		furColour: $scope.Bear.furColour,
+        	    		pawMeasured: $scope.Bear.pawMeasered,
+        	    		cubs: $scope.Bear.cubs,
+        	    		cubFurColour: $scope.Bear.cubFurColour,
+        	    		cubAge: $scope.Bear.cubAge,
+        	    		comment: $scope.Bear.comment
+        	    	});
+                            
+        		}, function(error) {
+           	 		$scope.bearInsertResult = "Error on inserting Bear: " + error.message;
+        		})
+            //change page location
+            $location.path("tab.bear");
+            $state.go("tab.bear");
+        }
+	} //end of add bear function
+
+
    	var numret = 0;
    	$scope.numret = numret;
    	//select example

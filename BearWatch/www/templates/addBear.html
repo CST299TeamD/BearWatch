@@ -30,8 +30,9 @@
         </div>
         <form style="" class="list">
             <div style="width: 283px; height: 22px;" class="spacer"></div>
+            <ion-checkbox ng-model="Bear.isFocal" ng-show="FBearSet.isFocalPresent == '' ">Focal Bear?</ion-checkbox>
             <ion-item style="" class="item-divider">Name of Bear</ion-item>
-            <label style="" class="item item-input" >
+            <label style="" class="item item-input">
 
                 <input placeholder="Bear #" type="text" ng-model="Bear.name">
                 
@@ -142,7 +143,7 @@
             </label>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
-            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button20" ui-sref="tab.bear" ng-click="addBear()">Add Bear</a>
+            <a style="" class="button button-balanced  button-block icon-right ion-android-arrow-forward" id="addNewBear-button20" ng-click="addBear()">Save Bear</a>
             <a style="" class="button button-assertive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button21" ui-sref="tab.bear">Cancel</a>
         </form>
     </ion-content>
