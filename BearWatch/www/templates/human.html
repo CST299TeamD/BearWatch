@@ -22,7 +22,7 @@
                     <div class="col col-33" ng-repeat="zone in Human.zoneMatrix">
                         <label style="" class="item item-input">
                             <span class="input-label">Zone {{zone.zone}}: </span>
-                            <input placeholder="# of Humans" type="number" ng-model="zone.humans">
+                            <input placeholder="# of Humans" type="number" ng-model="zone.humans" ng-change="Human.save()">
                         </label>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 <ion-item ng-show="activeVehicles.length != 0" class="item-divider">Active Motorized Human</ion-item>
                 <div>
                     <div ng-repeat="moto in activeVehicles" class="item item-button-right">
-                        {{moto}}
+                        {{moto.time + " " + moto.name + " " + moto.desc}}
                         <a class="button button-icon icon ion-close-circled" ng-click="recordMoto(moto, 'departed', '')"></a>
                     </div>
                     <div style="width: 283px; height: 20px;" class="spacer"></div>
@@ -147,7 +147,7 @@
             <div ng-show="nonMotorizedHuman">
                 <div class="row" style="flex-wrap: wrap;">
                     <div class="col col-33" ng-repeat="class in Human.nonMoto">
-                        <ion-checkbox ng-model="class.checked">{{class.type}}</ion-checkbox>                
+                        <ion-checkbox ng-model="class.checked" ng-change="Human.save()">{{class.type}}</ion-checkbox>                
                     </div>
                 </div>
                 <div ng-show="Human.nonMoto[10].checked">
@@ -162,7 +162,7 @@
             <ion-item style="" class="item-divider">Human Behaviour (worst in group)</ion-item>
             <label style="" class="item item-select">
                 <span class="input-label">Behaviour</span>
-                <select ng-model="Human.behavior">
+                <select ng-model="Human.behavior" ng-change="Human.save()">
                     <option selected disabled></option>
                     <option>Quietly observing, minimal movement</option>
                     <option>Loud disturbance, minimal movement</option>
@@ -175,9 +175,14 @@
             </label>
             
             <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <label style="" class="item item-input">
-                <span class="input-label">Comment</span><textarea placeholder="" ng-model="Human.comment"> </textarea>
-            </label>
+            <div class="item item-input-inset">
+                <label class="item item-input-wrapper">     
+                    <span class="input-label">Comment:</span>
+                    <input type="text" placeholder="Describe human activities/interactions" ng-model="Human.comment"> </textarea>
+                </label>
+                <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Human.save()">&nbsp; Update</button>
+            </div>
+            <div style="width: 283px; height: 20px;" class="spacer"></div>
         </form>
       </ion-content>
 </ion-view>

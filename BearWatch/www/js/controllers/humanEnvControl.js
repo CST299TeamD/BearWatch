@@ -20,20 +20,20 @@ angular.module('app.controllers')
 	//determine zone matrix and help image
 	switch(Session.zoneSchema){
 		case "Estuary":
-			Human.zoneMatrix = [{zone: "+1", humans: 0}, {zone: "1", humans: 0}, {zone: "4", humans: 0}, {zone:"7", humans:0}, {zone: "7+", humans: 0}, {zone: "2+", humans: 0}, 
-			{zone:"2", humans: 0}, {zone: "5", humans: 0}, {zone: "8", humans: 0}, {zone: "8+", humans: 0}, {zone: "6", humans: 0}];
+			Human.zoneMatrix = [{zone: "+1", humans: ''}, {zone: "1", humans: ''}, {zone: "4", humans: ''}, {zone:"7", humans:''}, {zone: "7+", humans: ''}, {zone: "2+", humans: ''}, 
+			{zone:"2", humans: ''}, {zone: "5", humans: ''}, {zone: "8", humans: ''}, {zone: "8+", humans: ''}, {zone: "6", humans: ''}];
 			$scope.zoneImgURI = "img/estuary.png"
 			break;
 		case "River":
-			Human.zoneMatrix = [{zone: "+1", humans: 0}, {zone: "1", humans: 0}, {zone: "4", humans: 0}, {zone:"7", humans:0}, {zone: "7+", humans: 0}, {zone: "2+", humans: 0}, 
-			{zone:"2", humans: 0}, {zone: "5", humans: 0}, {zone: "8", humans: 0}, {zone: "8+", humans: 0}, {zone: "6", humans: 0}, {zone: "9", humans: 0}, {zone: "9+", humans: 0}];
+			Human.zoneMatrix = [{zone: "+1", humans: ''}, {zone: "1", humans: ''}, {zone: "4", humans: ''}, {zone:"7", humans:''}, {zone: "7+", humans: ''}, {zone: "2+", humans: ''}, 
+			{zone:"2", humans: ''}, {zone: "5", humans: ''}, {zone: "8", humans: ''}, {zone: "8+", humans: ''}, {zone: "6", humans: ''}, {zone: "9", humans: ''}, {zone: "9+", humans: ''}];
 			$scope.zoneImgURI = "img/river.png"
 			break;
 		case "Terrestrial":
-			Human.zoneMatrix = [{zone: "1b", humans: 0}, {zone: "1a", humans: 0}, {zone: "4+", humans: 0}, {zone: "7a", humans: 0}, {zone: "7b", humans: 0}, {zone: "+1", humans: 0}, 
-			{zone: "1", humans: 0}, {zone: "4", humans: 0}, {zone:"7", humans:0}, {zone: "7+", humans: 0}, {zone: "2+", humans: 0}, {zone:"2", humans: 0}, {zone: "5", humans: 0}, 
-			{zone: "8", humans: 0}, {zone: "8+", humans: 0}, {zone: "6", humans: 0}, {zone: "9", humans: 0}, {zone: "9+", humans: 0}, {zone: "3b", humans: 0}, {zone: "3a", humans: 0}, 
-			{zone: "6+", humans: 0}, {zone: "9a", humans: 0}, {zone: "9b", humans:0}];
+			Human.zoneMatrix = [{zone: "1b", humans: ''}, {zone: "1a", humans: ''}, {zone: "4+", humans: ''}, {zone: "7a", humans: ''}, {zone: "7b", humans: ''}, {zone: "+1", humans: ''}, 
+			{zone: "1", humans: ''}, {zone: "4", humans: ''}, {zone:"7", humans:''}, {zone: "7+", humans: ''}, {zone: "2+", humans: ''}, {zone:"2", humans: ''}, {zone: "5", humans: ''}, 
+			{zone: "8", humans: ''}, {zone: "8+", humans: ''}, {zone: "6", humans: ''}, {zone: "9", humans: ''}, {zone: "9+", humans: ''}, {zone: "3b", humans: ''}, {zone: "3a", humans: ''}, 
+			{zone: "6+", humans: ''}, {zone: "9a", humans: ''}, {zone: "9b", humans:''}];
 			$scope.zoneImgURI = "img/terrestrial.png"
 			break;
 		default:
@@ -76,6 +76,7 @@ angular.module('app.controllers')
 	$scope.matrixSave = function(){
 		$scope.modal.hide();
 		matrixCompleted = true;
+		Human.save();
 	}
 	
 	//motorized observation button list
@@ -85,49 +86,59 @@ angular.module('app.controllers')
 	//function to record motorized actions
 	$scope.recordMoto = function(motoType, action, description){
 
+		var time = new Date().toLocaleTimeString();
+		//object to hold motorized vehicle properties
+		var moto = {
+			action: action,
+			desc: description,
+			time: time
+		};
+
 		if(action != 'departed'){
-			//placeholder for vehicle name
-			var time = new Date();
-			var vehicleName = "" + time.toLocaleTimeString() + " ";
-				
+
 			//update vehicle number
 			switch(motoType){
 				case 'Aircraft':
 					aircraftNum ++;
-					vehicleName += motoType + '-' +  aircraftNum;
+					moto.name = motoType + '-' +  aircraftNum;
 					if($scope.aircraft.txt != undefined) $scope.aircraft.txt = '';
 					break;
 				case 'ATV':
 					atvNum ++;
-					vehicleName += motoType + '-' +  atvNum;
+					moto.name= motoType + '-' +  atvNum;
 					if($scope.atv.txt != undefined) $scope.atv.txt = '';
 					break;
 				case 'Boat':
 					boatNum ++;
-					vehicleName += motoType + '-' +  boatNum;
+					moto.name = motoType + '-' +  boatNum;
 					if($scope.motoBoat.txt != undefined) $scope.motoBoat.txt = '';
 					break;
 				case 'Vehicle':
 					carNum ++;
-					vehicleName += motoType + '-' +  carNum;
+					moto.name= motoType + '-' +  carNum;
 					if($scope.vehicle.txt != undefined) $scope.vehicle.txt = '';
 					break;
-			}
-			//add descrtiptor if available
-			if(description != '' && description != null){
-				vehicleName += ' ' + description;	
 			}
 			
 			if (action == 'Staying in area'){
 				//add to active list
-				$scope.activeVehicles.push(vehicleName);
+				$scope.activeVehicles.push(moto);
 			}
-			//TODO: update log table
+
 		}else{
+			//remove from active list
 			var index = $scope.activeVehicles.indexOf(motoType);
   			$scope.activeVehicles.splice(index, 1);
-			 //TODO: update database 
 		}
+
+		//update log table
+		Human.motoType = moto.name;
+		Human.motoAction = moto.action;
+		Human.motoDesc = moto.desc;
+		Human.save();
+
+		//add to model
+		$scope.moto = moto;
 	};
 
 })
