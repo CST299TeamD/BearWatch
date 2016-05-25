@@ -4,6 +4,7 @@ angular.module('app.services')
     return {
         index: -1,
         id: -1,
+        isFocal: '',
         name: '',
         zone: '',
         size: '',
@@ -18,6 +19,13 @@ angular.module('app.services')
         cubAge: '',
         ba: [],
         comment: ''
+    };
+                     
+}])
+
+.factory('FBearSet', [function(){
+    return {
+        isFocalPresent: '',
     };
                      
 }])
