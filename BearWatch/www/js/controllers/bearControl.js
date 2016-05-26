@@ -180,7 +180,7 @@ angular.module('app.controllers')
             var bBInteraction =["Alert/Vigilance", "Playing", "Fighting", "Defense"];
             var bHInteraction = ["Alert/Vigilance", "Retreat", "Bear Approach"];
             var hBinteraction = ["Alert/Vigilance", "Retreat", "Approach Bear", "Aggression "];
-            var habituationLevel = ["Habituated", "Non- Habituated", "SUbadult"];
+            var habituationLevel = ["Habituated", "Non- Habituated", "Sub-Adult"];
             
             $scope.feeding = feeding;
             $scope.nonInteractive = nonInteractive;
@@ -188,14 +188,42 @@ angular.module('app.controllers')
             $scope.bHInteraction = bHInteraction;
             $scope.hBinteraction = hBinteraction;
             $scope.habituationLevel = habituationLevel;
-            $scope.test= "No behaviour";
 
             $scope.addBehaviour = function(type, desc){
-            	Bear.behaviour.push(type + " - " + desc);
-
+                var curTime = new Date().toLocaleTimeString();
+                var updated = false;
+            
+                for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
+                   //if the this type of behaviour is alredy going on then update description
+                   if($scope.Bear.behaviour[n].category == type) {
+                      $scope.Bear.behaviour[n].description = desc;
+                      $scope.Bear.behaviour[n].time = curTime;
+                      updated = true;
+                   }
+                }
+                if(updated == false) {
+                       Bear.behaviour.push({
+                            category: type,
+                            description: desc,
+                            time: curTime});
+                }
             }
 
-
+            $scope.removeBehaviour = function(ind, cat, desc, time) {
+            var index = -1;
+            for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
+            
+                if($scope.Bear.behaviour[n].category == cat)
+                    {
+                        index = n;
+                        break;
+                    }
+            }
+                console.log(index + " "+ cat +" "+ "removed");
+                if(index >= 0){
+                    $scope.Bear.behaviour.splice(index, 1);
+                }
+            }
 
 })
 
