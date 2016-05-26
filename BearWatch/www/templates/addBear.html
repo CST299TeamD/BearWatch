@@ -30,7 +30,7 @@
         </div>
         <form style="" class="list">
             <div style="width: 283px; height: 22px;" class="spacer"></div>
-            <ion-checkbox ng-model="Bear.isFocal" ng-show="FBearSet.isFocalPresent == '' ">Focal Bear?</ion-checkbox>
+            <ion-checkbox ng-model="Bear.isFocal" ng-show="FBearSet.isFocalPresent == ''&& Session.observationMode == 'Focal' ">Focal Bear</ion-checkbox>
             <ion-item style="" class="item-divider">Name of Bear</ion-item>
             <label style="" class="item item-input">
 
