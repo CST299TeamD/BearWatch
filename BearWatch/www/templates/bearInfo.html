@@ -35,11 +35,13 @@
             <ion-item style="" class="item-text-wrap">Ongoing Behaviour
                 <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <div>
-                        <lable ng-repeat="activeBehv in Bear.behaviour">
-                            <button class="button button-balanced">{{activeBehv}}</button>
-                        </lable>
+                        <div ng-repeat="(index, Object) in Bear.behaviour" class="item item-button-right">
+                            {{Object.category}} - {{Object.description}} - {{Object.time}}
+                            <a class="button button-icon icon ion-close-circled" ng-click="removeBehaviour({{index}}, '{{Object.category}}', '{{Object.description}}','{{Object.time}}')"></a>
+                        </div>
                     </div>
-        </ion-item>
+        	</ion-item>
+
 
             <div style="width: 283px; height: 30px;" class="spacer"></div>
             <ion-checkbox ng-model="behaviourHabituation.checked">Habituation Level</ion-checkbox>
