@@ -133,12 +133,14 @@ angular.module('app.controllers')
 
 })
 
-.controller('startNewSessionCtrl', function($scope, Session, Park) {
+.controller('startNewSessionCtrl', function($scope, Session, Park, $location, $state) {
 	//global debug var
 	$scope.debug = debug;
 	
 	//global factory session object
 	$scope.Session = Session;
+
+	$scope.parkChecked = false;
 
 	//function for adding observers
 	$scope.addObserver = function(observer){
@@ -162,10 +164,18 @@ angular.module('app.controllers')
 
 	$scope.parkSelected = function(){
 		$scope.showList = false;
+		$scope.parkChecked = true;
 	}
+
 	$scope.changePark = function(){
 		$scope.showList = true;
 	}
+
+	$scope.clearPark = function(){
+		Session.park = '';
+		$scope.parkChecked = false;
+	}
+
 
     //function to change zoning schema picture
     $scope.showZoneSchema = function(zoningSchemaSelect){
@@ -184,7 +194,7 @@ angular.module('app.controllers')
     $scope.validate = function(form){
     	console.log("Submitting");
     	$scope.submitted = true;
-    	if(form.$valid) {
+    	if(form.$valid && $scope.parkChecked && Session.observer != '' && Session.nameResult.length == 0) {
     		console.log("Form Valid");
 	    	$state.go('startNewSessionCont');
 	    }

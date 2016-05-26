@@ -51,15 +51,51 @@
                 </ion-item>
             </ion-list>
             <div style="width: 283px; height: 30px;" class="spacer"></div>
+
+            <div ng-show="submitted && Session.nameResult.length == 0 && Session.observer == ''" >
+                <div class="error-container">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        Observer is a required field!
+                    </div>
+                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                </div>
+            </div>
+            <div ng-show="submitted && Session.observer != ''" >
+                <div class="error-container">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        Observer needs to be added to session! (press the green button)
+                    </div>
+                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                </div>
+            </div>
             <!--end observers-->
             
             <!--Park-->
 			<div style="width: 283px; height: 30px;" class="spacer"></div>
             <h2 style="">Location</h2>
-			<label style="" class="item item-input" ng-class="{ 'has-errors' : (submitted && startForm.park.$invalid), 'no-errors' : (submitted && startForm.park.$valid)}">
-                <span class="input-label">Park/Area:</span>
-                <input name="park" type="text" ng-model="Session.park" ng-change="changePark()">
-            </label>
+            <div ng-class="{ 'has-errors' : (submitted && startForm.park.$invalid), 'no-errors' : (submitted && startForm.park.$valid && parkChecked)}">
+    			<label ng-hide="parkChecked" style="" class="item item-input">
+                    <span class="input-label">Park/Area:</span>
+                    <input name="park" type="text" ng-model="Session.park" ng-change="changePark()" required>
+                </label>
+                <ion-item ng-show="parkChecked" class="item item-button-right">
+                    {{Session.park}}
+                    <a class="button button-icon icon ion-close-circled" ng-click="clearPark()"></a>
+                </ion-item>
+            </div>
+
+            <div ng-show="submitted && !parkChecked && !startForm.park.$error" >
+                <div class="error-container">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        You must select parks from the provided list!
+                    </div>
+                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                </div>
+            </div>
+
             <div ng-show="submitted && startForm.park.$error" ng-messages="startForm.park.$error">
                 <div class="error-container">
                   <div ng-messages-include="error-list.html"></div>
@@ -71,8 +107,9 @@
             <label class="list" ng-show="Session.park.length > 0 && showList ">
                 <ion-item class="item-divider">Select Park</ion-item>
                 <div ng-repeat="park in parkNames | filter:Session.park | limitTo:4 ">
-                    <ion-radio ng-model="Session.park" value="{{park}}" ng-click="parkSelected()">{{park}}</ion-radio>
+                    <ion-radio ng-model="Session.park" value="{{park}}" ng-click="parkSelected()" required>{{park}}</ion-radio>
                 </div>
+                <div style="width: 283px; height: 10px;" class="spacer"></div>
             </label>
             <!--End Park-->
 
