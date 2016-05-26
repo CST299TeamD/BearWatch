@@ -183,9 +183,10 @@ angular.module('app.controllers')
     //validation function
     $scope.validate = function(form){
     	console.log("Submitting");
+    	$scope.submitted = true;
     	if(form.$valid) {
     		console.log("Form Valid");
-	      //$state.go('home');
+	    	$state.go('startNewSessionCont');
 	    }
     }
 })

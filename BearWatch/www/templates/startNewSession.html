@@ -53,82 +53,137 @@
             <div style="width: 283px; height: 30px;" class="spacer"></div>
             <!--end observers-->
             
+            <!--Park-->
 			<div style="width: 283px; height: 30px;" class="spacer"></div>
             <h2 style="">Location</h2>
-			<label style="" class="item item-input">
+			<label style="" class="item item-input" ng-class="{ 'has-errors' : (submitted && startForm.park.$invalid), 'no-errors' : (submitted && startForm.park.$valid)}">
                 <span class="input-label">Park/Area:</span>
-                <input placeholder="" type="text" ng-model="Session.park" ng-change="changePark()">
+                <input name="park" type="text" ng-model="Session.park" ng-change="changePark()">
             </label>
+            <div ng-show="submitted && startForm.park.$error" ng-messages="startForm.park.$error">
+                <div class="error-container">
+                  <div ng-messages-include="error-list.html"></div>
+                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                </div>
+            </div>
 
-            <!-- Search box for park naems-->
+            <!-- Search box for park names-->
             <label class="list" ng-show="Session.park.length > 0 && showList ">
                 <ion-item class="item-divider">Select Park</ion-item>
                 <div ng-repeat="park in parkNames | filter:Session.park | limitTo:4 ">
                     <ion-radio ng-model="Session.park" value="{{park}}" ng-click="parkSelected()">{{park}}</ion-radio>
                 </div>
             </label>
+            <!--End Park-->
 
-
-			<label style="" class="item item-input">
+            <!--Site-->
+			<label style="" class="item item-input" ng-class="{ 'has-errors' : (submitted && startForm.site.$invalid), 'no-errors' : (submitted && startForm.site.$valid)}">
                 <span class="input-label">Site:</span>
-                <input placeholder="" type="text" ng-model="Session.site">
+                <input name="site" type="text" ng-model="Session.site" ng-minlength="2" ng-maxlength="20" required>
             </label>
-			
-	   	<div style="width: 283px; height: 30px;" class="spacer"></div>
-        <h2>Viewing Area</h2>
-	   <label class="item item-select" ng-class="{ 'has-errors' : (startForm.viewingArea.$invalid && startForm.viewingArea.$dirty), 'no-errors' : (startForm.viewingArea.$valid && startForm.viewingArea.$dirty)}">
+            <div ng-show="submitted && startForm.site.$error" ng-messages="startForm.site.$error">
+                <div class="error-container">
+                  <div ng-messages-include="error-list.html"></div>
+                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                </div>
+            </div>
+            <!--End Site-->
+
+    	    <!--ViewingArea-->
+            <div style="width: 283px; height: 30px;" class="spacer"></div>
+            <h2>Viewing Area</h2>
+            <label class="item item-select" ng-class="{ 'has-errors' : (submitted && startForm.viewingArea.$invalid), 'no-errors' : (submitted && startForm.viewingArea.$valid)}">
                 <span class="input-label">Viewing Area:</span>
                 <select name="viewingArea" ng-model="Session.viewingArea" required>
-                    <option value=""></option>
                     <option value="Platform">Platform</option>
                     <option value="Boating">Boating</option>
                     <option value="Blind">Blind</option>
-					<option value="Other">Other</option>
+    				<option value="Other">Other</option>
                 </select>
-        </label>
-       <div ng-show="Session.viewingArea == 'Other'">
-           <label style="" class="item item-input">
-               <span class="input-label">Description:</span>
-               <input ng-model="Session.viewingAreaOther" placeholder="Description" type="text">
-           </label>
-       </div>
-        <ion-item class="error-container" ng-show="startForm.viewingArea.$dirty && startForm.viewingArea.$error.required">
-            <i class="ion-alert-circled" style="font-size: x-large;"></i> 
-            Viewing Area is required!
-        </ion-item>
+            </label>
+            <div ng-show="Session.viewingArea == 'Other'">
+               <label style="" class="item item-input" ng-class="{ 'has-errors' : (submitted && startForm.viewingOther.$invalid), 'no-errors' : (submitted && startForm.viewingOther.$valid)}">
+                   <span class="input-label">Description:</span>
+                   <input name="viewingOther" ng-model="Session.viewingAreaOther" placeholder="Description" type="text" ng-required="Session.viewingArea == 'Other'">
+               </label>
+            </div>
 
-       <div class="list">
-           <ion-item class="item-divider">Select Mode:</ion-item>
-           <ion-radio ng-model="Session.stationary" value="Stationary" >Stationary</ion-radio>
-           <ion-radio ng-model="Session.stationary" value="Mobile">Mobile</ion-radio>
-       </div>
-	
-		<div style="width: 283px; height: 30px;" class="spacer"></div>
-		<h2>Zone Type</h2>
-		<ion-item class="item-divider">Zone</ion-item>
-            <label class="item item-select">
+            <div ng-show="submitted && startForm.viewingOther.$error" ng-messages="startForm.viewingOther.$error">
+                <div class="error-container">
+                  <div ng-messages-include="error-list.html"></div>
+                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                </div>
+            </div>
+
+            <div ng-show="submitted && startForm.viewingArea.$error" ng-messages="startForm.viewingArea.$error">
+                <div class="error-container">
+                  <div ng-messages-include="error-list.html"></div>
+                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                </div>
+            </div>
+            <!--End ViewingArea-->
+
+            <!--Stationary-->
+            <div class="list">
+                <ion-item class="item-divider" ng-class="{ 'has-errors' : (submitted && startForm.stationary.$invalid), 'no-errors' : (submitted && startForm.stationary.$valid)}">Select Mode:</ion-item>
+                <ion-radio name="stationary" ng-model="Session.stationary" value="Stationary" ng-required="Session.stationary == ''">Stationary</ion-radio>
+                <ion-radio name="stationary" ng-model="Session.stationary" value="Mobile" ng-required="Session.stationary == ''">Mobile</ion-radio>
+            </div>
+
+            <div class="error-container" ng-show="submitted && startForm.stationary.$error" ng-messages="startForm.stationary.$error">
+                <div ng-messages-include="error-list.html"></div> 
+                <div style="width: 283px; height: 10px;" class="spacer"></div>
+            </div>
+            <!--End Stationary-->
+    	   
+            <!--Zone type-->
+    		<div style="width: 283px; height: 30px;" class="spacer"></div>
+    		<h2>Zone Type</h2>
+    		<ion-item class="item-divider">Zone</ion-item>
+            <label class="item item-select" ng-class="{ 'has-errors' : (submitted && startForm.zoneSchema.$invalid), 'no-errors' : (submitted && startForm.zoneSchema.$valid)}">
                 <span class="input-label">View Type:</span>
-                <select ng-model="Session.zoneSchema" ng-change="showZoneSchema(Session.zoneSchema)">
-                    <option selected disabled></option>
+                <select name="zoneSchema" ng-model="Session.zoneSchema" ng-change="showZoneSchema(Session.zoneSchema)" required>
                     <option>River</option>
                     <option>Estuary</option>
-					<option>Terrestrial</option>
-				</select>
+    				<option>Terrestrial</option>
+    			</select>
             </label>
+            <div ng-show="submitted && startForm.zoneSchema.$error" ng-messages="startForm.zoneSchema.$error">
+                <div class="error-container">
+                    <div ng-messages-include="error-list.html"></div>
+                    <div style="width: 283px; height: 10px;" class="spacer"></div>
+                </div>
+            </div>
+
             <div ng-bind-html="zoningSchemaPic" class="center" style="text-align: center;">
             </div>
-            
-		<label style="" class="item item-input">
-			<span class="input-label">Comment:</span>
-			<input ng-model="Session.comment" type="text" placeholder="Additional Zone Information">
-        </label>
+                
+    		<label style="" class="item item-input">
+    			<span class="input-label">Comment:</span>
+    			<input ng-model="Session.comment" type="text" placeholder="Additional Zone Information">
+            </label>
+            <!--End Zone type-->
+    	    
+    	    <div style="width: 283px; height: 20px;" class="spacer"></div>
+    	    <button class="button button-positive button-block icon-right ion-android-arrow-forward" type="submit">Continue</button>
+        </form><!--End startForm-->
 
-	    
-	    <div style="width: 283px; height: 20px;" class="spacer"></div>
-	    <button class="button button-positive button-block icon-right ion-android-arrow-forward" type="submit">Continue</button>
-        </form>
-        <div ng-show="debug">
-            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="startNewSessionCont">Debug Continue</a>
+        <div ng-show="true">
+            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="startNewSessionCont">Skip Validation</a>
         </div>
 	   	</ion-content>
 </ion-view>
+<script id="error-list.html" type="text/ng-template">  
+    <div class="error" ng-message="required">
+        <i class="ion-alert-circled"></i> 
+        This field is required!
+    </div>
+    <div class="error" ng-message="minlength">
+        <i class="ion-alert-circled"></i> 
+        Minimum length of this field is 2 characters!
+    </div>
+    <div class="error" ng-message="maxlength">
+        <i class="ion-alert-circled"></i> 
+        Maximum length of this field is 20 characters!
+    </div>
+</script> 
