@@ -1,10 +1,10 @@
 angular.module('app.controllers')
 
-.controller('bearCtrl', function($scope, $cordovaSQLite, BearList, Bear, $location) {
+.controller('bearCtrl', function($scope, $cordovaSQLite, BearList, Bear, $location, Session) {
 	
 	$scope.BearList = BearList;
 	$scope.Bear = Bear;
-
+            $scope.Session = Session;
 	$scope.changeBear = function(index){
 
 		var tmp = $scope.BearList.add[index];
@@ -25,6 +25,13 @@ angular.module('app.controllers')
 		$scope.Bear.cubFurColour = tmp.cubFurColour;
 		$scope.Bear.cubAge = tmp.cubAge;
 		$scope.Bear.behaviour = tmp.behaviour;
+        $scope.Bear.fishing = tmp.fishing;
+        $scope.Bear.fishingMethod = tmp.fishing[tmp.fishing.length -1].method;
+        $scope.Bear.fishingSuboption = tmp.fishing[tmp.fishing.length -1].suboption;
+        $scope.Bear.tally = tmp.fishing[tmp.fishing.length -1].tally;
+        //console.log($scope.Bear.fishingMethod);
+        //console.log($scope.Bear.fishingSuboption);
+        //console.log($scope.Bear.tally);
 		$scope.Bear.comment = tmp.comment;
 		//$location.path("/BearInfo");		
 	}
@@ -114,7 +121,9 @@ angular.module('app.controllers')
                     if($scope.FBearSet.isFocalPresent == '' && $scope.Bear.isFocal == true) {
                         $scope.FBearSet.isFocalPresent = true;
                     }
-
+                      if($scope.Session.observationMode == "Scanning"){
+                        $scope.Bear.isFocal = true;
+                      }
         	    	$scope.BearList.add.push({
         	    		index: $scope.BearList.add.length,
         	    		id: result.insertId,
@@ -132,6 +141,11 @@ angular.module('app.controllers')
         	    		cubs: $scope.Bear.cubs,
         	    		cubFurColour: $scope.Bear.cubFurColour,
         	    		cubAge: $scope.Bear.cubAge,
+                        isFishing: false,
+                        fishing: [],
+                        fishingMethod: '',
+                        fishingSuboption: '',
+                        tally: 0,
         	    		comment: $scope.Bear.comment
         	    	});
                             
@@ -219,6 +233,16 @@ angular.module('app.controllers')
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].suboption = fishingSuboption;
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].tally = tally;
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].time = curTime;
+            
+                var tmp = $scope.Bear;
+                //update the local copy of the bear
+                $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].method = fishingMethod;
+
+                $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].suboption = fishingSuboption;
+            
+                $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].tally = tally;
+            
+                $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].time = curTime;
             }
 
             $scope.addTally = function(fishingMethod, fishingSuboption, tally){
