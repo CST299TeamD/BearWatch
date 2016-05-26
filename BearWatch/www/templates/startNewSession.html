@@ -31,7 +31,7 @@
             </div><!--end debug-->
         
 		<h2 style="">Add Observer</h2>
-        <form style="" class="list">
+        <form name="startForm" novalidate  ng-submit="validate(startForm)" class="list">
 
             <!--Session observers-->
             <div class="item item-input-inset">
@@ -76,14 +76,14 @@
 			
 	   	<div style="width: 283px; height: 30px;" class="spacer"></div>
         <h2>Viewing Area</h2>
-	   <label class="item item-select">
+	   <label class="item item-select" ng-class="{ 'has-errors' : (startForm.viewingArea.$invalid && startForm.viewingArea.$dirty), 'no-errors' : (startForm.viewingArea.$valid && startForm.viewingArea.$dirty)}">
                 <span class="input-label">Viewing Area:</span>
-                <select ng-model="Session.viewingArea">
-                    <option selected disabled></option>
-                    <option>Platform</option>
-                    <option>Boating</option>
-                    <option>Blind</option>
-					<option>Other</option>
+                <select name="viewingArea" ng-model="Session.viewingArea" required>
+                    <option value=""></option>
+                    <option value="Platform">Platform</option>
+                    <option value="Boating">Boating</option>
+                    <option value="Blind">Blind</option>
+					<option value="Other">Other</option>
                 </select>
         </label>
        <div ng-show="Session.viewingArea == 'Other'">
@@ -92,6 +92,11 @@
                <input ng-model="Session.viewingAreaOther" placeholder="Description" type="text">
            </label>
        </div>
+        <ion-item class="error-container" ng-show="startForm.viewingArea.$dirty && startForm.viewingArea.$error.required">
+            <i class="ion-alert-circled" style="font-size: x-large;"></i> 
+            Viewing Area is required!
+        </ion-item>
+
        <div class="list">
            <ion-item class="item-divider">Select Mode:</ion-item>
            <ion-radio ng-model="Session.stationary" value="Stationary" >Stationary</ion-radio>
@@ -118,8 +123,12 @@
 			<input ng-model="Session.comment" type="text" placeholder="Additional Zone Information">
         </label>
 
-	   </form>
-	   <div style="width: 283px; height: 20px;" class="spacer"></div>
-	      <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" id="newSessionEnvironmentVariables-button9" ui-sref="startNewSessionCont">Continue</a>
+	    
+	    <div style="width: 283px; height: 20px;" class="spacer"></div>
+	    <button class="button button-positive button-block icon-right ion-android-arrow-forward" type="submit">Continue</button>
+        </form>
+        <div ng-show="debug">
+            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="startNewSessionCont">Debug Continue</a>
+        </div>
 	   	</ion-content>
 </ion-view>
