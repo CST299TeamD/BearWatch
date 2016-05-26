@@ -1,4 +1,12 @@
 <ion-view style="" title="Environment">
+	<ion-nav-title>
+		<div width=100%>
+			<div style="position:absolute;left:5px;">Environment</div>
+			<div style="position:absolute;right:0px;"ng-show=true ng-controller="countdownController">
+				<span style="color:{{CountdownTimerColor}}">{{CountdownTimer}}
+			</div>
+		</div>
+	</ion-nav-title>
     <div style="">
         <ion-nav-bar class="bar-stable">
             <ion-nav-buttons side="right">
