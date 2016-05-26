@@ -57,8 +57,18 @@
             <h2 style="">Location</h2>
 			<label style="" class="item item-input">
                 <span class="input-label">Park/Area:</span>
-                <input placeholder="" type="text" ng-model="Session.park">
+                <input placeholder="" type="text" ng-model="Session.park" ng-change="changePark()">
             </label>
+
+            <!-- Search box for park naems-->
+            <label class="list" ng-show="Session.park.length > 0 && showList ">
+                <ion-item class="item-divider">Select Park</ion-item>
+                <div ng-repeat="park in parkNames | filter:Session.park | limitTo:4 ">
+                    <ion-radio ng-model="Session.park" value="{{park}}" ng-click="parkSelected()">{{park}}</ion-radio>
+                </div>
+            </label>
+
+
 			<label style="" class="item item-input">
                 <span class="input-label">Site:</span>
                 <input placeholder="" type="text" ng-model="Session.site">

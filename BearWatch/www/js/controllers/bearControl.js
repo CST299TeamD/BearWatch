@@ -81,11 +81,10 @@ angular.module('app.controllers')
             $scope.Bear.name += " (Focal Bear)";
         }
 
-        //test for duplicative name
+        //check for duplicative name
         for(var n = 0; n < $scope.BearList.add.length; n++) {
             if($scope.BearList.add[n].name == $scope.Bear.name) {
                 duplicate = true;
-                console.log($scope.BearList.add[n].name + " == " + $scope.Bear.name);
                 var alertPopup = $ionicPopup.alert({
                     title: 'Duplicate Bear!',
                     template: 'There is another bear named '+ $scope.BearList.add[n].name +' in this session' 
@@ -98,7 +97,7 @@ angular.module('app.controllers')
         }
 
 
-        console.log(duplicate);
+        
         if(duplicate == false) {
     		//insert into bears table
     		$cordovaSQLite.execute(db, 'INSERT INTO bears (bear_name, bear_location, size, age, gender, species, '
