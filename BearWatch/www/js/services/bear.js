@@ -18,6 +18,11 @@ angular.module('app.services')
         cubFurColour: '',
         cubAge: '',
         behaviour: [],
+        isFishing: false,
+        fishing: [],
+        fishingMethod: '',
+        fishingSuboption: '',
+        tally: 0,
         comment: ''
     };
                      

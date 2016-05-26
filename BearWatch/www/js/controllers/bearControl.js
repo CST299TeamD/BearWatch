@@ -59,6 +59,7 @@ angular.module('app.controllers')
     $scope.Bear.cubFurColour = '';
     $scope.Bear.cubAge = '';
     $scope.Bear.behaviour = [];
+    $scope.Bear.fishing = [];
     $scope.Bear.comment = '';
 
    	var sIdInsertResult = "Not Initialized";
@@ -189,9 +190,71 @@ angular.module('app.controllers')
             $scope.hBinteraction = hBinteraction;
             $scope.habituationLevel = habituationLevel;
 
+            //fishing activity
+            $scope.onFishing = function(){
+                //turn off other feeding and foraging
+                for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
+                    if($scope.Bear.behaviour[n].category == "Feeding or Foraging") {
+                            $scope.Bear.behaviour.splice(n, 1);
+                    }
+                }
+                $scope.Bear.isFishing = !($scope.Bear.isFishing);
+                if($scope.Bear.isFishing == true) {
+                    var curTime = new Date().toLocaleTimeString();
+                    $scope.Bear.fishingMethod = '';
+                    $scope.Bear.fishingSuboption = '';
+                    $scope.Bear.tally = 0;
+                    $scope.Bear.fishing.push({method: $scope.Bear.fishingMethod,
+                                     suboption: $scope.Bear.fishingSuboption,
+                                     tally: $scope.Bear.tally,
+                                     time: curTime
+                                     });
+                }
+            }
+            
+            $scope.updateFish = function(fishingMethod, fishingSuboption, tally){
+                var curTime = new Date().toLocaleTimeString();
+                        console.log("add"+ fishingMethod + " " + fishingSuboption + " " + tally );
+                $scope.Bear.fishing[$scope.Bear.fishing.length - 1].method = fishingMethod;
+                $scope.Bear.fishing[$scope.Bear.fishing.length - 1].suboption = fishingSuboption;
+                $scope.Bear.fishing[$scope.Bear.fishing.length - 1].tally = tally;
+                $scope.Bear.fishing[$scope.Bear.fishing.length - 1].time = curTime;
+            }
+
+            $scope.addTally = function(fishingMethod, fishingSuboption, tally){
+                var curTime = new Date().toLocaleTimeString();
+            console.log("add"+ fishingMethod + " " + fishingSuboption + " " + tally );
+                $scope.Bear.tally += 1;
+                $scope.Bear.fishing[$scope.Bear.fishing.length - 1].method = fishingMethod;
+                $scope.Bear.fishing[$scope.Bear.fishing.length - 1].suboption = fishingSuboption;
+                $scope.Bear.fishing[$scope.Bear.fishing.length - 1].tally = tally + 1;
+                $scope.Bear.fishing[$scope.Bear.fishing.length - 1].time = curTime;
+            }
+            
+            $scope.removeTally = function(fishingMethod, fishingSuboption, tally){
+                var curTime = new Date().toLocaleTimeString();
+                        console.log("add"+ fishingMethod + " " + fishingSuboption + " " + tally );
+                $scope.Bear.fishing[$scope.Bear.fishing.length - 1].method = fishingMethod;
+                $scope.Bear.fishing[$scope.Bear.fishing.length - 1].suboption = fishingSuboption;
+                if($scope.Bear.tally != 0){
+                    $scope.Bear.tally -= 1;
+                    $scope.Bear.fishing[$scope.Bear.fishing.length - 1].tally = tally - 1;
+                    $scope.Bear.fishing[$scope.Bear.fishing.length - 1].time = curTime;
+                }
+            }
+            
+            $scope.testfunc = function() {
+                console.log("I am working");
+            }
+            
             $scope.addBehaviour = function(type, desc){
                 var curTime = new Date().toLocaleTimeString();
                 var updated = false;
+            
+                //check for fishing
+                if(type == "Feeding or Foraging"){
+                    $scope.Bear.isFishing = false;
+                }
             
                 for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
                    //if the this type of behaviour is alredy going on then update description
@@ -224,7 +287,6 @@ angular.module('app.controllers')
                     $scope.Bear.behaviour.splice(index, 1);
                 }
             }
-
 })
 
 .controller('bearSpecCtrl', function($scope, BearList, Bear) {
@@ -250,7 +312,10 @@ angular.module('app.controllers')
         $scope.BearList.add[index].cubFurColour = tmp.cubFurColour;
         $scope.BearList.add[index].cubAge = tmp.cubAge;
         $scope.BearList.add[index].behaviour = tmp.behaviour;
+        $scope.BearList.add[index].isFishing = tmp.isFishing;
+        $scope.BearList.add[index].fishing = tmp.fishing;
         $scope.BearList.add[index].comment = tmp.comment;
+            
 
 
         //update the bear in the database
