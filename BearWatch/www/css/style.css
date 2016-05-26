@@ -10,5 +10,43 @@
 
 /*improve sho/hide speed fix*/
 .ng-hide.ng-hide-animate{
-     display: none !important;
+    display: none !important;
+}
+
+/*Validation Style*/
+
+.error-container {
+	border-radius: 15px;
+	margin: 5px 0;
+	color: #D8000C;
+	background-color: #FFBABA;
+}
+ 
+.error-container:last-child {
+    margin: 5px 0 0;
+}
+ 
+.error {
+	padding: 10px 16px;
+	font-family: "Arial Black", Gadget, sans-serif;
+	font-size: 11px;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+ 
+.error.i { 
+	vertical-align: middle;
+	font-size: 90px;;
+}
+ 
+.last-error-container > .error {
+	padding: 10px 16px 0;
+}
+ 
+.has-errors {
+	border-bottom: 3px solid #B83E2C;
+}
+ 
+.no-errors {
+	border-bottom: 3px solid green;
 }
