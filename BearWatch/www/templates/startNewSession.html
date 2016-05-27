@@ -36,10 +36,14 @@
             <!--Session observers-->
             <div class="item item-input-inset">
                 <label class="item item-input-wrapper">		
-                <span class="input-label" >Name:</span>
-                <input placeholder="First Initial &amp; Surname" type="text" ng-model="Session.observer">
+                <span class="input-label" >First Name:</span>
+                <input type="text" ng-model="Session.firstName">
                 </label>
-                <button class="button button-balanced icon ion-plus" ng-click="addObserver(Session.observer)">&nbsp; Add Observer</button>
+                <label class="item item-input-wrapper">     
+                <span class="input-label" >Last Name:</span>
+                <input type="text" ng-model="Session.lastName">
+                </label>
+                <button class="button button-balanced icon ion-person-add" ng-click="addObserver()">&nbsp; Add Observer</button>
             </div>
             
             <!--show active observer names with remove option-->
@@ -52,16 +56,16 @@
             </ion-list>
             <div style="width: 283px; height: 30px;" class="spacer"></div>
 
-            <div ng-show="submitted && Session.nameResult.length == 0 && Session.observer == ''" >
+            <div ng-show="submitted && Session.nameResult.length == 0 && (Session.firstName == '' || Session.lastName == '')" >
                 <div class="error-container">
                     <div class="error">
                         <i class="ion-alert-circled"></i> 
-                        Observer is a required field!
+                        First and last name are required fields!
                     </div>
                   <div style="width: 283px; height: 10px;" class="spacer"></div>
                 </div>
             </div>
-            <div ng-show="submitted && Session.observer != ''" >
+            <div ng-show="submitted && Session.firstName != '' && Session.lastName !=''" >
                 <div class="error-container">
                     <div class="error">
                         <i class="ion-alert-circled"></i> 
@@ -86,7 +90,7 @@
                 </ion-item>
             </div>
 
-            <div ng-show="submitted && !parkChecked && !startForm.park.$error" >
+            <div ng-show="submitted && !parkChecked && !startForm.park.$error.required" >
                 <div class="error-container">
                     <div class="error">
                         <i class="ion-alert-circled"></i> 
@@ -116,7 +120,7 @@
             <!--Site-->
 			<label style="" class="item item-input" ng-class="{ 'has-errors' : (submitted && startForm.site.$invalid), 'no-errors' : (submitted && startForm.site.$valid)}">
                 <span class="input-label">Site:</span>
-                <input name="site" type="text" ng-model="Session.site" ng-minlength="2" ng-maxlength="20" required>
+                <input name="site" type="text" ng-model="Session.site" required>
             </label>
             <div ng-show="submitted && startForm.site.$error" ng-messages="startForm.site.$error">
                 <div class="error-container">
@@ -202,7 +206,7 @@
             <!--End Zone type-->
     	    
     	    <div style="width: 283px; height: 20px;" class="spacer"></div>
-    	    <button class="button button-positive button-block icon-right ion-android-arrow-forward" type="submit">Continue</button>
+    	    <button class="button button-positive button-block icon-right ion-android-arrow-forward" type="submit">Next</button>
         </form><!--End startForm-->
 
         <div ng-show="true">
@@ -213,7 +217,7 @@
 <script id="error-list.html" type="text/ng-template">  
     <div class="error" ng-message="required">
         <i class="ion-alert-circled"></i> 
-        This field is required!
+        The field above is required!
     </div>
     <div class="error" ng-message="minlength">
         <i class="ion-alert-circled"></i> 
@@ -221,6 +225,6 @@
     </div>
     <div class="error" ng-message="maxlength">
         <i class="ion-alert-circled"></i> 
-        Maximum length of this field is 20 characters!
+        Maximum length of this field is 25 characters!
     </div>
 </script> 

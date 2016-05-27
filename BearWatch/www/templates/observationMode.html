@@ -1,15 +1,21 @@
 <ion-view title="Observation Mode">
     <ion-content class="has-header" overflow-scroll="true" padding="true">
         <h2>Observation Mode</h2>
- 
-		<label class="list">
-            <ion-item class="item-divider">Select Mode</ion-item>
-            <ion-radio ng-model="Session.observationMode" value="Focal">Focal</ion-radio>
-            <ion-radio ng-model="Session.observationMode" value="Scanning">Scanning</ion-radio>
-        </label>
+        <form name="obsForm" novalidate  ng-submit="saveSession(obsForm)" class="list">
 
-        <!--ui-sref="tab.bear"-->
-		<button class="button button-balanced  button-block" ng-click="saveSession()" ui-sref="tab.bear" ng-disabled="Session.observationMode == ''" >&nbsp; Start Session</button>
+    		<label class="list">
+                <ion-item class="item-divider" ng-class="{ 'has-errors' : (submitted && obsForm.observationMode.$invalid), 'no-errors' : (submitted && obsForm.observationMode.$valid)}">Select Mode</ion-item>
+                <ion-radio name="observationMode" ng-model="Session.observationMode" value="Focal" ng-required="Session.observationMode == ''">Focal</ion-radio>
+                <ion-radio name="observationMode" ng-model="Session.observationMode" value="Scanning" ng-required="Session.observationMode == ''">Scanning</ion-radio>
+            </label>
+            <div class="error-container" ng-show="submitted && obsForm.observationMode.$error" ng-messages="obsForm.observationMode.$error">
+                <div ng-messages-include="error-list.html"></div> 
+                <div style="width: 283px; height: 10px;" class="spacer"></div>
+            </div>
+
+            <!--ui-sref="tab.bear"-->
+    		<button class="button button-balanced button-block icon ion-log-in" type="submit">&nbsp; Start Session</button>
+        </form><!--End obsForm-->
         
         <div ng-show="debug">
         <button ng-click="testInsert()">Test insert</button>
@@ -22,3 +28,9 @@
         </div>
     </ion-content>
 </ion-view>
+<script id="error-list.html" type="text/ng-template">  
+    <div class="error" ng-message="required">
+        <i class="ion-alert-circled"></i> 
+        The field above is required!
+    </div>
+</script> 

@@ -3,7 +3,8 @@ angular.module('app.services')
 .factory('Session', function($cordovaSQLite, $q){
     var Session =  { 
         id: '',
-        observer: '',
+        firstName: '',
+        lastName: '',
         nameResult: [],
         park: '',
         site: '',

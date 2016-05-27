@@ -143,12 +143,14 @@ angular.module('app.controllers')
 	$scope.parkChecked = false;
 
 	//function for adding observers
-	$scope.addObserver = function(observer){
+	$scope.addObserver = function(){
 		//check for empty string
-		if(observer != '' && observer != null){
-			$scope.Session.nameResult.push(observer);
+		if(Session.firstName != '' && Session.lastName != ''){
+			var name = Session.firstName + ' ' + Session.lastName;
+			$scope.Session.nameResult.push(name);
 			//clear textfield
-			$scope.Session.observer = '';
+			Session.firstName = '';
+			Session.lastName = '';
 		}
 	}
 
@@ -194,7 +196,7 @@ angular.module('app.controllers')
     $scope.validate = function(form){
     	console.log("Submitting");
     	$scope.submitted = true;
-    	if(form.$valid && $scope.parkChecked && Session.observer != '' && Session.nameResult.length == 0) {
+    	if(form.$valid && $scope.parkChecked && Session.firstName == '' && Session.lastName == '' && Session.nameResult.length != 0) {
     		console.log("Form Valid");
 	    	$state.go('startNewSessionCont');
 	    }
@@ -208,7 +210,7 @@ angular.module('app.controllers')
 			            
 })
 
-.controller('observationModeCtrl', function($scope, $cordovaSQLite, Session, Enviro) {
+.controller('observationModeCtrl', function($scope, $cordovaSQLite, Session, Enviro, $location, $state, $ionicPopup) {
 	//global debug var
 	$scope.debug = debug;	
 	
@@ -269,17 +271,33 @@ angular.module('app.controllers')
         );
 	}
 
-	$scope.saveSession = function(){
-		//save session THEN save environment using session id
-		Session.save()
-		.then(
-			function(result){
-				Enviro.save(result.insertId);
-			}, 
-			function(error){
-				console.log("saveSession error: " + error.message);
-			}
-		);
+	//function to save session and initial enviro data
+	$scope.saveSession = function(form){
+		
+		$scope.submitted = true;
+
+		//validate input
+		if(form.$valid) {
+    		console.log("Form Valid");
+    		//save session THEN save environment using session id
+			Session.save()
+			.then(
+				function(result){
+					Enviro.save(result.insertId);
+					$state.go('tab.bear');
+				}, 
+				function(error){
+					var alertPopup = $ionicPopup.alert({
+						title: 'Session Error',
+						template: 'Error saving session information, please try again. Restart BearWatch if behavior continues.'
+					});
+
+					alertPopup.then(function(res) {
+						console.log("saveSession error: " + error.message);
+					});
+				}
+			);
+	    }
 	}
 
 });
