@@ -11,22 +11,8 @@
             </div>
 		</div>
 			
-		<div ng-show=false>
-        		
-				<br/>
-				Message: {{message}}
-				<br/>
-				Longitude : {{longitude}}
-				<br/>
-				Latitude: {{latitude}}
-				<br/>
-				Easting : {{easting}}
-				<br/>
-				Northing : {{northing}}
-				<br/>
-				UTM Block : {{utmBlock}}
-				<br/>        
-				<button style="" ng-click="getUTM()" id="peterTest-button">Get UTM</button>
+		<div ng-show="debug" ng-controller='geolocationController'>			
+
 		</div>
     </ion-content>
 

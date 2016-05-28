@@ -1,6 +1,9 @@
 angular.module('app.controllers')
 
 .controller('homeCtrl', function($scope, $ionicPopup) {	
+	//global debug var
+	$scope.debug = debug;
+	
 	//Warn user if database cannot be created
     if(db_error == true){
       var alertPopup = $ionicPopup.alert({
@@ -18,49 +21,38 @@ angular.module('app.controllers')
 	//disable contiue button if no valid sessions available
 })
 
-.controller('peterTest', function($scope, $cordovaGeolocation) {
-	
-	document.addEventListener("deviceready", onDeviceReady, false);
+//Activates the GPS
+.controller('geolocationController', function($scope, GPS) {
+	GPS.refresher();
+})
 
-	function onDeviceReady() {		
-        console.log("navigator.geolocation is Ready");	
-	}	
-	$scope.getUTM = function() {
-		
-		$scope.message = "message";
-		//$scope.longitude = 5+5;
-		//$scope.latitude = "latitude";
-		//$scope.easting = "easting";
-		//$scope.northing = "northing";
-		//$scope.utmBlock = "utmblock";
-		
-		function onSuccess(position) {
-			$scope.latitude = position.coords.latitude;
-			$scope.longitude = position.coords.longitude;
-				
-			//var coords = utmconv.latLngToUtm(position.coords.latitude, position.coords.longitude);
-
-            //setStandardUtm(coords.global.easting, coords.global.northing, coords.global.zone, coords.global.southern);
-
-			//$scope.easting = coords.global.easting;
-			//$scope.northing = coords.global.northing;
-			//$scope.utmBlock = coords.global.zone;
+/* WORKING geolocation controller
+.controller('geolocationController', function($scope, $cordovaGeolocation) {
+	$scope.getUTM = function() {		
+		function onSuccess(position) {			
+			$scope.debugValue = ' Longitude:'+position.coords.longitude;	
+			$scope.debugValue += ' Latitude:'+position.coords.latitude;	
+			//alert("success!\nlat : " + position.coords.latitude + "\nlong : " + position.coords.longitude);
+			LatLngToUTMRef(position.coords.latitude, position.coords.longitude, function(UTMEasting, UTMNorthing, UTMZone){
+				//alert("Easting: " + UTMEasting + "\nNorthing: " + UTMNorthing + "\nZone: " + UTMZone);
+				$scope.debugValue += ' Easting:'+UTMEasting;	
+				$scope.debugValue += ' Northing:'+UTMNorthing;	
+				$scope.debugValue += ' UTMBlock:'+UTMZone;		
+			});							
+			$scope.$apply();
 		}
 
-		// onError Callback receives a PositionError object
-		//
 		function onError(error) {
 			alert('code: '    + error.code    + '\n' +
 				  'message: ' + error.message + '\n');
 		}
 
-		// Options: throw an error if no update is received every 30 seconds.
-		//
 		navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true, timeout: 5000, maximumAge: 0});
-		//$scope.message = watchID;
-		//navigator.geolocation.clearWatch(watchID);
+
 	}
-})
+})*/
+
+
 
 //TODO: Remove test code before deployment
 //application test code and example functions
