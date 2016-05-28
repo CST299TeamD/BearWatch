@@ -130,6 +130,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "picture_subjects  TEXT    , "
       + "collection_mode   TEXT    , "
       +	"bear_id       	   INTEGER , "
+      +	"bear       	   TEXT    , "                           
       + "species           TEXT    , "
       + "bear_zone         TEXT    , "
       + "paw_measure       TEXT    , "

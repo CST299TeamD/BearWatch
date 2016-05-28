@@ -2,8 +2,8 @@ angular.module('app.services')
 
 
 //Bear Object
-.factory('Bear', [function(){
-    return {
+.factory('Bear', function($cordovaSQLite){
+    var Bear = {
         index: -1,
         id: -1,
         isFocal: '',
@@ -27,10 +27,27 @@ angular.module('app.services')
         tally: 0,
         comment: ''
     };
-                     
-}])
+    
+    Bear.Log = function(sessionId){
+        //get the time
+        var time = new Date().toLocaleTimeString();
+        var bearlog = angular.toJson(Bear, false);
+        $cordovaSQLite.execute(db,
+                        'INSERT INTO logs '
+                        + '(timestamp, session_id, bear_id, bear)'
+                        + ' VALUES (?, ?, ?, ?)',
+                        [time, sessionId, Bear.id, bearlog])
+        .then(function(result) {
+            console.log("bear Logged with log id - " + result.insertId);
+            console.log(Bear);
+        }, function(error) {
+            console.log("Error on saving comment: " + error.message);
+        });
+     }
+    return Bear;
+})
 
-//boolean to check focal bear present
+//boolean to check for presence of focal bear in session
 .factory('FBearSet', [function(){
     return {
         isFocalPresent: '',

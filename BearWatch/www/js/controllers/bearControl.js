@@ -106,7 +106,7 @@ angular.module('app.controllers')
 	$scope.bearInsertResult = bearInsertResult;
 	$scope.sIdInsertResult = sIdInsertResult;
 
-	//add bear to fake session id - to be updated
+	//add bear with session id to bear table
 	$scope.addBear = function(){
         var validated = false;
         var duplicate = false;
@@ -139,7 +139,7 @@ angular.module('app.controllers')
 
         
         if(duplicate == false) {
-    		//insert into bears table
+            //insert into bears table
     		$cordovaSQLite.execute(db, 'INSERT INTO bears (bear_name, bear_location, size, age, gender, species, '
     								  +'mark_desc, fur_colour, paw_measure, cubs, cub_fur, cub_age, comment, '
     								  +	'session_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
@@ -159,7 +159,11 @@ angular.module('app.controllers')
                         $scope.Bear.isFocal = true;
                     }
                       
-                    //store the bear object in the session array
+                    //update id and index of local copy
+                    $scope.Bear.index = $scope.BearList.add.length;
+                    $scope.Bear.id = result.insertId;
+                      
+                    //add the bear object in the bear array
         	    	$scope.BearList.add.push({
         	    		index: $scope.BearList.add.length,
         	    		id: result.insertId,
@@ -184,7 +188,13 @@ angular.module('app.controllers')
                         tally: 0,
         	    		comment: $scope.Bear.comment
         	    	});
+                    
+                    //update local copy of bear object
+                    $scope.Bear = $scope.BearList.add[$scope.BearList.add.length - 1];
                       
+                    //insert into log table
+                    Bear.Log($scope.Session.id);
+                    
                     //debug stuff
                    /* console.log($scope.BearList.add[$scope.BearList.add.length - 1].index + " index \n " +
                                 $scope.BearList.add[$scope.BearList.add.length - 1].id + " id \n" +
@@ -208,6 +218,8 @@ angular.module('app.controllers')
         		}, function(error) {
            	 		$scope.bearInsertResult = "Error on inserting Bear: " + error.message;
         		})
+            
+            
             //change page location
             $location.path("tab.bear");
             $state.go("tab.bear");
@@ -242,19 +254,21 @@ angular.module('app.controllers')
 
 
 .controller('bearInfoCtrl', function($scope, Bear, BearList, Session) {
+            
+            //get all the factory objects
             $scope.Session = Session;
             $scope.session_id = Session.id;
             $scope.Bear = Bear;
             $scope.BearList = BearList; 
 
             
+            //create and attache all the behaviour arrays to scope
             var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Human Food"];
             var nonInteractive = ["Loafing/Resting", "Sleeping", "Walking", "Running"];
             var bBInteraction =["Alert/Vigilance", "Playing", "Fighting", "Defense"];
             var bHInteraction = ["Alert/Vigilance", "Retreat", "Bear Approach"];
             var hBinteraction = ["Alert/Vigilance", "Retreat", "Approach Bear", "Aggression "];
             var habituationLevel = ["Habituated", "Non- Habituated", "Sub-Adult"];
-            
             $scope.feeding = feeding;
             $scope.nonInteractive = nonInteractive;
             $scope.bBInteraction = bBInteraction;
@@ -262,15 +276,21 @@ angular.module('app.controllers')
             $scope.hBinteraction = hBinteraction;
             $scope.habituationLevel = habituationLevel;
 
-            //fishing activity
+            
+            //starting the fishing activity
             $scope.onFishing = function(){
-                //turn off other feeding and foraging
+            
+                //turn off other feeding and foraging if running
                 for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
                     if($scope.Bear.behaviour[n].category == "Feeding or Foraging") {
                             $scope.Bear.behaviour.splice(n, 1);
                     }
                 }
+            
+                //turn fishing on/off
                 $scope.Bear.isFishing = !($scope.Bear.isFishing);
+            
+                //if fishing is turned on add fishing session to fishing array
                 if($scope.Bear.isFishing == true) {
                     var curTime = new Date().toLocaleTimeString();
                     $scope.Bear.fishingMethod = '';
@@ -281,19 +301,26 @@ angular.module('app.controllers')
                                      tally: $scope.Bear.tally,
                                      time: curTime
                                      });
+            
                 }
+                //insert into log table
+                Bear.Log($scope.Session.id);
             }
             
+            //update fishing subcategories
             $scope.updateFish = function(fishingMethod, fishingSuboption, tally){
+            
+                //get now timestamp
                 var curTime = new Date().toLocaleTimeString();
-                        console.log("add"+ fishingMethod + " " + fishingSuboption + " " + tally );
+            
+                //update fishing array
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].method = fishingMethod;
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].suboption = fishingSuboption;
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].tally = tally;
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].time = curTime;
             
                 var tmp = $scope.Bear;
-                //update the local copy of the bear
+                //update the bear in the bear array
                 $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].method = fishingMethod;
 
                 $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].suboption = fishingSuboption;
@@ -301,43 +328,64 @@ angular.module('app.controllers')
                 $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].tally = tally;
             
                 $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].time = curTime;
+            
+                //insert into log table
+                Bear.Log($scope.Session.id);
             }
 
+            //To increment the number of fishes caught
             $scope.addTally = function(fishingMethod, fishingSuboption, tally){
+            
+                //get new timestamp
                 var curTime = new Date().toLocaleTimeString();
-            console.log("add"+ fishingMethod + " " + fishingSuboption + " " + tally );
+            
+                //update the fishing session
                 $scope.Bear.tally += 1;
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].method = fishingMethod;
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].suboption = fishingSuboption;
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].tally = tally + 1;
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].time = curTime;
+            
+                //insert into log table
+                Bear.Log($scope.Session.id);
             }
             
+            //To decrement the number of fishes caught
             $scope.removeTally = function(fishingMethod, fishingSuboption, tally){
+            
+                //get the new timestamp
                 var curTime = new Date().toLocaleTimeString();
-                        console.log("add"+ fishingMethod + " " + fishingSuboption + " " + tally );
+            
+                //update the fishing session
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].method = fishingMethod;
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].suboption = fishingSuboption;
-                if($scope.Bear.tally != 0){
+            
+                //check for negative number
+                if($scope.Bear.tally != 0) {
+            
+                    //update fishing session
                     $scope.Bear.tally -= 1;
                     $scope.Bear.fishing[$scope.Bear.fishing.length - 1].tally = tally - 1;
                     $scope.Bear.fishing[$scope.Bear.fishing.length - 1].time = curTime;
+            
+                    //insert into log table
+                    Bear.Log($scope.Session.id);
                 }
             }
             
-            $scope.testfunc = function() {
-                console.log("I am working");
-            }
-            
+            //To add Beahaviour to bear Object
             $scope.addBehaviour = function(type, desc){
+          
+                //get the timestamp
                 var curTime = new Date().toLocaleTimeString();
                 var updated = false;
             
-                //check for fishing
-                if(type == "Feeding or Foraging"){
+                //turn off ongoing fishing session
+                if(type == "Feeding or Foraging") {
                     $scope.Bear.isFishing = false;
                 }
             
+                //chack for ongoing behaviour types
                 for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
                    //if the this type of behaviour is alredy going on then update description
                    if($scope.Bear.behaviour[n].category == type) {
@@ -346,36 +394,50 @@ angular.module('app.controllers')
                       updated = true;
                    }
                 }
+            
+                // if not a update, add behaviour to the list
                 if(updated == false) {
                        Bear.behaviour.push({
                             category: type,
                             description: desc,
                             time: curTime});
                 }
-            }
-
-            $scope.removeBehaviour = function(ind, cat, desc, time) {
-            var index = -1;
-            for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
             
-                if($scope.Bear.behaviour[n].category == cat)
-                    {
-                        index = n;
-                        break;
-                    }
+                //insert into log table
+                Bear.Log($scope.Session.id);
             }
-                console.log(index + " "+ cat +" "+ "removed");
+            
+            
+            //To remove behaviour from the list
+            $scope.removeBehaviour = function(ind, cat, desc, time) {
+            
+                //get the index of behavior to be removed from the behaviour list
+                var index = -1;
+                for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
+                    if($scope.Bear.behaviour[n].category == cat) {
+                            index = n;
+                            break;
+                        }
+                }
+            
+                //Remove behaviour if index found
                 if(index >= 0){
+            
                     $scope.Bear.behaviour.splice(index, 1);
+            
+                    //insert into log table
+                    Bear.Log($scope.Session.id);
                 }
             }
 })
 
-.controller('bearSpecCtrl', function($scope, BearList, Bear) {
+
+.controller('bearSpecCtrl', function($scope, BearList, Bear, Session) {
     
     //get factory objects
     $scope.BearList = BearList;
 	$scope.Bear = Bear;
+    $scope.Session = Session;
             
     //create temp variables to hold changes
     $scope.tmpName = $scope.Bear.name;
@@ -429,7 +491,8 @@ angular.module('app.controllers')
         $scope.Bear.cubAge = cubAge;
         $scope.Bear.comment = comment;
             
-            
+        //insert into log table
+        Bear.Log($scope.Session.id);
     }
             
 });
