@@ -2,18 +2,22 @@
     <ion-content class="has-header" overflow-scroll="true" padding="true">
         <h3 style="">Bear {{Bear.name}} Specifications</h3>
         <div>
-            Session id : {{session_id}} <br>
+            Session id : {{Session.id}} <br>
+            Bear Index : {{Bear.index}} <br>
+            Bear id : {{Bear.id}} <br>
+            Is focal bear : {{Bear.isFocal}} <br>
+            Bear Name : {{Bear.name}} <br>
             Zone : {{Bear.zone}} <br>
             Bear Size : {{Bear.size}} <br>
-            Bear Species : {{Bear.species}} <br>
-            Bear gender : {{Bear.gender}} <br>
             Bear Age : {{Bear.age}} <br>
+            Bear gender : {{Bear.gender}} <br>
+            Bear Species : {{Bear.species}} <br>
             MarkDescription : {{Bear.markDescription}} <br>
             Bear Fur Colour : {{Bear.furColour}} <br>
-            Bear Paw Measure : {{Bear.pawMeasered}} <br>
+            Bear Paw Measure : {{Bear.pawMeasured}} <br>
             Bear Cubs : {{Bear.cubs}} <br>
-            Bear Cubs Age : {{Bear.cubAge}} <br>
             Bear Cubs Fur Colour ; {{Bear.cubFurColour}} <br>
+            Bear Cubs Age : {{Bear.cubAge}} <br>
             Bear Comment : {{Bear.comment}} <br>
             <div ng-show="debug">
                 <br>Select session <br>
@@ -107,7 +111,7 @@
                 </label>            
             </div>
 
-            <ion-checkbox ng-model="Bear.pawMeasered">Paw Measurement Taken</ion-checkbox>
+            <ion-checkbox ng-model="Bear.pawMeasured">Paw Measurement Taken</ion-checkbox>
 			
 			<div style="width: 283px; height: 30px;" class="spacer"></div>
             <ion-item style="" class="item-divider">Cubs</ion-item>

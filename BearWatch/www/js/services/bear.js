@@ -1,5 +1,7 @@
 angular.module('app.services')
 
+
+//Bear Object
 .factory('Bear', [function(){
     return {
         index: -1,
@@ -13,7 +15,7 @@ angular.module('app.services')
         species: '',
         markDescription: '',
         furColour: '',
-        pawMeasered: '',
+        pawMeasured: false,
         cubs: '',
         cubFurColour: '',
         cubAge: '',
@@ -28,6 +30,7 @@ angular.module('app.services')
                      
 }])
 
+//boolean to check focal bear present
 .factory('FBearSet', [function(){
     return {
         isFocalPresent: '',
@@ -35,6 +38,7 @@ angular.module('app.services')
                      
 }])
 
+//array to add all the bear objects
 .factory('BearList', [function(){
     return {
         add: [],
