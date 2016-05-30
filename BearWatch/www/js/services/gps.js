@@ -1,6 +1,7 @@
 angular.module('app.services')
 
 .factory('GPS', function($cordovaGeolocation){
+	
     var GPS =  { 
 		errorCode: '',
 		errorMessage: '',

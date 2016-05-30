@@ -22,37 +22,9 @@ angular.module('app.controllers')
 })
 
 //Activates the GPS
-.controller('geolocationController', function($scope, GPS) {
+.controller('geolocationController', function(GPS) {
 	GPS.refresher();
 })
-
-/* WORKING geolocation controller
-.controller('geolocationController', function($scope, $cordovaGeolocation) {
-	$scope.getUTM = function() {		
-		function onSuccess(position) {			
-			$scope.debugValue = ' Longitude:'+position.coords.longitude;	
-			$scope.debugValue += ' Latitude:'+position.coords.latitude;	
-			//alert("success!\nlat : " + position.coords.latitude + "\nlong : " + position.coords.longitude);
-			LatLngToUTMRef(position.coords.latitude, position.coords.longitude, function(UTMEasting, UTMNorthing, UTMZone){
-				//alert("Easting: " + UTMEasting + "\nNorthing: " + UTMNorthing + "\nZone: " + UTMZone);
-				$scope.debugValue += ' Easting:'+UTMEasting;	
-				$scope.debugValue += ' Northing:'+UTMNorthing;	
-				$scope.debugValue += ' UTMBlock:'+UTMZone;		
-			});							
-			$scope.$apply();
-		}
-
-		function onError(error) {
-			alert('code: '    + error.code    + '\n' +
-				  'message: ' + error.message + '\n');
-		}
-
-		navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true, timeout: 5000, maximumAge: 0});
-
-	}
-})*/
-
-
 
 //TODO: Remove test code before deployment
 //application test code and example functions

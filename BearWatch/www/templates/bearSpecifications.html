@@ -1,4 +1,12 @@
 <ion-view style="" title="{{Bear.name}} Specifications">
+	<ion-nav-title>
+		<div width=100% class="dashboardHeader" ng-controller="timerControl">
+			{{Bear.name}} 
+			<span style="color:{{color}}">
+				{{value}}
+			</span>
+		</div>
+	</ion-nav-title>
     <ion-content class="has-header" overflow-scroll="true" padding="true">
         <form style="" class="list"></form>
         <h3 style="">Bear Specifications</h3>
