@@ -21,6 +21,12 @@ angular.module('app.controllers')
 	//disable contiue button if no valid sessions available
 })
 
+//Activates the GPS
+.controller('geolocationController', function($scope, GPS) {
+	GPS.refresher();
+})
+
+/* WORKING geolocation controller
 .controller('geolocationController', function($scope, $cordovaGeolocation) {
 	$scope.getUTM = function() {		
 		function onSuccess(position) {			
@@ -44,7 +50,9 @@ angular.module('app.controllers')
 		navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true, timeout: 5000, maximumAge: 0});
 
 	}
-})
+})*/
+
+
 
 .controller('startNewSessionCtrl', function($scope, Session, Park, $location, $state) {
 	//global debug var

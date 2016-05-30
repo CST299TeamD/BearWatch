@@ -113,6 +113,7 @@ angular.module('app.routes', ['ionicUIRouter'])
 
   .state('tab.bearInfo', {
     url: '/BearInfo',
+    cache: false,
     views: {
       'tab1': {
         templateUrl: 'templates/bearInfo.html',
