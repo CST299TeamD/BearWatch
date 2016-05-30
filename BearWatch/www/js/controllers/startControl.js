@@ -46,77 +46,6 @@ angular.module('app.controllers')
 	}
 })
 
-//TODO: Remove test code before deployment
-//application test code and example functions
-.controller( 'dbTest', function ($scope, $cordovaSQLite, Session, Enviro){
-	$scope.Session = Session;
-	$scope.Enviro = Enviro;
-    $scope.result = "TEST INITIALIZED";
-	$scope.status = "$scope.Session.nameResult: " + $scope.Session.nameResult;
-	
-	$scope.testing = function (){
-		$scope.test = "--$scope.Session-- ";
-		for(item in $scope.Session){
-			$scope.test += item + " : ";
-			if(item == 'nameResult'){
-				for(name in $scope.Session[item]){
-					$scope.test += $scope.Session[item][name] + ", ";	
-				}
-			}else{
-				$scope.test += $scope.Session[item] + ", ";
-			}	
-		}	 
-	}
-
-	
-	$scope.enviroTesting = function (){
-		$scope.enviroTest = "--$scope.Enviro-- ";
-		for(item in $scope.Enviro){
-			$scope.enviroTest += item + " : " + $scope.Enviro[item] + ", ";	
-		}
-		 
-	}
-
-
-	$scope.insert = function() {			
-		$cordovaSQLite.execute(db, 'INSERT INTO sessions (observers) VALUES (?)', [$scope.data])
-        .then(function(result) {
-            $scope.result = "Observer name saved successful, cheers!";
-			$scope.status = "Insert result: " + result;
-        }, function(error) {
-            $scope.result = "Error on saving: " + error.message;
-        })
-	}
-	
-	//select example
-    $scope.select = function() {
-		// Execute SELECT statement to load message from database.
-        $cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)' [Sessions.id])
-            .then(
-                function(result) {
-                    if (result.rows.length > 0) {
-                        $scope.status = result.rows.item(0).session_id;
-                        $scope.result = "Observer name loaded successful, cheers!";
-                    }
-                },
-                function(error) {
-                    $scope.result = "Error on loading: " + error.message;
-                }
-            );
-    }
-
-
-    var internet = "not set";
-	if(window.Connection){
-		internet = navigator.connection.type;
-	}else {
-		internet = "It doesn't work";
-	}
-
-	$scope.internet = internet;
-
-})
-
 .controller('startNewSessionCtrl', function($scope, Session, Park, $location, $state) {
 	//global debug var
 	$scope.debug = debug;
@@ -207,61 +136,13 @@ angular.module('app.controllers')
 	$scope.insertResult = insertResult;
 	$scope.selectResult = selectResult;
 
-	$scope.testInsert = function(){
-		$scope.insertResult = "Saving";
-		id = Session.save();
-		if(id != '') {
-			console.log("Trying envirosave with id " + id);
-			//Enviro.save(id);
-		}else{
-			console.log("no id");
-		}
-	}
-
-	$scope.testSelect = function(){
-		$scope.insertResult = "Initialized: Session_id?:  " + Session.id;
-		Enviro.save(Session.id);
-		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [Session.id])
-            .then(
-                function(result) {
-                	$scope.selectResult = "Session = ";
-                    if (result.rows.length > 0) {
-            			for(item in result.rows.item(0)){
-            				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
-            			}
-                    }
-                },
-                function(error) {
-                    $scope.selectResult = "Error on loading: " + error.message;
-                }
-            );
-
-        $cordovaSQLite.execute(db, 'SELECT * FROM logs')
-        .then(
-            function(result) {
-            	$scope.selectResult += "Enviro = ";
-                if (result.rows.length > 0) {
-                	console.log("enviro results returned");
-        			for(item in result.rows.item(0)){
-        				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
-        			}
-                }else{
-                	console.log("No enviro results")
-                }
-            },
-            function(error) {
-                $scope.selectResult = "Error on loading: " + error.message;
-            }
-        );
-	}
-
 	//function to save session and initial enviro data
 	$scope.saveSession = function(form){
 		
 		$scope.submitted = true;
 
 		//validate input
-		if(form.$valid) {
+		if(form.$valid && (Session.hr != undefined || Session.min != undefined)) {
     		console.log("Form Valid");
     		//save session THEN save environment using session id
 			Session.save()

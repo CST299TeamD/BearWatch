@@ -1,36 +1,129 @@
-<ion-view title="Observation Mode">
+<ion-view title="Session Setup">
     <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <h2>Observation Mode</h2>
+        <div style="width: 283px; height: 20px;" class="spacer"></div>
         <form name="obsForm" novalidate  ng-submit="saveSession(obsForm)" class="list">
 
     		<label class="list">
-                <ion-item class="item-divider" ng-class="{ 'has-errors' : (submitted && obsForm.observationMode.$invalid), 'no-errors' : (submitted && obsForm.observationMode.$valid)}">Select Mode</ion-item>
+                <ion-item class="item-divider" ng-class="{ 'has-errors' : (submitted && obsForm.observationMode.$invalid), 'no-errors' : (submitted && obsForm.observationMode.$valid)}">Observation Mode</ion-item>
                 <ion-radio name="observationMode" ng-model="Session.observationMode" value="Focal" ng-required="Session.observationMode == ''">Focal</ion-radio>
                 <ion-radio name="observationMode" ng-model="Session.observationMode" value="Scanning" ng-required="Session.observationMode == ''">Scanning</ion-radio>
             </label>
             <div class="error-container" ng-show="submitted && obsForm.observationMode.$error" ng-messages="obsForm.observationMode.$error">
                 <div ng-messages-include="error-list.html"></div> 
-                <div style="width: 283px; height: 10px;" class="spacer"></div>
             </div>
 
-            <!--ui-sref="tab.bear"-->
+            <!--Focal timer info-->
+            <div ng-show="Session.observationMode == 'Focal'">
+                <div style="width: 283px; height: 20px;" class="spacer"></div>
+                <ion-item class="item-divider">Session Time</ion-item>
+                <div class="item item-input-inset" ng-class="{ 'has-errors' : (submitted && ((Session.hr == undefined && Session.min == undefined) || obsForm.hr.$invalid || obsForm.min.$invalid)), 'no-errors' : (submitted && obsForm.hr.$valid && obsForm.min.$valid && (Session.hr != undefined || Session.min != undefined))}">
+                    <label class="item item-input-wrapper">     
+                    <span class="input-label">Hours:</span>
+                    <input type="number" name="hr" ng-model="Session.hr" max="24">
+                    </label>
+                    <label class="item item-input-wrapper">     
+                    <span class="input-label">Minutes:</span>
+                    <input type="number" name="min" ng-model="Session.min" max="59">
+                    </label>
+                </div>
+ 
+                <div class="error-container" ng-show="submitted && Session.hr == undefined && Session.min == undefined && obsForm.hr.$valid && obsForm.min.$valid">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        Session time is required!
+                    </div>
+                </div>
+                <div class="error-container" ng-show="submitted && obsForm.hr.$invalid">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        Maximum 24 hours - only numbers are accepted!
+                    </div>
+                </div>
+                <div class="error-container" ng-show="submitted && obsForm.min.$invalid">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        Maximum 59 minutes - only numbers are accepted!
+                    </div>
+                </div>
+            </div><!--End Focal timer-->
+
+            <!--Scanning timer info-->
+            <div ng-show="Session.observationMode == 'Scanning'">
+                <div style="width: 283px; height: 20px;" class="spacer"></div>
+                <ion-item class="item-divider">Session Time</ion-item>
+                <div class="item item-input-inset" ng-class="{ 'has-errors' : (submitted && ((Session.hr == undefined && Session.min == undefined) || obsForm.hr.$invalid || obsForm.min.$invalid)), 'no-errors' : (submitted && obsForm.hr.$valid && obsForm.min.$valid && (Session.hr != undefined || Session.min != undefined))}">
+                    <label class="item item-input-wrapper">     
+                    <span class="input-label">Hours:</span>
+                    <input type="number" name="hr" ng-model="Session.hr" max="24">
+                    </label>
+                    <label class="item item-input-wrapper">     
+                    <span class="input-label">Minutes:</span>
+                    <input type="number" name="min" ng-model="Session.min" max="59">
+                    </label>
+                </div>
+
+                <div class="error-container" ng-show="submitted && Session.hr == undefined && Session.min == undefined && obsForm.hr.$valid && obsForm.min.$valid">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        Session time is required!
+                    </div>
+                </div>
+                <div class="error-container" ng-show="submitted && obsForm.hr.$invalid">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        Maximum 24 hours - only numbers are accepted!
+                    </div>
+                </div>
+                <div class="error-container" ng-show="submitted && obsForm.min.$invalid">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        Maximum 59 minutes - only numbers are accepted!
+                    </div>
+                </div>
+
+                <ion-item class="item-divider">Scanning Timers</ion-item>
+                <div class="item item-input-inset" ng-class="{ 'has-errors' : (submitted && (obsForm.resting.$invalid || obsForm.active.$invalid)), 'no-errors' : (submitted && (obsForm.resting.$valid && obsForm.active.$valid))}">
+                    <label class="item item-input-wrapper">     
+                    <span class="input-label">Active time:</span>
+                    <input type="number" name="active" ng-model="Session.active" placeholder="(minutes)" max="60" ng-required="Session.observationMode == 'Scanning'" ng-messages="obsForm.active.$error">
+                    </label>
+                    <label class="item item-input-wrapper">     
+                    <span class="input-label">Resting time:</span>
+                    <input type="number" name="resting" ng-model="Session.resting" placeholder="(minutes)" max="60" ng-required="Session.observationMode == 'Scanning'" ng-messages="obsForm.resting.$error">
+                    </label>
+                </div>
+
+                <div class="row">                
+                    <div class="error-container col" ng-show="submitted && obsForm.active.$error" ng-messages="obsForm.active.$error">
+                        <div ng-messages-include="error-list.html"></div> 
+                    </div>
+                    <div class="error-container col" ng-show="submitted && obsForm.resting.$error" ng-messages="obsForm.resting.$error">
+                        <div ng-messages-include="error-list.html"></div> 
+                    </div>
+                </div>
+            </div><!--End Scanning timer-->
+
+
     		<button class="button button-balanced button-block icon ion-log-in" type="submit">&nbsp; Start Session</button>
+            <div ng-show="true">
+                <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="tab.bear">Skip Validation</a>
+            </div>
         </form><!--End obsForm-->
-        
-        <div ng-show="debug">
-        <button ng-click="testInsert()">Test insert</button>
-        <br/><br/>
-        <button ng-click="testSelect()">Test select</button>
-        <br><br>
-        Insert Results: {{insertResult}}
-        <br>
-        Select Results: {{selectResult}}
-        </div>
     </ion-content>
 </ion-view>
+<!--generic error messages-->
 <script id="error-list.html" type="text/ng-template">  
     <div class="error" ng-message="required">
         <i class="ion-alert-circled"></i> 
         The field above is required!
     </div>
+    <div class="error" ng-message="number">
+        <i class="ion-alert-circled"></i> 
+        Only numeric values accepted!
+    </div>
+    <div class="error" ng-message="max">
+        <i class="ion-alert-circled"></i> 
+        Maximum 60 Minutes for resting or active!
+    </div>
+  </div>
 </script> 

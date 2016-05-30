@@ -13,7 +13,12 @@ angular.module('app.services')
         stationary: '',
         zoneSchema: '',
         comment: '',
-        observationMode: ''
+        observationMode: '',
+        start_time: '',
+        hr: '',
+        min: '',
+        active: '',
+        resting: ''
     };
     
     //function for saving session state
@@ -26,13 +31,15 @@ angular.module('app.services')
         }
 
         var defer = $q.defer();
+        var time = new Date();
+        Session.start_time = time;
                   
         $cordovaSQLite.execute(db, 
             'INSERT INTO sessions '
             + '(observers, park, park_site, protocol, stationary, zone_type, zone_comment, start_time, observation_mode)'
             + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
             [Session.nameResult.toString(), Session.park, Session.site, protocol, Session.stationary, Session.zoneSchema, Session.comment, 
-            new Date().toLocaleTimeString(), Session.observationMode])
+            time.toLocaleTimeString(), Session.observationMode])
         .then(function(result) {
             console.log("Session save success" + result.insertId);
             defer.resolve(result);            
