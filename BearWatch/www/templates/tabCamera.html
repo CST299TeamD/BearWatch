@@ -22,32 +22,6 @@
             <img ng-show="imgURI === undefined" ng-src="img/pic_placeholder.png">
         </div>
         
-        <div ng-show="debug">
-            <br/>
-            ShowSubjects: {{showSubjects}}
-            <br/>
-            <ion-item ng-repeat="item in Picture.subjects">Item: {{item.name + ' ' + item.selected}}</ion-item>
-            <br/>
-            Subject array: {{Picture.subjects}}
-            <br/>
-            Camera Message: {{camResult}}
-            <br/>
-            Picture array : {{}}
-            <br/>
-            Result: {{cameraResult}}
-            <br/>
-            Mail Progress: {{mailProgress}}
-            <br/>
-            Delete Result: {{deleteResult}}
-            <br/>
-            Insert Result: {{insertResult}}
-            <br/>
-            Select Result: {{selectResult}}
-            <br/>
-            <!--Image Info: {{imageInfo}}-->
-            <br/>
-        </div><!--end debug-->
-        
         <form style="" class="list" ng-show="imgURI !== undefined">
             <div style="border: 0.5px groove;" class="row item-divider">
                 <div class="col col-center"><h4>Subject(s) in Picture</h4></div>

@@ -1,35 +1,6 @@
-<ion-view style="" title="Set Sesssion Variables">
+<ion-view style="" title="Sesssion Setup">
 	<ion-content class="has-header" overflow-scroll="true" padding="true">
-        <!--debug div-->
-            <div ng-show="debug" ng-controller="dbTest">
-                <h2 style="">Debug Info</h2>
-                <label style="" class="item item-input">
-                    <span class="input-label" >TestName:</span>
-                    <input placeholder="First Initial &amp; Surname" type="text" ng-model="data">                       
-                </label>
-                <div>
-                    <br/>
-                    <br/><br/>
-                    Internet Connection: {{ internet }}
-                    <br>
-                    Result: {{ result }}
-                    <br>
-                    Status: {{ status }}
-                    <br/>
-                    Session test: {{ test }}
-                    <br/>
-                    Enviro test: {{ enviroTest }}
-                    <br/>
 
-                    <button class="button" ng-click="insert()">insert</button>
-                    <button class="button" ng-click="select()">select</button>
-                    <button class="button" ng-click="testing()">Session Test</button>
-                    <button class="button" ng-click="enviroTesting()">Enviro Test</button>
-                    <button class="button" ng-click="DB.fail()">DBFail test</button>
-                    <br/><br/>
-                </div>
-            </div><!--end debug-->
-        
 		<h2 style="">Add Observer</h2>
         <form name="startForm" novalidate  ng-submit="validate(startForm)" class="list">
 
@@ -79,7 +50,7 @@
             <!--Park-->
 			<div style="width: 283px; height: 30px;" class="spacer"></div>
             <h2 style="">Location</h2>
-            <div ng-class="{ 'has-errors' : (submitted && startForm.park.$invalid), 'no-errors' : (submitted && startForm.park.$valid && parkChecked)}">
+            <div ng-class="{ 'has-errors' : (submitted && !parkChecked), 'no-errors' : (submitted && startForm.park.$valid && parkChecked)}">
     			<label ng-hide="parkChecked" style="" class="item item-input">
                     <span class="input-label">Park/Area:</span>
                     <input name="park" type="text" ng-model="Session.park" ng-change="changePark()" required>
@@ -89,17 +60,6 @@
                     <a class="button button-icon icon ion-close-circled" ng-click="clearPark()"></a>
                 </ion-item>
             </div>
-
-            <div ng-show="submitted && !parkChecked && !startForm.park.$error.required" >
-                <div class="error-container">
-                    <div class="error">
-                        <i class="ion-alert-circled"></i> 
-                        You must select parks from the provided list!
-                    </div>
-                  <div style="width: 283px; height: 10px;" class="spacer"></div>
-                </div>
-            </div>
-
             <div ng-show="submitted && startForm.park.$error" ng-messages="startForm.park.$error">
                 <div class="error-container">
                   <div ng-messages-include="error-list.html"></div>
@@ -115,6 +75,15 @@
                 </div>
                 <div style="width: 283px; height: 10px;" class="spacer"></div>
             </label>
+            <div ng-show="submitted && !parkChecked && !startForm.park.$error.required" >
+                <div class="error-container">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        You must select parks from the provided list!
+                    </div>
+                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                </div>
+            </div>
             <!--End Park-->
 
             <!--Site-->
@@ -214,6 +183,8 @@
         </div>
 	   	</ion-content>
 </ion-view>
+
+<!--generic error messages-->
 <script id="error-list.html" type="text/ng-template">  
     <div class="error" ng-message="required">
         <i class="ion-alert-circled"></i> 

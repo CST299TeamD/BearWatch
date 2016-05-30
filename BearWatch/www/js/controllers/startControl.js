@@ -187,61 +187,13 @@ angular.module('app.controllers')
 	$scope.insertResult = insertResult;
 	$scope.selectResult = selectResult;
 
-	$scope.testInsert = function(){
-		$scope.insertResult = "Saving";
-		id = Session.save();
-		if(id != '') {
-			console.log("Trying envirosave with id " + id);
-			//Enviro.save(id);
-		}else{
-			console.log("no id");
-		}
-	}
-
-	$scope.testSelect = function(){
-		$scope.insertResult = "Initialized: Session_id?:  " + Session.id;
-		Enviro.save(Session.id);
-		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [Session.id])
-            .then(
-                function(result) {
-                	$scope.selectResult = "Session = ";
-                    if (result.rows.length > 0) {
-            			for(item in result.rows.item(0)){
-            				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
-            			}
-                    }
-                },
-                function(error) {
-                    $scope.selectResult = "Error on loading: " + error.message;
-                }
-            );
-
-        $cordovaSQLite.execute(db, 'SELECT * FROM logs')
-        .then(
-            function(result) {
-            	$scope.selectResult += "Enviro = ";
-                if (result.rows.length > 0) {
-                	console.log("enviro results returned");
-        			for(item in result.rows.item(0)){
-        				$scope.selectResult += item + ": " + result.rows.item(0)[item] + ", ";
-        			}
-                }else{
-                	console.log("No enviro results")
-                }
-            },
-            function(error) {
-                $scope.selectResult = "Error on loading: " + error.message;
-            }
-        );
-	}
-
 	//function to save session and initial enviro data
 	$scope.saveSession = function(form){
 		
 		$scope.submitted = true;
 
 		//validate input
-		if(form.$valid) {
+		if(form.$valid && (Session.hr != undefined || Session.min != undefined)) {
     		console.log("Form Valid");
     		//save session THEN save environment using session id
 			Session.save()
