@@ -43,12 +43,8 @@
             </label>
 			<label style="" class="item item-select">
                 <span class="input-label">Bear Location</span>
-                <select ng-model="Bear.zone">
-                    <option>Zone 1</option>
-                    <option>Zone 2</option>
-                    <option>Zone 3</option>
-                    <option>Zone 4</option>
-                    <option>Zone 5</option>
+                <select ng- repeat="z in zoneList" ng-model="Bear.zone">
+                    <option>{{z}}</option>
                 </select>
             </label>
 			<label style="" class="item item-select">

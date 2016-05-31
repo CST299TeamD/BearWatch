@@ -43,25 +43,7 @@ angular.module('app.controllers')
             $scope.Bear.tally = 0;
 
         }
-            //debug stuff
-        /*    console.log($scope.Bear.index + " index \n " +
-                        $scope.Bear.id + " id \n" +
-                        $scope.Bear.isFocal + " isFocal \n" +
-                        $scope.Bear.name + " name \n" +
-                        $scope.Bear.zone + " zone \n" +
-                        $scope.Bear.size + " size \n" +
-                        $scope.Bear.age + " age \n " +
-                        $scope.Bear.gender + " gender \n" +
-                        $scope.Bear.species + " species \n" +
-                        $scope.Bear.markDescription + " markdescription \n " +
-                        $scope.Bear.furColour + " furcolour \n" +
-                        $scope.Bear.pawMeasured + " pawmesured \n" +
-                        $scope.Bear.cubs + " cubs \n" +
-                        $scope.Bear.cubFurColour + " cubFurcolour \n" +
-                        $scope.Bear.cubAge + "cubAge \n" +
-                        $scope.Bear.isFishing + " isFishing \n" +
-                        $scope.Bear.comment + " comment \n"
-                        ); */
+
         $scope.Bear.comment = tmp.comment;
 	
     }
@@ -100,6 +82,14 @@ angular.module('app.controllers')
     $scope.Bear.fishingSuboption = '';
     $scope.Bear.tally = 0;
     $scope.Bear.comment = '';
+    
+    //get the zone list
+    $scope.zoneList =["1"];
+    for(var n = 0; n < $scope.Bear.Zones.length; n++){
+        if($scope.Session.zoneSchema == $scope.Bear.Zones[n].name){
+            $scope.zoneList = $scope.Bear.Zones[n].zones;
+        }
+    }
             
    	var sIdInsertResult = "Not Initialized";
 	var bearInsertResult = "Not Initialized";
@@ -195,25 +185,6 @@ angular.module('app.controllers')
                     //insert into log table
                     Bear.Log($scope.Session.id);
                     
-                    //debug stuff
-                   /* console.log($scope.BearList.add[$scope.BearList.add.length - 1].index + " index \n " +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].id + " id \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].isFocal + " isFocal \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].name + " name \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].zone + " zone \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].size + " size \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].age + " age \n " +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].gender + " gender \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].species + " species \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].markDescription + " markdescription \n " +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].furColour + " furcolour \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].pawMeasured + " pawmesured \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].cubs + " cubs \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].cubFurColour + " cubFurcolour \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].cubAge + "cubAge \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].isFishing + " isFishing \n" +
-                                $scope.BearList.add[$scope.BearList.add.length - 1].comment + " comment \n"
-                                );*/
                             
         		}, function(error) {
            	 		$scope.bearInsertResult = "Error on inserting Bear: " + error.message;
@@ -457,9 +428,6 @@ angular.module('app.controllers')
 
     //update bear specs
 	$scope.updateBear = function(index, name, zone, size, species, gender, age, markDescription, furColour, pawMeasured, cubs, cubAge, cubFurColour, comment){
-        
-        //debug stuff
-        //console.log(" index " + index + "\n name " + name +"\n zone " + zone + " \n size " + size + "\n species " + species + "\n gender " + gender + "\n age " + age + "\n markdesc " + markDescription + "\n furColour " + furColour +"\n pawmeasured " + pawMeasured +" \n cubs " + cubs +"\n cubAge " + cubAge + "\n cubFurColour " + cubFurColour + "\n comment" +  comment);
         
         //update Bear in bear array
         $scope.BearList.add[index].name = name;
