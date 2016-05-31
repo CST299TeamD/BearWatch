@@ -49,7 +49,7 @@ angular.module('app.controllers')
     }
 })
 
-.controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session, FBearSet, $ionicPopup, $location, $state) {
+.controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session, FBearSet, $ionicPopup, $location, $state, Human) {
 	//global debug var
 	$scope.debug = debug;
 
@@ -84,14 +84,33 @@ angular.module('app.controllers')
     $scope.Bear.comment = '';
     
     //get the zone list
-    $scope.zoneList =["1"];
+    var zoneList =[];
     for(var n = 0; n < $scope.Bear.Zones.length; n++){
         if($scope.Session.zoneSchema == $scope.Bear.Zones[n].name){
-            $scope.zoneList = $scope.Bear.Zones[n].zones;
+            zoneList = $scope.Bear.Zones[n].zones;
         }
     }
+    $scope.zoneList = zoneList;
             
-   	var sIdInsertResult = "Not Initialized";
+            
+            //determine zone matrix and help image
+    switch(Session.zoneSchema){
+        case "Estuary":
+            $scope.zoneImgURI = "img/estuary.png"
+            break;
+        case "River":
+            $scope.zoneImgURI = "img/river.png"
+            break;
+        case "Terrestrial":
+            $scope.zoneImgURI = "img/terrestrial.png"
+            break;
+        default:
+            $scope.zoneImgURI = "img/pic_placeholder.png"
+    }
+
+    
+   	
+    var sIdInsertResult = "Not Initialized";
 	var bearInsertResult = "Not Initialized";
 	$scope.bearInsertResult = bearInsertResult;
 	$scope.sIdInsertResult = sIdInsertResult;

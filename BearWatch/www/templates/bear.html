@@ -1,6 +1,6 @@
 <ion-view title="{{Session.observationMode}}">
     <div>
-        <ion-nav-bar class="bar-stable">
+        <ion-nav-bar class="bar-dark">
             <ion-nav-buttons side="right">
                 <a class="button icon-left ion-log-out button-small button-assertive" ng-click = "showConfirm()">&nbsp;End Session</a>
             </ion-nav-buttons>
@@ -13,7 +13,7 @@
             <img src="img/behavior_heading.png" height="auto" width="100%" class="rcorners">
         </div>
         <ion-list >
-            <ion-item class="item-divider">Bears in the Session {{bearNum}}</ion-item>
+            <ion-item class="item-divider list-head">Bears in the Session - {{BearList.add.length}}</ion-item>
             <div ng-repeat="(index, Object) in BearList.add">    
             <ion-item ng-click="changeBear({{index}})" ui-sref="tab.bearInfo">{{Object.name}}</ion-item>
             </div>
