@@ -13,11 +13,29 @@
 	color: #FFFFFF;
 }
 
+.expando-pane{
+	border: 0.5px groove;
+}
+
+.flexi-div{
+	flex-wrap: wrap;
+}
+
+.border-bottom{
+	border-bottom: solid 1px black;
+	margin-bottom: 10px;
+}
+
 /*picture css*/
 
 .img-fit {
 	height: auto;
 	width: 100%;
+}
+
+.img-300{
+	max-height: 300px; 
+	max-width: 300px;
 }
 
 .rcorners {
@@ -36,6 +54,11 @@
 
 .pull-left {
 	text-align: left;
+}
+
+/*padding*/
+.padding-top-20{
+	padding-top: 20px;
 }
 
 /*comment boxes*/

@@ -2,22 +2,24 @@
     <div >
         <ion-nav-bar class="bar-stable">
             <ion-nav-buttons side="right">
-                <a class="button button-icon icon-left ion-ios-close" ng-click = "showConfirm()">End Session</a>
+                <a class="button icon-left ion-log-out button-small button-assertive" ng-click = "showConfirm()">&nbsp;End Session</a>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view animation="slide-left-right" ></ion-nav-view>
     </div>
-    <ion-content class="has-header" overflow-scroll="true" padding="true">
+    <ion-content class="has-header container" overflow-scroll="true" padding="true">
         <form class="list">
-            <div style="width: 283px; height: 37px;" class="spacer"></div>
-            <h3>General Comment</h3>
+            <div class="spacer spacer-20"></div>
+            <h2 class="center">General Comment(s)</h2>
+            <div class="spacer spacer-20"></div>
+
             <label class="item item-input">
                 <textarea rows="10" cols="50" placeholder="Type here" ng-model="Comment.text"> </textarea>
             </label>
             <button class="button button-positive  button-block" ng-click="Comment.add()">Record</button>
 
-            <div style="width: 283px; height: 20px;" class="spacer"></div>         
-            <div style="border: 0.5px groove;" class="row item-divider">
+            <div class="spacer spacer-20"></div>       
+            <div class="row item-divider expando-pane">
                 <div class="col col-center"><h4>Session Comments</h4></div>
                 <div class="col col-center text-right">
                     <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showComments, 'button button-small button-icon icon ion-ios-minus-outline':showComments}" ng-click="showComments=!showComments"></a>
@@ -31,7 +33,7 @@
                     <ion-item ng-repeat="comment in Comment.commentList">
                         <div class="card">
                             <div class="item item-text-wrap">                 
-                                <div class="row" style="border-bottom: solid 1px black;">
+                                <div class="row border-bottom">
                                     <div class="col col-bottom col-75">
                                         <p>{{comment.timeStamp}}</p>
                                     </div>
@@ -42,7 +44,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" style="padding-top: 20px;">
+                                <div class="row padding-top-20">
                                     <div class="col col-center">
                                         {{comment.text}}
                                     </div>
@@ -51,7 +53,7 @@
                         </div>
                     </ion-item>
                 </ion-list>
-                <div style="width: 283px; height: 20px;" class="spacer"></div> 
+                <div class="spacer spacer-40"></div>
             </div>
         </form>
     </ion-content>

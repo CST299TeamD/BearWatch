@@ -1,26 +1,25 @@
-<ion-view style="" title="Human">
-    <div style="">
+<ion-view title="Human">
+    <div >
         <ion-nav-bar class="bar-stable">
             <ion-nav-buttons side="right">
-                <a class="button button-icon icon-left ion-ios-close" ng-click = "showConfirm()">End Session</a>
+                <a class="button icon-left ion-log-out button-small button-assertive" ng-click = "showConfirm()">&nbsp;End Session</a>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view animation="slide-left-right" ></ion-nav-view>
     </div>
-    <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <form style="" class="list">
-            <h3>Humans in each Zone</h3>
-
-            <div style="border: 0.5px groove;" class="row item-divider">
+    <ion-content class="has-header container" overflow-scroll="true" padding="true">
+        <form class="list">
+            <div class="spacer spacer-20"></div>
+            <div class="row item-divider expando-pane">
                 <div class="col col-center"><h4>Human-Zone Matrix</h4></div>
                 <div class="col col-center text-right">
                     <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showZoneMatrix, 'button button-small button-icon icon ion-ios-minus-outline':showZoneMatrix}" ng-click="showMatrix()"></a>
                 </div>
             </div>
             <div ng-model="showZoneMatrix" ng-show="showZoneMatrix">
-                <div class="row" style="flex-wrap: wrap;">
+                <div class="row flexi-div">
                     <div class="col col-20" ng-repeat="zone in Human.zoneMatrix">
-                        <label style="" class="item item-input">
+                        <label class="item item-input">
                             <span class="input-label">{{zone.zone}}: </span>
                             <input placeholder="# Humans" type="number" ng-model="zone.humans" ng-change="Human.save()">
                         </label>
@@ -28,19 +27,19 @@
                 </div>
             </div><!--end zoneMatrix-->
             
-            <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <div style="border: 0.5px groove;" class="row item-divider">
+            <div class="spacer spacer-20"></div>
+            <div class="row item-divider expando-pane">
                 <div class="col col-center"><h4>Zone Mapping</h4></div>
                 <div class="col col-center text-right">
                     <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showZoneSchema, 'button button-small button-icon icon ion-ios-minus-outline':showZoneSchema}" ng-click="showZoneSchema=!showZoneSchema"></a>
                 </div>
             </div>
             <div ng-model="showZoneSchema" ng-show="showZoneSchema" class="center" style="text-align: center;">
-                <img style="padding-top: 20px;" ng-src="{{zoneImgURI}}">
+                <img class="padding-top-20" ng-src="{{zoneImgURI}}">
             </div>            
             
-            <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <ion-item style="" class="item-divider">Human Activities Occurring</ion-item>
+            <div class="spacer spacer-20"></div>
+            <ion-item class="item-divider list-head">Human Activities Occurring</ion-item>
             <ion-toggle ng-model="motorizedHuman" toggle-class="toggle-balanced">Motorized</ion-toggle>
             <div ng-show="motorizedHuman">
                 <!--show active motorized humans with remove option-->
@@ -50,7 +49,7 @@
                         {{moto.time + " " + moto.name + " " + moto.desc}}
                         <a class="button button-icon icon ion-close-circled" ng-click="recordMoto(moto, 'departed', '')"></a>
                     </div>
-                    <div style="width: 283px; height: 20px;" class="spacer"></div>
+                    <div class="spacer spacer-20"></div>
                 </div>
                 
                 <!--show Motorized selection options-->
@@ -61,20 +60,20 @@
                 <div ng-show="aircraft.checked" class="row padding">
                     <!--motorized input options-->
                     <div class="col">
-                        <label style="" class="item item-input">
+                        <label class="item item-input">
                             <span class="input-label">Description:</span>
                             <input ng-model="aircraft.txt" placeholder="e.g. helicopter, circling, etc." type="text">
                         </label>
                     </div>
-                    <div style="" class="col">                   
+                    <div class="col">                   
                         <label ng-repeat="motoAction in motoActions">                                
                             <button 
-                            ng-class="{'button button-positive button-outline': motoAction == 'Passing through', 'button button-assertive button-outline': motoAction == 'Staying in area'}" 
+                            ng-class="{'button button-balanced button-outline': motoAction == 'Passing through', 'button button-assertive button-outline': motoAction == 'Staying in area'}" 
                             ng-click="recordMoto('Aircraft', motoAction, aircraft.txt); aircraft.checked = !aircraft.checked">{{ motoAction }}</button>
                         </label>
                     </div>
+                    <div class="spacer spacer-10"></div>
                 </div>
-                <div ng-show="aircraft.checked" style="width: 283px; height: 20px;" class="spacer"></div> 
                 <!--end aircraft-->
                 
                 <!--atv-->
@@ -82,20 +81,20 @@
                 <div ng-show="atv.checked" class="row padding">
                     <!--motorized input options-->
                     <div class="col">
-                        <label style="" class="item item-input">
+                        <label class="item item-input">
                             <span class="input-label">Description:</span>
                             <input ng-model="atv.txt" placeholder="e.g. Tour, private, etc." type="text">
                         </label>
                     </div>
-                    <div style="" class="col">                   
+                    <div class="col">                   
                         <label ng-repeat="motoAction in motoActions">                                
                             <button 
-                            ng-class="{'button button-positive button-outline': motoAction == 'Passing through', 'button button-assertive button-outline': motoAction == 'Staying in area'}" 
+                            ng-class="{'button button-balanced button-outline': motoAction == 'Passing through', 'button button-assertive button-outline': motoAction == 'Staying in area'}" 
                             ng-click="recordMoto('ATV', motoAction, atv.txt); atv.checked = !atv.checked">{{ motoAction }}</button>
                         </label>
-                    </div>           
+                    </div>
+                    <div class="spacer spacer-10"></div>           
                 </div>
-                <div ng-show="atv.checked" style="width: 283px; height: 20px;" class="spacer"></div>
                 <!--end ATV-->
                 
                 <!--motoBoat-->
@@ -103,20 +102,20 @@
                 <div ng-show="motoBoat.checked" class="row padding">
                     <!--motorized input options-->
                     <div class="col">
-                        <label style="" class="item item-input">
+                        <label class="item item-input">
                             <span class="input-label">Description:</span>
-                            <input ng-model="motoBoat.txt" placeholder="e.g. Commercial, private, jetski, etc." type="text">
+                            <input ng-model="motoBoat.txt" placeholder="e.g. Commercial, private, jet-ski, etc." type="text">
                         </label>
                     </div>
-                    <div style="" class="col">                   
+                    <div class="col">                   
                         <label ng-repeat="motoAction in motoActions">                                
                             <button 
-                            ng-class="{'button button-positive button-outline': motoAction == 'Passing through', 'button button-assertive button-outline': motoAction == 'Staying in area'}" 
+                            ng-class="{'button button-balanced button-outline': motoAction == 'Passing through', 'button button-assertive button-outline': motoAction == 'Staying in area'}" 
                             ng-click="recordMoto('Boat', motoAction, motoBoat.txt); motoBoat.checked = !motoBoat.checked">{{ motoAction }}</button>
                         </label>
                     </div>
+                    <div class="spacer spacer-10"></div>
                 </div>
-                <div ng-show="motoBoat.checked" style="width: 283px; height: 20px;" class="spacer"></div>
                 <!--end motoBoat-->
                 
                 <!--vehicle-->
@@ -124,43 +123,42 @@
                 <div ng-show="vehicle.checked" class="row padding">
                     <!--motorized input options-->
                     <div class="col">
-                        <label style="" class="item item-input">
+                        <label class="item item-input">
                             <span class="input-label">Description:</span>
                             <input ng-model="vehicle.txt" placeholder="e.g. Car, jeep, parked, etc." type="text">
                         </label>
                     </div>
-                    <div style="" class="col">                   
+                    <div class="col">                   
                         <label ng-repeat="motoAction in motoActions">                                
                             <button 
-                            ng-class="{'button button-positive button-outline': motoAction == 'Passing through', 'button button-assertive button-outline': motoAction == 'Staying in area'}" 
+                            ng-class="{'button button-balanced button-outline': motoAction == 'Passing through', 'button button-assertive button-outline': motoAction == 'Staying in area'}" 
                             ng-click="recordMoto('Vehicle', motoAction, vehicle.txt); vehicle.checked = !vehicle.checked">{{ motoAction }}</button>
                         </label>
                     </div>
+                    <div class="spacer spacer-10"></div>
                 </div>
-                <div ng-show="vehicle.checked" style="width: 283px; height: 20px;" class="spacer"></div>
                 <!--end vehicle-->
             </div>
-            <div ng-show="motorizedHuman" style="width: 283px; height: 20px;" class="spacer"></div>
             
             <!--non-motorized-->
             <ion-toggle ng-model="nonMotorizedHuman" toggle-class="toggle-balanced">Non-Motorized</ion-toggle>
             <div ng-show="nonMotorizedHuman">
-                <div class="row" style="flex-wrap: wrap;">
+                <div class="row flexi-div">
                     <div class="col col-33" ng-repeat="class in Human.nonMoto">
                         <ion-checkbox ng-model="class.checked" ng-change="Human.save()">{{class.type}}</ion-checkbox>                
                     </div>
                 </div>
                 <div ng-show="Human.nonMoto[10].checked">
-                    <label style="" class="item item-input">
-                        <span class="input-label">Other Non-Motorized</span>
+                    <label class="item item-input">
+                        <span class="input-label">Other Non-Motorized:</span>
                         <input placeholder="Description" type="text" ng-model="nonMotoOther">
                     </label>
                 </div>
             </div>
                         
-            <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <ion-item style="" class="item-divider">Human Behaviour (worst in group)</ion-item>
-            <label style="" class="item item-select">
+            <div class="spacer spacer-20"></div>
+            <ion-item class="item-divider list-head">Human Behaviour (worst in group)</ion-item>
+            <label class="item item-select">
                 <span class="input-label">Behaviour</span>
                 <select ng-model="Human.behavior" ng-change="Human.save()">
                     <option selected disabled></option>
@@ -174,15 +172,15 @@
                 </select>
             </label>
             
-            <div style="width: 283px; height: 20px;" class="spacer"></div>
+            <div class="spacer spacer-20"></div>
             <div class="item item-input-inset">
                 <label class="item item-input-wrapper">     
                     <span class="input-label">Comment:</span>
-                    <input type="text" placeholder="Describe human activities/interactions" ng-model="Human.comment"> </textarea>
+                    <input type="text" placeholder="activities/interactions" ng-model="Human.comment"> </textarea>
                 </label>
                 <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Human.save()">&nbsp; Update</button>
             </div>
-            <div style="width: 283px; height: 20px;" class="spacer"></div>
+            <div class="spacer spacer-40"></div>
         </form>
       </ion-content>
 </ion-view>

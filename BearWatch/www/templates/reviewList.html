@@ -1,22 +1,19 @@
-<ion-view style="" title="Review - List">
-    <div style="">
+<ion-view title="Review">
+    <div>
         <ion-nav-bar class="bar-stable">
             <ion-nav-buttons side="left">
-                <a class="button button-icon icon-left ion-home" ui-sref="home">Go Home</a>
+                <a class="button icon-left ion-home button-small button-balanced" ui-sref="home">&nbsp;Home</a>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view animation="slide-left-right" ></ion-nav-view>
     </div>
-    <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <ion-list style="">
-            <ion-item style="" class="item-divider">Sessions</ion-item>
+    <ion-content class="has-header container" overflow-scroll="true" padding="true">
+        <div class="spacer spacer-20"></div>
+
+        <ion-item class="item-divider list-head">Completed Sessions</ion-item>
+        <ion-list>
         </ion-list>
-    <!--    <ion-list style="">
-            <ion-item style="" ui-sref="reviewSession2">March 11, 2016, 13:43 J. Cumiskey</ion-item>
-            <ion-item style="">March 11, 2016, 8:22 B. Barlow</ion-item>
-            <ion-item style="">March 10, 2016, 10:53 S. Schaerer</ion-item>
-        </ion-list>
-    -->
+        <div class="spacer spacer-20"></div>
         <div ng-controller="reviewListCtrl">
             <br/>
             Mail Progress: {{mailProgress}}
@@ -30,5 +27,6 @@
             <button class="button" ng-click="reviewSaveSendCSV()">Save & Send CSV</button>
             <button class="button" ng-click="reviewSendPicture()">Send a Picture</button>
 		</div>
+        <div class="spacer spacer-40"></div>
 	</ion-content>
 </ion-view>
