@@ -1,11 +1,94 @@
-/* Empty. Add your own CSS if you like */
+/* BW Custom CSS */
+
+.container {
+	margin: 0px 20px;
+}
+
+.breadcrumb {
+	color: #A8A8A8;
+}
+
+.list-head{
+	background-color: #686868;
+	color: #FFFFFF;
+}
+
+.expando-pane{
+	border: 0.5px groove;
+}
+
+.flexi-div{
+	flex-wrap: wrap;
+}
+
+.border-bottom{
+	border-bottom: solid 1px black;
+	margin-bottom: 10px;
+}
+
+/*picture css*/
+
+.img-fit {
+	height: auto;
+	width: 100%;
+}
+
+.img-300{
+	max-height: 300px; 
+	max-width: 300px;
+}
+
+.rcorners {
+	border-radius: 15px;
+}
+
+/*alignment*/
+
 .center {
     text-align: center;
 }
 
+.pull-right {
+	text-align: right;
+}
+
+.pull-left {
+	text-align: left;
+}
+
+/*padding*/
+.padding-top-20{
+	padding-top: 20px;
+}
+
+/*comment boxes*/
+
 .commentPopup {
 	text-align: center;
-	background-color: red;
+	background-color: LightGray;
+}
+
+/*spacer classes*/
+
+.spacer-40 {
+	width: 283px; 
+	height: 40px;
+}
+
+.spacer-20 {
+	width: 283px; 
+	height: 20px;
+}
+
+.spacer-10 {
+	width: 283px; 
+	height: 10px;
+}
+
+/*color classes*/
+
+.forest-green {
+	background-color: #339900;
 }
 
 /*improve sho/hide speed fix*/

@@ -1,21 +1,25 @@
-<ion-view style="" title="{{Session.observationMode}}">
-    <div style="">
+<ion-view title="{{Session.observationMode}}">
+    <div>
         <ion-nav-bar class="bar-stable">
             <ion-nav-buttons side="right">
-                <a class="button button-icon icon-left ion-ios-close" ng-click = "showConfirm()">End Session</a>
+                <a class="button icon-left ion-log-out button-small button-assertive" ng-click = "showConfirm()">&nbsp;End Session</a>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view animation="slide-left-right" ></ion-nav-view>
     </div>
-    <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <ion-list style="" >
-            <ion-item style="" class="item-divider">Bears in the Session {{bearNum}}</ion-item>
+    <ion-content class="has-header container" overflow-scroll="true" padding="true">
+        <div class="spacer spacer-10"></div>
+        <div class="center">
+            <img src="img/behavior_heading.png" height="auto" width="100%" class="rcorners">
+        </div>
+        <ion-list >
+            <ion-item class="item-divider">Bears in the Session {{bearNum}}</ion-item>
             <div ng-repeat="(index, Object) in BearList.add">    
-            <ion-item style="" ng-click="changeBear({{index}})" ui-sref="tab.bearInfo">{{Object.name}}</ion-item>
+            <ion-item ng-click="changeBear({{index}})" ui-sref="tab.bearInfo">{{Object.name}}</ion-item>
             </div>
         </ion-list>
-        <div style="width: 283px; height: 30px;" class="spacer"></div>
+        <div class="spacer spacer-20"></div>
         
-        <a class="button button-positive  button-block" id="focal-button36" ui-sref="tab.addNewBear">Add Bear</a>
+        <a class="button button-balanced icon ion-plus button-block" ui-sref="tab.addNewBear">&nbsp;Add Bear</a>
     </ion-content>
 </ion-view>
