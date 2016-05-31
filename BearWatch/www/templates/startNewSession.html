@@ -1,10 +1,20 @@
-<ion-view style="" title="Sesssion Setup">
-	<ion-content class="has-header" overflow-scroll="true" padding="true">
+<ion-view title="Sesssion Setup">
+	<ion-content class="has-header container" overflow-scroll="true" padding="true">
 
-		<h2 style="">Add Observer</h2>
+        <div class="spacer spacer-20"></div>
+		<h2 class="center">New Session</h2>
+        <!--session setup progress-->
+        <div class="breadcrumb center">
+            <i class="ion-ios-circle-filled"></i>
+            <i class="ion-ios-circle-outline"></i>
+            <i class="ion-ios-circle-outline"></i>
+        </div> 
+        <div class="spacer spacer-20"></div>
+
         <form name="startForm" novalidate  ng-submit="validate(startForm)" class="list">
 
             <!--Session observers-->
+            <ion-item class="item-divider list-head">Add Observer(s)</ion-item>
             <div class="item item-input-inset">
                 <label class="item item-input-wrapper">		
                 <span class="input-label" >First Name:</span>
@@ -14,7 +24,7 @@
                 <span class="input-label" >Last Name:</span>
                 <input type="text" ng-model="Session.lastName">
                 </label>
-                <button class="button button-balanced icon ion-person-add" ng-click="addObserver()">&nbsp; Add Observer</button>
+                <a class="button button-balanced icon ion-person-add" ng-click="addObserver()">&nbsp; Add</a>
             </div>
             
             <!--show active observer names with remove option-->
@@ -25,7 +35,7 @@
                     <a class="button button-icon icon ion-close-circled" ng-click="clearObserver(name)"></a>
                 </ion-item>
             </ion-list>
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
+            <div class="spacer spacer-10"></div>
 
             <div ng-show="submitted && Session.nameResult.length == 0 && (Session.firstName == '' || Session.lastName == '')" >
                 <div class="error-container">
@@ -33,7 +43,7 @@
                         <i class="ion-alert-circled"></i> 
                         First and last name are required fields!
                     </div>
-                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                  <div class="spacer spacer-10"></div>
                 </div>
             </div>
             <div ng-show="submitted && Session.firstName != '' && Session.lastName !=''" >
@@ -42,16 +52,17 @@
                         <i class="ion-alert-circled"></i> 
                         Observer needs to be added to session! (press the green button)
                     </div>
-                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                  <div class="spacer spacer-10"></div>
                 </div>
             </div>
+            <div class="spacer spacer-10"></div>
             <!--end observers-->
             
             <!--Park-->
-			<div style="width: 283px; height: 30px;" class="spacer"></div>
-            <h2 style="">Location</h2>
+			<div class="spacer spacer-10"></div>
+            <ion-item class="item-divider list-head">Location</ion-item>
             <div ng-class="{ 'has-errors' : (submitted && !parkChecked), 'no-errors' : (submitted && startForm.park.$valid && parkChecked)}">
-    			<label ng-hide="parkChecked" style="" class="item item-input">
+    			<label ng-hide="parkChecked" class="item item-input">
                     <span class="input-label">Park/Area:</span>
                     <input name="park" type="text" ng-model="Session.park" ng-change="changePark()" required>
                 </label>
@@ -63,7 +74,7 @@
             <div ng-show="submitted && startForm.park.$error" ng-messages="startForm.park.$error">
                 <div class="error-container">
                   <div ng-messages-include="error-list.html"></div>
-                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                  <div class="spacer spacer-10"></div>
                 </div>
             </div>
 
@@ -73,7 +84,7 @@
                 <div ng-repeat="park in parkNames | filter:Session.park | limitTo:4 ">
                     <ion-radio ng-model="Session.park" value="{{park}}" ng-click="parkSelected()" required>{{park}}</ion-radio>
                 </div>
-                <div style="width: 283px; height: 10px;" class="spacer"></div>
+                <div class="spacer spacer-10"></div>
             </label>
             <div ng-show="submitted && !parkChecked && !startForm.park.$error.required" >
                 <div class="error-container">
@@ -81,29 +92,29 @@
                         <i class="ion-alert-circled"></i> 
                         You must select parks from the provided list!
                     </div>
-                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                  <div class="spacer spacer-10"></div>
                 </div>
             </div>
             <!--End Park-->
 
             <!--Site-->
-			<label style="" class="item item-input" ng-class="{ 'has-errors' : (submitted && startForm.site.$invalid), 'no-errors' : (submitted && startForm.site.$valid)}">
+			<label class="item item-input" ng-class="{ 'has-errors' : (submitted && startForm.site.$invalid), 'no-errors' : (submitted && startForm.site.$valid)}">
                 <span class="input-label">Site:</span>
                 <input name="site" type="text" ng-model="Session.site" required>
             </label>
             <div ng-show="submitted && startForm.site.$error" ng-messages="startForm.site.$error">
                 <div class="error-container">
                   <div ng-messages-include="error-list.html"></div>
-                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                  <div class="spacer spacer-10"></div>
                 </div>
             </div>
             <!--End Site-->
 
     	    <!--ViewingArea-->
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
-            <h2>Viewing Area</h2>
+            <div class="spacer spacer-20"></div>
+            <ion-item class="item-divider list-head">Observeration Mode</ion-item>
             <label class="item item-select" ng-class="{ 'has-errors' : (submitted && startForm.viewingArea.$invalid), 'no-errors' : (submitted && startForm.viewingArea.$valid)}">
-                <span class="input-label">Viewing Area:</span>
+                <span class="input-label">Viewing Method:</span>
                 <select name="viewingArea" ng-model="Session.viewingArea" required>
                     <option value="Platform">Platform</option>
                     <option value="Boating">Boating</option>
@@ -112,7 +123,7 @@
                 </select>
             </label>
             <div ng-show="Session.viewingArea == 'Other'">
-               <label style="" class="item item-input" ng-class="{ 'has-errors' : (submitted && startForm.viewingOther.$invalid), 'no-errors' : (submitted && startForm.viewingOther.$valid)}">
+               <label class="item item-input" ng-class="{ 'has-errors' : (submitted && startForm.viewingOther.$invalid), 'no-errors' : (submitted && startForm.viewingOther.$valid)}">
                    <span class="input-label">Description:</span>
                    <input name="viewingOther" ng-model="Session.viewingAreaOther" placeholder="Description" type="text" ng-required="Session.viewingArea == 'Other'">
                </label>
@@ -121,37 +132,36 @@
             <div ng-show="submitted && startForm.viewingOther.$error" ng-messages="startForm.viewingOther.$error">
                 <div class="error-container">
                   <div ng-messages-include="error-list.html"></div>
-                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                  <div class="spacer spacer-10"></div>
                 </div>
             </div>
 
             <div ng-show="submitted && startForm.viewingArea.$error" ng-messages="startForm.viewingArea.$error">
                 <div class="error-container">
                   <div ng-messages-include="error-list.html"></div>
-                  <div style="width: 283px; height: 10px;" class="spacer"></div>
+                  <div class="spacer spacer-10"></div>
                 </div>
             </div>
             <!--End ViewingArea-->
 
             <!--Stationary-->
             <div class="list">
-                <ion-item class="item-divider" ng-class="{ 'has-errors' : (submitted && startForm.stationary.$invalid), 'no-errors' : (submitted && startForm.stationary.$valid)}">Select Mode:</ion-item>
+                <ion-item class="item-divider" ng-class="{ 'has-errors' : (submitted && startForm.stationary.$invalid), 'no-errors' : (submitted && startForm.stationary.$valid)}">Movement During Observation</ion-item>
                 <ion-radio name="stationary" ng-model="Session.stationary" value="Stationary" ng-required="Session.stationary == ''">Stationary</ion-radio>
                 <ion-radio name="stationary" ng-model="Session.stationary" value="Mobile" ng-required="Session.stationary == ''">Mobile</ion-radio>
             </div>
 
             <div class="error-container" ng-show="submitted && startForm.stationary.$error" ng-messages="startForm.stationary.$error">
                 <div ng-messages-include="error-list.html"></div> 
-                <div style="width: 283px; height: 10px;" class="spacer"></div>
+                <div class="spacer spacer-10"></div>
             </div>
             <!--End Stationary-->
     	   
             <!--Zone type-->
-    		<div style="width: 283px; height: 30px;" class="spacer"></div>
-    		<h2>Zone Type</h2>
-    		<ion-item class="item-divider">Zone</ion-item>
+    		<div class="spacer spacer-10"></div>
+    		<ion-item class="item-divider list-head">Zone</ion-item>
             <label class="item item-select" ng-class="{ 'has-errors' : (submitted && startForm.zoneSchema.$invalid), 'no-errors' : (submitted && startForm.zoneSchema.$valid)}">
-                <span class="input-label">View Type:</span>
+                <span class="input-label">Classification:</span>
                 <select name="zoneSchema" ng-model="Session.zoneSchema" ng-change="showZoneSchema(Session.zoneSchema)" required>
                     <option>River</option>
                     <option>Estuary</option>
@@ -161,26 +171,27 @@
             <div ng-show="submitted && startForm.zoneSchema.$error" ng-messages="startForm.zoneSchema.$error">
                 <div class="error-container">
                     <div ng-messages-include="error-list.html"></div>
-                    <div style="width: 283px; height: 10px;" class="spacer"></div>
+                    <div class="spacer spacer-10"></div>
                 </div>
             </div>
 
-            <div ng-bind-html="zoningSchemaPic" class="center" style="text-align: center;">
+            <div ng-bind-html="zoningSchemaPic" class="center">
             </div>
                 
-    		<label style="" class="item item-input">
+    		<label class="item item-input">
     			<span class="input-label">Comment:</span>
     			<input ng-model="Session.comment" type="text" placeholder="Additional Zone Information">
             </label>
             <!--End Zone type-->
     	    
-    	    <div style="width: 283px; height: 20px;" class="spacer"></div>
+    	    <div class="spacer spacer-20"></div>
     	    <button class="button button-positive button-block icon-right ion-android-arrow-forward" type="submit">Next</button>
         </form><!--End startForm-->
 
         <div ng-show="true">
-            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="startNewSessionCont">Skip Validation</a>
+            <a class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="startNewSessionCont">Skip Validation</a>
         </div>
+        <div class="spacer spacer-40"></div>
 	   	</ion-content>
 </ion-view>
 

@@ -1,10 +1,19 @@
-<ion-view style="" title="Session Setup">
-    <ion-content class="has-header" overflow-scroll="true" padding="true">
+<ion-view title="Session Setup">
+    <ion-content class="has-header container" overflow-scroll="true" padding="true">
         
-        <form style="" class="list">
-        <h2 style="">Environment Variables</h2>
-		<ion-item style="" class="item-divider">Water</ion-item>
-            <label style="" class="item item-select">
+        <div class="spacer spacer-20"></div>
+        <h2 class="center">Environment</h2>
+        <!--session setup progress-->
+        <div class="breadcrumb center">
+            <i class="ion-ios-circle-outline"></i>
+            <i class="ion-ios-circle-filled"></i>
+            <i class="ion-ios-circle-outline"></i>
+        </div> 
+        <div class="spacer spacer-20"></div>
+
+        <form class="list">
+		<ion-item class="item-divider list-head">Water</ion-item>
+            <label class="item item-select">
                 <span class="input-label">Water Body:</span>
                 <select ng-model="Enviro.waterBody">
                     <option selected disabled></option>
@@ -13,8 +22,8 @@
                     <option>Estuary</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Water Level</span>
+            <label class="item item-select">
+                <span class="input-label">Water Level:</span>
                 <select ng-model="Enviro.waterLevel">
                     <option selected disabled></option>
                     <option>High</option>
@@ -22,8 +31,8 @@
                     <option>Low</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Water Flow</span>
+            <label class="item item-select">
+                <span class="input-label">Water Flow:</span>
                 <select ng-model="Enviro.waterFlow">
                     <option selected disabled></option>
                     <option>Cascade</option>
@@ -35,22 +44,22 @@
                 </select>
             </label>
 			
-			<label style="" class="item item-select">
-                <span class="input-label">Water Clarity</span>
+			<label class="item item-select">
+                <span class="input-label">Water Clarity:</span>
                 <select ng-model="Enviro.waterClarity">
                     <option selected disabled></option>
-                    <option value="0">Sparkling clear</option>
-                    <option value="1">Water appears dull, slight discoloration</option>
-                    <option value="2">Bottom visible to approx. 3ft, but not distinct</option>
-                    <option value="3">Bottom visible to approx. 1ft, but not distinct</option>
-                    <option value="4">Cannot see bottom</option>
+                    <option>Sparkling clear</option>
+                    <option>Water appears dull, slight discoloration</option>
+                    <option>Bottom visible to approx. 3ft, but not distinct</option>
+                    <option>Bottom visible to approx. 1ft, but not distinct</option>
+                    <option>Cannot see bottom</option>
                 </select>
             </label>			
 			
-			<div style="width: 283px; height: 20px;" class="spacer"></div>
-			<ion-item style="" class="item-divider">Weather</ion-item>
-            <label style="" class="item item-select">
-                <span class="input-label">Cloud Cover</span>
+			<div class="spacer spacer-20"></div>
+			<ion-item class="item-divider list-head">Weather</ion-item>
+            <label class="item item-select">
+                <span class="input-label">Cloud Cover:</span>
                 <select ng-model="Enviro.cloudCover">
                     <option selected disabled></option>
                     <option>0%</option>
@@ -59,8 +68,8 @@
                     <option>100%</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Precipitation</span>
+            <label class="item item-select">
+                <span class="input-label">Precipitation:</span>
                 <select ng-model="Enviro.precipitation">
                     <option selected disabled></option>
                     <option>None</option>
@@ -69,8 +78,8 @@
                     <option>Heavy Rain</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Wind</span>
+            <label class="item item-select">
+                <span class="input-label">Wind:</span>
                 <select ng-model="Enviro.wind">
                     <option selected disabled></option>
                     <option>Calm</option>
@@ -86,8 +95,8 @@
                     <option>Storm</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Wind direction</span>
+            <label class="item item-select">
+                <span class="input-label">Wind direction:</span>
                 <select ng-model="Enviro.windDirection">
                     <option selected disabled></option>
                     <option>N</option>
@@ -108,19 +117,19 @@
                     <option>ESE</option>					
                 </select>
             </label>			
-			<label style="" class="item item-input">
-              <span class="input-label">Temperature</span>
+			<label class="item item-input">
+              <span class="input-label">Temperature:</span>
               <input placeholder="&#176;C" type="number" ng-model="Enviro.temp">
 			</label>
-            <label style="" class="item item-input">
-                <span class="input-label">Humidity</span>
+            <label class="item item-input">
+                <span class="input-label">Humidity:</span>
                 <input placeholder="0 - 100%" type="number" ng-model="Enviro.humid">
             </label>
-            <div style="width: 283px; height: 15px;" class="spacer"></div>
+            <div class="spacer spacer-20"></div>
             
-			<h2 style="">Visibility</h2>
-            <label style="" class="item item-select">
-                <span class="input-label">Area Visibility</span>
+			<ion-item class="item-divider list-head">Area Visibility</ion-item>
+            <label class="item item-select">
+                <span class="input-label">Quality:</span>
                 <select ng-model="Enviro.visibility">
                     <option selected disabled></option>
                     <option>Excellent</option>
@@ -131,10 +140,10 @@
             </label>
             
             <div ng-show="Enviro.visibility == 'Partly obscured' || Enviro.visibility == 'Mostly obscured'">
-                <div style="width: 283px; height: 20px;" class="spacer"></div>
-                <h3 style="">If Obscured, Specify Reason</h5>
-                <label style="" class="item item-select">
-                    <span class="input-label">Reason</span>
+                <div class="spacer spacer-20"></div>
+                <ion-item class="item-divider">Obstruction</ion-item>
+                <label class="item item-select">
+                    <span class="input-label">Reason:</span>
                     <select ng-model="Enviro.obscuredReason">
                         <option selected disabled></option>
                         <option>None</option>
@@ -145,17 +154,17 @@
                     </select>
                 </label>
                 <div ng-show="Enviro.obscuredReason == 'Other'">
-                    <label style="" class="item item-input">
+                    <label class="item item-input">
                         <span class="input-label">Description:</span>
                         <input placeholder="Describe visibilty impairments" type="text" ng-model="Enviro.obscuredOther">
                     </label>
                 </div>
             </div>
             
-            <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <ion-item style="" class="item-divider">Environmental Noise</ion-item>
-            <label style="" class="item item-select">
-                <span class="input-label">Noise level</span>
+            <div class="spacer spacer-20"></div>
+            <ion-item class="item-divider list-head">Environmental Noise</ion-item>
+            <label class="item item-select">
+                <span class="input-label">Level:</span>
                 <select ng-model="Enviro.noiseLevel">
                     <option selected disabled></option>
                     <option>Low</option>
@@ -166,11 +175,10 @@
                 </select>
             </label>
             
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
-			<h2 style="">Food Sources</h2>
-			<ion-item style="" class="item-divider">Add Food Source</ion-item>
-            <label style="" class="item item-select">
-                <span class="input-label">Food Source</span>
+            <div class="spacer spacer-20"></div>
+			<ion-item class="item-divider list-head">Food Sources</ion-item>
+            <label class="item item-select">
+                <span class="input-label">Type:</span>
                 <select ng-model="Enviro.foodSource">
                     <option selected disabled></option>
                     <option>Fish</option>
@@ -179,8 +187,8 @@
 					<option>Other</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Availability</span>
+            <label class="item item-select">
+                <span class="input-label">Availability:</span>
                 <select ng-model="Enviro.foodSourceAvail">
                     <option selected disabled></option>
                     <option>None</option>
@@ -190,26 +198,28 @@
                 </select>
             </label>
             
-            <label style="" class="item item-input">
+            <label class="item item-input">
                 <span class="input-label">Comment:</span>
                 <input placeholder="Note species and/or describe other" type="text" ng-model="Enviro.foodSourceComment">
             </label>
-            <button class="button button-balanced  button-block icon ion-plus" ng-click="Enviro.addFood()">&nbsp;Add Food Source</button>			
+            <div class="item pull-right">
+                <a class="button button-balanced icon ion-plus" ng-click="Enviro.addFood()">&nbsp;Add</a>			
+            </div>
+            <div class="spacer spacer-10"></div>
             
             <!--show active food sources with remove option-->
-            <ion-item ng-show="Enviro.foodSources.length > 0" class="item-divider">Available food sources:</ion-item>
+            <ion-item ng-show="Enviro.foodSources.length > 0" class="item-divider">Available food sources</ion-item>
             <ion-list>
                 <ion-item ng-repeat="food in Enviro.foodSources" class="item item-button-right">
                     <p>{{food.added + " " + food.src + ", " + food.avail + "-Available"}}</p>
                     <p ng-show="food.desc != ''">{{food.desc}}</p>
                     <a class="button button-icon icon ion-close-circled" ng-click="Enviro.clearFood(food.id)"></a>
                 </ion-item>
-            </ion-list>
-            <div ng-show="Enviro.foodSources.length > 0" style="width: 283px; height: 10px;" class="spacer"></div>
-            
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
+            </ion-list>            
+            <div class="spacer spacer-20"></div>
 			
-            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" id="newSessionObserverSVisibility-button33" ui-sref="observationMode">Next</a>
+            <a class="button button-positive button-block icon-right ion-android-arrow-forward" id="newSessionObserverSVisibility-button33" ui-sref="observationMode">Next</a>
         </form>
+        <div class="spacer spacer-40"></div>
     </ion-content>
 </ion-view>

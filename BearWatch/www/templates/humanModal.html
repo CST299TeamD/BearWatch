@@ -17,10 +17,10 @@
             <img style="padding-top: 10px;" ng-src="{{zoneImgURI}}">
         </div> 
 	   	<div class="row" style="flex-wrap: wrap; padding-top: 10px;">
-            <div class="col col-33" ng-repeat="zone in Human.zoneMatrix">
+            <div class="col col-20" ng-repeat="zone in Human.zoneMatrix">
                 <label style="" class="item item-input">
-                    <span class="input-label">Zone {{zone.zone}}: </span>
-                    <input placeholder="# of Humans" type="number" ng-model="zone.humans">
+                    <span class="input-label">{{zone.zone}}: </span>
+                    <input placeholder="Humans" type="number" ng-model="zone.humans">
                 </label>
             </div>
         </div>
