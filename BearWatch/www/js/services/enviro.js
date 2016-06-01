@@ -24,7 +24,29 @@ angular.module('app.services')
         foodSourceComment: '',
         foodSources: []
     };
-    
+
+    //function to reset enviro object
+    Enviro.reset = function(){
+        Enviro.session_id = '';
+        Enviro.waterBody = '';
+        Enviro.waterLevel = '';
+        Enviro.waterFlow = '';
+        Enviro.waterClarity = '';
+        Enviro.cloudCover = '';
+        Enviro.precipitation = '';
+        Enviro.wind = '';
+        Enviro.windDirection = '';
+        Enviro.temp = '';
+        Enviro.humid = '';
+        Enviro.visibility = '';
+        Enviro.obscuredReason = '';
+        Enviro.obscuredOther = '';
+        Enviro.noiseLevel = '';
+        Enviro.foodSource = '';
+        Enviro.foodSourceAvail = '';
+        Enviro.foodSourceComment = '';
+        Enviro.foodSources = [];
+    };
     
     //function for adding food sources
     Enviro.addFood = function(id){

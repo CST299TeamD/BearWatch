@@ -15,6 +15,16 @@ angular.module('app.services')
 		pictures: []
 	};
 
+	//function to reset Picture Object
+	Picture.reset = function(){
+		Picture.fileName = '';
+		subjects = [];
+		comment = '';
+		imgURI = '';
+		imgInfo = '';
+		pictures = [];
+	};
+
 	//function to check if bears are already in picture subjects
 	Picture.subjectsContain = function(id, list){
 		var i;
