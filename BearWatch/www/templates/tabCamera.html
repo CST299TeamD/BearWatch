@@ -35,8 +35,10 @@
         <div class="center">
             <button ng-show="imgURI === undefined" ng-click="takePhoto()" class="button button-positive button-outline icon-left ion-ios-camera-outline" id="camera-button1">Take Picture</button>
         </div>
-        <button ng-show="imgURI !== undefined" ng-click="choosePhoto()" class="button button-balanced button-outline icon-left ion-archive" id="camera-button3">Record</button>
-        <button ng-show="imgURI !== undefined" ng-click="discardPhoto(true)" class="button button-assertive button-outline icon-left ion-trash-a" id="camera-button2">Discard</button>
+        <div class="button-bar" ng-show="imgURI !== undefined">
+            <a ng-click="choosePhoto()" class="button button-balanced button-outline icon ion-archive">&nbsp; Record</a>
+            <a ng-click="discardPhoto(true)" class="button button-assertive button-outline icon ion-trash-a">&nbsp; Discard</a>
+        </div>
         <div class="spacer spacer-40"></div>
 
 
@@ -64,7 +66,7 @@
                         </div>
                         <div class="row padding-top-20">
                             <div class="col col-center center">
-                                <img ng-src="{{picture.imgURI}}" style="max-height: 300px; max-width: 300px;">
+                                <img ng-src="{{picture.imgURI}}" class="img-300">
                             </div>
                             <div class="col col-bottom">
                                 <p>Subjects: {{picture.subjectString}}</p>
