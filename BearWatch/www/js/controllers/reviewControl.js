@@ -2,6 +2,31 @@ angular.module('app.controllers')
 
 //Controller loaded when "Review Sessions" is selected"
 .controller('reviewListCtrl', function($scope, $cordovaEmailComposer, $cordovaSQLite) {
+
+	//function to populate sessions list
+	$scope.sessionList = [];
+	$scope.$on('$ionicView.enter', function() {
+		$cordovaSQLite.execute(db, 'SELECT * FROM sessions')
+	    .then(
+	        function(result) {
+	            if (result.rows.length > 0) {
+	            	for (var i = 0; i < result.rows.length; i++){
+	            		var session = {};
+	        			for(item in result.rows.item(i)){
+	        				session[item] = result.rows.item(i)[item];
+	        			}
+	        			$scope.sessionList.push(session);
+	        		}
+	            }else{
+	            	console.log("No sessions returned");
+	            }
+	        },
+	        function(error) {
+	            console.log("Error on sessions SELECT: " + error.message);
+	        }
+	    );
+	})
+
 	
 	//$scope.result = '...starting reviewListCtrl';
 	document.addEventListener("deviceready", onDeviceReady, false);

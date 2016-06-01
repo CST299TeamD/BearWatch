@@ -5,14 +5,37 @@
                 <a class="button icon-left ion-home button-small button-balanced" ui-sref="home">&nbsp;Home</a>
             </ion-nav-buttons>
         </ion-nav-bar>
-        <ion-nav-view animation="slide-left-right" ></ion-nav-view>
+        <ion-nav-view animation="no-animation"></ion-nav-view>
     </div>
     <ion-content class="has-header container" overflow-scroll="true" padding="true">
         <div class="spacer spacer-20"></div>
 
+        <!--available sessions-->
         <ion-item class="item-divider list-head">Completed Sessions</ion-item>
         <ion-list>
-        </ion-list>
+            <ion-item ng-repeat="session in sessionList">
+                <div class="card">
+                    <div class="item item-text-wrap">                 
+                        <div class="row border-bottom">
+                            <div class="col col-bottom col-75">
+                                <p>{{session.session_id + "-" +  session.start_time + "-" +  session.finish_time + "-" +  session.park}}</p>
+                            </div>
+                            <div class="col col-center text-right">
+                                <div class="button-bar">
+                                    <a class="button button-icon icon ion-eye" ng-click=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-20">
+                            <div class="col col-center">
+                                {{comment.text}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list><!--End available sessions-->
+
         <div class="spacer spacer-20"></div>
         <div ng-controller="reviewListCtrl">
             <br/>

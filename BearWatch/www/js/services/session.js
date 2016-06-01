@@ -20,6 +20,27 @@ angular.module('app.services')
         active: '',
         resting: ''
     };
+
+    //function to reset session
+    Session.reset = function(){
+        Session.id = '';
+        Session.firstName = '';
+        Session.lastName = '';
+        Session.nameResult = [];
+        Session.park = '';
+        Session.site = '';
+        Session.viewingArea = '';
+        Session.viewingAreaOther = '';
+        Session.stationary = '';
+        Session.zoneSchema = '';
+        Session.comment = '';
+        Session.observationMode = '';
+        Session.start_time = '';
+        Session.hr = '';
+        Session.min = '';
+        Session.active = '';
+        Session.resting = '';
+    }
     
     //function for saving session state
     Session.save = function(){      

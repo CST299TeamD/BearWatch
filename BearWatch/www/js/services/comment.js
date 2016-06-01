@@ -12,6 +12,13 @@ angular.module('app.services')
         commentList: []
     };
 
+    //clear comment object function
+    Comment.reset = function(){
+        Comment.text = '';
+        Comment.id = '';
+        Comment.commentList = [];
+    };
+
     //add new comment to session and save to DB
     Comment.add = function(){
         
