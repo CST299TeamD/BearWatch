@@ -1,7 +1,8 @@
-<ion-view style="" title="Add new Bear">
+<ion-view style="" title="Bear">
     <ion-content class="has-header container" overflow-scroll="true" padding="true">
-        <h3 style="">Bear {{Bear.name}} Specifications</h3>
-        <div>
+        <div class="spacer spacer-20"></div>
+        <h2 class="center">Add new Bear</h3>
+        <div ng-show="false">
             Session id : {{Session.id}} <br>
             Bear Index : {{Bear.index}} <br>
             Bear id : {{Bear.id}} <br>
@@ -34,24 +35,38 @@
         </div>
         <form style="" class="list">
             <div style="width: 283px; height: 22px;" class="spacer"></div>
-            <ion-checkbox ng-model="Bear.isFocal" ng-show="FBearSet.isFocalPresent == ''&& Session.observationMode == 'Focal' ">Focal Bear</ion-checkbox>
-            <ion-item style="" class="item-divider">Name of Bear</ion-item>
+            <ion-item style="" class="item-divider list-head" ng-show="FBearSet.isFocalPresent == ''&& Session.observationMode == 'Focal' ">Bear Type</ion-item>
+
+            <ion-checkbox ng-model="Bear.isFocal" ng-show="FBearSet.isFocalPresent == ''&& Session.observationMode == 'Focal' ">Focal</ion-checkbox>
+            <ion-item style="" class="item-divider list-head">Name of Bear</ion-item>
             <label style="" class="item item-input">
 
                 <input placeholder="Bear #" type="text" ng-model="Bear.name">
                 
             </label>
-			<label style="" class="item item-select">
-                <span class="input-label">Bear Location</span>
+            <div style="width: 283px; height: 22px;" class="spacer"></div>
+            <ion-item style="" class="item-divider list-head">Location</ion-item>
+            <label style="" class="item item-select">
+                <span class="input-label">Bear Location ({{Session.zoneSchema}})</span>
                 <select ng-model="Bear.zone">
-                    <option>Zone 1</option>
-                    <option>Zone 2</option>
-                    <option>Zone 3</option>
-                    <option>Zone 4</option>
-                    <option>Zone 5</option>
+                    <option ng-repeat="z in zoneList">{{z}}</option>
                 </select>
+
             </label>
-			<label style="" class="item item-select">
+            <div class="row item-divider expando-pane">
+                <div class="col col-center"><h4>Zone Mapping</h4></div>
+                <div class="col col-center text-right">
+                    <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showZoneSchema, 'button button-small button-icon icon ion-ios-minus-outline':showZoneSchema}" ng-click="showZoneSchema=!showZoneSchema"></a>
+                </div>
+            </div>
+            <div ng-model="showZoneSchema" ng-show="showZoneSchema" class="center" style="text-align: center;">
+                <img class="padding-top-20" ng-src="{{zoneImgURI}}">
+                    </div>
+
+            <div style="width: 283px; height: 22px;" class="spacer"></div>
+            <ion-item style="" class="item-divider list-head">Other Specs</ion-item>
+
+            <label style="" class="item item-select">
 			<span class="input-label">Size</span>
                 <select ng-model="Bear.size">
                     <option>Small</option>
@@ -114,7 +129,7 @@
             <ion-checkbox ng-model="Bear.pawMeasured">Paw Measurement Taken</ion-checkbox>
 			
 			<div style="width: 283px; height: 30px;" class="spacer"></div>
-            <ion-item style="" class="item-divider">Cubs</ion-item>
+            <ion-item style="" class="item-divider list-head">Cubs</ion-item>
 			<label style="" class="item item-input">
                 <span class="input-label">Number of cubs</span>
                 <input placeholder="(if present)" type="number" ng-model="Bear.cubs">

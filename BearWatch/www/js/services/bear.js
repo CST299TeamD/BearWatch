@@ -28,6 +28,11 @@ angular.module('app.services')
         comment: ''
     };
     
+    //diffrent zones for locations
+    Bear.Zones = [{name:"River", zones: ["1", "1+", "2", "2+", "3", "3+", "4", "5", "6", "7", "7+", "8", "8+", "9", "9+"]},
+                       {name: "Estuary", zones: ["1", "1+", "2", "2+", "4", "5", "6", "7", "7+", "8", "8+", "9", "9+"]},
+                       {name: "Terrestrial", zones: ["1", "1+", "1a", "1b", "2", "2+", "3", "3+", "3a", "3b", "4", "4+", "5", "6", "6+", "7", "7+", "7a", "7b", "8", "8+", "9", "9+", "9a", "9b"]}]
+    
     Bear.Log = function(sessionId){
         //get the time
         var time = new Date().toLocaleTimeString();

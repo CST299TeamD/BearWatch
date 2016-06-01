@@ -14,6 +14,7 @@ var Park = {
 		 " Alty Conservancy ",
 		 " Ambrose Lake Ecological Reserve ",
 		 " Anarchist Protected Area ",
+         " Ancient Forest/Chun T’oh Whudujut, Omineca ",
 		 " Anderson Bay Park ",
 		 " Anderson Flats Park ",
 		 " Anhluut'ukwsim Laxmihl Angwinga'Asanskwhl Nisga'a (a.k.a. Nisga'a Memorial Lava Bed Park)  ",
@@ -115,7 +116,8 @@ var Park = {
 		 " Burges James Gadsden Park ",
 		 " Burgoyne Bay Park ",
 		 " Burnie River Protected Area ",
-		 " Burns Bog (Management Agreement with GVRD) ",
+		 " Burnie Shea Park ",
+         " Burns Bog (Management Agreement with GVRD) ",
 		 " Burns Bog (PACQ) ",
 		 " Burns Lake Park ",
 		 " Burnt Bridge Creek Conservancy ",
@@ -391,7 +393,7 @@ var Park = {
 		 " Hakai Conservation Study Area ",
 		 " Hakai Luxvbalis Conservancy ",
 		 " Haley Lake Ecological Reserve ",
-		 " Halkett Bay Park ",
+		 " Halkett Bay Marine Park ",
 		 " Hamber Park ",
 		 " Hanna-Tintina Conservancy ",
 		 " Harbour-Dudgeon Lakes Park ",
@@ -622,7 +624,7 @@ var Park = {
 		 " Mount Elphinstone Park ",
 		 " Mount Erskine Park ",
 		 " Mount Fernie Park ",
-		 " Mount Geoffrey Escarpment Park ",
+		 " Mount Geoffery Escarpment Park ",
 		 " Mount Griffin Ecological Reserve ",
 		 " Mount Griffin Park ",
 		 " Mount Maxwell Ecological Reserve ",
@@ -942,7 +944,6 @@ var Park = {
 		 " Taweel Park ",
 		 " Taylor Arm Park ",
 		 " Taylor Landing Park ",
-		 " Tazdli Wyiez Bin/Burnie-Shea Park ",
 		 " Teakerne Arm Park ",
 		 " Ten Mile Lake Park ",
 		 " Ten Mile Point Ecological Reserve ",
@@ -1059,7 +1060,9 @@ var Park = {
 		 " Yale Garry Oak Ecological Reserve ",
 		 " Yard Creek Park ",
 		 " Yellow Point Bog Ecological Reserve ",
-		 " Zumtela Bay Conservancy "
+		 " Zumtela Bay Conservancy ",
+         " sx̌ʷəx̌ʷnitkʷ Park",
+         " sw̓iw̓s Park"
 		 ]
 	};
 
