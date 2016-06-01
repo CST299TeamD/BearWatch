@@ -1,15 +1,18 @@
-<ion-view style="" title="Bear Watch">
-    <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <div>
-            <div class="center">
-                <img src="img/home.jpg" height="90%" width="90%">
-            </div>
-            <div class="button-bar">
-                <a class="button button-positive button-outline icon ion-arrow-return-right" >&nbsp;Continue Session</a>
-                <a class="button button-balanced button-outline icon ion-android-create" id="start-button3" ui-sref="startNewSession">&nbsp;New Session</a>
-                <a class="button button-royal button-outline icon ion-eye" ui-sref="reviewList">&nbsp; Review Session</a>
-            </div>
-		</div>
+<ion-view style="" title="Home">
+    <ion-content class="has-header container" overflow-scroll="true" padding="true">
+        <div class="spacer spacer-20"></div>
+        <div class="center">
+            <img src="img/BW_heading.PNG">
+        </div>
+        <div class="center">
+            <img src="img/home2.jpg" height="auto" width="100%" class="rcorners">
+        </div>
+        <div class="spacer spacer-20"></div>
+        <div class="button-bar">
+            <a class="button button-balanced button-outline icon ion-android-create" ui-sref="startNewSession">&nbsp; New Session</a>
+            <a class="button button-royal button-outline icon ion-eye" ui-sref="reviewList">&nbsp; Review Session</a>
+        </div>
+		<div class="spacer spacer-40"></div>
 			
 		<div ng-show="debug" ng-controller='geolocationController'>			
 

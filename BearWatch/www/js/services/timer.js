@@ -1,20 +1,36 @@
 angular.module('app.services')
 
-.factory('Timer', function() {
+.factory('Timer', function(Session) {
 	
 	var Timer = {
-		activeTime: 30,
-		restingTime: 10,
+		scanningTimer: false,
+		activeTime: '',
+		restingTime: '',
 		typeOfTimer: "active",
 		value: '',
 		color: 'purple',
-		timerInterval: 0,
-		controllerInterval: 0
+		endTimer: false,
+		endTime: '',
+		lastTimer: false,
+		timerInterval: 0
 	};
-	
+
+	if (Session.active != '' && Session.active !== null) {
+		Timer.scanningTimer = true;
+		Timer.activeTime = parseInt(Session.active) * 60;
+		Timer.restingTime = parseInt(Session.resting) * 60;
+	}
+	if ((Session.hr != '' || Session.min != '') && (Session.hr !== null || Session.min !== null)){
+		
+		Timer.endTimer = true;
+		Timer.endTime = (new Date().getTime()) + ((((parseInt(Session.hr) * 60) + parseInt(Session.min)) * 60) * 1000);
+		if (Session.active == '' || Session.active == null){
+			Timer.activeTime = (((parseInt(Session.hr) * 60) + parseInt(Session.min)) * 60);
+		}
+	}
+
 	Timer.Start = function() {
-		console.log('Running Timer.Start');
-		if (Timer.typeOfTimer == "active"){
+		if (Timer.typeOfTimer == "active"){	
 			Timer.setTimer(Timer.activeTime);
 		} else {
 			Timer.setTimer(Timer.restingTime);
@@ -24,9 +40,9 @@ angular.module('app.services')
 	Timer.updateValue = function($CountdownTimerEnd){
 		var seconds, minutes, hours;
 		var timeLeft = $CountdownTimerEnd - (new Date().getTime());
-		if (timeLeft > 0){
+		if (timeLeft >= 1){
 			
-			seconds = Math.floor(timeLeft / 1000);
+			seconds = (Math.floor(timeLeft / 1000));
 			minutes = Math.floor(timeLeft / (60 * 1000));
 			hours = Math.floor(timeLeft / (60 * 60 * 1000));
 			
@@ -34,7 +50,6 @@ angular.module('app.services')
 				if (seconds >= 60 ) {Timer.color = 'green';}
 				else if (seconds >= 10 ) {Timer.color = 'yellow';}
 				else if (seconds >= 0) {Timer.color = 'red';}
-				else {}
 			} else {
 				Timer.color = 'blue';
 			}
@@ -48,13 +63,28 @@ angular.module('app.services')
 
 		} else {
 			seconds = minutes = hours = '00';
-			if (Timer.typeOfTimer == "active"){
+			clearInterval(Timer.timerInterval);
+			if (Timer.lastTimer == true){
+				Timer.value = '';
+
+				var message = "This Session has run for ";
+				if(Session.hr != ""){message = message + Session.hr + " hour";}
+				if(Session.hr != "" && Session.hr != "1"){message = message + "s";}
+				if(Session.hr != "" && Session.min != ""){message = message + " and ";}
+				if(Session.min != ""){message = message + Session.min + " minute";}
+				if(Session.min != "" && Session.min != "1"){message = message + "s";}
+				message = message + ".\n Data collection will continue.";
+				alert(message);
+				Timer.endTimer = false;
+				Timer.scanningTimer = false;
+				return;
+			} else if (Timer.typeOfTimer == "active"){
 				Timer.typeOfTimer = "resting";
-				clearInterval(Timer.timerInterval);
+				Timer.value = (hours + ':' + minutes + ':' + seconds);
 				Timer.setTimer(Timer.restingTime);
 			} else {
 				Timer.typeOfTimer = "active";
-				clearInterval(Timer.timerInterval);
+				Timer.value = (hours + ':' + minutes + ':' + seconds);
 				Timer.setTimer(Timer.activeTime);
 			}
 		}
@@ -64,11 +94,15 @@ angular.module('app.services')
 	Timer.setTimer = function($secondsFromNow) {
 		var currentTime = new Date().getTime();
 		var timeToAdd = $secondsFromNow * 1000;
-		var CountdownTimerEnd = (currentTime+timeToAdd);  
+		var CountdownTimerEnd = (currentTime+timeToAdd);
+		if (Timer.endTimer == true && CountdownTimerEnd >= Timer.endTime){
+			Timer.lastTimer = true;
+			CountdownTimerEnd = Timer.endTime;
+		}
+		Timer.updateValue(CountdownTimerEnd);
 		Timer.timerInterval = setInterval(function(){
 			Timer.updateValue(CountdownTimerEnd);
 		}, 1000); 
-	
 	}
 
 	return Timer;

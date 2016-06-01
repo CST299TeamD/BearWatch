@@ -27,7 +27,6 @@ angular.module('app.services')
 				GPS.easting = UTMEasting;	
 				GPS.northing = UTMNorthing;	
 				GPS.utmZone = UTMZone;	
-				console.log("GPS Data refreshed...");
 			});				
 		}
 

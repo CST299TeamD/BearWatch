@@ -7,26 +7,26 @@
 			</span>
 		</div>
 	</ion-nav-title>
-    <div style="">
-        <ion-nav-bar class="bar-stable">
+    <div>
+        <ion-nav-bar class="bar-dark">
             <ion-nav-buttons side="right">
-                <a class="button button-icon icon-left ion-ios-close" ng-click = "showConfirm()">End Session</a>
+                <a class="button icon-left ion-log-out button-small button-assertive" ng-click = "showConfirm()">&nbsp;End Session</a>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view animation="slide-left-right" ></ion-nav-view>
     </div>
-    <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <form style="" class="list">
-            <h2 style="">Environment Variables</h2>
-            <div style="border: 0.5px groove;" class="row item-divider">
+    <ion-content class="has-header container" overflow-scroll="true" padding="true">
+        <form class="list">
+            <div class="spacer spacer-10"></div>
+            <div class="row item-divider expando-pane">
                 <div class="col col-center"><h4>Water</h4></div>
                 <div class="col col-center text-right">
                     <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showWater, 'button button-small button-icon icon ion-ios-minus-outline':showWater}" ng-click="showWater=!showWater"></a>
                 </div>
             </div>
             <div ng-model="showWater" ng-show="showWater">
-            <label style="" class="item item-select">
-                <span class="input-label">Water Body</span>
+            <label class="item item-select">
+                <span class="input-label">Water Body:</span>
                 <select ng-model="Enviro.waterBody" ng-change="Enviro.save(Session.id)">
                     <option selected disabled></option>
                     <option>River</option>
@@ -34,8 +34,8 @@
                     <option>Estuary</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Water Level</span>
+            <label class="item item-select">
+                <span class="input-label">Water Level:</span>
                 <select ng-model="Enviro.waterLevel" ng-change="Enviro.save(Session.id)"> 
                     <option selected disabled></option>
                     <option>High</option>
@@ -43,8 +43,8 @@
                     <option>Low</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Water Flow</span>
+            <label class="item item-select">
+                <span class="input-label">Water Flow:</span>
                 <select ng-model="Enviro.waterFlow" ng-change="Enviro.save(Session.id)">
                     <option selected disabled></option>
                     <option>Cascade</option>
@@ -56,8 +56,8 @@
                 </select>
             </label>
             
-            <label style="" class="item item-select">
-                <span class="input-label">Water Clarity</span>
+            <label class="item item-select">
+                <span class="input-label">Water Clarity:</span>
                 <select ng-model="Enviro.waterClarity" ng-change="Enviro.save(Session.id)">
                     <option selected disabled></option>
                     <option value="0">Sparkling clear</option>
@@ -69,16 +69,16 @@
             </label>
             </div><!--end water options-->
             
-            <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <div style="border: 0.5px groove;" class="row item-divider">
+            <div class="spacer spacer-20"></div>
+            <div class="row item-divider expando-pane">
                 <div class="col col-center"><h4>Weather</h4></div>
                 <div class="col col-center text-right">
                     <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showWeather, 'button button-small button-icon icon ion-ios-minus-outline':showWeather}" ng-click="showWeather=!showWeather"></a>
                 </div>
             </div>           
             <div ng-model="showWeather" ng-show="showWeather">
-            <label style="" class="item item-select">
-                <span class="input-label">Cloud Cover</span>
+            <label class="item item-select">
+                <span class="input-label">Cloud Cover:</span>
                 <select ng-model="Enviro.cloudCover" ng-change="Enviro.save(Session.id)">
                     <option selected disabled></option>
                     <option>0%</option>
@@ -87,8 +87,8 @@
                     <option>100%</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Precipitation</span>
+            <label class="item item-select">
+                <span class="input-label">Precipitation:</span>
                 <select ng-model="Enviro.precipitation" ng-change="Enviro.save(Session.id)">
                     <option selected disabled></option>
                     <option>None</option>
@@ -97,8 +97,8 @@
                     <option>Heavy Rain</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Wind</span>
+            <label class="item item-select">
+                <span class="input-label">Wind:</span>
                 <select ng-model="Enviro.wind" ng-change="Enviro.save(Session.id)">
                     <option selected disabled></option>
                     <option>Calm</option>
@@ -114,8 +114,8 @@
                     <option>Storm</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Wind direction</span>
+            <label class="item item-select">
+                <span class="input-label">Wind direction:</span>
                 <select ng-model="Enviro.windDirection" ng-change="Enviro.save(Session.id)">
                     <option selected disbaled></option>
                     <option>N</option>
@@ -139,7 +139,7 @@
 
             <div class="item item-input-inset">
                 <label class="item item-input-wrapper">     
-                <span class="input-label">Temperature</span>
+                <span class="input-label">Temperature:</span>
                 <input placeholder="&#176;C" type="number" ng-model="Enviro.temp">
                 </label>
                 <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Enviro.save(Session.id)">&nbsp; Update</button>
@@ -147,23 +147,23 @@
 
             <div class="item item-input-inset">
                 <label class="item item-input-wrapper">     
-                    <span class="input-label">Humidity</span>
+                    <span class="input-label">Humidity:</span>
                     <input placeholder="0 - 100%" type="number" ng-model="Enviro.humid">
                 </label>
                 <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Enviro.save(Session.id)">&nbsp; Update</button>
             </div>
             </div><!--end weather options-->
 
-            <div style="width: 283px; height: 20px;" class="spacer"></div>         
-            <div style="border: 0.5px groove;" class="row item-divider">
-                <div class="col col-center"><h4>Visibility</h4></div>
+            <div class="spacer spacer-20"></div>      
+            <div class="row item-divider expando-pane">
+                <div class="col col-center"><h4>Area Visibility</h4></div>
                 <div class="col col-center text-right">
                     <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showVisibility, 'button button-small button-icon icon ion-ios-minus-outline':showVisibility}" ng-click="showVisibility=!showVisibility"></a>
                 </div>
             </div>             
             <div ng-model="showVisibility" ng-show="showVisibility">
-                <label style="" class="item item-select">
-                    <span class="input-label">Area Visibility</span>
+                <label class="item item-select">
+                    <span class="input-label">Quality:</span>
                     <select ng-model="Enviro.visibility" ng-change="Enviro.save(Session.id)">
                         <option selected disabled></option>
                         <option>Excellent</option>
@@ -174,9 +174,8 @@
                 </label>
                        
                 <div ng-show="Enviro.visibility == 'Partly obscured' || Enviro.visibility == 'Mostly obscured'">
-                    <div style="width: 283px; height: 20px;" class="spacer"></div>
-                    <label style="" class="item item-select">
-                        <span class="input-label">Reason</span>
+                    <label class="item item-select">
+                        <span class="input-label">Obstruction</span>
                         <select ng-model="Enviro.obscuredReason" ng-change="Enviro.save(Session.id)">
                             <option selected disabled></option>
                             <option>None</option>
@@ -190,7 +189,7 @@
                         <div class="item item-input-inset">
                             <label class="item item-input-wrapper">     
                                 <span class="input-label">Description:</span>
-                                <input placeholder="Describe visibilty impairments" type="text" ng-model="Enviro.obscuredOther">
+                                <input placeholder="(impairments)" type="text" ng-model="Enviro.obscuredOther">
                             </label>
                             <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Enviro.save(Session.id)">&nbsp; Update</button>
                         </div>
@@ -198,10 +197,10 @@
                 </div>
             </div><!--end visibility options-->
             
-            <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <ion-item style="" class="item-divider">Environmental Noise</ion-item>
-            <label style="" class="item item-select">
-                <span class="input-label">Noise level</span>
+            <div class="spacer spacer-20"></div> 
+            <ion-item class="item-divider list-head">Environmental Noise</ion-item>
+            <label class="item item-select">
+                <span class="input-label">Level:</span>
                 <select ng-model="Enviro.noiseLevel" ng-change="Enviro.save(Session.id)">
                     <option selected disabled></option>
                     <option>Low</option>
@@ -213,16 +212,16 @@
             </label>
             <!--end noise options-->
             
-            <div style="width: 283px; height: 20px;" class="spacer"></div>          
-            <div style="border: 0.5px groove;" class="row item-divider">
+            <div class="spacer spacer-20"></div>        
+            <div class="row item-divider expando-pane">
                 <div class="col col-center"><h4>Food Sources</h4></div>
                 <div class="col col-center text-right">
                     <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showFoodSource, 'button button-small button-icon icon ion-ios-minus-outline':showFoodSource}" ng-click="showFoodSource=!showFoodSource"></a>
                 </div>
             </div>            
             <div ng-model="showFoodSource" ng-show="showFoodSource">
-            <label style="" class="item item-select">
-                <span class="input-label">Food Source</span>
+            <label class="item item-select">
+                <span class="input-label">Type:</span>
                 <select ng-model="Enviro.foodSource">
                     <option selected disabled></option>
                     <option>Fish</option>
@@ -231,8 +230,8 @@
 					<option>Other</option>
                 </select>
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Availability</span>
+            <label class="item item-select">
+                <span class="input-label">Availability:</span>
                 <select ng-model="Enviro.foodSourceAvail">
                     <option selected disabled></option>
                     <option>None</option>
@@ -242,11 +241,13 @@
                 </select>
             </label>
             
-            <label style="" class="item item-input">
+            <label class="item item-input">
                 <span class="input-label">Comment:</span>
                 <input placeholder="Note species and/or describe other" type="text" ng-model="Enviro.foodSourceComment">
             </label>
-            <button class="button button-balanced  button-block icon ion-plus" ng-click="Enviro.addFood(Session.id)">&nbsp;Add Food Source</button>			
+            <div class="item pull-right">
+                <a class="button button-balanced icon ion-plus" ng-click="Enviro.addFood(Session.id)">&nbsp;Add</a>           
+            </div>		
             
             <!--show active food sources with remove option-->
             <ion-item ng-show="Enviro.foodSources.length > 0" class="item-divider">Available food sources:</ion-item>
@@ -258,7 +259,7 @@
                 </ion-item>
             </ion-list>
             </div>
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
+            <div class="spacer spacer-20"></div>  
             </div><!--end foodSources-->
 
             <div ng-show="debug">
@@ -275,5 +276,6 @@
             </div>
 
         </form>
+        <div class="spacer spacer-40"></div>  
     </ion-content>
 </ion-view>

@@ -10,20 +10,21 @@
     <div style="">
         <ion-nav-bar class="bar-stable">
             <ion-nav-buttons side="right">
-                <a class="button button-icon icon-left ion-ios-close" ng-click = "showConfirm()">End Session</a>
+                <a class="button icon-left ion-log-out button-small button-assertive" ng-click = "showConfirm()">&nbsp;End Session</a>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view animation="slide-left-right" ></ion-nav-view>
     </div>
-    <ion-content class="has-header" overflow-scroll="true" padding="true" ng-controller="tabCameraCtrl">
-        <div style="width: 283px; height: 40px;" class="spacer"></div>
-        <div class="center" style="text-align: center;">
-            <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="max-height: 300px; max-width: 300px;">
+    <ion-content class="has-header container" overflow-scroll="true" padding="true" ng-controller="tabCameraCtrl">
+        <div class="spacer spacer-40"></div>
+        <div class="center">
+            <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" class="img-300">
             <img ng-show="imgURI === undefined" ng-src="img/pic_placeholder.png">
         </div>
+        <div class="spacer spacer-20"></div>
         
-        <form style="" class="list" ng-show="imgURI !== undefined">
-            <div style="border: 0.5px groove;" class="row item-divider">
+        <form class="list" ng-show="imgURI !== undefined">
+            <div class="row item-divider expando-pane">
                 <div class="col col-center"><h4>Subject(s) in Picture</h4></div>
                 <div class="col col-center text-right">
                     <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showSubjects, 'button button-small button-icon icon ion-ios-minus-outline':showSubjects}" ng-click="showSubjects=!showSubjects"></a>
@@ -33,32 +34,34 @@
                 <ion-item ng-show="Picture.subjects.length == 0" class="item-divider">No bears added to session</ion-item>
                 <ion-checkbox ng-repeat="bear in Picture.subjects" ng-model="bear.selected">{{bear.name}}</ion-checkbox>             
             </div>
-            <div style="width: 283px; height: 20px;" class="spacer"></div>
-            <label style="" class="item item-input">
+            <div class="spacer spacer-20"></div>
+            <label class="item item-input">
                 <span class="input-label">Comment:</span>
                 <input placeholder="Picture description" ng-model="Picture.comment" type="text" >
             </label>                
         </form>
         <div class="center">
-            <button style="" ng-show="imgURI === undefined" ng-click="takePhoto()" class="button button-stable  button-icon icon-left ion-ios-camera-outline" id="camera-button1">Take Picture</button>
+            <button ng-show="imgURI === undefined" ng-click="takePhoto()" class="button button-positive button-outline icon-left ion-ios-camera-outline" id="camera-button1">Take Picture</button>
         </div>
-        <button style="" ng-show="imgURI !== undefined" ng-click="choosePhoto()" class="button button-stable  button-icon icon-left ion-archive" id="camera-button3">Record</button>
-        <button style="" ng-show="imgURI !== undefined" ng-click="discardPhoto(true)" class="button button-stable  button-icon icon-left ion-trash-a" id="camera-button2">Discard</button>
-        <div style="width: 283px; height: 40px;" class="spacer"></div>
+        <div class="button-bar" ng-show="imgURI !== undefined">
+            <a ng-click="choosePhoto()" class="button button-balanced button-outline icon ion-archive">&nbsp; Record</a>
+            <a ng-click="discardPhoto(true)" class="button button-assertive button-outline icon ion-trash-a">&nbsp; Discard</a>
+        </div>
+        <div class="spacer spacer-40"></div>
 
 
-        <div style="border: 0.5px groove;" class="row item-divider" ng-show="Picture.pictures.length > 0">
+        <div class="row item-divider expando-pane" ng-show="Picture.pictures.length > 0">
             <div class="col col-center"><h4>Session Pictures</h4></div>
             <div class="col col-center text-right">
                 <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showPictures, 'button button-small button-icon icon ion-ios-minus-outline':showPictures}" ng-click="showPictures=!showPictures"></a>
             </div>
         </div>
-        <div style="width: 283px; height: 20px;" class="spacer"></div>
+        <div class="spacer spacer-20"></div>
         <div ng-model="showPictures" ng-show="showPictures">
             <ion-item ng-repeat="picture in Picture.pictures">
                 <div class="card">
                     <div class="item item-text-wrap">                 
-                        <div class="row" style="border-bottom: solid 1px black;">
+                        <div class="row border-bottom">
                             <div class="col col-bottom col-75">
                                 <p>{{picture.fileName}}</p>
                             </div>
@@ -69,9 +72,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="padding-top: 20px;">
+                        <div class="row padding-top-20">
                             <div class="col col-center center">
-                                <img ng-src="{{picture.imgURI}}" style="max-height: 300px; max-width: 300px;">
+                                <img ng-src="{{picture.imgURI}}" class="img-300">
                             </div>
                             <div class="col col-bottom">
                                 <p>Subjects: {{picture.subjectString}}</p>
@@ -82,7 +85,7 @@
                 </div>
             </ion-item>
         </div>
-        <div style="width: 283px; height: 30px;" class="spacer"></div>
+        <div class="spacer spacer-40"></div>
     </ion-content>
     
 </ion-view>

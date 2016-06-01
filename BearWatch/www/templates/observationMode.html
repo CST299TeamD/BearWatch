@@ -1,10 +1,20 @@
 <ion-view title="Session Setup">
-    <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <div style="width: 283px; height: 20px;" class="spacer"></div>
+    <ion-content class="has-header container" overflow-scroll="true" padding="true">
+        
+        <div class="spacer spacer-20"></div>
+        <h2 class="center">Observation Settings</h2>
+        <!--session setup progress-->
+        <div class="breadcrumb center">            
+            <i class="ion-ios-circle-outline"></i>
+            <i class="ion-ios-circle-outline"></i>
+            <i class="ion-ios-circle-filled"></i>
+        </div> 
+        <div class="spacer spacer-20"></div>
+
         <form name="obsForm" novalidate  ng-submit="saveSession(obsForm)" class="list">
 
     		<label class="list">
-                <ion-item class="item-divider" ng-class="{ 'has-errors' : (submitted && obsForm.observationMode.$invalid), 'no-errors' : (submitted && obsForm.observationMode.$valid)}">Observation Mode</ion-item>
+                <ion-item class="item-divider list-head" ng-class="{ 'has-errors' : (submitted && obsForm.observationMode.$invalid), 'no-errors' : (submitted && obsForm.observationMode.$valid)}">Mode</ion-item>
                 <ion-radio name="observationMode" ng-model="Session.observationMode" value="Focal" ng-required="Session.observationMode == ''">Focal</ion-radio>
                 <ion-radio name="observationMode" ng-model="Session.observationMode" value="Scanning" ng-required="Session.observationMode == ''">Scanning</ion-radio>
             </label>
@@ -14,8 +24,8 @@
 
             <!--Focal timer info-->
             <div ng-show="Session.observationMode == 'Focal'">
-                <div style="width: 283px; height: 20px;" class="spacer"></div>
-                <ion-item class="item-divider">Session Time</ion-item>
+                <div class="spacer spacer-20"></div>
+                <ion-item class="item-divider list-head">Session Time</ion-item>
                 <div class="item item-input-inset" ng-class="{ 'has-errors' : (submitted && ((Session.hr == undefined && Session.min == undefined) || obsForm.hr.$invalid || obsForm.min.$invalid)), 'no-errors' : (submitted && obsForm.hr.$valid && obsForm.min.$valid && (Session.hr != undefined || Session.min != undefined))}">
                     <label class="item item-input-wrapper">     
                     <span class="input-label">Hours:</span>
@@ -49,8 +59,8 @@
 
             <!--Scanning timer info-->
             <div ng-show="Session.observationMode == 'Scanning'">
-                <div style="width: 283px; height: 20px;" class="spacer"></div>
-                <ion-item class="item-divider">Session Time</ion-item>
+                <div class="spacer spacer-20"></div>
+                <ion-item class="item-divider list-head">Session Time</ion-item>
                 <div class="item item-input-inset" ng-class="{ 'has-errors' : (submitted && ((Session.hr == undefined && Session.min == undefined) || obsForm.hr.$invalid || obsForm.min.$invalid)), 'no-errors' : (submitted && obsForm.hr.$valid && obsForm.min.$valid && (Session.hr != undefined || Session.min != undefined))}">
                     <label class="item item-input-wrapper">     
                     <span class="input-label">Hours:</span>
@@ -80,8 +90,8 @@
                         Maximum 59 minutes - only numbers are accepted!
                     </div>
                 </div>
-
-                <ion-item class="item-divider">Scanning Timers</ion-item>
+                <div class="spacer spacer-10"></div>
+                <ion-item class="item-divider list-head">Scanning Timers</ion-item>
                 <div class="item item-input-inset" ng-class="{ 'has-errors' : (submitted && (obsForm.resting.$invalid || obsForm.active.$invalid)), 'no-errors' : (submitted && (obsForm.resting.$valid && obsForm.active.$valid))}">
                     <label class="item item-input-wrapper">     
                     <span class="input-label">Active time:</span>
@@ -106,9 +116,10 @@
 
     		<button class="button button-balanced button-block icon ion-log-in" type="submit">&nbsp; Start Session</button>
             <div ng-show="true">
-                <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="tab.bear">Skip Validation</a>
+                <a class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="tab.bear">Skip Validation</a>
             </div>
         </form><!--End obsForm-->
+        <div class="spacer spacer-40"></div>
     </ion-content>
 </ion-view>
 <!--generic error messages-->

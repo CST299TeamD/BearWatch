@@ -2,8 +2,10 @@ angular.module('app.controllers')
 
 .controller('timerControl', function($scope, Timer) {
 		
-	if(Timer.value == '') {Timer.Start();}
 	if(Timer.controllerInterval != 0) {clearInterval(Timer.controllerInterval);}
+	if(Timer.endTimer == false && Timer.scanningTimer == false){return;}
+	if(Timer.value == '') {Timer.Start();}
+
 	$scope.value = Timer.value;
 	$scope.color = Timer.color;
 	
@@ -14,8 +16,9 @@ angular.module('app.controllers')
 		$scope.$apply();
 	}
 
-	Timer.controllerInterval = setInterval(function(){		
+	var controllerInterval = setInterval(function(){
 		updateScope();
+		if (Timer.value == '' && Timer.lastTimer == true) {clearInterval(controllerInterval);}
 	}, 1000); 
 	
 
