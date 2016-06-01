@@ -14,6 +14,20 @@ angular.module('app.services')
 		motoDesc: ''
 	};
 
+	//function to reset Human object
+	Human.reset = function(){
+		Human.zoneMatrix = [];
+		Human.behavior = '';
+		Human.comment = '';
+		Human.nonMoto = [{type: 'Angling', checked: false}, {type: 'Boating', checked: false}, {type: 'Hiking/Walking', checked: false}, 
+		{type: 'Running', checked: false}, {type: 'Picnicking', checked: false}, {type: 'Photography', checked: false}, {type: 'Playing', checked: false}, 
+		{type: 'Wildlife Viewing', checked: false}, {type: 'Biking', checked: false}, {type: 'Unobservable', checked: false}, {type: 'Other', checked: false}];
+		Human.nonMotoOther = '';
+		Human.motoType = '';
+		Human.motoAction = '';
+		Human.motoDesc = '';
+	};
+
 	//function to save human state in logs table
 	Human.save = function(){
 		$cordovaSQLite.execute(db, 
