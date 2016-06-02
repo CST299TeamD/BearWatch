@@ -17,8 +17,8 @@ angular.module('app.controllers')
 	}
 
 	Timer.controllerInterval = setInterval(function(){
-		updateScope();
 		if (Timer.value == '' && Timer.lastTimer == true) {clearInterval(Timer.controllerInterval);}
+		updateScope();
 	}, 1000); 
 	
 
