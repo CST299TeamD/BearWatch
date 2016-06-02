@@ -13,7 +13,7 @@ var debug = false;
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngIOS9UIWebViewPatch', 'ngMessages'])
+angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngIOS9UIWebViewPatch', 'ngMessages', 'chart.js'])
 
 .run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaFileTransfer, $cordovaGeolocation) {
   $ionicPlatform.ready(function() {
@@ -130,7 +130,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "picture_subjects  TEXT    , "
       + "collection_mode   TEXT    , "
       +	"bear_id       	   INTEGER , "
-      +	"bear       	   TEXT    , "                           
+      +	"bear       	     TEXT    , "                           
       + "species           TEXT    , "
       + "bear_zone         TEXT    , "
       + "paw_measure       TEXT    , "

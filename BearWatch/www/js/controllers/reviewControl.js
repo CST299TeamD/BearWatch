@@ -1,7 +1,10 @@
 angular.module('app.controllers')
 
 //Controller loaded when "Review Sessions" is selected"
-.controller('reviewListCtrl', function($scope, $cordovaEmailComposer, $cordovaSQLite) {
+.controller('reviewListCtrl', function($scope, $cordovaEmailComposer, $cordovaSQLite, $ionicPopup, $state, $location) {
+
+	//show/hide boolean for session list and session
+	$scope.showList = true;
 
 	//function to populate sessions list
 	$scope.sessionList = [];
@@ -25,9 +28,159 @@ angular.module('app.controllers')
 	            console.log("Error on sessions SELECT: " + error.message);
 	        }
 	    );
-	})
+	});
+
+	//function to show session details
+	$scope.displaySession = function(session){
+		//db test var - remove for production
+		id = session.session_id;
+
+		$scope.openSession = session;
+		
+		/*pie chart values*/
+
+		//feeding foraging - number of logs for each behavior
+		$scope.feedForageLabels = ["Pursuit for Food", "Green Vegetation", "Berries", "Human Food", "Fishing"];
+	  	$scope.ff_data = [];
+	  	$scope.ff_type = 'FeedForage';
+	  	$cordovaSQLite.execute(db, 'SELECT bear FROM logs WHERE session_id = (?)', [id])
+        .then(
+            function(result) {
+                if (result.rows.length > 0) {
+                	for (var i = 0; i < result.rows.length; i++){
+	        			for(item in result.rows.item(i)){
+	        				console.log(result.rows.item(i)[item].behavior);
+	        			}
+	        			//update values
+	        		}
+                }else{
+                	console.log("No bear results")
+                }
+            },
+            function(error) {
+                $scope.selectResult = "Error bear select: " + error.message;
+            }
+        );
+
+		$scope.showList = !$scope.showList;
+	};
+
+	//function to close open session
+	$scope.closeSession = function(){
+		$scope.showList = !$scope.showList;
+	};
+
+	//function to remove session info from DB
+	$scope.removeSession = function(id){
+		console.log(id);
+		var confirmPopup = $ionicPopup.confirm({
+			title: 'Delete Session',
+			template: '<h1>Warning</h1> <p>This will permanently remove all data associated with this session, are you sure?</p>',
+			cssClass: 'commentPopup'
+
+		});
+
+	   confirmPopup.then(function(res) {
+			if(res) {
+				//remove from DB
+				$cordovaSQLite.execute(db, 'DELETE FROM sessions WHERE session_id = (?)', [id])
+		        .then(
+		            function(result) {
+						$cordovaSQLite.execute(db, 'DELETE FROM bears WHERE session_id = (?)', [id])
+				        .then(
+				            function(result) {
+								$cordovaSQLite.execute(db, 'DELETE FROM logs WHERE session_id = (?)', [id])
+						        .then(
+						            function(result) {
+										$cordovaSQLite.execute(db, 'DELETE FROM food_sources WHERE session_id = (?)', [id])
+								        .then(
+								            function(result) {
+												console.log("session delete success");
+												$scope.showList = !$scope.showList;
+												$state.go($state.current, {}, {reload: true});
+								            },
+								            function(error) {
+								                $scope.selectResult = "Error on food_sources delete: " + error.message;
+								            }
+								        );
+						            },
+						            function(error) {
+						                $scope.selectResult = "Error on logs delete: " + error.message;
+						            }
+						        );
+				            },
+				            function(error) {
+				                $scope.selectResult = "Error on bears delete: " + error.message;
+				            }
+				        );
+		            },
+		            function(error) {
+		                $scope.selectResult = "Error on session delete: " + error.message;
+		            }
+		        );
+			} 
+		});
+	};
+
+	//pie chart function
+	$scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+  	$scope.data = [300, 500, 100];
+  	$scope.type = 'PolarArea';
+
+    $scope.toggleGraph = function () {
+      $scope.type = $scope.type === 'PolarArea' ? 'Pie' : 'PolarArea';
+    };
+
 
 	
+	//logging test field
+	var id = '';
+	$scope.testSelect = function(){
+		$scope.insertResult = "Initialized: Session_id?:  " + id;
+
+        $cordovaSQLite.execute(db, 'SELECT * FROM logs WHERE session_id = (?)', [id])
+        .then(
+            function(result) {
+            	$scope.selectResult = "Logs = ";
+                if (result.rows.length > 0) {
+                	console.log("enviro results returned");
+                	for (var i = 0; i < result.rows.length; i++){
+	        			for(item in result.rows.item(i)){
+	        				$scope.selectResult += item + ": " + result.rows.item(i)[item] + ", ";
+	        			}
+	        			$scope.selectResult += "   *******New Entry******   ";
+	        		}
+                }else{
+                	console.log("No enviro results")
+                }
+            },
+            function(error) {
+                $scope.selectResult = "Error on loading: " + error.message;
+            }
+        );
+
+        $cordovaSQLite.execute(db, 'SELECT * FROM food_sources WHERE session_id = (?)', [id])
+        .then(
+            function(result) {
+            	$scope.foodResult = "food sources = ";
+                if (result.rows.length > 0) {
+                	console.log("enviro results returned");
+                	for (var i = 0; i < result.rows.length; i++){
+	        			for(item in result.rows.item(i)){
+	        				$scope.foodResult += item + ": " + result.rows.item(i)[item] + ", ";
+	        			}
+	        			$scope.foodResult += "   *******New Entry******   ";
+	        		}
+                }else{
+                	console.log("No food source results")
+                }
+            },
+            function(error) {
+                $scope.selectResult = "Error on loading: " + error.message;
+            }
+        );
+	}
+
 	//$scope.result = '...starting reviewListCtrl';
 	document.addEventListener("deviceready", onDeviceReady, false);
 
