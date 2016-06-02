@@ -8,27 +8,41 @@
 		</div>
 	</ion-nav-title>
     <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <form style="" class="list"></form>
-        <h3 style="">Bear Specifications</h3>
+        <div class="spacer spacer-20"></div>
+        <h2 class="center">Modify Bear Specifications</h2>
         
         <form style="" class="list">
             <div style="width: 283px; height: 22px;" class="spacer"></div>
-            <ion-item style="" class="item-divider">Name of Bear</ion-item>
+            <ion-item style="" class="item-divider list-head">Name of Bear</ion-item>
             <label style="" class="item item-input" >
-
                 <input placeholder="Bear #" type="text" ng-model="tmpName">
+            </label>
+            <label style="" class="item item-input">
+                <span class="input-label">Accuracy</span>
+                <input placeholder="1 - 100" type="number" ng-model="tmpAccuracy">
+            </label>
+            <div style="width: 283px; height: 22px;" class="spacer"></div>
+            <ion-item style="" class="item-divider list-head">Location</ion-item>
+            <label style="" class="item item-select">
+                <span class="input-label">Bear Location ({{Session.zoneSchema}})</span>
+                <select ng-model="tmpZone">
+                    <option ng-repeat="z in zoneList">{{z}}</option>
+                </select>
                 
             </label>
-            <label style="" class="item item-select">
-                <span class="input-label">Bear Location</span>
-                <select ng-model="tmpZone">
-                    <option>Zone 1</option>
-                    <option>Zone 2</option>
-                    <option>Zone 3</option>
-                    <option>Zone 4</option>
-                    <option>Zone 5</option>
-                </select>
-            </label>
+            <div class="row item-divider expando-pane">
+                <div class="col col-center"><h4>Zone Mapping</h4></div>
+                <div class="col col-center text-right">
+                    <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showZoneSchema, 'button button-small button-icon icon ion-ios-minus-outline':showZoneSchema}" ng-click="showZoneSchema=!showZoneSchema"></a>
+                </div>
+            </div>
+            <div ng-model="showZoneSchema" ng-show="showZoneSchema" class="center" style="text-align: center;">
+                <img class="padding-top-20" ng-src="{{zoneImgURI}}">
+                    </div>
+            
+
+            <div style="width: 283px; height: 22px;" class="spacer"></div>
+            <ion-item style="" class="item-divider list-head">Other Specs</ion-item>
             <label style="" class="item item-select">
             <span class="input-label">Size</span>
                 <select ng-model="tmpSize">
@@ -125,7 +139,7 @@
             </label>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
-            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button20" ui-sref="tab.bearInfo" ng-click="updateBear(Bear.index, tmpName, tmpZone, tmpSize, tmpSpecies, tmpGender, tmpAge, tmpMarkDescription, tmpFurColour, tmpPawMeasured, tmpCubs, tmpCubAge, tmpCubFurColour, tmpComment)">Update</a>
+            <a style="" class="button button-positive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button20" ui-sref="tab.bearInfo" ng-click="updateBear(Bear.index, tmpName, tmpZone, tmpSize, tmpSpecies, tmpGender, tmpAge, tmpMarkDescription, tmpFurColour, tmpPawMeasured, tmpCubs, tmpAccuracy, tmpCubAge, tmpCubFurColour, tmpComment)">Update</a>
             <a style="" class="button button-assertive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button21" ui-sref="tab.bearInfo">Cancel</a>
         </form>
     </ion-content>

@@ -27,6 +27,7 @@ angular.module('app.controllers')
 		$scope.Bear.furColour = tmp.furColour;
 		$scope.Bear.pawMeasured = tmp.pawMeasured;
 		$scope.Bear.cubs = tmp.cubs;
+        $scope.Bear.accuracy = tmp.accuracy;
 		$scope.Bear.cubFurColour = tmp.cubFurColour;
 		$scope.Bear.cubAge = tmp.cubAge;
 		$scope.Bear.behaviour = tmp.behaviour;
@@ -73,6 +74,7 @@ angular.module('app.controllers')
     $scope.Bear.furColour = '';
     $scope.Bear.pawMeasured = false;
     $scope.Bear.cubs = '';
+    $scope.Bear.accuracy = '';
     $scope.Bear.cubFurColour = '';
     $scope.Bear.cubAge = '';
     $scope.Bear.behaviour = [];
@@ -93,7 +95,7 @@ angular.module('app.controllers')
     $scope.zoneList = zoneList;
             
             
-            //determine zone matrix and help image
+    //determine zone matrix and help image
     switch(Session.zoneSchema){
         case "Estuary":
             $scope.zoneImgURI = "img/estuary.png"
@@ -187,6 +189,7 @@ angular.module('app.controllers')
                         furColour: $scope.Bear.furColour,
                         pawMeasured: $scope.Bear.pawMeasured,
         	    		cubs: $scope.Bear.cubs,
+                        accuracy: $scope.Bear.accuracy,
         	    		cubFurColour: $scope.Bear.cubFurColour,
         	    		cubAge: $scope.Bear.cubAge,
                         behaviour: [],
@@ -378,7 +381,7 @@ angular.module('app.controllers')
                 //chack for ongoing behaviour types
                 for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
                    //if the this type of behaviour is alredy going on then update description
-                   if($scope.Bear.behaviour[n].category == type) {
+                   if($scope.Bear.behaviour[n].category == type && type != 'Other') {
                       $scope.Bear.behaviour[n].description = desc;
                       $scope.Bear.behaviour[n].time = curTime;
                       updated = true;
@@ -388,9 +391,15 @@ angular.module('app.controllers')
                 // if not a update, add behaviour to the list
                 if(updated == false) {
                        Bear.behaviour.push({
+                            index: Bear.behaviour.length,
                             category: type,
                             description: desc,
                             time: curTime});
+                }
+            
+                //clear the other filed
+                if(type == "Other"){
+                    $scope.other = '';
                 }
             
                 //insert into log table
@@ -403,13 +412,16 @@ angular.module('app.controllers')
             
                 //get the index of behavior to be removed from the behaviour list
                 var index = -1;
-                for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
-                    if($scope.Bear.behaviour[n].category == cat) {
+                if(cat == "Other"){
+                    index = ind;
+                }else {
+                    for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
+                        if($scope.Bear.behaviour[n].category == cat) {
                             index = n;
                             break;
                         }
+                    }
                 }
-            
                 //Remove behaviour if index found
                 if(index >= 0){
             
@@ -422,7 +434,7 @@ angular.module('app.controllers')
 })
 
 
-.controller('bearSpecCtrl', function($scope, BearList, Bear, Session) {
+.controller('bearSpecCtrl', function($scope, BearList, Bear, Session, Human) {
     
     //get factory objects
     $scope.BearList = BearList;
@@ -440,14 +452,42 @@ angular.module('app.controllers')
     $scope.tmpFurColour = $scope.Bear.furColour;
     $scope.tmpPawMeasured = $scope.Bear.pawMeasured;
     $scope.tmpCubs = $scope.Bear.cubs;
+    $scope.tmpAccuracy = $scope.Bear.accuracy;
     $scope.tmpCubFurColour = $scope.Bear.cubFurColour;
     $scope.tmpCubAge = $scope.Bear.cubAge;
     $scope.tmpComment = $scope.Bear.comment;
     
+            
+    //get the zone list
+    var zoneList =[];
+    for(var n = 0; n < $scope.Bear.Zones.length; n++){
+        if($scope.Session.zoneSchema == $scope.Bear.Zones[n].name){
+            zoneList = $scope.Bear.Zones[n].zones;
+        }
+    }
+    $scope.zoneList = zoneList;
+            
+            
+    //determine zone matrix and help image
+    switch(Session.zoneSchema){
+        case "Estuary":
+            $scope.zoneImgURI = "img/estuary.png"
+            break;
+        case "River":
+            $scope.zoneImgURI = "img/river.png"
+            break;
+        case "Terrestrial":
+            $scope.zoneImgURI = "img/terrestrial.png"
+            break;
+        default:
+            $scope.zoneImgURI = "img/pic_placeholder.png"
+    }
+            
+
 
     //update bear specs
-	$scope.updateBear = function(index, name, zone, size, species, gender, age, markDescription, furColour, pawMeasured, cubs, cubAge, cubFurColour, comment){
-        
+	$scope.updateBear = function(index, name, zone, size, species, gender, age, markDescription, furColour, pawMeasured, cubs, accuracy, cubAge, cubFurColour, comment){
+        console.log(zone);
         //update Bear in bear array
         $scope.BearList.add[index].name = name;
         $scope.BearList.add[index].zone = zone;
@@ -459,9 +499,11 @@ angular.module('app.controllers')
         $scope.BearList.add[index].furColour = furColour;
         $scope.BearList.add[index].pawMeasured = pawMeasured;
         $scope.BearList.add[index].cubs = cubs;
+        $scope.BearList.add[index].accuracy = accuracy;
         $scope.BearList.add[index].cubFurColour = cubFurColour;
         $scope.BearList.add[index].cubAge = cubAge;
         $scope.BearList.add[index].comment = comment;
+            
             
         //update local copy of bear
         $scope.Bear.name = name;
@@ -474,6 +516,7 @@ angular.module('app.controllers')
         $scope.Bear.furColour = furColour;
         $scope.Bear.pawMeasured = pawMeasured;
         $scope.Bear.cubs = cubs;
+        $scope.Bear.accuracy = accuracy;
         $scope.Bear.cubFurColour = cubFurColour;
         $scope.Bear.cubAge = cubAge;
         $scope.Bear.comment = comment;
