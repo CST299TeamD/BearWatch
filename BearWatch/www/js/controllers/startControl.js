@@ -26,77 +26,6 @@ angular.module('app.controllers')
 	GPS.refresher();
 })
 
-//TODO: Remove test code before deployment
-//application test code and example functions
-.controller( 'dbTest', function ($scope, $cordovaSQLite, Session, Enviro){
-	$scope.Session = Session;
-	$scope.Enviro = Enviro;
-    $scope.result = "TEST INITIALIZED";
-	$scope.status = "$scope.Session.nameResult: " + $scope.Session.nameResult;
-	
-	$scope.testing = function (){
-		$scope.test = "--$scope.Session-- ";
-		for(item in $scope.Session){
-			$scope.test += item + " : ";
-			if(item == 'nameResult'){
-				for(name in $scope.Session[item]){
-					$scope.test += $scope.Session[item][name] + ", ";	
-				}
-			}else{
-				$scope.test += $scope.Session[item] + ", ";
-			}	
-		}	 
-	}
-
-	
-	$scope.enviroTesting = function (){
-		$scope.enviroTest = "--$scope.Enviro-- ";
-		for(item in $scope.Enviro){
-			$scope.enviroTest += item + " : " + $scope.Enviro[item] + ", ";	
-		}
-		 
-	}
-
-
-	$scope.insert = function() {			
-		$cordovaSQLite.execute(db, 'INSERT INTO sessions (observers) VALUES (?)', [$scope.data])
-        .then(function(result) {
-            $scope.result = "Observer name saved successful, cheers!";
-			$scope.status = "Insert result: " + result;
-        }, function(error) {
-            $scope.result = "Error on saving: " + error.message;
-        })
-	}
-	
-	//select example
-    $scope.select = function() {
-		// Execute SELECT statement to load message from database.
-        $cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)' [Sessions.id])
-            .then(
-                function(result) {
-                    if (result.rows.length > 0) {
-                        $scope.status = result.rows.item(0).session_id;
-                        $scope.result = "Observer name loaded successful, cheers!";
-                    }
-                },
-                function(error) {
-                    $scope.result = "Error on loading: " + error.message;
-                }
-            );
-    }
-
-
-    var internet = "not set";
-	if(window.Connection){
-		internet = navigator.connection.type;
-	}else {
-		internet = "It doesn't work";
-	}
-
-	$scope.internet = internet;
-
-})
-
 .controller('startNewSessionCtrl', function($scope, Session, Park, $location, $state) {
 	//global debug var
 	$scope.debug = debug;
@@ -146,11 +75,11 @@ angular.module('app.controllers')
     //function to change zoning schema picture
     $scope.showZoneSchema = function(zoningSchemaSelect){
         if(zoningSchemaSelect == "River"){
-            $scope.zoningSchemaPic = '<br/> <h3>River Zone Map</h3> <br/> <img src="img/river.png"> <br/><br/>';
+            $scope.zoningSchemaPic = 'img/river.png';
         } else if(zoningSchemaSelect == "Estuary"){
-            $scope.zoningSchemaPic = '<br/> <h3>Esturary Zone Map</h3> <br/> <img src="img/estuary.png"> <br/><br/>';
+            $scope.zoningSchemaPic = 'img/estuary.png';
         } else if(zoningSchemaSelect == "Terrestrial"){
-            $scope.zoningSchemaPic = '<br/> <h3>Terrestrial Zone Map</h3> <br/> <img src="img/terrestrial.png"> <br/><br/>';
+            $scope.zoningSchemaPic = 'img/terrestrial.png';
         } else {
             $scope.zoningSchemaPic = '';
         }

@@ -3,33 +3,57 @@ angular.module('app.services')
 .factory('Timer', function(Session) {
 	
 	var Timer = {
+		running: false,
 		scanningTimer: false,
 		activeTime: '',
 		restingTime: '',
 		typeOfTimer: "active",
 		value: '',
-		color: 'purple',
+		color: '',
 		endTimer: false,
 		endTime: '',
 		lastTimer: false,
-		timerInterval: 0
+		timerInterval: 0,
+		controllerInterval: 0
 	};
 
-	if (Session.active != '' && Session.active !== null) {
-		Timer.scanningTimer = true;
-		Timer.activeTime = parseInt(Session.active) * 60;
-		Timer.restingTime = parseInt(Session.resting) * 60;
-	}
-	if ((Session.hr != '' || Session.min != '') && (Session.hr !== null || Session.min !== null)){
-		
-		Timer.endTimer = true;
-		Timer.endTime = (new Date().getTime()) + ((((parseInt(Session.hr) * 60) + parseInt(Session.min)) * 60) * 1000);
-		if (Session.active == '' || Session.active == null){
-			Timer.activeTime = (((parseInt(Session.hr) * 60) + parseInt(Session.min)) * 60);
-		}
+	Timer.reset = function(){
+		clearInterval(Timer.timerInterval);
+		clearInterval(Timer.controllerInterval);
+
+		Timer.running = false;
+		Timer.scanningTimer = false;
+		Timer.activeTime = '';
+		Timer.restingTime = '';
+		Timer.typeOfTimer = "active";
+		Timer.value = '';
+		Timer.color = '';
+		Timer.endTimer = false;
+		Timer.endTime = '';
+		Timer.lastTimer = false;
+		Timer.timerInterval = 0;
+		Timer.controllerInterval = 0;		
 	}
 
 	Timer.Start = function() {
+		
+		if (Session.active != '' && Session.active !== null) {
+			Timer.scanningTimer = true;
+			Timer.activeTime = parseInt(Session.active) * 60;
+			Timer.restingTime = parseInt(Session.resting) * 60;
+		}
+		if (Session.hr !== null || Session.min !== null) Timer.endTimer = true;
+		if (Timer.endTimer){
+			if (Session.hr == null) Session.hr = 0;
+			if (Session.min == null) Session.min = 0;
+			Timer.endTime = (new Date().getTime()) + ((((parseInt(Session.hr) * 60) + parseInt(Session.min)) * 60) * 1000);
+			if (Session.active == '' || Session.active == null){
+				Timer.activeTime = (((parseInt(Session.hr) * 60) + parseInt(Session.min)) * 60);
+			}
+		}
+
+		Timer.running = true;
+
 		if (Timer.typeOfTimer == "active"){	
 			Timer.setTimer(Timer.activeTime);
 		} else {

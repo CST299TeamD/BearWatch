@@ -10,34 +10,95 @@
     <ion-content class="has-header container" overflow-scroll="true" padding="true">
         <div class="spacer spacer-20"></div>
 
-        <!--available sessions-->
-        <ion-item class="item-divider list-head">Completed Sessions</ion-item>
-        <ion-list>
-            <ion-item ng-repeat="session in sessionList">
-                <div class="card">
-                    <div class="item item-text-wrap">                 
-                        <div class="row border-bottom">
-                            <div class="col col-bottom col-75">
-                                <p>{{session.session_id + "-" +  session.start_time + "-" +  session.finish_time + "-" +  session.park}}</p>
-                            </div>
-                            <div class="col col-center text-right">
-                                <div class="button-bar">
-                                    <a class="button button-icon icon ion-eye" ng-click=""></a>
-                                </div>
+        <div ng-model="showList" ng-show="showList">
+            <!--available sessions-->
+            <ion-item class="item-divider list-head">Completed Sessions</ion-item>
+            <ion-list>
+                <ion-item ng-repeat="session in sessionList" class="item item-button-right">
+                    <p>{{session.session_id + "-" +  session.start_time + "-" +  session.finish_time + "-" +  session.park}}</p>
+                    <a class="button icon-left ion-eye button-small button-balanced" ng-click="displaySession(session)">&nbsp;View</a>
+                </ion-item>
+            </ion-list><!--End available sessions-->
+        </div>
+
+        <div ng-hide="showList">
+            <div class="card">
+                <div class="item item-text-wrap">                 
+                    <div class="row border-bottom">
+                        <div class="col col-bottom col-75">
+                            <p>{{openSession.session_id + "-" +  openSession.start_time + "-" +  openSession.finish_time + "-" +  openSession.park}}</p>
+                        </div>
+                        <div class="col col-center text-right">
+                            <a class="button button-icon icon ion-close-circled" ng-click="closeSession()"></a>                        
+                        </div>
+                    </div>
+                    <div class="row padding-top-20">
+                        <div class="col">
+                            <p><strong>Session Start:</strong> {{openSession.start_time}}</p>
+                            <p><strong>Session End:</strong> {{openSession.finish_time}}</p>
+                            <p><strong>Observer(s):</strong> {{openSession.observers}}</p>
+                            <p><strong>Observation Mode:</strong> {{openSession.observation_mode}}</p>
+                        </div>
+                        <div class="col">
+                            <p><strong>Park:</strong> {{openSession.park}}</p>
+                            <p><strong>Site:</strong> {{openSession.park_site}}</p>
+                            <p><strong>Viewing Method:</strong> {{openSession.protocol}}</p>
+                            <p><strong>Zone Classification:</strong> {{openSession.zone_type}}</p>
+                        </div>
+                    </div>
+                    <div class="spacer spacer-20"></div>
+                    <div class="row">
+                        <div class="col col-center text-center">
+                            <h2>Bear Behavior Log Statistics</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-center text-right">
+                             <a ng-click="toggleGraph()" class="button button-positive icon ion-arrow-swap">&nbsp; Change display</a>                       
+                        </div>
+                    </div>
+                    <div class="spacer spacer-20"></div>
+                    <div class="row">
+                        <div class="col col-33 text-center">
+                            <h3>Feeding/Foraging</h3>
+                            <div class="item item-text-wrap">
+                                <canvas id="base" class="chart-base" chart-type="type" chart-data="data" chart-labels="labels" chart-legend="true"></canvas>
                             </div>
                         </div>
-                        <div class="row padding-top-20">
-                            <div class="col col-center">
-                                {{comment.text}}
+                        <div class="col col-33">
+                        </div>
+                        <div class="col col-33">
+                        </div>
+                    </div>
+                    <div class="spacer spacer-40"></div>
+                    <div class="row">
+                        <div class="col col-center">
+                            <div class="button-bar">
+                                <a ng-click="closeSession()" class="button button-positive button-outline icon ion-chevron-left">&nbsp; Back</a>
+                                <a ng-click="reviewSendPicture()" class="button button-balanced button-outline icon ion-upload">&nbsp; Send Session</a>
+                                <a ng-click="removeSession(openSession.session_id)" class="button button-assertive button-outline icon ion-trash-a">&nbsp; Delete</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </ion-item>
-        </ion-list><!--End available sessions-->
+            </div>
+        </div>
+
+        <div>
+            <br><br>
+            <button ng-click="testSelect()">Test select</button>
+            <br><br>
+            Insert Results: {{insertResult}}
+            <br>
+            Enviro Results: {{selectResult}}
+            <br>
+            Food Results: {{foodResult}}
+            <br/>
+            <br/>
+        </div>
 
         <div class="spacer spacer-20"></div>
-        <div ng-controller="reviewListCtrl">
+        <div ng-controller="reviewListCtrl" ng-show="false">
             <br/>
             Mail Progress: {{mailProgress}}
             <br/>

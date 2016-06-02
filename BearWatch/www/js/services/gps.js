@@ -1,6 +1,6 @@
 angular.module('app.services')
 
-.factory('GPS', function($cordovaGeolocation){
+.factory('GPS', function($cordovaGeolocation, Session){
 	
     var GPS =  { 
 		errorCode: '',
@@ -14,7 +14,9 @@ angular.module('app.services')
 	GPS.refresher = function(){
 		var timerLength = 30; //interval in seconds
 		var timer = setInterval(function(){
-			GPS.refresh();
+			if(Session.stationary=='Mobile'){
+				GPS.refresh();
+			}
 		}, timerLength * 1000); 
 	}
 	

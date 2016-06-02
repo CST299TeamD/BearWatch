@@ -175,7 +175,12 @@
                 </div>
             </div>
 
-            <div ng-bind-html="zoningSchemaPic" class="center">
+            <div ng-show="Session.zoneSchema != ''" class="center">
+                <div class="spacer spacer-20"></div>
+                <h3>{{Session.zoneSchema}} Zone Map</h3>
+                <br/>
+                <img ng-src="{{zoningSchemaPic}}" alt="zoning picture">
+                <div class="spacer spacer-20"></div>
             </div>
                 
     		<label class="item item-input">

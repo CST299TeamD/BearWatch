@@ -106,6 +106,7 @@ angular.module('app.routes', ['ionicUIRouter'])
  
   .state('reviewList', {
     url: '/ReviewList',
+    cache: false,
     templateUrl: 'templates/reviewList.html',
     controller: 'reviewListCtrl'
   })
