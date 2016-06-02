@@ -246,7 +246,7 @@ angular.module('app.controllers')
 })
 
 
-.controller('bearInfoCtrl', function($scope, Bear, BearList, Session) {
+.controller('bearInfoCtrl', function($scope, Bear, BearList, Session, $ionicScrollDelegate) {
             
             //get all the factory objects
             $scope.Session = Session;
@@ -269,6 +269,13 @@ angular.module('app.controllers')
             $scope.hBinteraction = hBinteraction;
             $scope.habituationLevel = habituationLevel;
 
+            $scope.showHelp = false;
+            
+            //scroll top function
+            $scope.scrollDown = function(){
+                $scope.showHelp = !($scope.showHelp);
+                $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom(true);
+            }
             
             //starting the fishing activity
             $scope.onFishing = function(){
