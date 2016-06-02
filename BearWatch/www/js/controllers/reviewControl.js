@@ -37,7 +37,7 @@ angular.module('app.controllers')
 
 		$scope.openSession = session;
 		
-		/*pie chart values*/
+		/*pie chart values
 
 		//feeding foraging - number of logs for each behavior
 		$scope.feedForageLabels = ["Pursuit for Food", "Green Vegetation", "Berries", "Human Food", "Fishing"];
@@ -49,7 +49,18 @@ angular.module('app.controllers')
                 if (result.rows.length > 0) {
                 	for (var i = 0; i < result.rows.length; i++){
 	        			for(item in result.rows.item(i)){
-	        				console.log(result.rows.item(i)[item].behavior);
+	        				//console.log(result.rows.item(i)[item]);
+	        				bear = angular.fromJson(result.rows.item(i)[item]);
+	        				//console.log(bear);
+	        				if(bear != null){
+	        					if (bear.behaviour.length > 0) {
+                					for (var i = 0; i < bear.behaviour.length; i++){
+	        							console.log(bear.behaviour[i]);
+	        							behavior = angular.fromJson(bear.behaviour[i]);
+	        							console.log(behaviour.description);
+	        						}
+	        					}
+	        				}
 	        			}
 	        			//update values
 	        		}
@@ -60,7 +71,7 @@ angular.module('app.controllers')
             function(error) {
                 $scope.selectResult = "Error bear select: " + error.message;
             }
-        );
+        );*/
 
 		$scope.showList = !$scope.showList;
 	};
@@ -123,8 +134,8 @@ angular.module('app.controllers')
 	};
 
 	//pie chart function
-	$scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-  	$scope.data = [300, 500, 100];
+	$scope.labels = ["Pursuit for Food", "Berries", "Human Food"];
+  	$scope.data = [30, 50, 10];
   	$scope.type = 'PolarArea';
 
     $scope.toggleGraph = function () {
