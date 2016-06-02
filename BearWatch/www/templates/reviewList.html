@@ -17,7 +17,6 @@
                 <ion-item ng-repeat="session in sessionList" class="item item-button-right">
                     <p>{{session.session_id + "-" +  session.start_time + "-" +  session.finish_time + "-" +  session.park}}</p>
                     <a class="button icon-left ion-eye button-small button-balanced" ng-click="displaySession(session)">&nbsp;View</a>
-                </ion-item>
             </ion-list><!--End available sessions-->
         </div>
 
@@ -84,7 +83,7 @@
             </div>
         </div>
 
-        <div>
+        <div ng-show="false">
             <br><br>
             <button ng-click="testSelect()">Test select</button>
             <br><br>

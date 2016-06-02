@@ -37,7 +37,7 @@ angular.module('app.controllers')
 
 		$scope.openSession = session;
 		
-		/*pie chart values
+		/*pie chart values*/
 
 		//feeding foraging - number of logs for each behavior
 		$scope.feedForageLabels = ["Pursuit for Food", "Green Vegetation", "Berries", "Human Food", "Fishing"];
@@ -57,7 +57,7 @@ angular.module('app.controllers')
                 					for (var i = 0; i < bear.behaviour.length; i++){
 	        							console.log(bear.behaviour[i]);
 	        							behavior = angular.fromJson(bear.behaviour[i]);
-	        							console.log(behaviour.description);
+	        							console.log(behaviour[i].description);
 	        						}
 	        					}
 	        				}
@@ -71,7 +71,7 @@ angular.module('app.controllers')
             function(error) {
                 $scope.selectResult = "Error bear select: " + error.message;
             }
-        );*/
+        );
 
 		$scope.showList = !$scope.showList;
 	};
