@@ -17,6 +17,7 @@ angular.module('app.services')
         furColour: '',
         pawMeasured: false,
         cubs: '',
+        accuracy: '',
         cubFurColour: '',
         cubAge: '',
         behaviour: [],

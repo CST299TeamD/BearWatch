@@ -1,7 +1,7 @@
 <ion-view style="" title="Add new Bear">
 	<ion-nav-title>
 		<div width=100% class="dashboardHeader" ng-controller="timerControl">
-			"Add new Bear" 
+			Bear
 			<span style="color:{{color}}">
 				{{value}}
 			</span>
@@ -9,7 +9,7 @@
 	</ion-nav-title>
     <ion-content class="has-header container" overflow-scroll="true" padding="true">
         <div class="spacer spacer-20"></div>
-        <h2 class="center">Add new Bear</h3>
+        <h2 class="center">Add new Bear</h2>
         <div ng-show="false">
             Session id : {{Session.id}} <br>
             Bear Index : {{Bear.index}} <br>
@@ -48,10 +48,13 @@
             <ion-checkbox ng-model="Bear.isFocal" ng-show="FBearSet.isFocalPresent == ''&& Session.observationMode == 'Focal' ">Focal</ion-checkbox>
             <ion-item style="" class="item-divider list-head">Name of Bear</ion-item>
             <label style="" class="item item-input">
-
                 <input placeholder="Bear #" type="text" ng-model="Bear.name">
-                
             </label>
+            <label style="" class="item item-input">
+                <span class="input-label">Accuracy</span>
+                <input placeholder="1 - 100" type="number" ng-model="Bear.accuracy">
+            </label>
+            
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <ion-item style="" class="item-divider list-head">Location</ion-item>
             <label style="" class="item item-select">
@@ -170,8 +173,9 @@
             </label>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
-            <a style="" class="button button-balanced  button-block icon-right ion-android-arrow-forward" id="addNewBear-button20" ng-click="addBear()">Save Bear</a>
-            <a style="" class="button button-assertive  button-block icon-right ion-android-arrow-forward" id="addNewBear-button21" ui-sref="tab.bear">Cancel</a>
+            <a style="" class="button button-balanced  button-block ion-android-checkbox-outline" ng-click="addBear()">&nbsp; Save Bear</a>
+            <a style="" class="button button-assertive  button-block  ion-backspace-outline" id="addNewBear-button21" ui-sref="tab.bear">&nbsp; Cancel</a>
         </form>
+                <div class="spacer spacer-40"></div>
     </ion-content>
 </ion-view>

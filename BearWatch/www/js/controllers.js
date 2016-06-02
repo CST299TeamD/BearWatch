@@ -1,6 +1,6 @@
 angular.module('app.controllers', [])
 
-.controller('dashCtrl', function($scope, $ionicPopup, $state, $location, $cordovaSQLite, $ionicHistory, Session, Comment, Enviro, Human, Picture) {
+.controller('dashCtrl', function($scope, $ionicPopup, $state, $location, $cordovaSQLite, $ionicHistory, Session, Comment, Enviro, Human, Picture, Timer) {
 
    $scope.showConfirm = function() {
       var confirmPopup = $ionicPopup
@@ -26,6 +26,7 @@ angular.module('app.controllers', [])
                Enviro.reset();
                Human.reset();
                Picture.reset();
+			   Timer.reset();
                $ionicHistory.clearHistory();
                $ionicHistory.clearCache();
             }, function(error) {

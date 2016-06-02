@@ -28,7 +28,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
 
     //setup database schema
     db = $cordovaSQLite.openDB({name:"bear_watch.db", location:'default'});
-    console.log("Finally made it work");
+    console.log("Database open");
     /***** Lookup Tables ******/
 
     //park names table
