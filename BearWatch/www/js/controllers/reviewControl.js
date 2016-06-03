@@ -54,9 +54,10 @@ angular.module('app.controllers')
 	        				if(bear != null){
 	        					for(var j = 0; j < bear.behaviour.length; j++){
 	        						var behaviour = angular.fromJson(bear.behaviour[j]);
-        						if(behaviour.endTime != ''){
-        							//TODO:
-	        					}
+	        						if(behaviour.endTime != ''){
+	        							//TODO:
+		        					}
+		        				}
 	        				}
 	        			}
 	        			//update values
