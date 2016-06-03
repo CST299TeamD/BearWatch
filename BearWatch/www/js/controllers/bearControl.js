@@ -246,7 +246,7 @@ angular.module('app.controllers')
 })
 
 
-.controller('bearInfoCtrl', function($scope, Bear, BearList, Session, $ionicScrollDelegate) {
+.controller('bearInfoCtrl', function($scope, Bear, BearList, Session, $ionicScrollDelegate, $q) {
             
             //get all the factory objects
             $scope.Session = Session;
@@ -440,6 +440,7 @@ angular.module('app.controllers')
                     .then(
                           function(result){
                             $scope.Bear.behaviour.splice(index, 1);
+                          console.log("index " + index + " removed");
                           },
                           function(error){
                             console.log("error in geting rid of behaviour");
