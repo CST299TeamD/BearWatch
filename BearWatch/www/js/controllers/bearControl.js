@@ -423,10 +423,21 @@ angular.module('app.controllers')
             
                 //get the index of behavior to be removed from the behaviour list
                 var index = -1;
-            
+
                 for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
+                    console.log("Passed Desc " + desc + " and array desc "+ $scope.Bear.behaviour[n].description);
                     if($scope.Bear.behaviour[n].category == cat && $scope.Bear.behaviour[n].description == desc) {
                         index = n;
+                    }
+                }
+            
+                //if unable to find index drop descreption
+                if(index == -1){
+                    for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
+                        console.log("Passed Desc " + desc + " and array desc "+ $scope.Bear.behaviour[n].description);
+                        if($scope.Bear.behaviour[n].category == cat) {
+                            index = n;
+                        }
                     }
                 }
             
