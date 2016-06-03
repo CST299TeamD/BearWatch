@@ -3,7 +3,7 @@
 //global variables
 var db;
 var db_error = false;
-var db_drop = false;
+var db_drop = true;
 
 //debugging
 var debug = false;
@@ -29,19 +29,6 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
     //setup database schema
     db = $cordovaSQLite.openDB({name:"bear_watch.db", location:'default'});
     console.log("Database open");
-    /***** Lookup Tables ******/
-
-    //park names table
-    $cordovaSQLite.execute(db, 
-      "CREATE TABLE IF NOT EXISTS lv_parks ("
-      + "park_id       INTEGER PRIMARY KEY NOT NULL, "
-      + "park_name         TEXT);"
-    ).then(function(result) {
-        console.log("park_names table created");
-    }, function(error) {
-        console.log("Error on park_names: " + error.message);
-        db_error = true;
-    });
 
     /****** Storage Tables ******/
 
@@ -130,14 +117,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "picture_subjects  TEXT    , "
       + "collection_mode   TEXT    , "
       +	"bear_id       	   INTEGER , "
-      +	"bear       	     TEXT    , "                           
-      + "species           TEXT    , "
-      + "bear_zone         TEXT    , "
-      + "paw_measure       TEXT    , "
-      + "cubs              TEXT    , "
-      + "cub_fur           TEXT    , "
-      + "behavior          TEXT    , "
-      + "cub_age           TEXT    , "      
+      +	"bear       	     TEXT    , "                              
       + "session_id        INTEGER , "
       + "FOREIGN KEY(bear_id) REFERENCES bears(bear_id),"      
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"

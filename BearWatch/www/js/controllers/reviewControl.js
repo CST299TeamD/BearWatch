@@ -52,16 +52,10 @@ angular.module('app.controllers')
 	        				//console.log(result.rows.item(i)[item]);
 	        				bear = angular.fromJson(result.rows.item(i)[item]);
 	        				if(bear != null){
-	        					console.log(bear);
-	        					console.log(bear.behaviour);
-	        					if (bear.behaviour.length > 0) {
-                					
-                					/*
-                					for (var j = 0; j < bear.behaviour.length; j++){
-	        							console.log(bear.behaviour[i]);
-	        							behavior = angular.fromJson(bear.behaviour[i]);
-	        							console.log(behavior);
-	        						}*/
+	        					for(var j = 0; j < bear.behaviour.length; j++){
+	        						var behaviour = angular.fromJson(bear.behaviour[j]);
+        						if(behaviour.endTime != ''){
+        							//TODO:
 	        					}
 	        				}
 	        			}
