@@ -283,7 +283,10 @@ angular.module('app.controllers')
                 //turn off other feeding and foraging if running
                 for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
                     if($scope.Bear.behaviour[n].category == "Feeding or Foraging") {
-                            $scope.Bear.behaviour.splice(n, 1);
+                        $scope.Bear.behaviour[n].endTime = new Date().toLocaleTimeString();
+                        //insert into log table
+                        Bear.Log($scope.Session.id)
+                        $scope.Bear.behaviour.splice(n, 1);
                     }
                 }
             
@@ -401,9 +404,10 @@ angular.module('app.controllers')
                             index: Bear.behaviour.length,
                             category: type,
                             description: desc,
-                            time: curTime});
+                            time: curTime,
+                            endTime: ''});
                 }
-            
+
                 //clear the other filed
                 if(type == "Other"){
                     $scope.other = '';
@@ -419,23 +423,28 @@ angular.module('app.controllers')
             
                 //get the index of behavior to be removed from the behaviour list
                 var index = -1;
-                if(cat == "Other"){
-                    index = ind;
-                }else {
-                    for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
-                        if($scope.Bear.behaviour[n].category == cat) {
-                            index = n;
-                            break;
-                        }
+            
+                for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
+                    if($scope.Bear.behaviour[n].category == cat && $scope.Bear.behaviour[n].description == desc) {
+                        index = n;
                     }
                 }
+            
                 //Remove behaviour if index found
                 if(index >= 0){
-            
-                    $scope.Bear.behaviour.splice(index, 1);
-            
+                    //update end time
+                    $scope.Bear.behaviour[index].endTime = new Date().toLocaleTimeString();
+                    
                     //insert into log table
-                    Bear.Log($scope.Session.id);
+                    Bear.Log($scope.Session.id)
+                    .then(
+                          function(result){
+                            $scope.Bear.behaviour.splice(index, 1);
+                          },
+                          function(error){
+                            console.log("error in geting rid of behaviour");
+                          }
+                    );
                 }
             }
 })
