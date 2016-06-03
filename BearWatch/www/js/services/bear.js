@@ -2,7 +2,7 @@ angular.module('app.services')
 
 
 //Bear Object
-.factory('Bear', function($cordovaSQLite){
+.factory('Bear', function($cordovaSQLite, $q){
     var Bear = {
         index: -1,
         id: -1,
@@ -34,10 +34,13 @@ angular.module('app.services')
                        {name: "Estuary", zones: ["1", "1+", "2", "2+", "4", "5", "6", "7", "7+", "8", "8+", "9", "9+"]},
                        {name: "Terrestrial", zones: ["1", "1+", "1a", "1b", "2", "2+", "3", "3+", "3a", "3b", "4", "4+", "5", "6", "6+", "7", "7+", "7a", "7b", "8", "8+", "9", "9+", "9a", "9b"]}]
     
+         
     Bear.Log = function(sessionId){
         //get the time
-        var time = new Date().toLocaleTimeString();
+        var time = new Date();
         var bearlog = angular.toJson(Bear, false);
+        var defer = $q.defer();
+         
         $cordovaSQLite.execute(db,
                         'INSERT INTO logs '
                         + '(timestamp, session_id, bear_id, bear)'
@@ -46,10 +49,15 @@ angular.module('app.services')
         .then(function(result) {
             console.log("bear Logged with log id - " + result.insertId);
             console.log(Bear);
+            defer.resolve(result);
         }, function(error) {
             console.log("Error on saving comment: " + error.message);
+            defer.reject(error);
+              
         });
-     }
+         
+        return defer.promise;
+    }
     return Bear;
 })
 
