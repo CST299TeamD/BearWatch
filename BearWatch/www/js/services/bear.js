@@ -2,7 +2,7 @@ angular.module('app.services')
 
 
 //Bear Object
-.factory('Bear', function($cordovaSQLite, $q){
+.factory('Bear', function($cordovaSQLite, $q, GPS){
     var Bear = {
         index: -1,
         id: -1,
@@ -40,12 +40,17 @@ angular.module('app.services')
         var time = new Date();
         var bearlog = angular.toJson(Bear, false);
         var defer = $q.defer();
-         
+        
+        //get gps coordinates
+        var utm = GPS.utmZone;
+        var east = GPS.easting;
+        var north = GPS.northing;
+       
         $cordovaSQLite.execute(db,
                         'INSERT INTO logs '
-                        + '(timestamp, session_id, bear_id, bear)'
-                        + ' VALUES (?, ?, ?, ?)',
-                        [time, sessionId, Bear.id, bearlog])
+                        + '(timestamp, session_id, bear_id, bear, utm_zone, northing, easting)'
+                        + ' VALUES (?, ?, ?, ?, ?, ?, ?)',
+                        [time, sessionId, Bear.id, bearlog, utm, north, east])
         .then(function(result) {
             console.log("bear Logged with log id - " + result.insertId);
             console.log(Bear);
