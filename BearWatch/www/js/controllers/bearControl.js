@@ -283,7 +283,7 @@ angular.module('app.controllers')
                 //turn off other feeding and foraging if running
                 for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
                     if($scope.Bear.behaviour[n].category == "Feeding or Foraging") {
-                        $scope.Bear.behaviour[n].endTime = new Date().toLocaleTimeString();
+                        $scope.Bear.behaviour[n].endTime = new Date();
                         //insert into log table
                         Bear.Log($scope.Session.id)
                         $scope.Bear.behaviour.splice(n, 1);
@@ -295,7 +295,7 @@ angular.module('app.controllers')
             
                 //if fishing is turned on add fishing session to fishing array
                 if($scope.Bear.isFishing == true) {
-                    var curTime = new Date().toLocaleTimeString();
+                    var curTime = new Date();
                     $scope.Bear.fishingMethod = '';
                     $scope.Bear.fishingSuboption = '';
                     $scope.Bear.tally = 0;
@@ -314,7 +314,7 @@ angular.module('app.controllers')
             $scope.updateFish = function(fishingMethod, fishingSuboption, tally){
             
                 //get now timestamp
-                var curTime = new Date().toLocaleTimeString();
+                var curTime = new Date();
             
                 //update fishing array
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].method = fishingMethod;
@@ -340,7 +340,7 @@ angular.module('app.controllers')
             $scope.addTally = function(fishingMethod, fishingSuboption, tally){
             
                 //get new timestamp
-                var curTime = new Date().toLocaleTimeString();
+                var curTime = new Date();
             
                 //update the fishing session
                 $scope.Bear.tally += 1;
@@ -357,7 +357,7 @@ angular.module('app.controllers')
             $scope.removeTally = function(fishingMethod, fishingSuboption, tally){
             
                 //get the new timestamp
-                var curTime = new Date().toLocaleTimeString();
+                var curTime = new Date();
             
                 //update the fishing session
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].method = fishingMethod;
@@ -380,7 +380,7 @@ angular.module('app.controllers')
             $scope.addBehaviour = function(type, desc){
           
                 //get the timestamp
-                var curTime = new Date().toLocaleTimeString();
+                var curTime = new Date();
                 var updated = false;
             
                 //turn off ongoing fishing session
@@ -433,7 +433,7 @@ angular.module('app.controllers')
                 //Remove behaviour if index found
                 if(index >= 0){
                     //update end time
-                    $scope.Bear.behaviour[index].endTime = new Date().toLocaleTimeString();
+                    $scope.Bear.behaviour[index].endTime = new Date();
                     
                     //insert into log table
                     Bear.Log($scope.Session.id)

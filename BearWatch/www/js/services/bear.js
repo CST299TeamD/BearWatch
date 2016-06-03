@@ -37,7 +37,7 @@ angular.module('app.services')
          
     Bear.Log = function(sessionId){
         //get the time
-        var time = new Date().toLocaleTimeString();
+        var time = new Date();
         var bearlog = angular.toJson(Bear, false);
         var defer = $q.defer();
          
