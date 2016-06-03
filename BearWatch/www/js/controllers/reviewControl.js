@@ -51,14 +51,17 @@ angular.module('app.controllers')
 	        			for(item in result.rows.item(i)){
 	        				//console.log(result.rows.item(i)[item]);
 	        				bear = angular.fromJson(result.rows.item(i)[item]);
-	        				//console.log(bear);
 	        				if(bear != null){
+	        					console.log(bear);
+	        					console.log(bear.behaviour);
 	        					if (bear.behaviour.length > 0) {
-                					for (var i = 0; i < bear.behaviour.length; i++){
+                					
+                					/*
+                					for (var j = 0; j < bear.behaviour.length; j++){
 	        							console.log(bear.behaviour[i]);
 	        							behavior = angular.fromJson(bear.behaviour[i]);
-	        							console.log(behaviour[i].description);
-	        						}
+	        							console.log(behavior);
+	        						}*/
 	        					}
 	        				}
 	        			}
