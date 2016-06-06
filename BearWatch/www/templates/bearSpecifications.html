@@ -1,10 +1,16 @@
 <ion-view style="" title="{{Bear.name}} Specifications">
 	<ion-nav-title>
 		<div width=100% class="dashboardHeader" ng-controller="timerControl">
-			{{Bear.name}} 
-			<span style="color:{{color}}">
-				{{value}}
-			</span>
+			<div class="row">
+                <div class="col text-right">
+                    {{Bear.name}} 
+                </div>
+                <div class="col text-left">                
+                    <span style="color:{{color}}">
+                        {{value}}
+                    </span>
+                </div>
+            </div>
 		</div>
 	</ion-nav-title>
     <ion-content class="has-header container" overflow-scroll="true" padding="true">

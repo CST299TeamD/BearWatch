@@ -1,10 +1,16 @@
 <ion-view style="" title="{{Session.observationMode}}">
     	<ion-nav-title>
 		<div width=100% class="dashboardHeader" ng-controller="timerControl">
-			{{Session.observationMode}} 
-			<span style="color:{{color}}">
-				{{value}}
-			</span>
+            <div class="row">
+                <div class="col text-right">
+                    {{Session.observationMode}} 
+                </div>
+                <div class="col text-left">                
+                    <span style="color:{{color}}">
+                        {{value}}
+                    </span>
+                </div>
+            </div>
 		</div>
 	</ion-nav-title>
 	<div style="">

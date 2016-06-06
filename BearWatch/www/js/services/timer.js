@@ -71,9 +71,8 @@ angular.module('app.services')
 			hours = Math.floor(timeLeft / (60 * 60 * 1000));
 			
 			if(Timer.typeOfTimer == "active"){
-				if (seconds >= 60 ) {Timer.color = 'green';}
-				else if (seconds >= 10 ) {Timer.color = 'yellow';}
-				else if (seconds >= 0) {Timer.color = 'red';}
+				if (seconds >= 11 ) {Timer.color = 'green';}
+				else if (seconds < 11) {Timer.color = 'red';}
 			} else {
 				Timer.color = 'blue';
 			}
