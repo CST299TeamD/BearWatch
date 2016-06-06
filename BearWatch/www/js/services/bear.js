@@ -31,6 +31,10 @@ angular.module('app.services')
          
     //reset the bear factory
     Bear.reset = function(){
+         
+         
+         
+         
          Bear.index = -1;
          Bear.id = -1;
          Bear.isFocal = '';

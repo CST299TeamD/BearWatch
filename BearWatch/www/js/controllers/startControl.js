@@ -29,9 +29,11 @@ angular.module('app.controllers')
 	GPS.refresher();
 })
 
-.controller('startNewSessionCtrl', function($scope, Session, Park, $location, $state) {
+.controller('startNewSessionCtrl', function($scope, Session, Park, $location, $state, $ionicNavBarDelegate) {
 	//global debug var
 	$scope.debug = debug;
+    $ionicNavBarDelegate.showBackButton(true);
+            
 	
 	//global factory session object
 	$scope.Session = Session;
