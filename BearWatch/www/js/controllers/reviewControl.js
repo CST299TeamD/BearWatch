@@ -1,7 +1,7 @@
 angular.module('app.controllers')
 
 //Controller loaded when "Review Sessions" is selected"
-.controller('reviewListCtrl', function($scope, $cordovaEmailComposer, $cordovaSQLite, $ionicPopup, $state, $location) {
+.controller('reviewListCtrl', function($scope, $cordovaEmailComposer, $cordovaSQLite, $ionicPopup, $state, $location, Session) {
 
 	//show/hide boolean for session list and session
 	$scope.showList = true;
@@ -252,73 +252,339 @@ angular.module('app.controllers')
             }
         );
 	}
-
-	//$scope.result = '...starting reviewListCtrl';
-	document.addEventListener("deviceready", onDeviceReady, false);
-
-	function onDeviceReady() {
-		//$scope.result += ('...dataDirectory: '+cordova.file.dataDirectory);
-		
-	}	
 	
 	//Function to mail with attachments
-	$scope.reviewSendPicture = function() {
-
+	$scope.reviewSendPicture = function(id) {
+		//Load a session and its data using its ID
+		//Once loaded, build CSV files and push them to an array of attachments
+		//Load all pictures from a CSV, push each one to the array of attachments
+		//construct the email with its attachments and send it to the email application
+		
 		//instantiate array which holds all email attachments
-		var emailAttachments = []
+		var emailAttachments = [];
+		var pictureAttachments = [];
 
-		//Add CSV(s) to array of emailAttachments
-		//place holder -- this should actually be a huge text CSV with an entire session of data
-		var csv1contents = "Hello, World, Of, Bears"
-		emailAttachments.push('base64:csv1.csv//'+btoa(csv1contents));
-
-
-		//Add to pictures attachment array TODO - specify session
-		$scope.selectResult = "Initialized";
-        $cordovaSQLite.execute(db, "SELECT log_id, picture_data FROM logs").then(
-            function(result) {
-                $scope.selectResult += "...Select successful! Rows length = " + result.rows.length;
-                if (result.rows.length > 0) {
-                    $scope.fileName = "Select successful!";
-                    var i=0;
-                    while(i < result.rows.length){
-                    	$scope.selectResult += "...log_id: "+result.rows.item(i).log_id;
-                    	emailAttachments.push("base64:picture"+i+".jpg//" + result.rows.item(i).picture_data);
-                    	i++;
-                    }
-                } else {
-                	$scope.selectResult += "...No rows found"
-                }
-            },
-            function(error) {
-            	//TODO - GIVE USER FEEDBACK
-                $scope.selectResult = "Error on loading: " + error.message;
-            }
-        );
-
-        //Send (draft) email
-		$scope.mailProgress = "...attempting to send email with " + emailAttachments.length + " attachments";
-		try{
-			$cordovaEmailComposer.isAvailable().then(function() {
-				$scope.mailProgress = "...Email is available";
-				var email = {
-					//TODO - set proper email & mail contents
-					to: 'cobbsworth@outlook.com',
-					cc: '',
-					attachments: emailAttachments,
-					subject: 'Cordova Email',
-					body: '',
-					isHtml: false
-				};
-
-				$cordovaEmailComposer.open(email).then(null, function () {
-				   //$scope.mailProgress = "...Email Cancelled";
-				});
-			}, function () {
-			   $scope.mailProgress = "...Email is unavailable";
-			});
-		} catch (exception){
-			$scope.mailProgress = exception.name + " ::: " + exception.message;
+		Session.ready = 0;//not ready
+		try {
+			Session.load(id);
+		} catch(err) {
+			console.log("An exception occurred and was caught");
+			alert("Unable to load session from SQLiteDatabase. Error:\n" + err.message);
+			Session.ready = 2;
 		}
+		var sessionLoadInterval = setInterval(function(){		
+			if(Session.ready != 0){
+				if(Session.ready == 1){
+					buildAttachments();
+				} else {
+					alert("Unable to load session from database");
+				}
+				clearInterval(sessionLoadInterval);
+			}
+		}, 100);
+	
+		var buildAttachments = function(){
+			$scope.blockInformationHeader = 
+			$scope.blockInformationData = 		
+			$scope.siteIncidentalObservationsHeader = 
+			$scope.siteIncidentalObservationsData = 
+			$scope.generalSurveyHeader = 
+			$scope.GeneralSurveyData = '';
+
+			$scope.blockInformationStatus =
+			$scope.siteIncidentalObservationsStatus =
+			$scope.generalSurveyStatus =
+			$scope.pictureAttachmentsStatus = 0;
+
+			var header;
+			var data;
+			//construct Project Information sheet
+			header = "SPI Project ID\tProject Name\t Survey Name";
+			data = "SPI12345\tBearWatch\t" + Session.park + " " + Session.observers + " " + Session.start_time;
+			emailAttachments.push("base64:projectInformation.csv//" + btoa(header+"\n"+data));
+
+			//construct Block Information sheet
+			header = "Study Area Name\tStudy Area Photos\tBlock Label\tUTM Zone Block\tEasting Block\tNorthing Block\tBlock Area (sq m)\tBlock Comments\tBlock Photos";
+			data = Session.park_site + "\t" + "which photos?" + "\t" + "What is Block Label?" + "\t" + Session.logs[0].utm_zone + "\t" + Session.logs[0].easting + "\t" + Session.logs[0].northing + "\t" + "What is Block Area? " + "\t" + "What are Block Comments?" + "\t" + "What are Block Photos?"
+			emailAttachments.push("base64:blockInformation.csv//" + btoa(header+"\n"+data));
+
+			//construct General Survey sheet
+			header = 
+			"Study Area Name" + "\t" +
+			"Block Label" + "\t" +
+			"Date" + "\t" +	
+			"Start Time" + "\t" +
+			"End Time" + "\t" +
+			"Viewing Situation (river, estuary or terrestrial)" + "\t" +
+			"Stationary or Mobile" + "\t" +
+			"Zone type" + "\t" +
+			"Comment" + "\t" +
+			"Surveyor" + "\t" +
+			"Cloud cover" + "\t" +
+			"Precipiation" + "\t" +
+			"Wind" + "\t" +
+			"Wind direction" + "\t" +
+			"Temperature (C )" + "\t" +
+			"Humidity" + "\t" +
+			"Visibility" + "\t" +
+			"Reason for obscured visibility" + "\t" +
+			"Noise" + "\t" +
+			"Fish abundance" + "\t" +
+			"Berry abundance" + "\t" +
+			"Green vegetation abundance" + "\t" +
+			"Other" + "\t" +
+			"Comment (fish species or other)" + "\t" +
+			"Monitoring method (focal or scan)" + "\t" +
+			"Bear id" + "\t" +
+			"zone" + "\t" +
+			"Species" + "\t" +
+			"Count" + "\t" +
+			"Size" + "\t" +
+			"Sex" + "\t" +
+			"Age" + "\t" +
+			"Marks" + "\t" +
+			"Colour" + "\t" +
+			"Time" + "\t" +
+			"Paw measurement? (Y or N)" + "\t" +
+			"Number of cubs" + "\t" +
+			"Age of cubs" + "\t" +
+			"Cub fur colour" + "\t" +
+			"Bear comments" + "\t" +
+			"Habituation to humans" + "\t" +
+			"Feeding/foraging" + "\t" +
+			"Non-interactive" + "\t" +
+			"Bear-bear interactions" + "\t" +
+			"Bear-human interactions" + "\t" +
+			"zone 1b" + "\t" +
+			"zone 1a" + "\t" +
+			"zone 4+" + "\t" +
+			"zone 7a" + "\t" +
+			"zone 7b" + "\t" +
+			"zone 1+" + "\t" +
+			"zone 1" + "\t" +
+			"zone 4" + "\t" +
+			"zone 7" + "\t" +
+			"zone 7+" + "\t" +
+			"zone 2+" + "\t" +
+			"zone 2" + "\t" +
+			"zone 5" + "\t" +
+			"zone 8" + "\t" +
+			"zone 8+" + "\t" +
+			"zone 3+" + "\t" +
+			"zone 3" + "\t" +
+			"zone 6" + "\t" +
+			"zone 9" + "\t" +
+			"zone 9+" + "\t" +
+			"zone 3b" + "\t" +
+			"zone 3a" + "\t" +
+			"zone 6+" + "\t" +
+			"zone 9a" + "\t" +
+			"zone 9b" + "\t" +
+			"aircraft" + "\t" +
+			"ATC" + "\t" +
+			"motorized boat" + "\t" +
+			"vehicle" + "\t" +
+			"official or agency boat" + "\t" +
+			"angling" + "\t" +
+			"kayak/canoeing" + "\t" +
+			"hike/walking" + "\t" +
+			"running" + "\t" +
+			"picnic" + "\t" +
+			"photography" + "\t" +
+			"playing" + "\t" +
+			"wildlife viewing" + "\t" +
+			"biking" + "\t" +
+			"unobservable" + "\t" +
+			"other" + "\t" +
+			"human behaviour (worst if in a group)" + "\t" +
+			"human behaviour comment" + "\t" +
+			"Survey Observation Photos" + "\t" +
+			"General Comments";
+			
+			data = "";
+			for (var i = 0; i<Session.logs.length;i++){
+				with (Session.logs[i]){
+					surveyObservationPhoto = "";
+					blockPhoto = "";
+					studyAreaPhoto = "";
+					
+					if (picture_data != 'null'){
+							pictureAttachments.push("base64:picture"+i+".jpg//" + picture_data);
+					}	
+					data = data +				
+					Session.park_site + "\t" +
+					"What is Block Label?" + "\t" +
+					"05 June 2016" + "\t" +	
+					Session.start_time + "\t" +
+					Session.end_time + "\t" +
+					Session.viewing_area + "\t" +
+					Session.stationary + "\t" +
+					"What is Zone type?" + "\t" +
+					comment + "\t" +
+					Session.observers + "\t" +
+					cloud_cover + "\t" +
+					precipitation + "\t" +
+					wind + "\t" +
+					wind_direction + "\t" +
+					temperature + "\t" +
+					humididty + "\t" + //TYPO in SQL
+					visibility + "\t" +
+					"How ?? Reason for obscured visibility" + "\t" +
+					noise_level + "\t" +
+					"Fish abundance" + "\t" +
+					"Berry abundance" + "\t" +
+					"Green vegetation abundance" + "\t" +
+					"Other" + "\t" +
+					"Comment (fish species or other)" + "\t" +
+					Session.observation_mode + "\t" +
+					bear + "\t" +
+					bear_zone + "\t" +
+					species + "\t" +
+					"Count" + "\t" +
+					"Size" + "\t" +
+					"Sex" + "\t" +
+					"Age" + "\t" +
+					"Marks" + "\t" +
+					"Colour" + "\t" +
+					timestamp + "\t" +
+					paw_measure + "\t" +
+					cubs + "\t" +
+					"Age of cubs" + "\t" +
+					cub_fur + "\t" +
+					"Bear comments" + "\t" +
+					"Habituation to humans" + "\t" +
+					"Feeding/foraging" + "\t" +
+					"Non-interactive" + "\t" +
+					"Bear-bear interactions" + "\t" +
+					"Bear-human interactions" + "\t" +
+					"zone 1b" + "\t" +
+					"zone 1a" + "\t" +
+					"zone 4+" + "\t" +
+					"zone 7a" + "\t" +
+					"zone 7b" + "\t" +
+					"zone 1+" + "\t" +
+					"zone 1" + "\t" +
+					"zone 4" + "\t" +
+					"zone 7" + "\t" +
+					"zone 7+" + "\t" +
+					"zone 2+" + "\t" +
+					"zone 2" + "\t" +
+					"zone 5" + "\t" +
+					"zone 8" + "\t" +
+					"zone 8+" + "\t" +
+					"zone 3+" + "\t" +
+					"zone 3" + "\t" +
+					"zone 6" + "\t" +
+					"zone 9" + "\t" +
+					"zone 9+" + "\t" +
+					"zone 3b" + "\t" +
+					"zone 3a" + "\t" +
+					"zone 6+" + "\t" +
+					"zone 9a" + "\t" +
+					"zone 9b" + "\t" +
+					"aircraft" + "\t" +
+					"ATC" + "\t" +
+					"motorized boat" + "\t" +
+					"vehicle" + "\t" +
+					"official or agency boat" + "\t" +
+					"angling" + "\t" +
+					"kayak/canoeing" + "\t" +
+					"hike/walking" + "\t" +
+					"running" + "\t" +
+					"picnic" + "\t" +
+					"photography" + "\t" +
+					"playing" + "\t" +
+					"wildlife viewing" + "\t" +
+					"biking" + "\t" +
+					"unobservable" + "\t" +
+					"other" + "\t" +
+					"human behaviour (worst if in a group)" + "\t" +
+					"human behaviour comment" + "\t" +
+					"Survey Observation Photos" + "\t" +
+					"General Comments";
+				}
+				data = data + "\n";
+			}
+			emailAttachments.push("base64:generalSurvey.csv//" + btoa(header+"\n"+data));
+			
+			emailAttachments.concat(pictureAttachments);
+			sendEmail(id, emailAttachments);
+			sendEmail(id, emailAttachments);
+
+		}
+/*
+		var getPictures = function(sessionID){
+			//Add to pictures attachment array
+			var query = "SELECT log_id, picture_data FROM logs WHERE session_id = "+sessionID+" AND picture_data IS NOT NULL";
+			$cordovaSQLite.execute(db, query).then(
+				function(result) {
+					$scope.selectResult += "...Select successful! Rows length = " + result.rows.length;
+					if (result.rows.length > 0) {
+						$scope.fileName = "Select successful!";
+						var i=0;
+						while(i < result.rows.length){
+							$scope.selectResult += "...log_id: "+result.rows.item(i).log_id;
+							emailAttachments.push("base64:picture"+i+".jpg//" + result.rows.item(i).picture_data);
+							i++;
+						}
+					}					
+					$scope.pictureAttachmentsStatus = 1;
+				},
+				function(error) {
+					//TODO - GIVE USER FEEDBACK
+					console.log("Error on loading pictures: " + error.message);	
+					$scope.pictureAttachments = 2;
+				}
+			);
+		}
+*/
+	
+		//Send (draft) email
+		var sendEmail = function(sessionID, emailAttachments){
+			console.log("...attempting to send email with " + emailAttachments.length + " attachments");
+			try{
+				$cordovaEmailComposer.isAvailable().then(function() {
+					$scope.mailProgress = "...Email is available";
+					var email = {
+						//TODO - set proper email & mail contents
+						to: 'cobbsworth@outlook.com',
+						cc: '',
+						attachments: emailAttachments,
+						subject: 'Cordova Email',
+						body: '',
+						isHtml: true
+					};
+
+					$cordovaEmailComposer.open(email).then(null, function () {
+					   //$scope.mailProgress = "...Email Cancelled";
+					});
+				}, function () {
+				   $scope.mailProgress = "...Email is unavailable";
+				});
+			} catch (exception){
+				$scope.mailProgress = exception.name + " ::: " + exception.message;
+			}
+		}
+
+		var attachCSVs = function(emailAttachments){
+
+			var csvContents;
+
+			csvContents = btoa($scope.siteIncidentalObservationsHeader + "\n" + $scope.siteIncidentalObservationsData);
+			emailAttachments.push('base64:SiteIncidentalObservations.csv//'+csvContents);
+		
+			csvContents = btoa($scope.generalSurveyHeader + "\n" + $scope.generalSurveyData);
+			emailAttachments.push('base64:GeneralSurvey.csv//'+csvContents);
+
+			csvContents = btoa($scope.blockInformationHeader + "\n" + $scope.blockInformationData);
+			emailAttachments.push('base64:blockInformation.csv//'+csvContents);
+
+			csvContents = btoa($scope.projectInformationHeader + "\n" + $scope.projectInformationData);
+			console.log("csvContents: "+$scope.projectInformationHeader + "\n" + $scope.projectInformationData);
+			emailAttachments.push('base64:ProjectInformation.csv//'+csvContents);
+		}
+		
+
+        
 	}
 });
