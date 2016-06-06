@@ -21,6 +21,7 @@ angular.module('app.services')
         resting: '',
 		logs: [],
 		pictures: [],
+		foodSources: [],
 		ready: ''
     };
 
@@ -76,14 +77,11 @@ angular.module('app.services')
     }
     
 	Session.load = function(id){
-		console.log("getLogs function activated!");
 		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [id])
         .then(
             function(result) {
-            	console.log("reading sessions... Count: "+result.rows.length);
             	if (result.rows.length > 0) {
 					with(result.rows.item(0)){
-						console.log("We're looking at session id: "+session_id);
 						Session.id = session_id;
 						Session.firstName = observers; //TDL - why are we storing firstname/lastname as a single field?
 						Session.lastName = '';
@@ -96,12 +94,16 @@ angular.module('app.services')
 						Session.zoneSchema = zone_type;
 						Session.comment = zone_comment;
 						Session.observationMode = observation_mode;
-						Session.start_time = start_time;
+						Session.start_time = new Date(start_time).toLocaleTimeString();
+						console.log("Session Start Time: " + Session.start_time);
+						Session.start_date = new Date(start_time).toLocaleDateString();
+						console.log("Session Start Date: " + Session.start_date); 
 						Session.hr = '';
 						Session.min = '';
 						Session.active = '';
 						Session.resting = '';
 						Session.loadLogs();
+						Session.loadFoodSources();
 					}
                 }else{
                 	console.log("No sessions found")
@@ -112,15 +114,33 @@ angular.module('app.services')
             }
         );
 	}
-		
+	
+	Session.loadFoodSources = function() {
+		Session.foodSources = [];
+		$cordovaSQLite.execute(db, 'SELECT * FROM food_sources WHERE session_id = (?)', [Session.id])
+        .then(
+            function(result) {
+				if (result.rows.length > 0) {
+                	for (var i = 0; i < result.rows.length; i++){
+						Session.foodSources.push(result.rows.item(i));	
+	        		}
+					console.log("Food sources added to session object");
+                }else{
+                	console.log("No logs for this session")
+                }
+            },
+            function(error) {
+                alert("Error on loading: " + error.message);
+            }
+        );
+	}
+	
 	Session.loadLogs = function(){
 		Session.logs = [];
 		
 		$cordovaSQLite.execute(db, 'SELECT * FROM logs WHERE session_id = (?)', [Session.id])
         .then(
             function(result) {
-            	Session.logs = [];
-				console.log("reading session logs... Count: "+result.rows.length);
                 if (result.rows.length > 0) {
                 	for (var i = 0; i < result.rows.length; i++){
 						Session.logs.push(result.rows.item(i));	
@@ -132,7 +152,7 @@ angular.module('app.services')
                 }
             },
             function(error) {
-                $scope.selectResult = "Error on loading: " + error.message;
+                alert("Error on loading: " + error.message);
             }
         );
 	}
