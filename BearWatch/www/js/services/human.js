@@ -34,7 +34,7 @@ angular.module('app.services')
             'INSERT INTO logs '
             + '(timestamp, session_id, human_count, motorized_name, motorized_action, motorized_desc, human_type, human_other, human_behavior,'
             + ' comment_type, comment, utm_zone, northing, easting)'
-            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?. ?, ?)', 
+            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
             [new Date(), Session.id, JSON.stringify(Human.zoneMatrix), Human.motoType, Human.motoAction, Human.motoDesc, 
             JSON.stringify(Human.nonMoto), Human.nonMotoOther, Human.behavior, 'Human Comment', Human.comment, GPS.utmZone, GPS.northing, GPS.easting])
         .then(function(result) {
