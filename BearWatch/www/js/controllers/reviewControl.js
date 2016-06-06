@@ -6,6 +6,11 @@ angular.module('app.controllers')
 	//show/hide boolean for session list and session
 	$scope.showList = true;
 
+	//pie chart labels
+	$scope.ff_labels = ["Pursuit for Food", "Green Vegetation", "Berries", "Human Food", "Fishing"];
+	$scope.ni_labels = ["Loafing/Resting", "Sleeping", "Walking", "Running"];
+	$scope.bbi_labels = ["Alert/Vigilance", "Playing", "Fighting", "Defense"];
+
 	//function to populate sessions list
 	$scope.sessionList = [];
 	$scope.$on('$ionicView.enter', function() {
@@ -72,65 +77,49 @@ angular.module('app.controllers')
 	        					for(var j = 0; j < bear.behaviour.length; j++){
 	        						//get the behavior and add to total at end time
 	        						var behaviour = angular.fromJson(bear.behaviour[j]);
-	        						console.log(behaviour);
 	        						if(behaviour.endTime != ''){
 	        							var start = new Date(behaviour.time);
 	        							var end = new Date(behaviour.endTime);
 	        							var total = (end - start);
-	        							console.log(total);
-	        							console.log(behaviour.description);
 	        							switch(behaviour.description){
 	        								case "Pursuit for food":
 	        									fp_total += total;
-	        									console.log("Food Pursuit Update + " + total + ", total: " + fp_total);
 	        									break;
 	        								case "Green Vegetation":
 	        									gVeg_total += total;
-	        									console.log("Green Vegetation Update + " + total + ", total: " + gVeg_total);
 	        									break;
 	        								case "Berries":
 	        									berries_total += total;
-	        									console.log("Berries Update + " + total + ", total: " + berries_total);
 	        									break;
 	        								case "Human Food":
 	        									hFood_total += total;
-	        									console.log("Human Food Update + " + total + ", total: " + hFood_total);
 	        									break;
 	        								case "Fishing":
 	        									fishn_total += total;
-	        									console.log("Fishing Update + " + total + ", total: " + fishn_total);
 	        									break;
 	        								case "Loafing/Resting":
 	        									rest_total += total;
-	        									//console.log("Green Vegetation Update + " + total + ", total: " + fp_total));
 	        									break;
 	        								case "Sleeping":
 	        									sleep_total += total;
-	        									//console.log("Green Vegetation Update + " + total + ", total: " + fp_total));
 	        									break;
 	        								case "Walking":
 	        									walk_total += total;
-	        									//console.log("Green Vegetation Update + " + total);
 	        									break;
 	        								case "Running":
 	        									run_total += total;
-	        									//console.log("Green Vegetation Update + " + total);
 	        									break;
 	        								case "Alert/Vigilance":
 	        									alert_total += total;
-	        									console.log("Alert/Vigilance Update + " + total);
 	        									break;
 	        								case "Playing":
 	        									play_total += total;
-	        									//console.log("Green Vegetation Update + " + total);
 	        									break;
 	        								case "Fighting":
 	        									fight_total += total;
-	        									//console.log("Green Vegetation Update + " + total);
 	        									break;
 	        								case "Defense":
 	        									defend_total += total;
-	        									//console.log("Green Vegetation Update + " + total);
 	        									break;
 	        							}
 		        					}
@@ -153,14 +142,8 @@ angular.module('app.controllers')
 		$scope.showList = !$scope.showList;
 	};
 
-
-	//pie chart function
-	$scope.ff_labels = ["Pursuit for Food", "Green Vegetation", "Berries", "Human Food", "Fishing"];
-	$scope.ni_labels = ["Loafing/Resting", "Sleeping", "Walking", "Running"];
-	$scope.bbi_labels = ["Alert/Vigilance", "Playing", "Fighting", "Defense"];
-
-	$scope.type = 'Pie';
 	//function to toggle graph display
+	$scope.type = 'Pie';
 	$scope.toggleGraph = function () {
     	$scope.type = $scope.type === 'Pie' ? 'PolarArea' : 'Pie';
     };

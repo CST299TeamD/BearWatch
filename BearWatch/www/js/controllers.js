@@ -14,7 +14,7 @@ angular.module('app.controllers', [])
          if(res) {
             console.log('Session ending!');
             $cordovaSQLite.execute(db, 
-               'UPDATE sessions SET finish_time = ? WHERE session_id = ?', [new Date().toLocaleTimeString(), Session.id])
+               'UPDATE sessions SET finish_time = ? WHERE session_id = ?', [new Date(), Session.id])
             .then(function(result) {
                console.log("Session finish and save success");
                console.log(result);
