@@ -18,7 +18,10 @@ angular.module('app.services')
         hr: '',
         min: '',
         active: '',
-        resting: ''
+        resting: '',
+		logs: [],
+		pictures: [],
+		ready: ''
     };
 
     //function to reset session
@@ -72,7 +75,70 @@ angular.module('app.services')
         return defer.promise;
     }
     
+	Session.load = function(id){
+		console.log("getLogs function activated!");
+		$cordovaSQLite.execute(db, 'SELECT * FROM sessions WHERE session_id = (?)', [id])
+        .then(
+            function(result) {
+            	console.log("reading sessions... Count: "+result.rows.length);
+            	if (result.rows.length > 0) {
+					with(result.rows.item(0)){
+						console.log("We're looking at session id: "+session_id);
+						Session.id = session_id;
+						Session.firstName = observers; //TDL - why are we storing firstname/lastname as a single field?
+						Session.lastName = '';
+						Session.nameResult = [];
+						Session.park = park;
+						Session.park_site = '';
+						Session.viewingArea = protocol;
+						Session.viewingAreaOther = '';
+						Session.stationary = stationary;
+						Session.zoneSchema = zone_type;
+						Session.comment = zone_comment;
+						Session.observationMode = observation_mode;
+						Session.start_time = start_time;
+						Session.hr = '';
+						Session.min = '';
+						Session.active = '';
+						Session.resting = '';
+						Session.loadLogs();
+					}
+                }else{
+                	console.log("No sessions found")
+                }
+            },
+            function(error) {
+                $scope.selectResult = "Error on loading: " + error.message;
+            }
+        );
+	}
+		
+	Session.loadLogs = function(){
+		Session.logs = [];
+		
+		$cordovaSQLite.execute(db, 'SELECT * FROM logs WHERE session_id = (?)', [Session.id])
+        .then(
+            function(result) {
+            	Session.logs = [];
+				console.log("reading session logs... Count: "+result.rows.length);
+                if (result.rows.length > 0) {
+                	for (var i = 0; i < result.rows.length; i++){
+						Session.logs.push(result.rows.item(i));	
+	        		}
+					console.log("Logs added to session object");
+					Session.ready = 1;
+                }else{
+                	console.log("No logs for this session")
+                }
+            },
+            function(error) {
+                $scope.selectResult = "Error on loading: " + error.message;
+            }
+        );
+	}
+	
     //return session object
     return Session;
 
+	
 });
