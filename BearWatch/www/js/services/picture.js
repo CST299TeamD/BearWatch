@@ -1,6 +1,6 @@
 angular.module('app.services')
 
-.factory('Picture', function($cordovaCamera, $cordovaFile, $cordovaSQLite, Session, $q, BearList){
+.factory('Picture', function($cordovaCamera, $cordovaFile, $cordovaSQLite, Session, $q, BearList, GPS){
 	
 	//keep track of session pictures
 	var count = 0;

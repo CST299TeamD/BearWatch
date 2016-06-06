@@ -30,24 +30,19 @@ angular.module('app.services')
 
 	//function to save human state in logs table
 	Human.save = function(){
-		//get gps coordinates
-        var utm = GPS.utmZone;
-        var east = GPS.easting;
-        var north = GPS.northing;
-
 		$cordovaSQLite.execute(db, 
             'INSERT INTO logs '
-            + '(timestamp, session_id, human_count, motorized_name, motorized_action, motorized_desc, human_type, human_other, human_behavior, comment_type, comment, utm_zone, northing, easting)'
-            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?. ?, ?)', 
+            + '(timestamp, session_id, human_count, motorized_name, motorized_action, motorized_desc, human_type, human_other, human_behavior,'
+            + ' comment_type, comment, utm_zone, northing, easting)'
+            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
             [new Date(), Session.id, JSON.stringify(Human.zoneMatrix), Human.motoType, Human.motoAction, Human.motoDesc, 
-            JSON.stringify(Human.nonMoto), Human.nonMotoOther, Human.behavior, 'Human Comment', Human.comment, utm, north, east])
+            JSON.stringify(Human.nonMoto), Human.nonMotoOther, Human.behavior, 'Human Comment', Human.comment, GPS.utmZone, GPS.northing, GPS.easting])
         .then(function(result) {
             console.log("Human save success" + result.insertId);
             Human.comment = '';
         	Human.behavior = '';
         }, function(error) {
             console.log("Error on saving Human: " + error.message);
-            console.log(error);
         });
 	};
 

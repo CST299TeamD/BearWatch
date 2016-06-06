@@ -1,6 +1,6 @@
 angular.module('app.services')
 
-.factory('Comment', function($cordovaSQLite, Session){
+.factory('Comment', function($cordovaSQLite, Session, GPS){
     
     //count/id commments
     var count = 0;
