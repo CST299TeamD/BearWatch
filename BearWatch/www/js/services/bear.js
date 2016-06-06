@@ -2,7 +2,7 @@ angular.module('app.services')
 
 
 //Bear Object
-.factory('Bear', function($cordovaSQLite, $q, GPS, BearList, FBearSet){
+.factory('Bear', function($cordovaSQLite, $q, GPS, BearList, FBearSet, Session){
     var Bear = {
         index: -1,
         id: -1,
@@ -31,6 +31,25 @@ angular.module('app.services')
          
     //reset the bear factory
     Bear.reset = function(){
+         
+         for(var i = 0; i < BearList.add.length ;i++) {
+            for( var j = 0; j < BearList.add[i].behaviour.length; j++){
+                try {
+                    if(BearList.add[i].behaviour[j].endTime == '') {
+                        BearList.add[i].behaviour[j].endTime = new Date();
+                        try{
+                            Bear.behaviour[j].endTime = new Date();
+                        } catch(er){}
+                    }
+                } catch(err) {
+                    console.log("No ongoing behaviour");
+                }
+         
+            }
+         }
+         Bear.Log(Session.id);
+         
+         
          Bear.index = -1;
          Bear.id = -1;
          Bear.isFocal = '';

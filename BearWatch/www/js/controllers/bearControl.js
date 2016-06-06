@@ -451,7 +451,7 @@ angular.module('app.controllers')
                     .then(
                           function(result){
                             $scope.Bear.behaviour.splice(index, 1);
-                          console.log("index " + index + " removed");
+                            console.log("index " + index + " removed");
                           },
                           function(error){
                             console.log("error in geting rid of behaviour");
