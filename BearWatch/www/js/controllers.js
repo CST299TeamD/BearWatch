@@ -1,6 +1,6 @@
 angular.module('app.controllers', [])
 
-.controller('dashCtrl', function($scope, $ionicPopup, $state, $location, $cordovaSQLite, $ionicHistory, Session, Comment, Enviro, Human, Picture, Timer) {
+.controller('dashCtrl', function($scope, $ionicPopup, $state, $location, $cordovaSQLite, $ionicHistory, Session, Comment, Enviro, Human, Picture, Timer, Bear) {
 
    $scope.showConfirm = function() {
       var confirmPopup = $ionicPopup
@@ -14,13 +14,14 @@ angular.module('app.controllers', [])
          if(res) {
             console.log('Session ending!');
             $cordovaSQLite.execute(db, 
-               'UPDATE sessions SET finish_time = ? WHERE session_id = ?', [new Date().toLocaleTimeString(), Session.id])
+               'UPDATE sessions SET finish_time = ? WHERE session_id = ?', [new Date(), Session.id])
             .then(function(result) {
                console.log("Session finish and save success");
                console.log(result);
                $location.path("/ReviewList");
 
                //clean application
+               Bear.reset();
                Session.reset();
                Comment.reset();
                Enviro.reset();

@@ -246,7 +246,7 @@ angular.module('app.controllers')
 })
 
 
-.controller('bearInfoCtrl', function($scope, Bear, BearList, Session) {
+.controller('bearInfoCtrl', function($scope, Bear, BearList, Session, $ionicScrollDelegate, $q) {
             
             //get all the factory objects
             $scope.Session = Session;
@@ -269,6 +269,13 @@ angular.module('app.controllers')
             $scope.hBinteraction = hBinteraction;
             $scope.habituationLevel = habituationLevel;
 
+            $scope.showHelp = false;
+            
+            //scroll top function
+            $scope.scrollDown = function(){
+                $scope.showHelp = !($scope.showHelp);
+                $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom(true);
+            }
             
             //starting the fishing activity
             $scope.onFishing = function(){
@@ -276,7 +283,10 @@ angular.module('app.controllers')
                 //turn off other feeding and foraging if running
                 for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
                     if($scope.Bear.behaviour[n].category == "Feeding or Foraging") {
-                            $scope.Bear.behaviour.splice(n, 1);
+                        $scope.Bear.behaviour[n].endTime = new Date();
+                        //insert into log table
+                        Bear.Log($scope.Session.id)
+                        $scope.Bear.behaviour.splice(n, 1);
                     }
                 }
             
@@ -285,7 +295,7 @@ angular.module('app.controllers')
             
                 //if fishing is turned on add fishing session to fishing array
                 if($scope.Bear.isFishing == true) {
-                    var curTime = new Date().toLocaleTimeString();
+                    var curTime = new Date();
                     $scope.Bear.fishingMethod = '';
                     $scope.Bear.fishingSuboption = '';
                     $scope.Bear.tally = 0;
@@ -304,7 +314,7 @@ angular.module('app.controllers')
             $scope.updateFish = function(fishingMethod, fishingSuboption, tally){
             
                 //get now timestamp
-                var curTime = new Date().toLocaleTimeString();
+                var curTime = new Date();
             
                 //update fishing array
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].method = fishingMethod;
@@ -330,7 +340,7 @@ angular.module('app.controllers')
             $scope.addTally = function(fishingMethod, fishingSuboption, tally){
             
                 //get new timestamp
-                var curTime = new Date().toLocaleTimeString();
+                var curTime = new Date();
             
                 //update the fishing session
                 $scope.Bear.tally += 1;
@@ -347,7 +357,7 @@ angular.module('app.controllers')
             $scope.removeTally = function(fishingMethod, fishingSuboption, tally){
             
                 //get the new timestamp
-                var curTime = new Date().toLocaleTimeString();
+                var curTime = new Date();
             
                 //update the fishing session
                 $scope.Bear.fishing[$scope.Bear.fishing.length - 1].method = fishingMethod;
@@ -370,7 +380,7 @@ angular.module('app.controllers')
             $scope.addBehaviour = function(type, desc){
           
                 //get the timestamp
-                var curTime = new Date().toLocaleTimeString();
+                var curTime = new Date();
                 var updated = false;
             
                 //turn off ongoing fishing session
@@ -394,9 +404,10 @@ angular.module('app.controllers')
                             index: Bear.behaviour.length,
                             category: type,
                             description: desc,
-                            time: curTime});
+                            time: curTime,
+                            endTime: ''});
                 }
-            
+
                 //clear the other filed
                 if(type == "Other"){
                     $scope.other = '';
@@ -412,23 +423,40 @@ angular.module('app.controllers')
             
                 //get the index of behavior to be removed from the behaviour list
                 var index = -1;
-                if(cat == "Other"){
-                    index = ind;
-                }else {
+
+                for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
+                    console.log("Passed Desc " + desc + " and array desc "+ $scope.Bear.behaviour[n].description);
+                    if($scope.Bear.behaviour[n].category == cat && $scope.Bear.behaviour[n].description == desc) {
+                        index = n;
+                    }
+                }
+            
+                //if unable to find index drop descreption
+                if(index == -1){
                     for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
+                        console.log("Passed Desc " + desc + " and array desc "+ $scope.Bear.behaviour[n].description);
                         if($scope.Bear.behaviour[n].category == cat) {
                             index = n;
-                            break;
                         }
                     }
                 }
+            
                 //Remove behaviour if index found
                 if(index >= 0){
-            
-                    $scope.Bear.behaviour.splice(index, 1);
-            
+                    //update end time
+                    $scope.Bear.behaviour[index].endTime = new Date();
+                    
                     //insert into log table
-                    Bear.Log($scope.Session.id);
+                    Bear.Log($scope.Session.id)
+                    .then(
+                          function(result){
+                            $scope.Bear.behaviour.splice(index, 1);
+                          console.log("index " + index + " removed");
+                          },
+                          function(error){
+                            console.log("error in geting rid of behaviour");
+                          }
+                    );
                 }
             }
 })

@@ -1,6 +1,6 @@
 angular.module('app.services')
 
-.factory('Enviro', function($cordovaSQLite, $q){
+.factory('Enviro', function($cordovaSQLite, $q, GPS){
     
     //Object properties
     var Enviro =  { 
@@ -115,10 +115,11 @@ angular.module('app.services')
             $cordovaSQLite.execute(db, 
                 'INSERT INTO logs '
                 + '(timestamp, water_body, water_level, water_flow, water_clarity, cloud_cover, precipitation, wind, wind_direction,'
-                + ' temperature, humididty, visibility, obstruction, obstr_desc, noise_level, session_id)'
-                + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-                [new Date().toLocaleTimeString(), Enviro.waterBody, Enviro.waterLevel, Enviro.waterFlow, Enviro.waterClarity, Enviro.cloudCover, Enviro.precipitation, 
-                Enviro.wind, Enviro.windDirection, Enviro.temp, Enviro.humid, Enviro.visibility, Enviro.obscuredReason, Enviro.obscuredOther, Enviro.noiseLevel, id])
+                + ' temperature, humididty, visibility, obstruction, obstr_desc, noise_level, session_id, utm_zone, northing, easting)'
+                + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+                [new Date(), Enviro.waterBody, Enviro.waterLevel, Enviro.waterFlow, Enviro.waterClarity, Enviro.cloudCover, Enviro.precipitation, 
+                Enviro.wind, Enviro.windDirection, Enviro.temp, Enviro.humid, Enviro.visibility, Enviro.obscuredReason, Enviro.obscuredOther, 
+                Enviro.noiseLevel, id, GPS.utmZone, GPS.northing, GPS.easting])
             .then(function(result) {
                 console.log("Enviro save success" + result.insertId);
             }, function(error) {

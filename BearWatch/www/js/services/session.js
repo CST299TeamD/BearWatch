@@ -63,7 +63,7 @@ angular.module('app.services')
             + '(observers, park, park_site, protocol, stationary, zone_type, zone_comment, start_time, observation_mode)'
             + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
             [Session.nameResult.toString(), Session.park, Session.site, protocol, Session.stationary, Session.zoneSchema, Session.comment, 
-            time.toLocaleTimeString(), Session.observationMode])
+            time, Session.observationMode])
         .then(function(result) {
             console.log("Session save success" + result.insertId);
             defer.resolve(result);            

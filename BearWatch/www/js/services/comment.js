@@ -23,13 +23,13 @@ angular.module('app.services')
     Comment.add = function(){
         
         //timestamp
-        var time = new Date().toLocaleTimeString();
+        var time = new Date();
 
         //create new comment
         count ++;
         var comment = {
             id: 'General-' + count,
-            timeStamp: time,
+            timeStamp: time.toLocaleTimeString(),
             text: Comment.text
         };
 
@@ -39,9 +39,9 @@ angular.module('app.services')
         //log comment in DB
         $cordovaSQLite.execute(db, 
             'INSERT INTO logs '
-            + '(timestamp, session_id, comment_type, comment)'
-            + ' VALUES (?, ?, ?, ?)', 
-            [time, Session.id, comment.id, comment.text])
+            + '(timestamp, session_id, comment_type, comment, utm_zone, northing, easting)'
+            + ' VALUES (?, ?, ?, ?, ?, ?, ?)', 
+            [time, Session.id, comment.id, comment.text, GPS.utmZone, GPS.northing, GPS.easting])
         .then(function(result) {
             console.log("Comment save success" + result.insertId);
         }, function(error) {

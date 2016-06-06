@@ -85,12 +85,11 @@
 	height: 10px;
 }
 
-/*color classes*/
+/*font classes*/
 
-.forest-green {
-	background-color: #339900;
+em,i{
+    font-style:italic;
 }
-
 /*improve sho/hide speed fix*/
 .ng-hide.ng-hide-animate{
     display: none !important;

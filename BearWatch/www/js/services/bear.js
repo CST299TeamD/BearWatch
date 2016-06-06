@@ -2,7 +2,7 @@ angular.module('app.services')
 
 
 //Bear Object
-.factory('Bear', function($cordovaSQLite){
+.factory('Bear', function($cordovaSQLite, $q, GPS, BearList, FBearSet){
     var Bear = {
         index: -1,
         id: -1,
@@ -28,28 +28,71 @@ angular.module('app.services')
         tally: 0,
         comment: ''
     };
-    
+         
+    //reset the bear factory
+    Bear.reset = function(){
+         Bear.index = -1;
+         Bear.id = -1;
+         Bear.isFocal = '';
+         Bear.name = '';
+         Bear.zone = '';
+         Bear.size = '';
+         Bear.age = '';
+         Bear.gender = '';
+         Bear.species = '';
+         Bear.markDescription = '';
+         Bear.furColour = '';
+         Bear.pawMeasured = false;
+         Bear.cubs = '';
+         Bear.accuracy = '';
+         Bear.cubFurColour = '';
+         Bear.cubAge = '';
+         Bear.behaviour = [];
+         Bear.isFishing = false;
+         Bear.fishing = [];
+         Bear.fishingMethod = '';
+         Bear.fishingSuboption = '';
+         Bear.tally = 0;
+         Bear.comment = '';
+         BearList.add = [];
+         FBearSet.isFocalPresent = '';
+         console.log("Bear reset");
+         
+    }
     //diffrent zones for locations
     Bear.Zones = [{name:"River", zones: ["1", "1+", "2", "2+", "3", "3+", "4", "5", "6", "7", "7+", "8", "8+", "9", "9+"]},
                        {name: "Estuary", zones: ["1", "1+", "2", "2+", "4", "5", "6", "7", "7+", "8", "8+", "9", "9+"]},
                        {name: "Terrestrial", zones: ["1", "1+", "1a", "1b", "2", "2+", "3", "3+", "3a", "3b", "4", "4+", "5", "6", "6+", "7", "7+", "7a", "7b", "8", "8+", "9", "9+", "9a", "9b"]}]
     
+         
     Bear.Log = function(sessionId){
         //get the time
-        var time = new Date().toLocaleTimeString();
+        var time = new Date();
         var bearlog = angular.toJson(Bear, false);
+        var defer = $q.defer();
+        
+        //get gps coordinates
+        var utm = GPS.utmZone;
+        var east = GPS.easting;
+        var north = GPS.northing;
+       
         $cordovaSQLite.execute(db,
                         'INSERT INTO logs '
-                        + '(timestamp, session_id, bear_id, bear)'
-                        + ' VALUES (?, ?, ?, ?)',
-                        [time, sessionId, Bear.id, bearlog])
+                        + '(timestamp, session_id, bear_id, bear, utm_zone, northing, easting)'
+                        + ' VALUES (?, ?, ?, ?, ?, ?, ?)',
+                        [time, sessionId, Bear.id, bearlog, utm, north, east])
         .then(function(result) {
             console.log("bear Logged with log id - " + result.insertId);
             console.log(Bear);
+            defer.resolve(result);
         }, function(error) {
             console.log("Error on saving comment: " + error.message);
+            defer.reject(error);
+              
         });
-     }
+         
+        return defer.promise;
+    }
     return Bear;
 })
 
