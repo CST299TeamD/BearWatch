@@ -1,8 +1,11 @@
 angular.module('app.controllers')
 
-.controller('homeCtrl', function($scope, $ionicPopup) {	
+.controller('homeCtrl', function($scope, $ionicPopup, $location, $ionicNavBarDelegate) {
 	//global debug var
 	$scope.debug = debug;
+    
+    //hide back button
+    $ionicNavBarDelegate.showBackButton(false);
 	
 	//Warn user if database cannot be created
     if(db_error == true){
