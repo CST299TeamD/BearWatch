@@ -49,10 +49,11 @@
                     <div class="row">
                         <div class="col col-center text-center">
                             <h2>Bear Behavior Log Statistics</h2>
+                            <p><em>Observations in minutes</em></p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col col-center text-right">
+                        <div class="col col-center text-center">
                              <a ng-click="toggleGraph()" class="button button-positive icon ion-arrow-swap">&nbsp; Change display</a>                       
                         </div>
                     </div>
@@ -61,12 +62,20 @@
                         <div class="col col-33 text-center">
                             <h3>Feeding/Foraging</h3>
                             <div class="item item-text-wrap">
-                                <canvas id="base" class="chart-base" chart-type="type" chart-data="data" chart-labels="labels" chart-legend="true"></canvas>
+                                <canvas id="base" class="chart-base" chart-type="type" chart-data="ff_data" chart-labels="ff_labels" chart-legend="true"></canvas>
                             </div>
                         </div>
                         <div class="col col-33">
+                            <h3>Non-Interactive</h3>
+                            <div class="item item-text-wrap">
+                                <canvas id="base" class="chart-base" chart-type="type" chart-data="ni_data" chart-labels="ni_labels" chart-legend="true"></canvas>
+                            </div>
                         </div>
                         <div class="col col-33">
+                            <h3>Bear-bear Interactive</h3>
+                            <div class="item item-text-wrap">
+                                <canvas id="base" class="chart-base" chart-type="type" chart-data="bbi_data" chart-labels="bbi_labels" chart-legend="true"></canvas>
+                            </div>
                         </div>
                     </div>
                     <div class="spacer spacer-40"></div>

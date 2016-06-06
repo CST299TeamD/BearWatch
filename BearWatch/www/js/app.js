@@ -3,7 +3,7 @@
 //global variables
 var db;
 var db_error = false;
-var db_drop = true;
+var db_drop = false;
 
 //debugging
 var debug = false;
