@@ -402,26 +402,84 @@ angular.module('app.controllers')
 			"General Comments";
 			
 			data = "";
+			var fishAbundance, berryAbundance, greenVegetationAbundance, other = '';
+			for (var i = 0; i<Session.foodSources.length;i++){
+				fishAbundance, berryAbundance, greenVegetationAbundance, other = '';
+				with (Session.foodSources[i]){
+					console.log("FOOD SOURCE: "+food_source + " " + availability);
+					switch (food_source){
+							case "Fish":
+								fishAbundance = availability;
+								break;
+							case "Berries":
+								berryAbundance = availability;
+								break;
+							case "Green Vegetation":
+								greenVegetationAbundance = availability;
+								break;
+							default:
+								other = availability;
+					}
+
+					data = data +				
+						Session.park_site + "\t" +
+						"What is Block Label?" + "\t" +
+						Session.start_date + "\t" +	
+						Session.start_time + "\t" +
+						Session.end_time + "\t" +
+						Session.viewing_area + "\t" +
+						Session.stationary + "\t" +
+						Session.zoneSchema + "\t" +
+						Session.comment + "\t" +
+						Session.firstName + "\t" +
+						"\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" +
+						fishAbundance + "\t" +
+						berryAbundance + "\t" +
+						greenVegetationAbundance + "\t" +
+						other + "\t" +
+						comment + "\t" +
+						Session.observationMode + "\t" + "\t" + "\t" + "\t" +
+						"0"; //count
+				
+				}
+				
+				data = data + "\n";
+			}
+			
 			for (var i = 0; i<Session.logs.length;i++){
 				with (Session.logs[i]){
 					surveyObservationPhoto = "";
 					blockPhoto = "";
 					studyAreaPhoto = "";
-					
+										
 					if (picture_data != 'null'){
 							pictureAttachments.push("base64:picture"+i+".jpg//" + picture_data);
-					}	
+							//logic to assign picture name to a "photo" field
+					}
+
+					zoneComment = "";
+					foodComment = "";
+					humanComment = "";
+					generalComment = "";
+					
+					if (comment != null)
+						console.log("Comment type: "+comment_type);
+					
+					if (comment_type != 'null'){
+							//logic to assign comment type
+					}
+					
 					data = data +				
 					Session.park_site + "\t" +
 					"What is Block Label?" + "\t" +
-					"05 June 2016" + "\t" +	
+					Session.start_date + "\t" +	
 					Session.start_time + "\t" +
 					Session.end_time + "\t" +
 					Session.viewing_area + "\t" +
 					Session.stationary + "\t" +
-					"What is Zone type?" + "\t" +
-					comment + "\t" +
-					Session.observers + "\t" +
+					Session.zoneSchema + "\t" +
+					Session.comment + "\t" +
+					Session.firstName + "\t" +
 					cloud_cover + "\t" +
 					precipitation + "\t" +
 					wind + "\t" +
@@ -429,16 +487,11 @@ angular.module('app.controllers')
 					temperature + "\t" +
 					humididty + "\t" + //TYPO in SQL
 					visibility + "\t" +
-					"How ?? Reason for obscured visibility" + "\t" +
-					noise_level + "\t" +
-					"Fish abundance" + "\t" +
-					"Berry abundance" + "\t" +
-					"Green vegetation abundance" + "\t" +
-					"Other" + "\t" +
-					"Comment (fish species or other)" + "\t" +
+					obstruction + "\t" +
+					noise_level + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" +
 					Session.observation_mode + "\t" +
 					bear + "\t" +
-					bear_zone + "\t" +
+					"bear zone?" + "\t" +
 					species + "\t" +
 					"Count" + "\t" +
 					"Size" + "\t" +
@@ -446,11 +499,11 @@ angular.module('app.controllers')
 					"Age" + "\t" +
 					"Marks" + "\t" +
 					"Colour" + "\t" +
-					timestamp + "\t" +
-					paw_measure + "\t" +
-					cubs + "\t" +
+					new Date(timestamp).toLocaleTimeString() + "\t" +
+					"paw measure" + "\t" +
+					"cubs" + "\t" +
 					"Age of cubs" + "\t" +
-					cub_fur + "\t" +
+					"cub_fur" + "\t" +
 					"Bear comments" + "\t" +
 					"Habituation to humans" + "\t" +
 					"Feeding/foraging" + "\t" +
@@ -499,16 +552,15 @@ angular.module('app.controllers')
 					"unobservable" + "\t" +
 					"other" + "\t" +
 					"human behaviour (worst if in a group)" + "\t" +
-					"human behaviour comment" + "\t" +
+					humanComment + "\t" +
 					"Survey Observation Photos" + "\t" +
-					"General Comments";
+					generalComment;
 				}
 				data = data + "\n";
 			}
 			emailAttachments.push("base64:generalSurvey.csv//" + btoa(header+"\n"+data));
 			
 			emailAttachments.concat(pictureAttachments);
-			sendEmail(id, emailAttachments);
 			sendEmail(id, emailAttachments);
 
 		}
