@@ -13,6 +13,21 @@
 	color: #FFFFFF;
 }
 
+.help{
+	color: #43cee6;
+	font-size: 32px;
+}
+.help:active{
+	color:#43a5e6;
+	opacity: 0;
+	transition: all 1s;
+}
+.help:active:after{
+	color:#43a5e6;
+	opacity: 1;
+    transition: 0s
+}
+
 .expando-pane{
 	border: 0.5px groove;
 }
@@ -90,7 +105,8 @@
 em,i{
     font-style:italic;
 }
-/*improve sho/hide speed fix*/
+
+/*improve show/hide speed fix*/
 .ng-hide.ng-hide-animate{
     display: none !important;
 }

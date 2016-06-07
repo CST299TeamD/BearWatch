@@ -1,8 +1,17 @@
 <ion-view title="Session Setup">
     <ion-content class="has-header container" overflow-scroll="true" padding="true">
         
-        <div class="spacer spacer-20"></div>
-        <h2 class="center">Environment</h2>
+        <div class="spacer spacer-10"></div>
+        <div class="row">
+            <div class="col col-33">
+            </div>
+            <div class="col col-33 text-center">
+                <h2>Environment</h2>
+            </div>
+            <div class="col col-33 text-right">
+                <a ng-hide="showHelp" ng-click="showHelp=!showHelp"><i class="ion-help-circled help"></i></a>
+            </div>
+        </div>
         <!--session setup progress-->
         <div class="breadcrumb center">
             <i class="ion-ios-circle-outline"></i>
@@ -10,6 +19,59 @@
             <i class="ion-ios-circle-outline"></i>
         </div> 
         <div class="spacer spacer-20"></div>
+
+        <!-- Help section-->
+        <div ng-model="showHelp" ng-show="showHelp" class="card">
+            <div class="container">
+                <div class="row border-bottom">
+                    <div class="col col-33">
+                    </div>
+                    <div class="col col-33 col-bottom text-center">
+                        <h3>Help Topics</h3> 
+                    </div>
+                    <div class="col col-33 col-center text-right">
+                        <a class="button button-icon icon ion-close-circled" ng-click="showHelp = false"></a>
+                    </div>
+                </div>
+                <div class="spacer spacer-10"></div>
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>General</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!genHelp, 'button button-small button-icon icon ion-ios-minus-outline':genHelp}" ng-click="genHelp=!genHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="genHelp" ng-show="genHelp" class="container">
+                    <div class="spacer spacer-10"></div>
+                    <p>Fill in the fields below in order to continue setting up your session. It is important to have complete environment at the beginning of a session, updates can be made in the dashboard section.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Water Definitions</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!waterHelp, 'button button-small button-icon icon ion-ios-minus-outline':waterHelp}" ng-click="waterHelp=!waterHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="waterHelp" ng-show="waterHelp" class="container">
+                    <div class="spacer spacer-10"></div>                    
+                    <h4 class="center">Water Body:</h4>
+                    <p><strong>High:</strong> definition...</p>
+                    <p><strong>Medium:</strong> definition...</p>
+                    <p><strong>Low:</strong> definition...</p>
+
+                    <h4 class="center">Water Flow:</h4>
+                    <p><strong>Cascade:</strong> definition...</p>
+                    <p><strong>Rapid:</strong> definition...</p>
+                    <p><strong>Riffle:</strong> definition...</p>
+                    <p><strong>Glide:</strong> definition...</p>
+                    <p><strong>Pool:</strong> definition...</p>
+                    <p><strong>Woody Debris Jam:</strong> definition...</p>
+
+                    <div class="spacer spacer-10"></div>
+                </div>
+            </div>
+            <div class="spacer spacer-20"></div>            
+        </div><!--End Help-->
 
         <form class="list">
 		<ion-item class="item-divider list-head">Water</ion-item>
