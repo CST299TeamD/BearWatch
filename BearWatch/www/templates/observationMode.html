@@ -1,8 +1,17 @@
 <ion-view title="Session Setup">
     <ion-content class="has-header container" overflow-scroll="true" padding="true">
         
-        <div class="spacer spacer-20"></div>
-        <h2 class="center">Observation Settings</h2>
+        <div class="spacer spacer-10"></div>
+        <div class="row">
+            <div class="col col-33">
+            </div>
+            <div class="col col-33 text-center">
+                <h2>Observation Settings</h2>
+            </div>
+            <div class="col col-33 text-right">
+                <a ng-click="showHelp=!showHelp"><i class="ion-help-circled help"></i></a>
+            </div>
+        </div>
         <!--session setup progress-->
         <div class="breadcrumb center">            
             <i class="ion-ios-circle-outline"></i>
@@ -10,6 +19,90 @@
             <i class="ion-ios-circle-filled"></i>
         </div> 
         <div class="spacer spacer-20"></div>
+
+        <!-- Help section-->
+        <div ng-model="showHelp" ng-show="showHelp" class="card">
+            <div class="container">
+                <div class="row border-bottom">
+                    <div class="col col-33">
+                    </div>
+                    <div class="col col-33 col-bottom text-center">
+                        <h3>Help Topics</h3> 
+                    </div>
+                    <div class="col col-33 col-center text-right">
+                        <a class="button button-icon icon ion-close-circled" ng-click="showHelp = false"></a>
+                    </div>
+                </div>
+                <div class="spacer spacer-10"></div>
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>General</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!genHelp, 'button button-small button-icon icon ion-ios-minus-outline':genHelp}" ng-click="genHelp=!genHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="genHelp" ng-show="genHelp" class="container">
+                    <div class="spacer spacer-10"></div>
+                    <p>Fill in the fields below in order to finish setting up your session, then press the Start Session button below to begin.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Focal and Scanning</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!focalHelp, 'button button-small button-icon icon ion-ios-minus-outline':focalHelp}" ng-click="focalHelp=!focalHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="focalHelp" ng-show="focalHelp" class="container">
+                    <div class="spacer spacer-10"></div>                    
+                    <h4 class="center">Focal:</h4>
+                    <p>One hour focal observation sessions begin with a summary of the activities occurring in each zone (refer to Excel datasheet file for focal samples). The observer will use comments to provide a brief overview of the selected focal bear(s) and human behaviours and note the mean distance between bears and people. Next, the observer will fill out the appropriate datasheet beginning with the general datasheet (Appendix I) followed by the focal and opportunistic datasheets (Appendix II). Bear behaviour recorded during focal observations includes:</p>
+                    <ul>
+                        <li>Bear species</li>
+                        <li>Sex and age class</li>
+                        <li>Identification or description of individual</li>
+                        <li>Bear location</li>
+                        <li>Bear activity: arrival time, departure time</li>
+                        <li>Number of bears present</li>
+                        <li>Location of bears present</li>
+                        <li>Activityofthefocalbear(s)(seebearbehaviourkeyforexplanations)</li>
+                    </ul>
+                    <p>Dependent upon the activity of the focal bear(s) the observer will then fill in the appropriate corresponding datasheets. For example, if the focal bear is fishing the fish capture datasheet will be filled in; however, if a jet boat is approaching then the human behaviour observation sampling datasheet would be filled in because it contains information on the distances (e.g., between bears and people) and behavioural response to stimuli (e.g., jet boats, aircrafts, vehicles).</p>
+                    <p><em>Potential interactions with humans and behavioural response to stimuli should always take precedent over gathering other data, such as fish captures!</em></p>
+                 
+
+                    <h4 class="center">Scanning:</h4>
+                    <p>In order to reduce the overall observation recording time (currently recommended at 5 daylight hours plus nocturnal monitoring) scan sampling should occur within the focal observation on the 1⁄4 hour (i.e., 13:15, 13:20, and 13:45). A timer should be set to 15-minute intervals at which time the observer visually scans all designated zones. Scan sampling allows for a snapshot of what is happening within all zones during the focal sampling period. For example, scan samples are used to obtain relative measures of visitor and bear activity (i.e., count data such as the number of people within the focal observation (Olson et al. 1998, Chi et al. 1998). Data gathered during scan sampling includes:</p>
+                    <ul>
+                        <li>Visitor numbers by zone and east and west river banks o Bear numbers by zone and east and west river banks</li>
+                        <li>Classification of human activities</li>
+                        <li>Classification of bear activities</li>
+                        <li>Presence or absence of non-natural attractants</li>
+                        <li>Raw catch data of fish only – i.e., observed fish captures recorded (Nevis 2003) - (may also be recorded under focal sampling)</li>
+                    </ul>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Timers</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!timerlHelp, 'button button-small button-icon icon ion-ios-minus-outline':focalHelp}" ng-click="timerHelp=!timerHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="timerHelp" ng-show="timerHelp" class="container">
+                    <div class="spacer spacer-10"></div>                    
+                    <h4 class="center">Focal:</h4>
+                    <p>Set this timer for the desired session length.</p>
+                 
+
+                    <h4 class="center">Scanning:</h4>
+                    <p>Set the desired session length and define the amount of time (in minutes) you plan to spend capturing data and resting.</p>
+                    <p>Example: scan sampling should occur within the focal observation on the 1⁄4 hour (i.e., 13:15, 13:20, and 13:45). A timer should be set to 15-minute intervals at which time the observer visually scans all designated zones.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+            </div>
+            <div class="spacer spacer-20"></div>            
+        </div><!--End Help-->
 
         <form name="obsForm" novalidate  ng-submit="saveSession(obsForm)" class="list">
 
