@@ -259,8 +259,11 @@ angular.module('app.controllers')
             var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Human Food"];
             var nonInteractive = ["Loafing/Resting", "Sleeping", "Walking", "Running"];
             var bBInteraction =["Alert/Vigilance", "Playing", "Fighting", "Defense"];
-            var bHInteraction = ["Alert/Vigilance", "Retreat", "Bear Approach"];
-            var hBinteraction = ["Alert/Vigilance", "Retreat", "Approach Bear", "Aggression "];
+            var bHInteraction = [ "Retreat", "Bear Approach", "Enticing"];
+            var hBinteraction = [ "Retreat", "Approach Bear", "Aggression"];
+            var alert = [ "Unknown/Unaware", "Aware/ Uninterested", "Relax", "Bold and pushy", "Cautious"];
+            
+            
             var habituationLevel = ["Habituated", "Non- Habituated", "Sub-Adult"];
             $scope.feeding = feeding;
             $scope.nonInteractive = nonInteractive;
@@ -268,7 +271,8 @@ angular.module('app.controllers')
             $scope.bHInteraction = bHInteraction;
             $scope.hBinteraction = hBinteraction;
             $scope.habituationLevel = habituationLevel;
-
+            $scope.alert = alert;
+            
             $scope.showHelp = false;
             
             //scroll top function
