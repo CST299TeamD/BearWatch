@@ -76,6 +76,17 @@
             <div style="width: 283px; height: 30px;" class="spacer"></div>
             
             
+            <ion-checkbox ng-model="behaviournAV.checked">Alert/Vigilance</ion-checkbox>
+            <div ng-show="behaviournAV.checked">
+                <ion-item style="" class="item-text-wrap">Description
+                    <div style="width: 283px; height: 10px;" class="spacer"></div>
+                    <lable ng-repeat="behaviour in alert">
+                        <button class="button button-assertive" ng-click="addBehaviour('Alert/Vigilance', '{{behaviour}}')">{{ behaviour }}</button>
+                    </lable>
+                </ion-item>
+                <div style="width: 283px; height: 30px;" class="spacer"></div>
+            </div>
+            
             <ion-checkbox ng-model="behaviourHabituation.checked">Habituation Level
             </ion-checkbox>
             <div ng-show="behaviourHabituation.checked">
@@ -103,7 +114,7 @@
                 </ion-item>
                 <ion-item style="" class="item-text-wrap" ng-show="Bear.isFishing">Fishing Sub categories<br>
                     <label style="" class="item item-select">
-                        <span class="input-label">Fishing Method</span>
+                        <span class="input-label">Fishing Techniques</span>
                         <select ng-model="Bear.fishingMethod" ng-change="updateFish(Bear.fishingMethod, Bear.fishingSuboption, Bear.tally)">
                             <option>Scavenging</option>
                             <option>Weir Scavenging</option>
@@ -117,7 +128,7 @@
                     </label>
                     
                     <label style="" class="item item-select">
-                    <span class="input-label">Fish Suboption</span>
+                    <span class="input-label">Foraging details</span>
                     <select ng-model="Bear.fishingSuboption"  ng-change="updateFish(Bear.fishingMethod, Bear.fishingSuboption, Bear.tally)" >
                         <option>Caught Alive</option>
                         <option>Caught Dead</option>
@@ -183,7 +194,8 @@
                 </ion-item>
                     <div style="width: 283px; height: 30px;" class="spacer"></div>
             </div>
-            
+
+
             <ion-checkbox ng-model="behaviournOther.checked">Other</ion-checkbox>
             <div ng-show="behaviournOther.checked">
             
