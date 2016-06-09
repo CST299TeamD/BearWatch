@@ -73,7 +73,7 @@
                 <ion-item style="" class="item-text-wrap">Select Habituation Level
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in habituationLevel">
-                        <button class="button button-royal button-outline" ng-click="addBehaviour('Habituation', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-royal" ng-click="addBehaviour('Habituation', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
                 </ion-item>
                 <div style="width: 283px; height: 30px;" class="spacer"></div>        
@@ -85,10 +85,10 @@
                 <ion-item style="" class="item-text-wrap">Description
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in feeding">
-                        <button class="button button-balanced button-outline"  ng-click="addBehaviour('Feeding or Foraging', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-balanced"  ng-click="addBehaviour('Feeding or Foraging', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
                     <lable>
-                        <button class="button button-balanced button-outline" ng-click="onFishing()">Fishing</button>
+                        <button class="button button-balanced" ng-click="onFishing()">Fishing</button>
                     </lable>
                     
                 </ion-item>
@@ -136,7 +136,7 @@
                 <ion-item style="" class="item-text-wrap">Description
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in nonInteractive">
-                        <button class="button button-calm button-outline" ng-click="addBehaviour('Non-Interactive', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-calm" ng-click="addBehaviour('Non-Interactive', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
                 </ion-item>
                 <div style="width: 283px; height: 30px;" class="spacer"></div>
@@ -147,7 +147,7 @@
                 <ion-item style="" class="item-text-wrap">Description
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in bBInteraction">
-                        <button class="button button-energized button-outline" ng-click="addBehaviour('Bear-Bear Interactive', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-energized" ng-click="addBehaviour('Bear-Bear Interactive', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
                 </ion-item>
                 <div style="width: 283px; height: 30px;" class="spacer"></div>
@@ -159,7 +159,7 @@
                 <ion-item style="" class="item-text-wrap">Description
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in bHInteraction">
-                        <button class="button button-royal button-outline" ng-click="addBehaviour('Bear-human Interaction', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-royal " ng-click="addBehaviour('Bear-human Interaction', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
                 </ion-item>
                 <div style="width: 283px; height: 30px;" class="spacer"></div>
@@ -169,9 +169,10 @@
                 <ion-item style="" class="item-text-wrap">Description
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in hBinteraction">
-                        <button class="button button-positive button-outline" ng-click="addBehaviour('Human-bear Interaction', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-positive" ng-click="addBehaviour('Human-bear Interaction', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
-                </ion-item>                
+                </ion-item>
+                    <div style="width: 283px; height: 30px;" class="spacer"></div>
             </div>
             
             <ion-checkbox ng-model="behaviournOther.checked">Other</ion-checkbox>
