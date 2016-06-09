@@ -42,6 +42,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "protocol          TEXT    , "
       + "stationary        TEXT    , "
       + "zone_type         TEXT    , "
+      + "observer_zone     TEXT    , "
       + "zone_comment      TEXT    , "
       + "start_time        TEXT    , "
       + "finish_time       TEXT    , "

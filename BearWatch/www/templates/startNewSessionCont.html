@@ -69,6 +69,18 @@
 
                     <div class="spacer spacer-10"></div>
                 </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Food Sources</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!foodHelp, 'button button-small button-icon icon ion-ios-minus-outline':foodHelp}" ng-click="foodHelp=!foodHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="foodHelp" ng-show="foodHelp" class="container">
+                    <div class="spacer spacer-10"></div>                    
+                    <p>A maximum of 3 food sources can be specified per session.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
             </div>
             <div class="spacer spacer-20"></div>            
         </div><!--End Help-->
@@ -238,42 +250,46 @@
             </label>
             
             <div class="spacer spacer-20"></div>
-			<ion-item class="item-divider list-head">Food Sources</ion-item>
-            <label class="item item-select">
-                <span class="input-label">Type:</span>
-                <select ng-model="Enviro.foodSource">
-                    <option selected disabled></option>
-                    <option>Fish</option>
-                    <option>Berries</option>
-                    <option>Green Vegetation</option>
-					<option>Other</option>
-                </select>
-            </label>
-            <label class="item item-select">
-                <span class="input-label">Availability:</span>
-                <select ng-model="Enviro.foodSourceAvail">
-                    <option selected disabled></option>
-                    <option>None</option>
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option>High</option>
-                </select>
-            </label>
-            
-            <label class="item item-input">
-                <span class="input-label">Comment:</span>
-                <input placeholder="Note species and/or describe other" type="text" ng-model="Enviro.foodSourceComment">
-            </label>
-            <div class="item pull-right">
-                <a class="button button-balanced icon ion-plus" ng-click="Enviro.addFood()">&nbsp;Add</a>			
+            <div ng-show="Enviro.foodSources.length < 4" ng-hide="Enviro.foodSources.length == 3">
+    			<ion-item class="item-divider list-head">Food Sources</ion-item>
+                <label class="item item-select">
+                    <span class="input-label">Type:</span>
+                    <select ng-model="Enviro.foodSource">
+                        <option selected disabled></option>
+                        <option>Fish</option>
+                        <option>Berries</option>
+                        <option>Green Vegetation</option>
+    					<option>Other</option>
+                    </select>
+                </label>
+                <label class="item item-select">
+                    <span class="input-label">Availability:</span>
+                    <select ng-model="Enviro.foodSourceAvail">
+                        <option selected disabled></option>
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
+                    </select>
+                </label>
+                
+                <label class="item item-input">
+                    <span class="input-label">Comment:</span>
+                    <input placeholder="Note species and/or describe other" type="text" ng-model="Enviro.foodSourceComment">
+                </label>
+                <div class="item pull-right">
+                    <a class="button button-balanced icon ion-plus" ng-click="Enviro.addFood()">&nbsp;Add</a>			
+                </div>
+                <div class="spacer spacer-10"></div>
             </div>
-            <div class="spacer spacer-10"></div>
-            
+            <div ng-hide="Enviro.foodSources.length < 4" ng-show="Enviro.foodSources.length == 3">
+                <ion-item class="item-divider list-head">3 Food Sources Max in Session</ion-item>
+            </div>
+
             <!--show active food sources with remove option-->
             <ion-item ng-show="Enviro.foodSources.length > 0" class="item-divider">Available food sources</ion-item>
             <ion-list>
                 <ion-item ng-repeat="food in Enviro.foodSources" class="item item-button-right">
-                    <p>{{food.added + " " + food.src + ", " + food.avail + "-Available"}}</p>
+                    <p>{{food.added + " " + food.src + ", Availability: " + food.avail}}</p>
                     <p ng-show="food.desc != ''">{{food.desc}}</p>
                     <a class="button button-icon icon ion-close-circled" ng-click="Enviro.clearFood(food.id)"></a>
                 </ion-item>

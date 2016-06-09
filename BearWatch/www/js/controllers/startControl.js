@@ -19,9 +19,8 @@ angular.module('app.controllers')
       });
     }
 
-   	//continue session TODO:
-	//if session is not complete (no observation mode), remove from DB 
-	//disable contiue button if no valid sessions available
+   	//TODO:
+	//Clear session data on "new Session" click 
 })
 
 //Activates the GPS
@@ -39,6 +38,8 @@ angular.module('app.controllers')
 	$scope.Session = Session;
 
 	$scope.parkChecked = false;
+
+	$scope.zoneList = '';
 
 	//function for adding observers
 	$scope.addObserver = function(){
@@ -81,10 +82,13 @@ angular.module('app.controllers')
     $scope.showZoneSchema = function(zoningSchemaSelect){
         if(zoningSchemaSelect == "River"){
             $scope.zoningSchemaPic = 'img/river.png';
+            $scope.zoneList = ["4", "5", "6"];
         } else if(zoningSchemaSelect == "Estuary"){
             $scope.zoningSchemaPic = 'img/estuary.png';
+            $scope.zoneList = '';
         } else if(zoningSchemaSelect == "Terrestrial"){
             $scope.zoningSchemaPic = 'img/terrestrial.png';
+            $scope.zoneList = '';
         } else {
             $scope.zoningSchemaPic = '';
         }

@@ -175,10 +175,10 @@
             <div class="spacer spacer-20"></div>
             <ion-item class="item-divider list-head">Observation Mode</ion-item>
             <label class="item item-select" ng-class="{ 'has-errors' : (submitted && startForm.viewingArea.$invalid), 'no-errors' : (submitted && startForm.viewingArea.$valid)}">
-                <span class="input-label">Viewing Method:</span>
+                <span class="input-label">Viewing Location:</span>
                 <select name="viewingArea" ng-model="Session.viewingArea" required>
                     <option value="Platform">Platform</option>
-                    <option value="Boating">Boating</option>
+                    <option value="Boating">Boat</option>
                     <option value="Blind">Blind</option>
     				<option value="Other">Other</option>
                 </select>
@@ -236,10 +236,23 @@
                 </div>
             </div>
 
+            <div ng-show="zoneList != ''" ng-hide="zoneList == ''">
+                <label class="item item-select" ng-class="{ 'has-errors' : (submitted && startForm.obsArea.$invalid), 'no-errors' : (submitted && startForm.obsArea.$valid)}">
+                    <span class="input-label">Observer(s) Location {{Session.zoneSchema}}:</span>
+                    <select name="obsArea" ng-model="Session.obsArea" ng-required="zoneList != ''">
+                        <option ng-repeat="z in zoneList">{{z}}</option>
+                    </select>
+                </label>
+            </div>    
+            <div class="error-container" ng-show="submitted && startForm.obsArea.$error" ng-messages="startForm.obsArea.$error">
+                <div ng-messages-include="error-list.html"></div> 
+                <div class="spacer spacer-10"></div>
+            </div>
+
             <div ng-show="Session.zoneSchema != ''" class="center">
                 <div class="spacer spacer-20"></div>
                 <h3>{{Session.zoneSchema}} Zone Map</h3>
-                <p><em>The image below shows the mapping of the {{Session.zoneSchema}} zone. Descriptions can bve found in the help section</em></p>
+                <p><em>The image below shows the mapping of the {{Session.zoneSchema}} zone. Descriptions can be found in the help section.</em></p>
                 <br/>
                 <img ng-src="{{zoningSchemaPic}}" alt="zoning picture">
                 <div class="spacer spacer-20"></div>
