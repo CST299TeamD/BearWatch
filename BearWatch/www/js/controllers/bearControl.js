@@ -258,9 +258,9 @@ angular.module('app.controllers')
             //create and attache all the behaviour arrays to scope
             var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Human Food"];
             var nonInteractive = ["Loafing/Resting", "Sleeping", "Walking", "Running"];
-            var bBInteraction =["Alert/Vigilance", "Playing", "Fighting", "Defense"];
-            var bHInteraction = [ "Retreat", "Bear Approach", "Enticing"];
-            var hBinteraction = [ "Retreat", "Approach Bear", "Aggression"];
+            var bBInteraction =[ "Playing", "Fighting", "Defense"];
+            var bHInteraction = [ "Retreat", "Bear Approach", "Aggression"];
+            var hBinteraction = [ "Retreat", "Approach Bear", "Aggression", "Enticing"];
             var alert = [ "Unknown/Unaware", "Aware/ Uninterested", "Relax", "Bold and pushy", "Cautious"];
             
             
