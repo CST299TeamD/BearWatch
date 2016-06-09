@@ -306,6 +306,7 @@ angular.module('app.controllers')
                                      });
             
                 }
+            
                 //insert into log table
                 Bear.Log($scope.Session.id);
             }
