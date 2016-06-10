@@ -100,7 +100,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "wind              TEXT    , "
       + "wind_direction    TEXT    , "
       + "temperature       INTEGER , "
-      + "humididty         INTEGER , "
+      + "humididty          INTEGER , "
       + "visibility        TEXT    , "
       + "obstruction       TEXT    , "
       + "obstr_desc        TEXT    , "

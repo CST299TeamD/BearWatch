@@ -15,14 +15,29 @@ angular.module('app.services')
         comment: '',
         observationMode: '',
         start_time: '',
+		finish_time: '',
         hr: '',
         min: '',
         active: '',
         resting: '',
+		
+		cloud_cover: '',
+		precipitation: '',
+		wind: '',
+		wind_direction: '',
+		temperature: '',
+		humididty: '',
+		noise_level: '',
+		visibility: '',
+		obstruction: '',
+		
+		humans: {"1b" : "",	"1a" : "", "4p" : "", "7a" : "", "7b" : "", "1p" : "", "1" : "", "4" : "", "7" : "", "7p" : "", "2p" : "", "2" : "", "5" : "", "8" : "", "8p" : "", "3p" : "", "3" : "", "6" : "", "9" : "", "9p" : "", "3b" : "", "3a" : "", "6p" : "", "9a" : "", "9b" : ""},
 		logs: [],
 		pictures: [],
 		foodSources: [],
-		ready: ''
+		sessionReady: 0,
+		logsReady: 0,
+		foodReady: 0
     };
 
     //function to reset session
@@ -95,9 +110,8 @@ angular.module('app.services')
 						Session.comment = zone_comment;
 						Session.observationMode = observation_mode;
 						Session.start_time = new Date(start_time).toLocaleTimeString();
-						console.log("Session Start Time: " + Session.start_time);
 						Session.start_date = new Date(start_time).toLocaleDateString();
-						console.log("Session Start Date: " + Session.start_date); 
+						Session.finish_time = new Date(finish_time).toLocaleTimeString();
 						Session.hr = '';
 						Session.min = '';
 						Session.active = '';
@@ -105,6 +119,7 @@ angular.module('app.services')
 						Session.loadLogs();
 						Session.loadFoodSources();
 					}
+					Session.sessionReady = 1;
                 }else{
                 	console.log("No sessions found")
                 }
@@ -127,7 +142,8 @@ angular.module('app.services')
 					console.log("Food sources added to session object");
                 }else{
                 	console.log("No logs for this session")
-                }
+                }				
+				Session.foodReady = 1;
             },
             function(error) {
                 alert("Error on loading: " + error.message);
@@ -146,7 +162,7 @@ angular.module('app.services')
 						Session.logs.push(result.rows.item(i));	
 	        		}
 					console.log("Logs added to session object");
-					Session.ready = 1;
+					Session.logsReady = 1;
                 }else{
                 	console.log("No logs for this session")
                 }
