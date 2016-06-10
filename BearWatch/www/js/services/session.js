@@ -65,7 +65,7 @@ angular.module('app.services')
                   
         $cordovaSQLite.execute(db, 
             'INSERT INTO sessions '
-            + '(observers, park, park_site, protocol, stationary, zone_type, observer_zone, zone_comment, start_time, observation_mode, survey_shed)'
+            + '(observers, park, park_site, protocol, stationary, zone_type, observer_zone, zone_comment, start_time, observation_mode, survey_sched)'
             + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
             [Session.nameResult.toString(), Session.park, Session.site, protocol, Session.stationary, Session.zoneSchema, 
             Session.obsArea, Session.comment, time, Session.observationMode, Session.surveySched])
