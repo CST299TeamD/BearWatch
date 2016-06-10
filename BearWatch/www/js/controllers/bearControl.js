@@ -278,7 +278,7 @@ angular.module('app.controllers')
             var bBInteraction =[ "Playing", "Fighting", "Defense"];
             var bHInteraction = [ "Retreat", "Bear Approach", "Aggression"];
             var hBinteraction = [ "Retreat", "Approach Bear", "Aggression", "Enticing"];
-            var alert = [ "Unknown/Unaware", "Aware/ Uninterested", "Relax", "Bold and pushy", "Cautious"];
+            var alert = [ "Unknown", "Unaware", "Aware", "Disinterested", "Relaxed", "Bold/pushy", "Cautious", "Aggressive"];
             var habituationLevel = ["Habituated", "Non- Habituated", "Sub-Adult"];
             $scope.feeding = feeding;
             $scope.nonInteractive = nonInteractive;
