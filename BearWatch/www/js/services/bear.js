@@ -7,6 +7,7 @@ angular.module('app.services')
         index: -1,
         id: -1,
         inSight: true,
+        uStream: false,
         isFocal: '',
         name: '',
         zone: '',
@@ -53,6 +54,7 @@ angular.module('app.services')
          
          Bear.index = -1;
          Bear.id = -1;
+         Bear.inSight = true,
          Bear.isFocal = '';
          Bear.name = '';
          Bear.zone = '';

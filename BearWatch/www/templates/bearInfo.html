@@ -52,6 +52,7 @@
         </ion-item>
         <ion-checkbox ng-model="Bear.inSight" ng-change="sightChange('{{Bear.inSight}}')">Is bear in sight? (uncheck if you bear is out of sight)</ion-checkbox>
         <div  ng-hide="Bear.inSight">
+        <div ng-show="{{Bear.isFocal}}">
         <div class="error-container">
             <div class="error">
                 <i class="ion-alert-circled"></i>
@@ -59,6 +60,7 @@
                 Make sure to check above button before logging more behaviours.
             </div>
             <div class="spacer spacer-10"></div>
+        </div>
         </div>
         </div>
         <button class="button button-positive  button-block icon ion-edit" ui-sref="tab.changeSpecs" >&nbsp; Modify Bear Specs</button>

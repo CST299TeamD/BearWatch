@@ -56,10 +56,21 @@
             <label style="" class="item item-input">
                 <input placeholder="E.g. Alex" type="text" ng-model="Bear.name">
             </label>
-            <label style="" class="item item-input">
-                <span class="input-label">Accuracy</span>
-                <input placeholder="1 - 10" type="number" ng-model="Bear.accuracy">
+            <div style="width: 283px; height: 22px;" class="spacer"></div>
+            
+            <ion-item style="" class="item-divider list-head">Accuracy</ion-item>
+            <label style="" class="item item-select">
+            <span class="input-label">Observation Quality</span>
+            <select ng-model="Bear.accuracy">
+                <option>Excellent</option>
+                <option>Good</option>
+                <option>Moderate</option>
+                <option>Low</option>
+                <option>Poor</option>
+            </select>
             </label>
+            
+            <ion-checkbox ng-model="Bear.uStream">Urine Stream Observed</ion-checkbox>
             
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <ion-item style="" class="item-divider list-head">Location</ion-item>
