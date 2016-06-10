@@ -27,7 +27,7 @@ angular.module('app.controllers', [])
                Enviro.reset();
                Human.reset();
                Picture.reset();
-			   Timer.reset();
+			      Timer.reset();
                $ionicHistory.clearHistory();
                $ionicHistory.clearCache();
             }, function(error) {

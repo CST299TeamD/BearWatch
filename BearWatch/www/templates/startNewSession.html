@@ -238,7 +238,7 @@
 
             <div ng-show="zoneList != ''" ng-hide="zoneList == ''">
                 <label class="item item-select" ng-class="{ 'has-errors' : (submitted && startForm.obsArea.$invalid), 'no-errors' : (submitted && startForm.obsArea.$valid)}">
-                    <span class="input-label">Observer(s) Location {{Session.zoneSchema}}:</span>
+                    <span class="input-label">Observer Location ({{Session.zoneSchema}}):</span>
                     <select name="obsArea" ng-model="Session.obsArea" ng-required="zoneList != ''">
                         <option ng-repeat="z in zoneList">{{z}}</option>
                     </select>

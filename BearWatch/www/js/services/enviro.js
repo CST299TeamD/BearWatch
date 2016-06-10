@@ -73,7 +73,7 @@ angular.module('app.services')
         }               
     };
     
-    //function to clear observer name from list
+    //function to clear food source from DB
     Enviro.clearFood = function (id, session){
         //remove from DB
         $cordovaSQLite.execute(db, 'DELETE FROM food_sources WHERE food_source_id = (?)', [id])

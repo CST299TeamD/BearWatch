@@ -85,7 +85,7 @@ angular.module('app.controllers')
             $scope.zoneList = ["4", "5", "6"];
         } else if(zoningSchemaSelect == "Estuary"){
             $scope.zoningSchemaPic = 'img/estuary.png';
-            $scope.zoneList = '';
+            $scope.zoneList = ["4", "6"];
         } else if(zoningSchemaSelect == "Terrestrial"){
             $scope.zoningSchemaPic = 'img/terrestrial.png';
             $scope.zoneList = '';
