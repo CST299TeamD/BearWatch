@@ -3,7 +3,7 @@
 //global variables
 var db;
 var db_error = false;
-var db_drop = false;
+var db_drop = true;
 
 //debugging
 var debug = false;
@@ -44,6 +44,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "zone_type         TEXT    , "
       + "observer_zone     TEXT    , "
       + "zone_comment      TEXT    , "
+      + "survey_sched      TEXT    , "
       + "start_time        TEXT    , "
       + "finish_time       TEXT    , "
       + "observation_mode  TEXT);"

@@ -54,7 +54,7 @@
                 </div>
                 <div ng-model="focalHelp" ng-show="focalHelp" class="container">
                     <div class="spacer spacer-10"></div>                    
-                    <h4 class="center">Focal:</h4>
+                    <h3>Focal:</h3>
                     <p>One hour focal observation sessions begin with a summary of the activities occurring in each zone (refer to Excel datasheet file for focal samples). The observer will use comments to provide a brief overview of the selected focal bear(s) and human behaviours and note the mean distance between bears and people. Next, the observer will fill out the appropriate datasheet beginning with the general datasheet (Appendix I) followed by the focal and opportunistic datasheets (Appendix II). Bear behaviour recorded during focal observations includes:</p>
                     <ul>
                         <li>Bear species</li>
@@ -70,7 +70,7 @@
                     <p><em>Potential interactions with humans and behavioural response to stimuli should always take precedent over gathering other data, such as fish captures!</em></p>
                  
 
-                    <h4 class="center">Scanning:</h4>
+                    <h3>Scanning:</h3>
                     <p>In order to reduce the overall observation recording time (currently recommended at 5 daylight hours plus nocturnal monitoring) scan sampling should occur within the focal observation on the 1⁄4 hour (i.e., 13:15, 13:20, and 13:45). A timer should be set to 15-minute intervals at which time the observer visually scans all designated zones. Scan sampling allows for a snapshot of what is happening within all zones during the focal sampling period. For example, scan samples are used to obtain relative measures of visitor and bear activity (i.e., count data such as the number of people within the focal observation (Olson et al. 1998, Chi et al. 1998). Data gathered during scan sampling includes:</p>
                     <ul>
                         <li>Visitor numbers by zone and east and west river banks o Bear numbers by zone and east and west river banks</li>
@@ -85,16 +85,16 @@
                 <div class="row item-divider expando-pane">
                     <div class="col col-center"><h4>Timers</h4></div>
                     <div class="col col-center text-right">
-                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!timerlHelp, 'button button-small button-icon icon ion-ios-minus-outline':focalHelp}" ng-click="timerHelp=!timerHelp"></a>
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!timerlHelp, 'button button-small button-icon icon ion-ios-minus-outline':timerHelp}" ng-click="timerHelp=!timerHelp"></a>
                     </div>
                 </div>
                 <div ng-model="timerHelp" ng-show="timerHelp" class="container">
                     <div class="spacer spacer-10"></div>                    
-                    <h4 class="center">Focal:</h4>
+                    <h3>Focal:</h3>
                     <p>Set this timer for the desired session length.</p>
                  
 
-                    <h4 class="center">Scanning:</h4>
+                    <h3>Scanning:</h3>
                     <p>Set the desired session length and define the amount of time (in minutes) you plan to spend capturing data and resting.</p>
                     <p>Example: scan sampling should occur within the focal observation on the 1⁄4 hour (i.e., 13:15, 13:20, and 13:45). A timer should be set to 15-minute intervals at which time the observer visually scans all designated zones.</p>
                     <div class="spacer spacer-10"></div>
@@ -114,11 +114,20 @@
             <div class="error-container" ng-show="submitted && obsForm.observationMode.$error" ng-messages="obsForm.observationMode.$error">
                 <div ng-messages-include="error-list.html"></div> 
             </div>
+            <div class="spacer spacer-20"></div>
+            <label class="list">
+                <ion-item class="item-divider list-head" ng-class="{ 'has-errors' : (submitted && obsForm.surveySched.$invalid), 'no-errors' : (submitted && obsForm.surveySched.$valid)}">Survey Schedule</ion-item>
+                <ion-radio name="surveySched" ng-model="Session.surveySched" value="Planned" ng-required="Session.surveySched == ''">Planned</ion-radio>
+                <ion-radio name="surveySched" ng-model="Session.surveySched" value="Opportunistic" ng-required="Session.surveySched == ''">Opportunistic</ion-radio>
+            </label>
+            <div class="error-container" ng-show="submitted && obsForm.surveySched.$error" ng-messages="obsForm.surveySched.$error">
+                <div ng-messages-include="error-list.html"></div> 
+            </div>
 
             <!--Focal timer info-->
             <div ng-show="Session.observationMode == 'Focal'">
                 <div class="spacer spacer-20"></div>
-                <ion-item class="item-divider list-head">Session Time</ion-item>
+                <ion-item class="item-divider list-head">Session Length</ion-item>
                 <div class="item item-input-inset" ng-class="{ 'has-errors' : (submitted && ((Session.hr == undefined && Session.min == undefined) || obsForm.hr.$invalid || obsForm.min.$invalid)), 'no-errors' : (submitted && obsForm.hr.$valid && obsForm.min.$valid && (Session.hr != undefined || Session.min != undefined))}">
                     <label class="item item-input-wrapper">     
                     <span class="input-label">Hours:</span>
@@ -133,7 +142,7 @@
                 <div class="error-container" ng-show="submitted && Session.hr == undefined && Session.min == undefined && obsForm.hr.$valid && obsForm.min.$valid">
                     <div class="error">
                         <i class="ion-alert-circled"></i> 
-                        Session time is required!
+                        Session length is required!
                     </div>
                 </div>
                 <div class="error-container" ng-show="submitted && obsForm.hr.$invalid">
@@ -153,7 +162,7 @@
             <!--Scanning timer info-->
             <div ng-show="Session.observationMode == 'Scanning'">
                 <div class="spacer spacer-20"></div>
-                <ion-item class="item-divider list-head">Session Time</ion-item>
+                <ion-item class="item-divider list-head">Session length</ion-item>
                 <div class="item item-input-inset" ng-class="{ 'has-errors' : (submitted && ((Session.hr == undefined && Session.min == undefined) || obsForm.hr.$invalid || obsForm.min.$invalid)), 'no-errors' : (submitted && obsForm.hr.$valid && obsForm.min.$valid && (Session.hr != undefined || Session.min != undefined))}">
                     <label class="item item-input-wrapper">     
                     <span class="input-label">Hours:</span>
@@ -168,7 +177,7 @@
                 <div class="error-container" ng-show="submitted && Session.hr == undefined && Session.min == undefined && obsForm.hr.$valid && obsForm.min.$valid">
                     <div class="error">
                         <i class="ion-alert-circled"></i> 
-                        Session time is required!
+                        Session length is required!
                     </div>
                 </div>
                 <div class="error-container" ng-show="submitted && obsForm.hr.$invalid">
