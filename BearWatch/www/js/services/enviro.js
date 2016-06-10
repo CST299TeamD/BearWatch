@@ -7,7 +7,6 @@ angular.module('app.services')
         session_id: '',
         waterBody: '',
         waterLevel: '',
-        waterFlow: '',
         waterClarity: '',
         cloudCover: '',
         precipitation: '',
@@ -30,7 +29,6 @@ angular.module('app.services')
         Enviro.session_id = '';
         Enviro.waterBody = '';
         Enviro.waterLevel = '';
-        Enviro.waterFlow = '';
         Enviro.waterClarity = '';
         Enviro.cloudCover = '';
         Enviro.precipitation = '';
@@ -75,7 +73,7 @@ angular.module('app.services')
         }               
     };
     
-    //function to clear observer name from list
+    //function to clear food source from DB
     Enviro.clearFood = function (id, session){
         //remove from DB
         $cordovaSQLite.execute(db, 'DELETE FROM food_sources WHERE food_source_id = (?)', [id])
@@ -114,10 +112,10 @@ angular.module('app.services')
            
             $cordovaSQLite.execute(db, 
                 'INSERT INTO logs '
-                + '(timestamp, water_body, water_level, water_flow, water_clarity, cloud_cover, precipitation, wind, wind_direction,'
+                + '(timestamp, water_body, water_level, water_clarity, cloud_cover, precipitation, wind, wind_direction,'
                 + ' temperature, humididty, visibility, obstruction, obstr_desc, noise_level, session_id, utm_zone, northing, easting)'
-                + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-                [new Date(), Enviro.waterBody, Enviro.waterLevel, Enviro.waterFlow, Enviro.waterClarity, Enviro.cloudCover, Enviro.precipitation, 
+                + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+                [new Date(), Enviro.waterBody, Enviro.waterLevel, Enviro.waterClarity, Enviro.cloudCover, Enviro.precipitation, 
                 Enviro.wind, Enviro.windDirection, Enviro.temp, Enviro.humid, Enviro.visibility, Enviro.obscuredReason, Enviro.obscuredOther, 
                 Enviro.noiseLevel, id, GPS.utmZone, GPS.northing, GPS.easting])
             .then(function(result) {

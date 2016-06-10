@@ -12,8 +12,10 @@ angular.module('app.services')
         viewingAreaOther: '',
         stationary: '',
         zoneSchema: '',
+        obsArea: '',
         comment: '',
         observationMode: '',
+        surveySched: '',
         start_time: '',
 		finish_time: '',
         hr: '',
@@ -52,8 +54,10 @@ angular.module('app.services')
         Session.viewingAreaOther = '';
         Session.stationary = '';
         Session.zoneSchema = '';
+        Session.obsArea = '';
         Session.comment = '';
         Session.observationMode = '';
+        Session.surveySched = '';
         Session.start_time = '';
         Session.hr = '';
         Session.min = '';
@@ -76,10 +80,10 @@ angular.module('app.services')
                   
         $cordovaSQLite.execute(db, 
             'INSERT INTO sessions '
-            + '(observers, park, park_site, protocol, stationary, zone_type, zone_comment, start_time, observation_mode)'
-            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-            [Session.nameResult.toString(), Session.park, Session.site, protocol, Session.stationary, Session.zoneSchema, Session.comment, 
-            time, Session.observationMode])
+            + '(observers, park, park_site, protocol, stationary, zone_type, observer_zone, zone_comment, start_time, observation_mode, survey_sched)'
+            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            [Session.nameResult.toString(), Session.park, Session.site, protocol, Session.stationary, Session.zoneSchema, 
+            Session.obsArea, Session.comment, time, Session.observationMode, Session.surveySched])
         .then(function(result) {
             console.log("Session save success" + result.insertId);
             defer.resolve(result);            

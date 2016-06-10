@@ -16,7 +16,9 @@ angular.module('app.controllers')
         
         $scope.Bear.index = tmp.index;
         $scope.Bear.id = tmp.id;
-	    $scope.Bear.isFocal = tmp.isFocal;
+        $scope.Bear.inSight = tmp.inSight;
+        $scope.Bear.uStream = tmp.uStream;
+        $scope.Bear.isFocal = tmp.isFocal;
 		$scope.Bear.name = tmp.name;
 		$scope.Bear.zone = tmp.zone;
 		$scope.Bear.size = tmp.size;
@@ -48,6 +50,7 @@ angular.module('app.controllers')
         $scope.Bear.comment = tmp.comment;
 	
     }
+
 })
 
 .controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session, FBearSet, $ionicPopup, $location, $state, Human) {
@@ -63,6 +66,8 @@ angular.module('app.controllers')
     //clear the bear object
     $scope.Bear.index = -1;
     $scope.Bear.id = -1;
+    $scope.Bear.inSight = true;
+    $scope.Bear.uStream = false;
     $scope.Bear.isFocal = '';
     $scope.Bear.name = '';
     $scope.Bear.zone = '';
@@ -178,6 +183,8 @@ angular.module('app.controllers')
         	    	$scope.BearList.add.push({
         	    		index: $scope.BearList.add.length,
         	    		id: result.insertId,
+                        inSight: $scope.Bear.inSight,
+                        uStream: $scope.Bear.uStream,
                         isFocal: $scope.Bear.isFocal,
         	    		name: $scope.Bear.name,
         	    		zone: $scope.Bear.zone,
@@ -258,9 +265,10 @@ angular.module('app.controllers')
             //create and attache all the behaviour arrays to scope
             var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Human Food"];
             var nonInteractive = ["Loafing/Resting", "Sleeping", "Walking", "Running"];
-            var bBInteraction =["Alert/Vigilance", "Playing", "Fighting", "Defense"];
-            var bHInteraction = ["Alert/Vigilance", "Retreat", "Bear Approach"];
-            var hBinteraction = ["Alert/Vigilance", "Retreat", "Approach Bear", "Aggression "];
+            var bBInteraction =[ "Playing", "Fighting", "Defense"];
+            var bHInteraction = [ "Retreat", "Bear Approach", "Aggression"];
+            var hBinteraction = [ "Retreat", "Approach Bear", "Aggression", "Enticing"];
+            var alert = [ "Unknown/Unaware", "Aware/ Uninterested", "Relax", "Bold and pushy", "Cautious"];
             var habituationLevel = ["Habituated", "Non- Habituated", "Sub-Adult"];
             $scope.feeding = feeding;
             $scope.nonInteractive = nonInteractive;
@@ -268,8 +276,25 @@ angular.module('app.controllers')
             $scope.bHInteraction = bHInteraction;
             $scope.hBinteraction = hBinteraction;
             $scope.habituationLevel = habituationLevel;
-
+            $scope.alert = alert;
+            
             $scope.showHelp = false;
+            
+            
+            $scope.sightChange = function(sight){
+                if(sight == "true") {
+                    $scope.BearList.add[Bear.index].inSight = false;
+                    $scope.BearList.add[Bear.index].behaviour = [];
+                    $scope.Bear.behaviour = [];
+                    $scope.Bear.isFishing = false;
+                    //console.log("Is bear in shight? false");
+                } else {
+                    $scope.BearList.add[Bear.index].inSight = true;
+                    //console.log("Is bear in shight? true");
+                }
+                Bear.Log($scope.Session.id);
+            }
+            
             
             //scroll top function
             $scope.scrollDown = function(){
@@ -306,6 +331,7 @@ angular.module('app.controllers')
                                      });
             
                 }
+            
                 //insert into log table
                 Bear.Log($scope.Session.id);
             }
@@ -325,11 +351,8 @@ angular.module('app.controllers')
                 var tmp = $scope.Bear;
                 //update the bear in the bear array
                 $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].method = fishingMethod;
-
                 $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].suboption = fishingSuboption;
-            
                 $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].tally = tally;
-            
                 $scope.BearList.add[$scope.Bear.index].fishing[($scope.BearList.add[$scope.Bear.index].fishing).length -1].time = curTime;
             
                 //insert into log table
@@ -481,6 +504,7 @@ angular.module('app.controllers')
     $scope.tmpPawMeasured = $scope.Bear.pawMeasured;
     $scope.tmpCubs = $scope.Bear.cubs;
     $scope.tmpAccuracy = $scope.Bear.accuracy;
+    $scope.tmpUStream = $scope.Bear.uStream;
     $scope.tmpCubFurColour = $scope.Bear.cubFurColour;
     $scope.tmpCubAge = $scope.Bear.cubAge;
     $scope.tmpComment = $scope.Bear.comment;
@@ -514,7 +538,7 @@ angular.module('app.controllers')
 
 
     //update bear specs
-	$scope.updateBear = function(index, name, zone, size, species, gender, age, markDescription, furColour, pawMeasured, cubs, accuracy, cubAge, cubFurColour, comment){
+	$scope.updateBear = function(index, name, zone, size, species, gender, age, markDescription, furColour, pawMeasured, uStream, cubs, accuracy, cubAge, cubFurColour, comment){
         console.log(zone);
         //update Bear in bear array
         $scope.BearList.add[index].name = name;
@@ -526,6 +550,7 @@ angular.module('app.controllers')
         $scope.BearList.add[index].markDescription = markDescription;
         $scope.BearList.add[index].furColour = furColour;
         $scope.BearList.add[index].pawMeasured = pawMeasured;
+        $scope.BearList.add[index].uStream = uStream;
         $scope.BearList.add[index].cubs = cubs;
         $scope.BearList.add[index].accuracy = accuracy;
         $scope.BearList.add[index].cubFurColour = cubFurColour;
@@ -543,6 +568,7 @@ angular.module('app.controllers')
         $scope.Bear.markDescription = markDescription;
         $scope.Bear.furColour = furColour;
         $scope.Bear.pawMeasured = pawMeasured;
+        $scope.Bear.uStream = uStream;
         $scope.Bear.cubs = cubs;
         $scope.Bear.accuracy = accuracy;
         $scope.Bear.cubFurColour = cubFurColour;

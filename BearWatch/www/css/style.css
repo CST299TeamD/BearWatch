@@ -11,6 +11,22 @@
 .list-head{
 	background-color: #686868;
 	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.help{
+	color: #43cee6;
+	font-size: 42px;
+}
+.help:active{
+	color:#43a5e6;
+	opacity: 0;
+	transition: all 1s;
+}
+.help:active:after{
+	color:#43a5e6;
+	opacity: 1;
+    transition: 0s
 }
 
 .expando-pane{
@@ -24,6 +40,19 @@
 .border-bottom{
 	border-bottom: solid 1px black;
 	margin-bottom: 10px;
+}
+
+/*gridbox table css*/
+.t_header{
+    background-color: #686868;
+	color: #FFFFFF;
+	font-weight: bold;
+    border: solid 1px grey;
+    text-align: center;
+}
+
+.t_data{
+    border: solid 1px grey;
 }
 
 /*picture css*/
@@ -90,7 +119,8 @@
 em,i{
     font-style:italic;
 }
-/*improve sho/hide speed fix*/
+
+/*improve show/hide speed fix*/
 .ng-hide.ng-hide-animate{
     display: none !important;
 }

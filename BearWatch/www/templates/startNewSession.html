@@ -1,8 +1,16 @@
 <ion-view title="Session Setup">
 	<ion-content class="has-header container" overflow-scroll="true" padding="true">
-
-        <div class="spacer spacer-20"></div>
-		<h2 class="center">New Session</h2>
+        <div class="spacer spacer-10"></div>
+        <div class="row">
+            <div class="col col-33">
+            </div>
+            <div class="col col-33 text-center">
+                <h2>New Session</h2>
+            </div>
+            <div class="col col-33 text-right">
+                <a ng-click="showHelp=!showHelp"><i class="ion-help-circled help"></i></a>
+            </div>
+        </div>
         <!--session setup progress-->
         <div class="breadcrumb center">
             <i class="ion-ios-circle-filled"></i>
@@ -11,20 +19,73 @@
         </div> 
         <div class="spacer spacer-20"></div>
 
+        <!-- Help section-->
+        <div ng-model="showHelp" ng-show="showHelp" class="card">
+            <div class="container">
+                <div class="row border-bottom">
+                    <div class="col col-33">
+                    </div>
+                    <div class="col col-33 col-bottom text-center">
+                        <h3>Help Topics</h3> 
+                    </div>
+                    <div class="col col-33 col-center text-right">
+                        <a class="button button-icon icon ion-close-circled" ng-click="showHelp = false"></a>
+                    </div>
+                </div>
+                <div class="spacer spacer-10"></div>
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>General</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!genHelp, 'button button-small button-icon icon ion-ios-minus-outline':genHelp}" ng-click="genHelp=!genHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="genHelp" ng-show="genHelp" class="container">
+                    <div class="spacer spacer-10"></div>
+                    <p>Fill in the fields below in order to begin setting up your session.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Zone Descriptions</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!zoneHelp, 'button button-small button-icon icon ion-ios-minus-outline':zoneHelp}" ng-click="zoneHelp=!zoneHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="zoneHelp" ng-show="zoneHelp" class="container">
+                    <div class="spacer spacer-10"></div>
+                    <p>Zonation Schemes – Before you begin collecting data, define your surroundings in one of the available zonation schemes: river, estuary or terrestrial. Your location will the shaded zone that is most appropriate. The zones are approximately 100 m wide unless there are obvious breaks. Take the time to describe the zones well enough that someone else can use the same scheme from the same location. It is quite possible that all the zones in the scheme will not be visible so will not be part of your description. Save your description in a document outside of the application, for instance a WORD doc in Docs to Go.</p>
+                    
+                    <h3>River:</h3>
+                    <p>If you are on the shores of a river you will be in either zone 6 or zone 4. Those on river right (right side when facing downstream) will be in zone 6. Those on river left will be in zone 4. This zone will extend about 50 m on either side of you or to an obvious break in the landscape. Find something approximately 100 m beyond that break to define the zones to your right and left. It will be useful if the zones across the river have approximately the same breaks. The depth of the zone will be as far as you can see. The river itself will be zones 2+, 2, 5, 8 and 8+.</p>
+                    <p>If you are in a boat you will be in zone 5. The zones are defined relative to your current location and will therefore be shifting continuously (unless you are anchored). You will not be able to pre-define the zones, so use approximate distances. In a serpentine river it will be difficult to see beyond the 3 central zones on each shore and in the river.</p>
+
+                    <h3>Estuary:</h3>
+                    <p>In an estuary situation you may be either in a boat or on the shore. If you are in a boat, you will be in zone 6. As the boat moves, the zones will change. Zone 5 will be the visible water directly in front of you and approximately 100 m wide. Zone 4 will be the shoreline adjacent to the water. To the right and left there will be paired water and shoreline zones of approximately 100 m. Beyond that zone everything you can see is in the final paired zones on either side.</p>
+                    <p>If you are on the shore, you will be in zone 4. The zones are the same as those described for the boat, but they will be stable and therefore you will be able to describe them based on landscape breaks if that is helpful.</p>
+
+                    <h3>Terrestrial:</h3>
+                    <p>This schema is the most flexible. It is assumed that you are not moving during observations, but if you do, your zones will shift. You are always in zone 5. If you are mobile, try to use regular 100 m by 100 m zones. If you are stationary, you can define the zones in a way that makes sense to the landscape.</p>
+                    <p>This schema is the most flexible. Use it in any situation that is not obviously <strong>River</strong> or <strong>estuary</strong>. It is assumed that you are not moving during observations, but if you do, your zones will shift with you. You are always in zone 5. If you are mobile, try to use regular 100 m by 100 m zones. If you are stationary, you can define the zones in a way that makes sense to the landscape.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+            </div>
+            <div class="spacer spacer-20"></div>            
+        </div><!--End Help-->
+
         <form name="startForm" novalidate  ng-submit="validate(startForm)" class="list">
 
             <!--Session observers-->
             <ion-item class="item-divider list-head">Add Observer(s)</ion-item>
-            <div class="item item-input-inset">
-                <label class="item item-input-wrapper">		
-                <span class="input-label" >First Name:</span>
-                <input type="text" ng-model="Session.firstName">
-                </label>
-                <label class="item item-input-wrapper">     
-                <span class="input-label" >Last Name:</span>
-                <input type="text" ng-model="Session.lastName">
-                </label>
-                <a class="button button-balanced icon ion-person-add" ng-click="addObserver()">&nbsp; Add</a>
+            <div class="list">
+                <div class="item item-input-inset">
+                    <label class="item item-input-wrapper">		
+                        <input type="text" placeholder="First Name" ng-model="Session.firstName">
+                    </label>
+                    <label class="item item-input-wrapper">     
+                        <input type="text" placeholder="Last Name" ng-model="Session.lastName">
+                    </label>
+                    <a class="button button-balanced icon ion-person-add" ng-click="addObserver()">&nbsp; Add</a>
+                </div>
             </div>
             
             <!--show active observer names with remove option-->
@@ -99,7 +160,7 @@
 
             <!--Site-->
 			<label class="item item-input" ng-class="{ 'has-errors' : (submitted && startForm.site.$invalid), 'no-errors' : (submitted && startForm.site.$valid)}">
-                <span class="input-label">Site:</span>
+                <span class="input-label">Site within Park/Area:</span>
                 <input name="site" type="text" ng-model="Session.site" required>
             </label>
             <div ng-show="submitted && startForm.site.$error" ng-messages="startForm.site.$error">
@@ -112,12 +173,12 @@
 
     	    <!--ViewingArea-->
             <div class="spacer spacer-20"></div>
-            <ion-item class="item-divider list-head">Observeration Mode</ion-item>
+            <ion-item class="item-divider list-head">Observation Mode</ion-item>
             <label class="item item-select" ng-class="{ 'has-errors' : (submitted && startForm.viewingArea.$invalid), 'no-errors' : (submitted && startForm.viewingArea.$valid)}">
-                <span class="input-label">Viewing Method:</span>
+                <span class="input-label">Viewing Location:</span>
                 <select name="viewingArea" ng-model="Session.viewingArea" required>
                     <option value="Platform">Platform</option>
-                    <option value="Boating">Boating</option>
+                    <option value="Boating">Boat</option>
                     <option value="Blind">Blind</option>
     				<option value="Other">Other</option>
                 </select>
@@ -175,9 +236,23 @@
                 </div>
             </div>
 
+            <div ng-show="zoneList != ''" ng-hide="zoneList == ''">
+                <label class="item item-select" ng-class="{ 'has-errors' : (submitted && startForm.obsArea.$invalid), 'no-errors' : (submitted && startForm.obsArea.$valid)}">
+                    <span class="input-label">Observer Location ({{Session.zoneSchema}}):</span>
+                    <select name="obsArea" ng-model="Session.obsArea" ng-required="zoneList != ''">
+                        <option ng-repeat="z in zoneList">{{z}}</option>
+                    </select>
+                </label>
+            </div>    
+            <div class="error-container" ng-show="submitted && startForm.obsArea.$error" ng-messages="startForm.obsArea.$error">
+                <div ng-messages-include="error-list.html"></div> 
+                <div class="spacer spacer-10"></div>
+            </div>
+
             <div ng-show="Session.zoneSchema != ''" class="center">
                 <div class="spacer spacer-20"></div>
                 <h3>{{Session.zoneSchema}} Zone Map</h3>
+                <p><em>The image below shows the mapping of the {{Session.zoneSchema}} zone. Descriptions can be found in the help section.</em></p>
                 <br/>
                 <img ng-src="{{zoningSchemaPic}}" alt="zoning picture">
                 <div class="spacer spacer-20"></div>
@@ -196,119 +271,6 @@
         <div ng-show="true">
             <a class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="startNewSessionCont">Skip Validation</a>
         </div>
-
-        <!-- Help section-->
-            <div class="spacer spacer-30"></div>
-                <ion-checkbox ng-model="help.checked">Help</ion-checkbox>
-                <div ng-show="help.checked">
-                    
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Habituation Level</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!habituationHelp, 'button button-small button-icon icon ion-ios-minus-outline':habituationHelp}" ng-click="habituationHelp=!habituationHelp"></a>
-                        </div>
-                    </div>
-                    <div ng-model="habituationHelp" ng-show="habituationHelp" class="center" style="text-align: left;">
-                            <br>
-                            <strong><u>Habituated</u></strong> - Tolerance of people at &lt; 50 m with no noticeable change in behaviour <br>
-                            <strong><u>Non-habituated</u></strong> - Normally moves away when people approach and/or displays agitated behaviours.<br>
-                            <strong><u>Subadult</u></strong> - May also sub-classify habituation level of subadults.<br>
-                            <br>
-                    </div>
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Feeding/Foraging </h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!feedingHelp, 'button button-small button-icon icon ion-ios-minus-outline':feedingHelp}" ng-click="feedingHelp=!feedingHelp"></a>
-                        </div>
-                    </div>
-                    <div ng-model="feedingHelp" ng-show="feedingHelp" class="center" style="text-align: left;">
-                        <br>
-                        <strong><u>Pursuit for food</u></strong> - Actively seeking out food.  Could be moving for purpose of feeding.<br>
-                        <strong><u>Green vegetation</u></strong> - Feeding on herbaceous material (i.e., sedges, clovers, grasses, cowparsnip, etc.).  Not to be confused with scavenging carcasses.<br>
-                        <strong><u>Berries</u></strong> -  Feeding on berries, i.e., blueberries, rosehips, devil's club, thimble berries, etc.<br>
-                        <strong><u>Fishing</u></strong> -  Capture and consumption of live, vigorous fish.<br>
-                        <strong><u>Human food</u></strong> - Consumption of human food items, excluding angler's fish.<br><br>
-                    
-                    </div>
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Non-Interactive</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!nIHelp, 'button button-small button-icon icon ion-ios-minus-outline':nIHelp}" ng-click="nIHelp=!nIHelp"></a>
-                        </div>
-                    </div>
-                    <div ng-model="nIHelp" ng-show="nIHelp" class="center" style="text-align: left;">
-                        <br>
-                        <strong><u>Loafing/Resting</u></strong> - Not moving, non-interactive, may be sitting or standing<br>
-                        <strong><u>Sleeping</u></strong> - Bear sleeping<br>
-                        <strong><u>Walking</u></strong> - Bear walking but not pursuing food, without interest<br>
-                        <strong><u>Running</u></strong> - Running to or from no apparent stimulus.<br>
-                        <br>
-                    </div>
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Bear-Bear Interaction</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!bBiHelp, 'button button-small button-icon icon ion-ios-minus-outline':bBiHelp}" ng-click="bBiHelp=!bBiHelp"></a>
-                        </div>
-                    </div>
-                    <div ng-model="bBiHelp" ng-show="bBiHelp" class="center" style="text-align: left;">
-                        <br>
-                        <strong><u>Alert/Vigilance</u></strong> - Interaction between individuals is evident but behaviour uncertain. Looking and/or sniffing intently towards another bear.<br>
-                        <strong><u>Playing</u></strong> - Non-agonistic amicable behaviour, wrestling, chasing, etc.<br>
-                        <strong><u>Fighting</u></strong> - Agonistic interaction with or without vocalization.<br>
-                        <strong><u>Defense</u></strong> - Active or passive deferral to aggressor, retreat orstanding ground.<br>
-                        <br>
-                    </div>
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Bear-Human Interaction</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!bHIHelp, 'button button-small button-icon icon ion-ios-minus-outline':bHIHelp}" ng-click="bHIHelp=!bHIHelp"></a>
-                        </div>
-                    </div>
-                    <div ng-model="bHIHelp" ng-show="bHIHelp" class="center" style="text-align: left;">
-                    <br>
-                    <strong><u>Bear Response:</u></strong><br><br>
-                    <strong><u>Alert/Vigilance</u></strong> - Interaction with human is evident but behaviour uncertain. Looking and/or sniffing and/or standingon hind legs toward humans or vehicle. Stop, watch, stare, stand to investigate.<br>
-                    <strong><u>Retreat</u></strong> - Actively increase distance away from human or vehicle<br>
-                    <strong><u>Bear Approach</u></strong> - Bear approaches human, record closest distance.<br>
-                    <br>
-                    </div>
-                    
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Human-Bear Interaction</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!hBIHelp, 'button button-small button-icon icon ion-ios-minus-outline':hBIHelp}" ng-click="hBIHelp=!hBIHelp"></a>
-                        </div>
-                    </div>
-                    <div ng-model="hBIHelp" ng-show="hBIHelp" class="center" style="text-align: left;">
-                    <br>
-                    <strong><u>Human response:</u></strong><br><br>
-                    
-                    <strong><u>Alert/Vigilance</u></strong> - Stop activity, watch, stare. Do not move.<br>
-                    <strong><u>Retreat</u></strong> - Back away, walk away, run away.<br>
-                    <strong><u>Approach</u></strong> bear - Human approaches bear, record closest distance. <strong>Note:<strong> run towards, walk towards.<br>
-                    <strong><u>Aggression</u></strong> - Yelling, hit with sticks, throw rocks, etc.<br>
-                    <strong><u>Enticing</u></strong> - Make fish whole or entrails obviously available to bears.  Make garbage of human food available to bears.  Try to attract bear(s).<br>
-                    <br>
-                    </div>
-                    
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Other</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!otherHelp, 'button button-small button-icon icon ion-ios-minus-outline':otherHelp}" ng-click="otherHelp=!otherHelp"></a>
-                        </div>
-                    </div>
-                    <div ng-model="otherHelp" ng-show="otherHelp" class="center" style="text-align: left;">
-                    <br>
-                    <strong><u>Other</strong></u> - Behaviour not on above list, e.g., interaction with dogs or other wildlife. <br>
-                    <br>
-                    </div>
 
         <div class="spacer spacer-40"></div>
 	   	</ion-content>

@@ -14,8 +14,17 @@
 		</div>
 	</ion-nav-title>
 	<ion-content class="has-header container" overflow-scroll="true" padding="true" delegate-handle="mainScroll">
-        <div class="spacer spacer-20"></div>
-        <h2 class="center">Bear Logs</h2>
+        <div class="spacer spacer-10"></div>
+        <div class="row">
+            <div class="col col-33">
+            </div>
+            <div class="col col-33 text-center">
+                <h2>Bear Logs</h2>
+            </div>
+            <div class="col col-33 text-right">
+                <a ng-click="showHelp=!showHelp;"><i class="ion-help-circled help"></i></a>
+            </div>
+        </div>
 
         <ion-list style="">
             <ion-item style="" class="item-divider list-head">Description</ion-item>
@@ -32,7 +41,7 @@
             <strong>Bear Age:</strong> {{Bear.age}} <br>
             </div>
             <div class = "col">
-            <strong>MarkDescription:</strong> {{Bear.markDescription}} <br>
+            <strong>Unique Markings:</strong> {{Bear.markDescription}} <br>
             <strong>Bear Fur Colour:</strong> {{Bear.furColour}} <br>
             <strong>Bear Cubs:</strong> {{Bear.cubs}} <br>
             <strong>Bear Cubs Age:</strong> {{Bear.cubAge}} <br>
@@ -41,8 +50,19 @@
             </div>
         </div>
         </ion-item>
-        
-
+        <ion-checkbox ng-model="Bear.inSight" ng-change="sightChange('{{Bear.inSight}}')">Is bear in sight? (uncheck if you bear is out of sight)</ion-checkbox>
+        <div  ng-hide="Bear.inSight">
+        <div ng-show="{{Bear.isFocal}}">
+        <div class="error-container">
+            <div class="error">
+                <i class="ion-alert-circled"></i>
+                All the ongoing behaviours are turned off because bear is out of sight.<br>
+                Make sure to check above button before logging more behaviours.
+            </div>
+            <div class="spacer spacer-10"></div>
+        </div>
+        </div>
+        </div>
         <button class="button button-positive  button-block icon ion-edit" ui-sref="tab.changeSpecs" >&nbsp; Modify Bear Specs</button>
         </ion-list>
     <div ng-show="{{Bear.isFocal}}">
@@ -67,13 +87,24 @@
             <div style="width: 283px; height: 30px;" class="spacer"></div>
             
             
+            <ion-checkbox ng-model="behaviournAV.checked">Alert/Vigilance</ion-checkbox>
+            <div ng-show="behaviournAV.checked">
+                <ion-item style="" class="item-text-wrap">Description
+                    <div style="width: 283px; height: 10px;" class="spacer"></div>
+                    <lable ng-repeat="behaviour in alert">
+                        <button class="button button-assertive" ng-click="addBehaviour('Alert/Vigilance', '{{behaviour}}')">{{ behaviour }}</button>
+                    </lable>
+                </ion-item>
+                <div style="width: 283px; height: 30px;" class="spacer"></div>
+            </div>
+            
             <ion-checkbox ng-model="behaviourHabituation.checked">Habituation Level
             </ion-checkbox>
             <div ng-show="behaviourHabituation.checked">
                 <ion-item style="" class="item-text-wrap">Select Habituation Level
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in habituationLevel">
-                        <button class="button button-royal button-outline" ng-click="addBehaviour('Habituation', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-royal" ng-click="addBehaviour('Habituation', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
                 </ion-item>
                 <div style="width: 283px; height: 30px;" class="spacer"></div>        
@@ -85,18 +116,18 @@
                 <ion-item style="" class="item-text-wrap">Description
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in feeding">
-                        <button class="button button-balanced button-outline"  ng-click="addBehaviour('Feeding or Foraging', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-balanced"  ng-click="addBehaviour('Feeding or Foraging', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
                     <lable>
-                        <button class="button button-balanced button-outline" ng-click="onFishing()">Fishing</button>
+                        <button class="button button-balanced" ng-click="onFishing()">Fishing</button>
                     </lable>
                     
                 </ion-item>
                 <ion-item style="" class="item-text-wrap" ng-show="Bear.isFishing">Fishing Sub categories<br>
                     <label style="" class="item item-select">
-                        <span class="input-label">Fishing Method</span>
+                        <span class="input-label">Fishing Techniques</span>
                         <select ng-model="Bear.fishingMethod" ng-change="updateFish(Bear.fishingMethod, Bear.fishingSuboption, Bear.tally)">
-                            <option>Scaevnging</option>
+                            <option>Scavenging</option>
                             <option>Weir Scavenging</option>
                             <option>Pick Water</option>
                             <option>Snorkeling</option>
@@ -108,7 +139,7 @@
                     </label>
                     
                     <label style="" class="item item-select">
-                    <span class="input-label">Fish Suboption</span>
+                    <span class="input-label">Foraging details</span>
                     <select ng-model="Bear.fishingSuboption"  ng-change="updateFish(Bear.fishingMethod, Bear.fishingSuboption, Bear.tally)" >
                         <option>Caught Alive</option>
                         <option>Caught Dead</option>
@@ -136,7 +167,7 @@
                 <ion-item style="" class="item-text-wrap">Description
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in nonInteractive">
-                        <button class="button button-calm button-outline" ng-click="addBehaviour('Non-Interactive', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-calm" ng-click="addBehaviour('Non-Interactive', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
                 </ion-item>
                 <div style="width: 283px; height: 30px;" class="spacer"></div>
@@ -147,7 +178,7 @@
                 <ion-item style="" class="item-text-wrap">Description
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in bBInteraction">
-                        <button class="button button-energized button-outline" ng-click="addBehaviour('Bear-Bear Interactive', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-energized" ng-click="addBehaviour('Bear-Bear Interactive', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
                 </ion-item>
                 <div style="width: 283px; height: 30px;" class="spacer"></div>
@@ -159,7 +190,7 @@
                 <ion-item style="" class="item-text-wrap">Description
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in bHInteraction">
-                        <button class="button button-royal button-outline" ng-click="addBehaviour('Bear-human Interaction', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-royal " ng-click="addBehaviour('Bear-human Interaction', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
                 </ion-item>
                 <div style="width: 283px; height: 30px;" class="spacer"></div>
@@ -169,11 +200,13 @@
                 <ion-item style="" class="item-text-wrap">Description
                     <div style="width: 283px; height: 10px;" class="spacer"></div>
                     <lable ng-repeat="behaviour in hBinteraction">
-                        <button class="button button-positive button-outline" ng-click="addBehaviour('Human-bear Interaction', '{{behaviour}}')">{{ behaviour }}</button>
+                        <button class="button button-positive" ng-click="addBehaviour('Human-bear Interaction', '{{behaviour}}')">{{ behaviour }}</button>
                     </lable>
-                </ion-item>                
+                </ion-item>
+                    <div style="width: 283px; height: 30px;" class="spacer"></div>
             </div>
-            
+
+
             <ion-checkbox ng-model="behaviournOther.checked">Other</ion-checkbox>
             <div ng-show="behaviournOther.checked">
             
@@ -186,132 +219,133 @@
             </div>
             
             </div>
-            
+
             <!-- Help section-->
-            <div style="width: 283px; height: 30px;" class="spacer"></div>
-                <ion-checkbox ng-model="help.checked">Help</ion-checkbox>
-                <div ng-show="help.checked">
-                    
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Habituation Level</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!habituationHelp, 'button button-small button-icon icon ion-ios-minus-outline':habituationHelp}" ng-click="habituationHelp=!habituationHelp"></a>
+            <div ng-model="showHelp" ng-show="showHelp" class="card">
+                <div class="container">
+                    <div class="row border-bottom">
+                        <div class="col col-33">
+                        </div>
+                        <div class="col col-33 col-bottom text-center">
+                            <h3>Help Topics</h3> 
+                        </div>
+                        <div class="col col-33 col-center text-right">
+                            <a class="button button-icon icon ion-close-circled" ng-click="showHelp = false"></a>
                         </div>
                     </div>
-                    <div ng-model="habituationHelp" ng-show="habituationHelp" class="center" style="text-align: left;">
+                    <div class="spacer spacer-10"></div>
+                    <div class="row item-divider expando-pane">
+                            <div class="col col-center"><h4>Habituation Level</h4></div>
+                            <div class="col col-center text-right">
+                                <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!habituationHelp, 'button button-small button-icon icon ion-ios-minus-outline':habituationHelp}" ng-click="habituationHelp=!habituationHelp"></a>
+                            </div>
+                        </div>
+                        <div ng-model="habituationHelp" ng-show="habituationHelp" class="center" style="text-align: left;">
+                                <br>
+                                <strong><u>Habituated</u></strong> - Tolerance of people at &lt; 50 m with no noticeable change in behaviour <br>
+                                <strong><u>Non-habituated</u></strong> - Normally moves away when people approach and/or displays agitated behaviours.<br>
+                                <strong><u>Subadult</u></strong> - May also sub-classify habituation level of subadults.<br>
+                                <br>
+                        </div>
+                        
+                        <div class="row item-divider expando-pane">
+                            <div class="col col-center"><h4>Feeding/Foraging </h4></div>
+                            <div class="col col-center text-right">
+                                <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!feedingHelp, 'button button-small button-icon icon ion-ios-minus-outline':feedingHelp}" ng-click="feedingHelp=!feedingHelp"></a>
+                            </div>
+                        </div>
+                        <div ng-model="feedingHelp" ng-show="feedingHelp" class="center" style="text-align: left;">
                             <br>
-                            <strong><u>Habituated</u></strong> - Tolerance of people at &lt; 50 m with no noticeable change in behaviour <br>
-                            <strong><u>Non-habituated</u></strong> - Normally moves away when people approach and/or displays agitated behaviours.<br>
-                            <strong><u>Subadult</u></strong> - May also sub-classify habituation level of subadults.<br>
+                            <strong><u>Pursuit for food</u></strong> - Actively seeking out food.  Could be moving for purpose of feeding.<br>
+                            <strong><u>Green vegetation</u></strong> - Feeding on herbaceous material (i.e., sedges, clovers, grasses, cowparsnip, etc.).  Not to be confused with scavenging carcasses.<br>
+                            <strong><u>Berries</u></strong> -  Feeding on berries, i.e., blueberries, rosehips, devil's club, thimble berries, etc.<br>
+                            <strong><u>Fishing</u></strong> -  Capture and consumption of live, vigorous fish.<br>
+                            <strong><u>Human food</u></strong> - Consumption of human food items, excluding angler's fish.<br><br>
+                        
+                        </div>
+                        
+                        <div class="row item-divider expando-pane">
+                            <div class="col col-center"><h4>Non-Interactive</h4></div>
+                            <div class="col col-center text-right">
+                                <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!nIHelp, 'button button-small button-icon icon ion-ios-minus-outline':nIHelp}" ng-click="nIHelp=!nIHelp"></a>
+                            </div>
+                        </div>
+                        <div ng-model="nIHelp" ng-show="nIHelp" class="center" style="text-align: left;">
                             <br>
-                    </div>
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Feeding/Foraging </h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!feedingHelp, 'button button-small button-icon icon ion-ios-minus-outline':feedingHelp}" ng-click="feedingHelp=!feedingHelp"></a>
+                            <strong><u>Loafing/Resting</u></strong> - Not moving, non-interactive, may be sitting or standing<br>
+                            <strong><u>Sleeping</u></strong> - Bear sleeping<br>
+                            <strong><u>Walking</u></strong> - Bear walking but not pursuing food, without interest<br>
+                            <strong><u>Running</u></strong> - Running to or from no apparent stimulus.<br>
+                            <br>
                         </div>
-                    </div>
-                    <div ng-model="feedingHelp" ng-show="feedingHelp" class="center" style="text-align: left;">
+                        
+                        <div class="row item-divider expando-pane">
+                            <div class="col col-center"><h4>Bear-Bear Interaction</h4></div>
+                            <div class="col col-center text-right">
+                                <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!bBiHelp, 'button button-small button-icon icon ion-ios-minus-outline':bBiHelp}" ng-click="bBiHelp=!bBiHelp"></a>
+                            </div>
+                        </div>
+                        <div ng-model="bBiHelp" ng-show="bBiHelp" class="center" style="text-align: left;">
+                            <br>
+                            <strong><u>Alert/Vigilance</u></strong> - Interaction between individuals is evident but behaviour uncertain. Looking and/or sniffing intently towards another bear.<br>
+                            <strong><u>Playing</u></strong> - Non-agonistic amicable behaviour, wrestling, chasing, etc.<br>
+                            <strong><u>Fighting</u></strong> - Agonistic interaction with or without vocalization.<br>
+                            <strong><u>Defense</u></strong> - Active or passive deferral to aggressor, retreat orstanding ground.<br>
+                            <br>
+                        </div>
+                        
+                        <div class="row item-divider expando-pane">
+                            <div class="col col-center"><h4>Bear-Human Interaction</h4></div>
+                            <div class="col col-center text-right">
+                                <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!bHIHelp, 'button button-small button-icon icon ion-ios-minus-outline':bHIHelp}" ng-click="bHIHelp=!bHIHelp"></a>
+                            </div>
+                        </div>
+                        <div ng-model="bHIHelp" ng-show="bHIHelp" class="center" style="text-align: left;">
                         <br>
-                        <strong><u>Pursuit for food</u></strong> - Actively seeking out food.  Could be moving for purpose of feeding.<br>
-                        <strong><u>Green vegetation</u></strong> - Feeding on herbaceous material (i.e., sedges, clovers, grasses, cowparsnip, etc.).  Not to be confused with scavenging carcasses.<br>
-                        <strong><u>Berries</u></strong> -  Feeding on berries, i.e., blueberries, rosehips, devil's club, thimble berries, etc.<br>
-                        <strong><u>Fishing</u></strong> -  Capture and consumption of live, vigorous fish.<br>
-                        <strong><u>Human food</u></strong> - Consumption of human food items, excluding angler's fish.<br><br>
-                    
-                    </div>
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Non-Interactive</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!nIHelp, 'button button-small button-icon icon ion-ios-minus-outline':nIHelp}" ng-click="nIHelp=!nIHelp"></a>
-                        </div>
-                    </div>
-                    <div ng-model="nIHelp" ng-show="nIHelp" class="center" style="text-align: left;">
+                        <strong><u>Bear Response:</u></strong><br><br>
+                        <strong><u>Alert/Vigilance</u></strong> - Interaction with human is evident but behaviour uncertain. Looking and/or sniffing and/or standingon hind legs toward humans or vehicle. Stop, watch, stare, stand to investigate.<br>
+                        <strong><u>Retreat</u></strong> - Actively increase distance away from human or vehicle<br>
+                        <strong><u>Bear Approach</u></strong> - Bear approaches human, record closest distance.<br>
                         <br>
-                        <strong><u>Loafing/Resting</u></strong> - Not moving, non-interactive, may be sitting or standing<br>
-                        <strong><u>Sleeping</u></strong> - Bear sleeping<br>
-                        <strong><u>Walking</u></strong> - Bear walking but not pursuing food, without interest<br>
-                        <strong><u>Running</u></strong> - Running to or from no apparent stimulus.<br>
+                        </div>
+                        
+                        
+                        <div class="row item-divider expando-pane">
+                            <div class="col col-center"><h4>Human-Bear Interaction</h4></div>
+                            <div class="col col-center text-right">
+                                <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!hBIHelp, 'button button-small button-icon icon ion-ios-minus-outline':hBIHelp}" ng-click="hBIHelp=!hBIHelp"></a>
+                            </div>
+                        </div>
+                        <div ng-model="hBIHelp" ng-show="hBIHelp" class="center" style="text-align: left;">
                         <br>
-                    </div>
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Bear-Bear Interaction</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!bBiHelp, 'button button-small button-icon icon ion-ios-minus-outline':bBiHelp}" ng-click="bBiHelp=!bBiHelp"></a>
-                        </div>
-                    </div>
-                    <div ng-model="bBiHelp" ng-show="bBiHelp" class="center" style="text-align: left;">
+                        <strong><u>Human response:</u></strong><br><br>
+                        
+                        <strong><u>Alert/Vigilance</u></strong> - Stop activity, watch, stare. Do not move.<br>
+                        <strong><u>Retreat</u></strong> - Back away, walk away, run away.<br>
+                        <strong><u>Approach</u></strong> bear - Human approaches bear, record closest distance. <strong>Note:<strong> run towards, walk towards.<br>
+                        <strong><u>Aggression</u></strong> - Yelling, hit with sticks, throw rocks, etc.<br>
+                        <strong><u>Enticing</u></strong> - Make fish whole or entrails obviously available to bears.  Make garbage of human food available to bears.  Try to attract bear(s).<br>
                         <br>
-                        <strong><u>Alert/Vigilance</u></strong> - Interaction between individuals is evident but behaviour uncertain. Looking and/or sniffing intently towards another bear.<br>
-                        <strong><u>Playing</u></strong> - Non-agonistic amicable behaviour, wrestling, chasing, etc.<br>
-                        <strong><u>Fighting</u></strong> - Agonistic interaction with or without vocalization.<br>
-                        <strong><u>Defense</u></strong> - Active or passive deferral to aggressor, retreat orstanding ground.<br>
+                        </div>
+                        
+                        
+                        <div class="row item-divider expando-pane">
+                            <div class="col col-center"><h4>Other</h4></div>
+                            <div class="col col-center text-right">
+                                <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!otherHelp, 'button button-small button-icon icon ion-ios-minus-outline':otherHelp}" ng-click="otherHelp=!otherHelp"></a>
+                            </div>
+                        </div>
+                        <div ng-model="otherHelp" ng-show="otherHelp" class="center" style="text-align: left;">
                         <br>
-                    </div>
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Bear-Human Interaction</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!bHIHelp, 'button button-small button-icon icon ion-ios-minus-outline':bHIHelp}" ng-click="bHIHelp=!bHIHelp"></a>
+                        <strong><u>Other</strong></u> - Behaviour not on above list, e.g., interaction with dogs or other wildlife. <br>
+                        <br>
                         </div>
-                    </div>
-                    <div ng-model="bHIHelp" ng-show="bHIHelp" class="center" style="text-align: left;">
-                    <br>
-                    <strong><u>Bear Response:</u></strong><br><br>
-                    <strong><u>Alert/Vigilance</u></strong> - Interaction with human is evident but behaviour uncertain. Looking and/or sniffing and/or standingon hind legs toward humans or vehicle. Stop, watch, stare, stand to investigate.<br>
-                    <strong><u>Retreat</u></strong> - Actively increase distance away from human or vehicle<br>
-                    <strong><u>Bear Approach</u></strong> - Bear approaches human, record closest distance.<br>
-                    <br>
-                    </div>
-                    
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Human-Bear Interaction</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!hBIHelp, 'button button-small button-icon icon ion-ios-minus-outline':hBIHelp}" ng-click="hBIHelp=!hBIHelp"></a>
-                        </div>
-                    </div>
-                    <div ng-model="hBIHelp" ng-show="hBIHelp" class="center" style="text-align: left;">
-                    <br>
-                    <strong><u>Human response:</u></strong><br><br>
-                    
-                    <strong><u>Alert/Vigilance</u></strong> - Stop activity, watch, stare. Do not move.<br>
-                    <strong><u>Retreat</u></strong> - Back away, walk away, run away.<br>
-                    <strong><u>Approach</u></strong> bear - Human approaches bear, record closest distance. <strong>Note:<strong> run towards, walk towards.<br>
-                    <strong><u>Aggression</u></strong> - Yelling, hit with sticks, throw rocks, etc.<br>
-                    <strong><u>Enticing</u></strong> - Make fish whole or entrails obviously available to bears.  Make garbage of human food available to bears.  Try to attract bear(s).<br>
-                    <br>
-                    </div>
-                    
-                    
-                    <div class="row item-divider expando-pane">
-                        <div class="col col-center"><h4>Other</h4></div>
-                        <div class="col col-center text-right">
-                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!otherHelp, 'button button-small button-icon icon ion-ios-minus-outline':otherHelp}" ng-click="otherHelp=!otherHelp"></a>
-                        </div>
-                    </div>
-                    <div ng-model="otherHelp" ng-show="otherHelp" class="center" style="text-align: left;">
-                    <br>
-                    <strong><u>Other</strong></u> - Behaviour not on above list, e.g., interaction with dogs or other wildlife. <br>
-                    <br>
-                    </div>
-
-
-
-
                 </div>
+                <div class="spacer spacer-20"></div>            
+            </div><!--End Help-->
             
-            </div>
-            
-            
-            
-        <div style="width: 283px; height: 30px;" class="spacer"></div>
-        <div style="width: 283px; height: 30px;" class="spacer"></div>
-        <div style="width: 283px; height: 30px;" class="spacer"></div>
+            <div class="spacer spacer-40"></div>
+            <div class="spacer spacer-40"></div>
         </ion-content>
     </div>
 </ion-view>

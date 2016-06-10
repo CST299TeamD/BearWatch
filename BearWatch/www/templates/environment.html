@@ -24,55 +24,152 @@
     <ion-content class="has-header container" overflow-scroll="true" padding="true">
         <form class="list">
             <div class="spacer spacer-10"></div>
+            <div class="row">
+                <div class="col col-33">
+                </div>
+                <div class="col col-33 text-center">
+                    <h2>Update Environment Info</h2>
+                </div>
+                <div class="col col-33 text-right">
+                    <a ng-click="showHelp=!showHelp"><i class="ion-help-circled help"></i></a>
+                </div>
+            </div>
+            <div class="spacer spacer-20"></div>
+
+            <!-- Help section-->
+            <div ng-model="showHelp" ng-show="showHelp" class="card">
+                <div class="container">
+                    <div class="row border-bottom">
+                        <div class="col col-33">
+                        </div>
+                        <div class="col col-33 col-bottom text-center">
+                            <h3>Help Topics</h3> 
+                        </div>
+                        <div class="col col-33 col-center text-right">
+                            <a class="button button-icon icon ion-close-circled" ng-click="showHelp = false"></a>
+                        </div>
+                    </div>
+                    <div class="spacer spacer-10"></div>
+                    <div class="row item-divider expando-pane">
+                        <div class="col col-center"><h4>General</h4></div>
+                        <div class="col col-center text-right">
+                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!genHelp, 'button button-small button-icon icon ion-ios-minus-outline':genHelp}" ng-click="genHelp=!genHelp"></a>
+                        </div>
+                    </div>
+                    <div ng-model="genHelp" ng-show="genHelp" class="container">
+                        <div class="spacer spacer-10"></div>
+                        <p>Fill in the fields below in order to continue setting up your session. It is important to have complete environment at the beginning of a session, updates can be made in the dashboard section.</p>
+                        <div class="spacer spacer-10"></div>
+                    </div>
+
+                    <div class="row item-divider expando-pane">
+                        <div class="col col-center"><h4>Weather Definitions</h4></div>
+                        <div class="col col-center text-right">
+                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!waterHelp, 'button button-small button-icon icon ion-ios-minus-outline':waterHelp}" ng-click="waterHelp=!waterHelp"></a>
+                        </div>
+                    </div>
+                    <div ng-model="waterHelp" ng-show="waterHelp" class="container">
+                        <div class="spacer spacer-10"></div>                    
+                        <div class="center">
+                            <h3>Wind (Beaufort Scale):</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col t_header">Description</div><div class="col t_header">Sea Conditions</div><div class="col t_header">Land Conditions</div>
+                        </div>
+                        <div class="row">
+                            <div class="col t_data">Calm</div><div class="col t_data">Sea like a mirror.</div><div class="col t_data">Smoke rises vertically.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col t_data">Light air</div><div class="col t_data">Ripples with the appearance of scales are formed, but without foam crests.</div><div class="col t_data">Smoke drift indicates wind direction. Leaves and wind vanes are stationary.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col t_data">Light breeze</div><div class="col t_data">Small wavelets, still short but more pronounced; crests have a glassy appearance and do not break.</div><div class="col t_data">Wind felt on exposed skin. Leaves rustle. Wind vanes begin to move.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col t_data">Gentle breeze</div><div class="col t_data">Large wavelets. Crests begin to break; scattered whitecaps.</div><div class="col t_data">Leaves and small twigs constantly moving, light flags extended.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col t_data">Moderate breeze</div><div class="col t_data">Small waves with breaking crests. Fairly frequent whitecaps.</div><div class="col t_data">Dust and loose paper raised. Small branches begin to move.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col t_data">Fresh breeze</div><div class="col t_data">Moderate waves of some length. Many whitecaps. Small amounts of spray.</div><div class="col t_data">Branches of a moderate size move. Small trees in leaf begin to sway.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col t_data">Strong breeze</div><div class="col t_data">Long waves begin to form. White foam crests are very frequent. Some airborne spray is present.</div><div class="col t_data">Large branches in motion. Whistling heard in overhead wires. Umbrella use becomes difficult. Empty plastic bins tip over.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col t_data">High wind moderate gale</div><div class="col t_data">Sea heaps up. Some foam from breaking waves is blown into streaks along wind direction. Moderate amounts of airborne spray.</div><div class="col t_data">Whole trees in motion. Effort needed to walk against the wind.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col t_data">Gale</div><div class="col t_data">Moderately high waves with breaking crests forming spindrift. Well-marked streaks of foam are blown along wind direction. Considerable airborne spray.</div><div class="col t_data">Some twigs broken from trees. Cars veer on road. Progress on foot is seriously impeded.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col t_data">Strong/severe gale</div><div class="col t_data">High waves whose crests sometimes roll over. Dense foam is blown along wind direction. Large amounts of airborne spray may begin to reduce visibility.</div><div class="col t_data">Some branches break off trees, and some small trees blow over. Construction/temporary signs and barricades blow over.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col t_data">Storm</div><div class="col t_data">Very high waves with overhanging crests. Large patches of foam from wave crests give the sea a white appearance. Considerable tumbling of waves with heavy impact. Large amounts of airborne spray reduce visibility.</div><div class="col t_data">Trees are broken off or uprooted, structural damage likely.</div>
+                        </div>
+
+                        <div class="spacer spacer-10"></div>
+                    </div>
+
+                    <div class="row item-divider expando-pane">
+                        <div class="col col-center"><h4>Food Sources</h4></div>
+                        <div class="col col-center text-right">
+                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!foodHelp, 'button button-small button-icon icon ion-ios-minus-outline':foodHelp}" ng-click="foodHelp=!foodHelp"></a>
+                        </div>
+                    </div>
+                    <div ng-model="foodHelp" ng-show="foodHelp" class="container">
+                        <div class="spacer spacer-10"></div>                    
+                        <p>A maximum of 3 food sources can be specified per session.</p>
+                        <div class="spacer spacer-10"></div>
+                    </div>
+                </div>
+                <div class="spacer spacer-20"></div>            
+            </div><!--End Help-->
+
+
+
             <div class="row item-divider expando-pane">
                 <div class="col col-center"><h4>Water</h4></div>
                 <div class="col col-center text-right">
                     <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!showWater, 'button button-small button-icon icon ion-ios-minus-outline':showWater}" ng-click="showWater=!showWater"></a>
                 </div>
             </div>
-            <div ng-model="showWater" ng-show="showWater">
-            <label class="item item-select">
-                <span class="input-label">Water Body:</span>
-                <select ng-model="Enviro.waterBody" ng-change="Enviro.save(Session.id)">
-                    <option selected disabled></option>
-                    <option>River</option>
-                    <option>Lake</option>
-                    <option>Estuary</option>
-                </select>
-            </label>
-            <label class="item item-select">
-                <span class="input-label">Water Level:</span>
-                <select ng-model="Enviro.waterLevel" ng-change="Enviro.save(Session.id)"> 
-                    <option selected disabled></option>
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Low</option>
-                </select>
-            </label>
-            <label class="item item-select">
-                <span class="input-label">Water Flow:</span>
-                <select ng-model="Enviro.waterFlow" ng-change="Enviro.save(Session.id)">
-                    <option selected disabled></option>
-                    <option>Cascade</option>
-                    <option>Rapid</option>
-                    <option>Riffle</option>
-                    <option>Glide</option>
-                    <option>Pool</option>
-                    <option>Woody debris jam</option>
-                </select>
-            </label>
-            
-            <label class="item item-select">
-                <span class="input-label">Water Clarity:</span>
-                <select ng-model="Enviro.waterClarity" ng-change="Enviro.save(Session.id)">
-                    <option selected disabled></option>
-                    <option value="0">Sparkling clear</option>
-                    <option value="1">Water appears dull, slight discoloration</option>
-                    <option value="2">Bottom visible to approx. 3ft, but not distinct</option>
-                    <option value="3">Bottom visible to approx. 1ft, but not distinct</option>
-                    <option value="4">Cannot see bottom</option>
-                </select>
-            </label>
+            <div ng-model="showWater" ng-show="showWater">            
+                <label class="item item-select">
+                    <span class="input-label">Water Body:</span>
+                    <select ng-model="Enviro.waterBody" ng-change="Enviro.save(Session.id)">
+                        <option selected disabled></option>
+                        <option>River</option>
+                        <option>Lake</option>
+                        <option>Estuary</option>
+                    </select>
+                </label>
+
+                <label class="item item-select">
+                    <span class="input-label">Water Level:</span>
+                    <select ng-model="Enviro.waterLevel" ng-change="Enviro.save(Session.id)"> 
+                        <option selected disabled></option>
+                        <option>Outside of Normal Banks</option>
+                        <option>Normal for the Season</option>
+                        <option>High Tide</option>
+                        <option>Mid Tide</option>
+                        <option>Low Tide</option>
+                    </select>
+                </label>
+                
+                <label class="item item-select">
+                    <span class="input-label">Water Clarity:</span>
+                    <select ng-model="Enviro.waterClarity" ng-change="Enviro.save(Session.id)">
+                        <option selected disabled></option>
+                        <option value="0">Sparkling clear</option>
+                        <option value="1">Water appears dull, slight discoloration</option>
+                        <option value="2">Bottom visible to approx. 3ft, but not distinct</option>
+                        <option value="3">Bottom visible to approx. 1ft, but not distinct</option>
+                        <option value="4">Cannot see bottom</option>
+                    </select>
+                </label>
             </div><!--end water options-->
             
             <div class="spacer spacer-20"></div>
@@ -226,44 +323,50 @@
                 </div>
             </div>            
             <div ng-model="showFoodSource" ng-show="showFoodSource">
-            <label class="item item-select">
-                <span class="input-label">Type:</span>
-                <select ng-model="Enviro.foodSource">
-                    <option selected disabled></option>
-                    <option>Fish</option>
-                    <option>Berries</option>
-                    <option>Green Vegetation</option>
-					<option>Other</option>
-                </select>
-            </label>
-            <label class="item item-select">
-                <span class="input-label">Availability:</span>
-                <select ng-model="Enviro.foodSourceAvail">
-                    <option selected disabled></option>
-                    <option>None</option>
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option>High</option>
-                </select>
-            </label>
-            
-            <label class="item item-input">
-                <span class="input-label">Comment:</span>
-                <input placeholder="Note species and/or describe other" type="text" ng-model="Enviro.foodSourceComment">
-            </label>
-            <div class="item pull-right">
-                <a class="button button-balanced icon ion-plus" ng-click="Enviro.addFood(Session.id)">&nbsp;Add</a>           
-            </div>		
-            
-            <!--show active food sources with remove option-->
-            <ion-item ng-show="Enviro.foodSources.length > 0" class="item-divider">Available food sources:</ion-item>
-            <ion-list>
-                <ion-item ng-repeat="food in Enviro.foodSources" class="item item-button-right">
-                    <p>{{food.added + " " + food.src + ", " + food.avail + "-Available" + " id: " + food.id}}</p>
-                    <p ng-show="food.desc != ''">{{food.desc}}</p>
-                    <a class="button button-icon icon ion-close-circled" ng-click="Enviro.clearFood(food.id, Session.id)"></a>
-                </ion-item>
-            </ion-list>
+                <div ng-show="Enviro.foodSources.length < 4" ng-hide="Enviro.foodSources.length == 3">
+                    <ion-item class="item-divider list-head">Food Sources</ion-item>
+                    <label class="item item-select">
+                        <span class="input-label">Type:</span>
+                        <select ng-model="Enviro.foodSource">
+                            <option selected disabled></option>
+                            <option>Fish</option>
+                            <option>Berries</option>
+                            <option>Green Vegetation</option>
+                            <option>Other</option>
+                        </select>
+                    </label>
+                    <label class="item item-select">
+                        <span class="input-label">Availability:</span>
+                        <select ng-model="Enviro.foodSourceAvail">
+                            <option selected disabled></option>
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
+                    </label>
+                    
+                    <label class="item item-input">
+                        <span class="input-label">Comment:</span>
+                        <input placeholder="Note species and/or describe other" type="text" ng-model="Enviro.foodSourceComment">
+                    </label>
+                    <div class="item pull-right">
+                        <a class="button button-balanced icon ion-plus" ng-click="Enviro.addFood()">&nbsp;Add</a>           
+                    </div>
+                    <div class="spacer spacer-10"></div>
+                </div>
+                <div ng-hide="Enviro.foodSources.length < 4" ng-show="Enviro.foodSources.length == 3">
+                    <ion-item class="item-divider list-head">3 Food Sources Max in Session</ion-item>
+                </div>
+
+                <!--show active food sources with remove option-->
+                <ion-item ng-show="Enviro.foodSources.length > 0" class="item-divider">Available food sources</ion-item>
+                <ion-list>
+                    <ion-item ng-repeat="food in Enviro.foodSources" class="item item-button-right">
+                        <p>{{food.added + " " + food.src + ", Availability: " + food.avail}}</p>
+                        <p ng-show="food.desc != ''">{{food.desc}}</p>
+                        <a class="button button-icon icon ion-close-circled" ng-click="Enviro.clearFood(food.id)"></a>
+                    </ion-item>
+                </ion-list> 
             </div>
             <div class="spacer spacer-20"></div>  
             </div><!--end foodSources-->
