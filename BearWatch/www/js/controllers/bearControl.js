@@ -16,6 +16,7 @@ angular.module('app.controllers')
         
         $scope.Bear.index = tmp.index;
         $scope.Bear.id = tmp.id;
+        $scope.Bear.inSight = tmp.inSight;
 	    $scope.Bear.isFocal = tmp.isFocal;
 		$scope.Bear.name = tmp.name;
 		$scope.Bear.zone = tmp.zone;
@@ -48,6 +49,7 @@ angular.module('app.controllers')
         $scope.Bear.comment = tmp.comment;
 	
     }
+
 })
 
 .controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session, FBearSet, $ionicPopup, $location, $state, Human) {
@@ -63,6 +65,7 @@ angular.module('app.controllers')
     //clear the bear object
     $scope.Bear.index = -1;
     $scope.Bear.id = -1;
+    $scope.Bear.inSight = true;
     $scope.Bear.isFocal = '';
     $scope.Bear.name = '';
     $scope.Bear.zone = '';
@@ -178,6 +181,7 @@ angular.module('app.controllers')
         	    	$scope.BearList.add.push({
         	    		index: $scope.BearList.add.length,
         	    		id: result.insertId,
+                        inSight: $scope.Bear.inSight,
                         isFocal: $scope.Bear.isFocal,
         	    		name: $scope.Bear.name,
         	    		zone: $scope.Bear.zone,
@@ -262,8 +266,6 @@ angular.module('app.controllers')
             var bHInteraction = [ "Retreat", "Bear Approach", "Aggression"];
             var hBinteraction = [ "Retreat", "Approach Bear", "Aggression", "Enticing"];
             var alert = [ "Unknown/Unaware", "Aware/ Uninterested", "Relax", "Bold and pushy", "Cautious"];
-            
-            
             var habituationLevel = ["Habituated", "Non- Habituated", "Sub-Adult"];
             $scope.feeding = feeding;
             $scope.nonInteractive = nonInteractive;
@@ -274,6 +276,21 @@ angular.module('app.controllers')
             $scope.alert = alert;
             
             $scope.showHelp = false;
+            
+            
+            $scope.sightChange = function(sight){
+                if(sight == "true") {
+                    $scope.BearList.add[Bear.index].inSight = false;
+                    $scope.BearList.add[Bear.index].behaviour = [];
+                    $scope.Bear.behaviour = [];
+                    //console.log("Is bear in shight? false");
+                } else {
+                    $scope.BearList.add[Bear.index].inSight = true;
+                    //console.log("Is bear in shight? true");
+                }
+                Bear.Log($scope.Session.id);
+            }
+            
             
             //scroll top function
             $scope.scrollDown = function(){
