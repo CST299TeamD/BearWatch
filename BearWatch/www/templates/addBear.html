@@ -72,6 +72,12 @@
             
             <ion-checkbox ng-model="Bear.uStream">Urine Stream Observed</ion-checkbox>
             
+            <label style="" class="item item-input">
+                <span class="input-label">Visual Equipment Used</span>
+                <input placeholder="    right or left side, location, size, description" type="text" ng-model="Bear.vAid">
+            </label>
+            
+            
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <ion-item style="" class="item-divider list-head">Location</ion-item>
             <label style="" class="item item-select">
@@ -147,6 +153,29 @@
                     <option>Other</option>                    
                 </select>
             </label>
+            
+            <label style="" class="item item-select">
+                <span class="input-label">Fur Condition</span>
+                <select ng-model="Bear.furCondition" >
+                    <option>Wet</option>
+                    <option>Dry</option>
+                </select>
+            </label>
+            
+            
+            <label style="" class="item item-select">
+                <span class="input-label">Fur Colour Variation</span>
+                <select ng-model="Bear.furCVariation" >
+                    <option>none</option>
+                    <option>Lighter Back</option>
+                    <option>Lighter Head</option>
+                    <option>Darker Legs</option>
+                    <option>Other</option>
+                </select>
+            </label>
+            
+            
+            
             <div ng-show="bearFurColour == 'Other' ">
                 <label style="" class="item item-input">
                     <span class="input-label">Fur Colour</span>

@@ -13,11 +13,12 @@ angular.module('app.controllers')
 
         // pull the bear object from the array
 		var tmp = $scope.BearList.add[index];
-        
+
         $scope.Bear.index = tmp.index;
         $scope.Bear.id = tmp.id;
         $scope.Bear.inSight = tmp.inSight;
         $scope.Bear.uStream = tmp.uStream;
+        $scope.Bear.vAid = tmp.vAid;
         $scope.Bear.isFocal = tmp.isFocal;
 		$scope.Bear.name = tmp.name;
 		$scope.Bear.zone = tmp.zone;
@@ -27,6 +28,8 @@ angular.module('app.controllers')
 		$scope.Bear.species = tmp.species;
 		$scope.Bear.markDescription = tmp.markDescription;
 		$scope.Bear.furColour = tmp.furColour;
+        $scope.Bear.furCondition = tmp.furCondition;
+        $scope.Bear.furCVariation = tmp.furCVariation;
 		$scope.Bear.pawMeasured = tmp.pawMeasured;
 		$scope.Bear.cubs = tmp.cubs;
         $scope.Bear.accuracy = tmp.accuracy;
@@ -34,7 +37,7 @@ angular.module('app.controllers')
 		$scope.Bear.cubAge = tmp.cubAge;
 		$scope.Bear.behaviour = tmp.behaviour;
         $scope.Bear.fishing = tmp.fishing;
-        
+            
         //try to get fishing behaviours
         try{
             $scope.Bear.fishingMethod = tmp.fishing[tmp.fishing.length -1].method;
@@ -68,6 +71,7 @@ angular.module('app.controllers')
     $scope.Bear.id = -1;
     $scope.Bear.inSight = true;
     $scope.Bear.uStream = false;
+    $scope.Bear.vAid = '';
     $scope.Bear.isFocal = '';
     $scope.Bear.name = '';
     $scope.Bear.zone = '';
@@ -77,6 +81,8 @@ angular.module('app.controllers')
     $scope.Bear.species = '';
     $scope.Bear.markDescription = '';
     $scope.Bear.furColour = '';
+    $scope.Bear.furCondition = '';
+    $scope.Bear.furCVariation = '';
     $scope.Bear.pawMeasured = false;
     $scope.Bear.cubs = '';
     $scope.Bear.accuracy = '';
@@ -185,6 +191,7 @@ angular.module('app.controllers')
         	    		id: result.insertId,
                         inSight: $scope.Bear.inSight,
                         uStream: $scope.Bear.uStream,
+                        vAid: $scope.Bear.vAid,
                         isFocal: $scope.Bear.isFocal,
         	    		name: $scope.Bear.name,
         	    		zone: $scope.Bear.zone,
@@ -194,6 +201,8 @@ angular.module('app.controllers')
         	    		species: $scope.Bear.species,
         	    		markDescription: $scope.Bear.markDescription,
                         furColour: $scope.Bear.furColour,
+                        furCondition: $scope.Bear.furCondition,
+                        furCVariation: $scope.Bear.furCVariation,
                         pawMeasured: $scope.Bear.pawMeasured,
         	    		cubs: $scope.Bear.cubs,
                         accuracy: $scope.Bear.accuracy,
@@ -505,6 +514,9 @@ angular.module('app.controllers')
     $scope.tmpCubs = $scope.Bear.cubs;
     $scope.tmpAccuracy = $scope.Bear.accuracy;
     $scope.tmpUStream = $scope.Bear.uStream;
+    $scope.tmpVAid = $scope.Bear.vAid;
+    $scope.tmpFurCondition = $scope.Bear.furCondition;
+    $scope.tmpFurCVariation = $scope.Bear.furCVariation;
     $scope.tmpCubFurColour = $scope.Bear.cubFurColour;
     $scope.tmpCubAge = $scope.Bear.cubAge;
     $scope.tmpComment = $scope.Bear.comment;
@@ -538,7 +550,7 @@ angular.module('app.controllers')
 
 
     //update bear specs
-	$scope.updateBear = function(index, name, zone, size, species, gender, age, markDescription, furColour, pawMeasured, uStream, cubs, accuracy, cubAge, cubFurColour, comment){
+	$scope.updateBear = function(index, name, zone, size, species, gender, age, markDescription, furColour, pawMeasured, uStream, cubs, accuracy, cubAge, cubFurColour, comment, vAid, furCondition, furCVariation){
         console.log(zone);
         //update Bear in bear array
         $scope.BearList.add[index].name = name;
@@ -551,6 +563,9 @@ angular.module('app.controllers')
         $scope.BearList.add[index].furColour = furColour;
         $scope.BearList.add[index].pawMeasured = pawMeasured;
         $scope.BearList.add[index].uStream = uStream;
+        $scope.BearList.add[index].vAid = vAid;
+        $scope.BearList.add[index].furCondition = furCondition;
+        $scope.BearList.add[index].furCVariation = furCVariation;
         $scope.BearList.add[index].cubs = cubs;
         $scope.BearList.add[index].accuracy = accuracy;
         $scope.BearList.add[index].cubFurColour = cubFurColour;
@@ -569,6 +584,9 @@ angular.module('app.controllers')
         $scope.Bear.furColour = furColour;
         $scope.Bear.pawMeasured = pawMeasured;
         $scope.Bear.uStream = uStream;
+        $scope.Bear.vAid = vAid;
+        $scope.Bear.furCondition = furCondition;
+        $scope.Bear.furCVariation = furCVariation;
         $scope.Bear.cubs = cubs;
         $scope.Bear.accuracy = accuracy;
         $scope.Bear.cubFurColour = cubFurColour;

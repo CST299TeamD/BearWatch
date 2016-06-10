@@ -39,6 +39,11 @@
             
             <ion-checkbox ng-model="tmpUStream">Urine Stream Observed</ion-checkbox>
             
+            <label style="" class="item item-input">
+                <span class="input-label">Visual Equipment Used</span>
+                <input placeholder="    right or left side, location, size, description" type="text" ng-model="tmpVAid">
+            </label>
+            
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <ion-item style="" class="item-divider list-head">Location</ion-item>
             <label style="" class="item item-select">
@@ -114,6 +119,28 @@
                     <option>Other</option>                    
                 </select>
             </label>
+            
+            <label style="" class="item item-select">
+                <span class="input-label">Fur Condition</span>
+                <select ng-model="tmpFurCondition" >
+                    <option>Wet</option>
+                    <option>Dry</option>
+                </select>
+            </label>
+            
+            
+            <label style="" class="item item-select">
+                <span class="input-label">Fur Colour Variation</span>
+                <select ng-model="tmpFurCVariation" >
+                    <option>none</option>
+                    <option>Lighter Back</option>
+                    <option>Lighter Head</option>
+                    <option>Darker Legs</option>
+                    <option>Other</option>
+                </select>
+            </label>
+            
+            
             <div ng-show="bearFurColour == 'Other' ">
                 <label style="" class="item item-input">
                     <span class="input-label">Fur Colour</span>
@@ -157,7 +184,7 @@
             </label>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
-            <a style="" class="button button-balanced  button-block ion-android-checkbox-outline" ui-sref="tab.bearInfo" ng-click="updateBear(Bear.index, tmpName, tmpZone, tmpSize, tmpSpecies, tmpGender, tmpAge, tmpMarkDescription, tmpFurColour, tmpPawMeasured, tmpUStream, tmpCubs, tmpAccuracy, tmpCubAge, tmpCubFurColour, tmpComment)">&nbsp;Save changes</a>
+            <a style="" class="button button-balanced  button-block ion-android-checkbox-outline" ui-sref="tab.bearInfo" ng-click="updateBear(Bear.index, tmpName, tmpZone, tmpSize, tmpSpecies, tmpGender, tmpAge, tmpMarkDescription, tmpFurColour, tmpPawMeasured, tmpUStream, tmpCubs, tmpAccuracy, tmpCubAge, tmpCubFurColour, tmpComment, tmpVAid, tmpFurCondition, tmpFurCVariation)">&nbsp;Save changes</a>
             <a style="" class="button button-assertive  button-block  ion-backspace-outline" ui-sref="tab.bearInfo">&nbsp;Cancel</a>
         </form>
     </ion-content>
