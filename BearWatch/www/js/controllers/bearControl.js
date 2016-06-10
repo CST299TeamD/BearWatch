@@ -308,8 +308,15 @@ angular.module('app.controllers')
             
             //scroll top function
             $scope.scrollDown = function(){
-                $scope.showHelp = !($scope.showHelp);
+                $scope.showHelp = true;
+                $ionicScrollDelegate.$getByHandle('mainScroll').resize();
+                $ionicScrollDelegate.$getByHandle('mainScroll').anchorScroll(true);
                 $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom(true);
+               // $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom(true);
+            }
+            
+            $scope.hideHelp = function() {
+                $scope.showHelp = false;
             }
             
             //starting the fishing activity
