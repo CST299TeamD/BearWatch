@@ -243,6 +243,28 @@
                         </div>
                     </div>
                     <div class="spacer spacer-10"></div>
+                    
+                    
+                    <div class="row item-divider expando-pane">
+                        <div class="col col-center"><h4>Alert/Vigilance</h4></div>
+                        <div class="col col-center text-right">
+                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!AVHelp, 'button button-small button-icon icon ion-ios-minus-outline':AVHelp}" ng-click="AVHelp=!AVHelp"></a>
+                        </div>
+                    </div>
+                    <div ng-model="bHIHelp" ng-show="AVHelp" class="center" style="text-align: left;">
+                        <br>
+                        <strong><u>Unknown</u></strong> - Unable to determine if the other has been noticed.<br>
+                        <strong><u>Unaware</u></strong> - It seems unlikely that the other has been noticed.<br>
+                        <strong><u>Aware</u></strong> - Appears to have noticed the other and is attentive.<br>
+                        <strong><u>Relaxed</u></strong> - Appears to have noticed the other and seems unaffected and calm.<br>
+                        <strong><u>Disinterested</u></strong> - Appears to have noticed the other but seems to be ignoring the other.<br>
+                        <strong><u>Cautious</u></strong> - Appears to have noticed the other and seems vigilant; movements may seem tentative, or bear may retreat or otherwise attempt to avoid interaction.<br>
+                        <strong><u>Bold/pushy</u></strong> - Appears to be testing boundaries, causing other to retreat or behave with caution.<br>
+                        <strong><u>Aggressive</u></strong> - charging other with/or without physical contact.<br>
+                        <br>
+                    </div>
+                    
+                    
                     <div class="row item-divider expando-pane">
                             <div class="col col-center"><h4>Habituation Level</h4></div>
                             <div class="col col-center text-right">
@@ -312,9 +334,9 @@
                         <div ng-model="bHIHelp" ng-show="bHIHelp" class="center" style="text-align: left;">
                         <br>
                         <strong><u>Bear Response:</u></strong><br><br>
-                        <strong><u>Alert/Vigilance</u></strong> - Interaction with human is evident but behaviour uncertain. Looking and/or sniffing and/or standingon hind legs toward humans or vehicle. Stop, watch, stare, stand to investigate.<br>
                         <strong><u>Retreat</u></strong> - Actively increase distance away from human or vehicle<br>
                         <strong><u>Bear Approach</u></strong> - Bear approaches human, record closest distance.<br>
+                        <strong><u>Aggression</u></strong> - Yelling, hit with sticks, throw rocks, etc.<br>
                         <br>
                         </div>
                         
@@ -329,7 +351,6 @@
                         <br>
                         <strong><u>Human response:</u></strong><br><br>
                         
-                        <strong><u>Alert/Vigilance</u></strong> - Stop activity, watch, stare. Do not move.<br>
                         <strong><u>Retreat</u></strong> - Back away, walk away, run away.<br>
                         <strong><u>Approach</u></strong> bear - Human approaches bear, record closest distance. <strong>Note:<strong> run towards, walk towards.<br>
                         <strong><u>Aggression</u></strong> - Yelling, hit with sticks, throw rocks, etc.<br>
