@@ -1,4 +1,4 @@
-<ion-view style="" can-swipe-back="false" title="{{Bear.name}}">
+<ion-view style="" title="{{Bear.name}}" can-swipe-back="false">
     	<ion-nav-title>
 		<div width=100% class="dashboardHeader" ng-controller="timerControl">
 			<div class="row">
@@ -20,7 +20,7 @@
             </ion-nav-buttons>
         </ion-nav-bar>
         
-	<ion-content class="has-header container" overflow-scroll="true" padding="true" delegate-handle="mainScroll">
+	<ion-content can-swipe-back="false" class="has-header container" overflow-scroll="true" padding="true" delegate-handle="mainScroll">
         <div class="spacer spacer-10"></div>
         <div class="row">
             <div class="col col-33">
@@ -353,6 +353,7 @@
             
             <div class="spacer spacer-40"></div>
             <div class="spacer spacer-40"></div>
-        </ion-content>
-    </div>
+        </div>
+    </ion-content>
+    
 </ion-view>
