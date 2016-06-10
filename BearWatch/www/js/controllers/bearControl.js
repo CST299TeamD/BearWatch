@@ -262,14 +262,15 @@ angular.module('app.controllers')
 })
 
 
-.controller('bearInfoCtrl', function($scope, Bear, BearList, Session, $ionicScrollDelegate, $q) {
+.controller('bearInfoCtrl', function($scope, Bear, BearList, Session, $ionicScrollDelegate, $q, $ionicNavBarDelegate) {
             
             //get all the factory objects
             $scope.Session = Session;
             $scope.session_id = Session.id;
             $scope.Bear = Bear;
             $scope.BearList = BearList; 
-
+            
+            $ionicNavBarDelegate.showBackButton(true);
             
             //create and attache all the behaviour arrays to scope
             var feeding = ["Pursuit for food", "Green Vegetation", "Berries", "Human Food"];
@@ -441,9 +442,8 @@ angular.module('app.controllers')
                 }
 
                 //clear the other filed
-                if(type == "Other"){
-                    $scope.other = '';
-                }
+                $scope.other = '';
+                document.getElementById("other").reset();
             
                 //insert into log table
                 Bear.Log($scope.Session.id);

@@ -13,6 +13,13 @@
             </div>
 		</div>
 	</ion-nav-title>
+        <ion-nav-bar class="bar-stable">
+            <ion-nav-back-button class="button-icon icon ion-ios-arrow-back">Back</ion-nav-back-button>
+            <ion-nav-buttons side="right">
+                <a class="button icon-left ion-log-out button-small button-assertive" ng-click = "showConfirm()">&nbsp;End Session</a>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        
 	<ion-content class="has-header container" overflow-scroll="true" padding="true" delegate-handle="mainScroll">
         <div class="spacer spacer-10"></div>
         <div class="row">
@@ -213,7 +220,7 @@
             <div class="item item-input-inset">
                 <label class="item item-input-wrapper">
                     <span class="input-label">Describe:</span>
-                    <input type="text" ng-model="other"> </textarea>
+                    <input type="text" id="other" ng-model="other"> </textarea>
                 </label>
                 <button class="button button-balanced icon ion-ios-upload-outline" ng-click="addBehaviour('Other', other)">&nbsp; Add</button>
             </div>
