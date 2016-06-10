@@ -94,7 +94,6 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "comment_type      TEXT    , "      
       + "water_body        TEXT    , "
       + "water_level       TEXT    , "
-      + "water_flow        TEXT    , "
       + "water_clarity     TEXT    , "
       + "cloud_cover       TEXT    , "
       + "precipitation     TEXT    , "
