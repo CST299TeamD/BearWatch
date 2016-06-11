@@ -23,6 +23,12 @@ angular.module('app.controllers')
 		$scope.Bear.name = tmp.name;
 		$scope.Bear.zone = tmp.zone;
 		$scope.Bear.size = tmp.size;
+        $scope.Bear.CFCBlonde = tmp.CFCBlonde;
+        $scope.Bear.CBCLightBrown = tmp.CBCLightBrown;
+        $scope.Bear.CFCBrown = tmp.CFCBrown;
+        $scope.Bear.CFCDarkBrown = tmp.CFCDarkBrown;
+        $scope.Bear.CFCOther = tmp.CFCOther;
+        $scope.Bear.cubAge = tmp.cubAge;
 		$scope.Bear.age = tmp.age;
 		$scope.Bear.gender = tmp.gender;
 		$scope.Bear.species = tmp.species;
@@ -82,6 +88,11 @@ angular.module('app.controllers')
     $scope.Bear.markDescription = '';
     $scope.Bear.furColour = '';
     $scope.Bear.furCondition = '';
+    $scope.Bear.CFCBlonde = false;
+    $scope.Bear.CBCLightBrown = false;
+    $scope.Bear.CFCBrown = false;
+    $scope.Bear.CFCDarkBrown = false;
+    $scope.Bear.CFCOther = false;
     $scope.Bear.furCVariation = '';
     $scope.Bear.pawMeasured = false;
     $scope.Bear.cubs = '';
@@ -207,7 +218,12 @@ angular.module('app.controllers')
         	    		cubs: $scope.Bear.cubs,
                         accuracy: $scope.Bear.accuracy,
         	    		cubFurColour: $scope.Bear.cubFurColour,
-        	    		cubAge: $scope.Bear.cubAge,
+                        CFCBlonde: $scope.Bear.CFCBlonde,
+                        CBCLightBrown: $scope.Bear.CBCLightBrown,
+                        CFCBrown: $scope.Bear.CFCBrown,
+                        CFCDarkBrown: $scope.Bear.CFCDarkBrown,
+                        CFCOther: $scope.Bear.CFCOther,
+                        cubAge: $scope.Bear.cubAge,
                         behaviour: [],
                         isFishing: false,
                         fishing: [],
@@ -525,6 +541,11 @@ angular.module('app.controllers')
     $scope.tmpFurCondition = $scope.Bear.furCondition;
     $scope.tmpFurCVariation = $scope.Bear.furCVariation;
     $scope.tmpCubFurColour = $scope.Bear.cubFurColour;
+    $scope.tmpCFCBlonde = $scope.Bear.CFCBlonde;
+    $scope.tmpCBCLightBrown = $scope.Bear.CBCLightBrown;
+    $scope.tmpCFCBrown = $scope.Bear.CFCBrown;
+    $scope.tmpCFCDarkBrown = $scope.Bear.CFCDarkBrown;
+    $scope.tmpCFCOther = $scope.Bear.CFCOther;
     $scope.tmpCubAge = $scope.Bear.cubAge;
     $scope.tmpComment = $scope.Bear.comment;
     
@@ -557,8 +578,10 @@ angular.module('app.controllers')
 
 
     //update bear specs
-	$scope.updateBear = function(index, name, zone, size, species, gender, age, markDescription, furColour, pawMeasured, uStream, cubs, accuracy, cubAge, cubFurColour, comment, vAid, furCondition, furCVariation){
-        console.log(zone);
+	$scope.updateBear = function(index, name, zone, size, species, gender, age, markDescription, furColour, pawMeasured, uStream, cubs, accuracy, cubAge, cubFurColour, comment, vAid, furCondition, furCVariation, CFCBlonde, CBCLightBrown, CFCBrown, CFCDarkBrown, CFCOther){
+       
+        console.log(CFCBlonde +" "+ CBCLightBrown +" "+ CFCBrown +" "+ CFCDarkBrown +" "+ CFCOther);
+            
         //update Bear in bear array
         $scope.BearList.add[index].name = name;
         $scope.BearList.add[index].zone = zone;
@@ -576,6 +599,13 @@ angular.module('app.controllers')
         $scope.BearList.add[index].cubs = cubs;
         $scope.BearList.add[index].accuracy = accuracy;
         $scope.BearList.add[index].cubFurColour = cubFurColour;
+            
+        $scope.BearList.add[index].CFCBlonde = CFCBlonde;
+        $scope.BearList.add[index].CBCLightBrown = CBCLightBrown;
+        $scope.BearList.add[index].CFCBrown = CFCBrown;
+        $scope.BearList.add[index].CFCDarkBrown = CFCDarkBrown;
+        $scope.BearList.add[index].CFCOther = CFCOther;
+            
         $scope.BearList.add[index].cubAge = cubAge;
         $scope.BearList.add[index].comment = comment;
             
@@ -597,6 +627,11 @@ angular.module('app.controllers')
         $scope.Bear.cubs = cubs;
         $scope.Bear.accuracy = accuracy;
         $scope.Bear.cubFurColour = cubFurColour;
+        $scope.Bear.CFCBlonde = CFCBlonde;
+        $scope.Bear.CBCLightBrown = CBCLightBrown;
+        $scope.Bear.CFCBrown = CFCBrown;
+        $scope.Bear.CFCDarkBrown = CFCDarkBrown;
+        $scope.Bear.CFCOther = CFCOther;
         $scope.Bear.cubAge = cubAge;
         $scope.Bear.comment = comment;
             

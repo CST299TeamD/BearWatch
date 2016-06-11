@@ -155,7 +155,7 @@
                 <select ng-model="Bear.furColour" >
                     <option>Blonde</option>
                     <option>Light Brown</option>
-                    <option>brown</option>
+                    <option>Brown</option>
                     <option>Dark Brown</option>
                     <option>Other</option>                    
                 </select>
@@ -208,19 +208,30 @@
                     <option>3rd YRLG</option>                    					
                 </select>
             </label>
+            
+                        <div style="width: 283px; height: 15px;" class="spacer"></div>
 
-
-            <label style="" class="item item-select">
-                <span class="input-label">Cub Fur colour</span>
-                <select ng-model="Bear.cubFurColour" >
-                    <option>Blonde</option>
-                    <option>Light Brown</option>
-                    <option>brown</option>
-                    <option>Dark Brown</option>
-                    <option>Other</option>                    
-                </select>
-            </label>
-            <div style="width: 283px; height: 22px;" class="spacer"></div>
+            <ion-item style="" class="item-divider list-head">Select Cub Fur Colours</ion-item>
+            <ion-item style="" class="item-text-wrap">
+                <div class = "row" style="flex-wrap: wrap;">
+                    <div class = "col">
+                        <div class="item-text-wrap">
+                                        <ion-checkbox ng-model="Bear.CFCBlonde">Blonde</ion-checkbox>
+                                        <ion-checkbox ng-model="Bear.CBCLightBrown">Light Brown</ion-checkbox>
+                                        <ion-checkbox ng-model="Bear.CFCBrown">Brown</ion-checkbox>
+                        </div>
+                    </div>
+                    <div class = "col">
+                        <div class="item-text-wrap">
+                                        <ion-checkbox ng-model="Bear.CFCDarkBrown">Dark Brown</ion-checkbox>
+                                        <ion-checkbox ng-model="Bear.CFCOther">Other</ion-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+            
+            
+            <div style="width: 283px; height: 35px;" class="spacer"></div>
             <label style="" class="item item-input">
                 <span class="input-label">Comment</span><textarea  ng-model="Bear.comment" placeholder=""> </textarea>
             </label>

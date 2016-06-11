@@ -173,25 +173,33 @@
                     <option>3rd YRLG</option>                                       
                 </select>
             </label>
+            <div style="width: 283px; height: 15px;" class="spacer"></div>
+
+            <ion-item style="" class="item-divider list-head">Select Cub Fur Colours</ion-item>
+                <div class = "row" style="flex-wrap: wrap;">
+                    <div class = "col">
+                                <ion-checkbox ng-model="tmpCFCBlonde">Blonde</ion-checkbox>
+                                <ion-checkbox ng-model="tmpCBCLightBrown">Light Brown</ion-checkbox>
+                                <ion-checkbox ng-model="tmpCFCBrown">Brown</ion-checkbox>
+                    </div>
+                    <div class = "col">
+                            <div class="item-text-wrap">
+                                <ion-checkbox ng-model="tmpCFCDarkBrown">Dark Brown</ion-checkbox>
+                                <ion-checkbox ng-model="tmpCFCOther">Other</ion-checkbox>
+                            </div>
+                    </div>
+                </div>
 
 
-            <label style="" class="item item-select">
-                <span class="input-label">Cub Fur colour</span>
-                <select ng-model="tmpCubFurColour" >
-                    <option>Blonde</option>
-                    <option>Light Brown</option>
-                    <option>brown</option>
-                    <option>Dark Brown</option>
-                    <option>Other</option>                    
-                </select>
-            </label>
-            <div style="width: 283px; height: 22px;" class="spacer"></div>
+
+
+            <div style="width: 283px; height: 35px;" class="spacer"></div>
             <label style="" class="item item-input">
                 <span class="input-label">Comment</span><textarea  ng-model="tmpComment"> </textarea>
             </label>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
-            <a style="" class="button button-balanced  button-block ion-android-checkbox-outline" ui-sref="tab.bearInfo" ng-click="updateBear(Bear.index, tmpName, tmpZone, tmpSize, tmpSpecies, tmpGender, tmpAge, tmpMarkDescription, tmpFurColour, tmpPawMeasured, tmpUStream, tmpCubs, tmpAccuracy, tmpCubAge, tmpCubFurColour, tmpComment, tmpVAid, tmpFurCondition, tmpFurCVariation)">&nbsp;Save changes</a>
+            <a style="" class="button button-balanced  button-block ion-android-checkbox-outline" ui-sref="tab.bearInfo" ng-click="updateBear(Bear.index, tmpName, tmpZone, tmpSize, tmpSpecies, tmpGender, tmpAge, tmpMarkDescription, tmpFurColour, tmpPawMeasured, tmpUStream, tmpCubs, tmpAccuracy, tmpCubAge, tmpCubFurColour, tmpComment, tmpVAid, tmpFurCondition, tmpFurCVariation,  tmpCFCBlonde, tmpCBCLightBrown, tmpCFCBrown, tmpCFCDarkBrown, tmpCFCOther)">&nbsp;Save changes</a>
             <a style="" class="button button-assertive  button-block  ion-backspace-outline" ui-sref="tab.bearInfo">&nbsp;Cancel</a>
         </form>
     </ion-content>
