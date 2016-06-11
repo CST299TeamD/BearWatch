@@ -285,374 +285,284 @@ angular.module('app.controllers')
 		}, 100);
 	
 		var buildAttachments = function(){
-			$scope.blockInformationHeader = 
-			$scope.blockInformationData = 		
-			$scope.siteIncidentalObservationsHeader = 
-			$scope.siteIncidentalObservationsData = 
-			$scope.generalSurveyHeader = 
-			$scope.GeneralSurveyData = '';
-
-			$scope.blockInformationStatus =
-			$scope.siteIncidentalObservationsStatus =
-			$scope.generalSurveyStatus =
-			$scope.pictureAttachmentsStatus = 0;
-
-			var header;
+			
 			var data;
-			//construct Project Information sheet
-			header = "SPI Project ID\tProject Name\t Survey Name";
-			data = "SPI12345\tBearWatch\t" + Session.park + " " + Session.observers + " " + Session.start_time;
-			emailAttachments.push("base64:projectInformation.csv//" + btoa(header+"\n"+data));
-
+			
 			//construct Block Information sheet
-			header = "Study Area Name\tStudy Area Photos\tBlock Label\tUTM Zone Block\tEasting Block\tNorthing Block\tBlock Area (sq m)\tBlock Comments\tBlock Photos";
-			data = Session.park_site + "\t" + "which photos?" + "\t" + "What is Block Label?" + "\t" + Session.logs[0].utm_zone + "\t" + Session.logs[0].easting + "\t" + Session.logs[0].northing + "\t" + "What is Block Area? " + "\t" + "What are Block Comments?" + "\t" + "What are Block Photos?"
-			emailAttachments.push("base64:blockInformation.csv//" + btoa(header+"\n"+data));
+			//header = "Study Area Name\tBlock Label\tUTM Zone Block\tEasting Block\tNorthing Block";
+			data = Session.park + "\t" + Session.site + "\t" + Session.logs[0].utm_zone + "\t" + Session.logs[0].easting + "\t" + Session.logs[0].northing;
+			emailAttachments.push("base64:blockInformation.csv//" + btoa(data));
 
 			//construct General Survey sheet
-			header = 
-			"Study Area Name" + "\t" +
-			"Block Label" + "\t" +
-			"Date" + "\t" +	
-			"Start Time" + "\t" +
-			"End Time" + "\t" +
-			"Viewing Situation (river, estuary or terrestrial)" + "\t" +
-			"Stationary or Mobile" + "\t" +
-			"Zone type" + "\t" +
-			"Comment" + "\t" +
-			"Surveyor" + "\t" +
-			"Cloud cover" + "\t" +
-			"Precipiation" + "\t" +
-			"Wind" + "\t" +
-			"Wind direction" + "\t" +
-			"Temperature (C )" + "\t" +
-			"humididty" + "\t" +
-			"Visibility" + "\t" +
-			"Reason for obscured visibility" + "\t" +
-			"Noise" + "\t" +
-			"Fish abundance" + "\t" +
-			"Berry abundance" + "\t" +
-			"Green vegetation abundance" + "\t" +
-			"Other" + "\t" +
-			"Comment (fish species or other)" + "\t" +
-			"Monitoring method (focal or scan)" + "\t" +
-			"Bear id" + "\t" +
-			"zone" + "\t" +
-			"Species" + "\t" +
-			"Count" + "\t" +
-			"Size" + "\t" +
-			"Sex" + "\t" +
-			"Age" + "\t" +
-			"Marks" + "\t" +
-			"Colour" + "\t" +
-			"Time" + "\t" +
-			"Paw measurement? (Y or N)" + "\t" +
-			"Number of cubs" + "\t" +
-			"Age of cubs" + "\t" +
-			"Cub fur colour" + "\t" +
-			"Bear comments" + "\t" +
-			"Habituation to humans" + "\t" +
-			"Feeding/foraging" + "\t" +
-			"Non-interactive" + "\t" +
-			"Bear-bear interactions" + "\t" +
-			"Bear-human interactions" + "\t" +
-			"zone 1b" + "\t" +
-			"zone 1a" + "\t" +
-			"zone 4+" + "\t" +
-			"zone 7a" + "\t" +
-			"zone 7b" + "\t" +
-			"zone 1+" + "\t" +
-			"zone 1" + "\t" +
-			"zone 4" + "\t" +
-			"zone 7" + "\t" +
-			"zone 7+" + "\t" +
-			"zone 2+" + "\t" +
-			"zone 2" + "\t" +
-			"zone 5" + "\t" +
-			"zone 8" + "\t" +
-			"zone 8+" + "\t" +
-			"zone 3+" + "\t" +
-			"zone 3" + "\t" +
-			"zone 6" + "\t" +
-			"zone 9" + "\t" +
-			"zone 9+" + "\t" +
-			"zone 3b" + "\t" +
-			"zone 3a" + "\t" +
-			"zone 6+" + "\t" +
-			"zone 9a" + "\t" +
-			"zone 9b" + "\t" +
-			"aircraft" + "\t" +
-			"ATC" + "\t" +
-			"motorized boat" + "\t" +
-			"vehicle" + "\t" +
-			"official or agency boat" + "\t" +
-			"angling" + "\t" +
-			"kayak/canoeing" + "\t" +
-			"hike/walking" + "\t" +
-			"running" + "\t" +
-			"picnic" + "\t" +
-			"photography" + "\t" +
-			"playing" + "\t" +
-			"wildlife viewing" + "\t" +
-			"biking" + "\t" +
-			"unobservable" + "\t" +
-			"other" + "\t" +
-			"human behaviour (worst if in a group)" + "\t" +
-			"human behaviour comment" + "\t" +
-			"Survey Observation Photos" + "\t" +
-			"General Comments";
-			
+		
 			data = "";
 			
-			//FOOD SOURCES
-			var fishAbundance, berryAbundance, greenVegetationAbundance, other = '';
-			for (var i = 0; i<Session.foodSources.length;i++){
-				fishAbundance = "";
-				berryAbundance = "";
-				greenVegetationAbundance = "";
-				other = "";
-				with (Session.foodSources[i]){
-					switch (food_source){
-							case "Fish":
-								fishAbundance = availability;
-								break;
-							case "Berries":
-								berryAbundance = availability;
-								break;
-							case "Green Vegetation":
-								greenVegetationAbundance = availability;
-								break;
-							default:
-								other = availability;
-					}
-
-					data = data +				
-						Session.park_site + "\t" +
-						"What is Block Label?" + "\t" +
-						Session.start_date + "\t" +	
-						Session.start_time + "\t" +
-						Session.finish_time + "\t" +
-						Session.viewing_area + "\t" +
-						Session.stationary + "\t" +
-						Session.zoneSchema + "\t" +
-						Session.comment + "\t" +
-						Session.firstName + "\t" +
-						"\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" +
-						fishAbundance + "\t" +
-						berryAbundance + "\t" +
-						greenVegetationAbundance + "\t" +
-						other + "\t" +
-						comment + "\t" +
-						Session.observationMode + "\t" + "\t" + "\t" + "\t" +
-						"0" +  "\t" +  "\t" +  "\t" +  "\t" +  "\t" +  "\t" + //count
-						Session.start_time; 
+			var bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, lastBearComment, habituation, feedingForaging, nonInteractive, bearBearInteractions, bearHumanInteractions, studyAreaPhoto, fishingTechnique, foragingDetails, numberOfFishCaught, alertVigilance, actionOtherComment= "";
 				
-				}
-				
-				data = data + "\n";
-			}
-			
-			//TIME BASED LOGS
-			humans = {"1b" : "", "1a" : "", "4p" : "", "7a" : "", "7b" : "", "1p" : "", "1" : "", "4" : "", "7" : "", "7p" : "", "2p" : "", "2" : "", "5" : "", "8" : "", "8p" : "", "3p" : "", "3" : "", "6" : "", "9" : "", "9p" : "", "3b" : "", "3a" : "", "6p" : "", "9a" : "", "9b" : ""};
-		
 			for (var i = 0; i<Session.logs.length;i++){
-				console.log("log start: "+i+"/"+Session.logs.length);
-					
-				var bearName, bearZone, species, count, size, sex, age, marks, colour, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, habituation, feedingForaging, nonInteractive, bearBearInteractions, bearHumanInteractions = "";
+				//console.log("log start: "+i+"/"+Session.logs.length);
+													
+				//values to reset
+				bearName = accuracy = accuracyComments = animalInSight = urineStreamObserved = bearZone = bearSpecies = count = size = sex = age = marks = colour = colourVariation = furWet = pawMeasure = cubs = ageOfCubs = cubFur = habituation = feedingForaging = nonInteractive = bearBearInteractions = bearHumanInteractions = bearComment = studyAreaPhoto = fishingTechnique = foragingDetails = numberOfFishCaught = alertVigilance = actionOtherComment= "";
 				with (Session.logs[i]){
+					
 					//Handle Pictures
-					surveyObservationPhoto = "";
-					blockPhoto = "";
-					studyAreaPhoto = "";	
-					if (picture_data != 'null'){
-							pictureAttachments.push("base64:picture"+i+".jpg//" + picture_data);
-							//logic to assign picture name to a "photo" field
-					}
-
-					//Handle Comments
-					humanComment = "";
-					generalComment = "";
-					if (comment != null && comment != ""){
-						if (comment_type.slice(0, 7) == "General"){
-							generalComment = comment;
-						} else if (comment_type.slice(0, 5) == "Human"){
-							humanComment = comment;
-						}
+					if (picture_data != null){
+						studyAreaPhoto = "picture"+i+".jpg";
+						//logic to assign picture name to a "photo" field
+						pictureAttachments.push("base64:picture"+i+".jpg//" + picture_data);
 					}
 					
 					//Handle ongoing environmental variables
+					if (water_body != null) Session.water_body = water_body;
+					if (water_level != null) Session.water_level = water_level;
+					if (water_clarity != null) Session.water_clarity = water_clarity;
+					
 					if (cloud_cover != null) Session.cloud_cover = cloud_cover;
 					if (precipitation  != null) Session.precipitation = precipitation;
 					if (wind != null) Session.wind = wind;
 					if (wind_direction != null) Session.wind_direction = wind_direction;
+					
 					if (temperature != null) Session.temperature = temperature;
 					if (humididty != null) Session.humididty = humididty;
+					
 					if (noise_level != null) Session.noise_level = noise_level;					
 					if (visibility != null) Session.visibility = visibility;
 					if (obstruction != null) Session.obstruction = obstruction;
 					
+					//Handle Comments
+					if (comment != null && comment != "" && (comment != humanComment || comment != generalComment)){
+						if (comment_type.slice(0, 7) == "General"){
+							humanComment = "";
+							generalComment = comment;
+						} else if (comment_type.slice(0, 5) == "Human"){
+							humanComment = comment;
+							generalComment = "";	
+						}
+					} else {
+						humanComment = "";
+						generalComment = "";	
+					}
+						
+
 					//Handle bears
-					if (bear != null && bear != [] && bear != "null" && bear != "undefined") {
+					//console.log(bear);
+					var bearUpdated = "";
+					if (bear != null) {
+						bearUpdated = "true";
 						bear = angular.fromJson(bear);
 						bearName = bear["name"];
+						accuracy = '';
+						accuracyComments = '';
+						animalInSight = '';
+						urineStreamObserved = '';
 						bearZone = bear["zone"];
-						species = bear["species"];
-						count = 1+parseInt(bear["cubs"]);
+						//habituation handled in behaviors
+						bearSpecies = bear["species"];
 						size = bear["size"];
+						if (parseInt(bear["cubs"]) != "NaN") {
+							count = 1+parseInt(bear["cubs"]);
+						} else {
+							count = 1;
+						};
 						sex = bear["gender"];
 						age = bear["age"];
-						marks = bear["markDescription"];
 						colour = bear["furColour"];
+						colourVariation = "";
+						furWet = "";
+						marks = bear["markDescription"];
 						pawMeasure = bear["pawMeasured"];
 						cubs = bear["cubs"];
 						ageOfCubs = bear["cubAge"];
 						cubFur = bear["cubFurColour"];
-						bearComment = bear["comment"];
+						if (lastBearComment != bear["comment"]) {bearComment = lastBearComment = bear["comment"];}
+
+							
+						
+							habituation,
+							feedingForaging,
+							fishingTechnique,
+							foragingDetails,
+							numberOfFishCaught,
+							nonInteractive,
+							bearBearInteractions,
+							bearHumanInteractions,
+							alertVigilance,
+							actionOtherComment = "";
+						/*
 						if (bear["behavior"] != "undefined" && bear["behavior"] != null){
 							var behavior = angular.fromJson(bear["behavior"]);
 							var fishing = angular.fromJson(bear["fishing"]);
 							console.log("************************");
-							console.log(bear["behavior"]);
-							console.log("************************");
-							console.log(bear["fishing"]);
-							console.log("************************");
-							//habituation = behavior["habituation"];
-							//feedingForaging = behavior["habituation"];
-							//nonInteractive = behavior["habituation"];
-							//bearBearInteractions = behavior["habituation"];
-							//bearHumanInteractions = behavior["habituation"];
-						}
-					} else {					
-						bearName = "";
-						sex = "";
-						bearZone = "";
-						species = "";
+							
+							feedingForaging
+							fishingTechnique
+							foragingDetails
+							numberOfFishCaught
+							nonInteractive
+							bearBearInteractions
+							bearHumanInteractions
+							alertVigilance
+							actionOtherComment
+							
+						}*/
+						bear = "";
+					} else {
+						//no bear data this log
+						bearUpdated = "false";
+						bear = null;
 						count = "0";
-						size = "";
-						sex = "";
-						age = "";
-						marks = "";
-						colour = "";
-						pawMeasure = "";
-						cubs = "";
-						ageOfCubs = "";
-						cubFur = "";
-						bearComment = "";
-						habituation = "";
-						feedingForaging = "";
-						nonInteractive = "";
-						bearBearInteractions = "";
-						bearHumanInteractions = "";						
+						bearName, accuracy,	accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, size, sex, age, colour, colourVariation, furWet, marks, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, habituation, feedingForaging, fishingTechnique, foragingDetails, numberOfFishCaught, nonInteractive, bearBearInteractions, bearHumanInteractions, alertVigilance, actionOtherComment = "";
 					}
 					
 					//Handle human zones
 					if (human_count != null){
-						var humans = [];
 						var oldHumans = angular.fromJson(human_count);
 						for (j=0;j<oldHumans.length;j++){									
-							humans[oldHumans[j]["zone"]] = oldHumans[j]["humans"];
+							Session.humans[oldHumans[j]["zone"]] = oldHumans[j]["humans"];
 						}
-						Session.humans = humans;
-						console.log(oldHumans);
-						console.log(humans);
+						//stringify? console.log(oldHumans);
+						//console.log(humans);
 					}
-									
 					
-					//Write the data
-					data = data +				
-					Session.park_site + "\t" +
-					"What is Block Label?" + "\t" +
-					Session.start_date + "\t" +	
-					Session.start_time + "\t" +
-					Session.finish_time + "\t" +
-					Session.viewing_area + "\t" +
-					Session.stationary + "\t" +
-					Session.zoneSchema + "\t" +
-					Session.comment + "\t" +
-					Session.firstName + "\t" +
-					Session.cloud_cover + "\t" +
-					Session.precipitation + "\t" +
-					Session.wind + "\t" +
-					Session.wind_direction + "\t" +
-					Session.temperature + "\t" +
-					Session.humididty + "\t" +
-					Session.visibility + "\t" +
-					Session.obstruction + "\t" +
-					Session.noise_level + "\t" + "\t" + "\t" + "\t" + "\t" + "\t" +
-					Session.observationMode + "\t" +
-					bearName + "\t" +
-					bearZone + "\t" +
-					species + "\t" +
-					count + "\t" +
-					size + "\t" +
-					sex + "\t" +
-					age + "\t" +
-					marks + "\t" +
-					colour + "\t" +
-					new Date(timestamp).toLocaleTimeString() + "\t" +
-					pawMeasure + "\t" +
-					cubs + "\t" +
-					ageOfCubs + "\t" +
-					cubFur + "\t" +
-					bearComment + "\t" +
-					habituation + "\t" +
-					feedingForaging + "\t" +
-					nonInteractive + "\t" +
-					bearBearInteractions + "\t" +
-					bearHumanInteractions + "\t" +
-					
-					Session.humans["1b"] + "\t" +
-					Session.humans["1a"] + "\t" +
-					Session.humans["4+"] + "\t" +
-					Session.humans["7a"] + "\t" +
-					Session.humans["7b"] + "\t" +
-					Session.humans["+1"] + "\t" +
-					Session.humans["1"] + "\t" +
-					Session.humans["4"] + "\t" +
-					Session.humans["7"] + "\t" +
-					Session.humans["7+"] + "\t" +
-					Session.humans["2+"] + "\t" +
-					Session.humans["2"] + "\t" +
-					Session.humans["5"] + "\t" +
-					Session.humans["8"] + "\t" +
-					Session.humans["8+"] + "\t" +
-					Session.humans["3+"] + "\t" +
-					Session.humans["3"] + "\t" +
-					Session.humans["6"] + "\t" +
-					Session.humans["9"] + "\t" +
-					Session.humans["9+"] + "\t" +
-					Session.humans["3b"] + "\t" +
-					Session.humans["3a"] + "\t" +
-					Session.humans["6+"] + "\t" +
-					Session.humans["9a"] + "\t" +
-					Session.humans["9b"] + "\t" +
-					"aircraft" + "\t" +
-					"ATC" + "\t" +
-					"motorized boat" + "\t" +
-					"vehicle" + "\t" +
-					"official or agency boat" + "\t" +
-					"angling" + "\t" +
-					"kayak/canoeing" + "\t" +
-					"hike/walking" + "\t" +
-					"running" + "\t" +
-					"picnic" + "\t" +
-					"photography" + "\t" +
-					"playing" + "\t" +
-					"wildlife viewing" + "\t" +
-					"biking" + "\t" +
-					"unobservable" + "\t" +
-					"other" + "\t" +
-					"human behaviour (worst if in a group)" + "\t" +
-					humanComment + "\t" +
-					"Survey Observation Photos" + "\t" +
-					generalComment;
-				}
-				data = data + "\n";
-				console.log("log end");
-			}
-			emailAttachments.push("base64:generalSurvey.csv//" + btoa(header+"\n"+data));
+					data = data +
+						Session.park + "\t" +
+						Session.site + "\t" +
+						Session.start_date + "\t" +	
+						Session.start_time + "\t" +
+						Session.finish_time + "\t" +
+						Session.firstName + "\t" +
+						
+						utm_zone + "\t" +
+						easting + "\t" +
+						northing + "\t" + 
 			
-			emailAttachments.concat(pictureAttachments);
+						Session.viewingArea + "\t" +
+						Session.zoneSchema + "\t" +
+						Session.obsArea + "\t" +
+						Session.comment + "\t" +
+						Session.observationMode + "\t" +
+					
+						Session.foodSources[0].food_source + "\t" +
+						Session.foodSources[0].availability + "\t" +
+						Session.foodSources[0].comment + "\t" + 
+						Session.foodSources[1].food_source + "\t" +
+						Session.foodSources[1].availability + "\t" +
+						Session.foodSources[1].comment + "\t" + 
+						Session.foodSources[2].food_source + "\t" +
+						Session.foodSources[2].availability + "\t" +
+						Session.foodSources[2].comment + "\t" +
+						
+						Session.water_body + "\t" +
+						"Need to talk to Chris" + "\t" +
+						Session.water_level + "\t" +
+						Session.water_clarity + "\t" +
+						
+						Session.cloud_cover + "\t" +
+						Session.precipitation + "\t" +
+						Session.wind + "\t" +
+						Session.wind_direction + "\t" +
+						
+						Session.temperature + "\t" +
+						Session.humididty + "\t" +
+						
+						Session.visibility + "\t" +
+						Session.obstruction + "\t" +
+						Session.noise_level + "\t" +
+						
+						bearName + "\t" +						
+						accuracy + "\t" +
+						accuracyComments + "\t" +
+						urineStreamObserved + "\t" +
+						bearZone + "\t" +
+						habituation + "\t" +
+						bearSpecies + "\t" +
+						size + "\t" +
+						count + "\t" +
+						sex + "\t" +
+						age + "\t" +
+						colour + "\t" +
+						colourVariation + "\t" +
+						furWet + "\t" +
+						marks + "\t" +
+						pawMeasure + "\t" +
+						cubs + "\t" +
+						ageOfCubs + "\t" +
+						cubFur + "\t" +
+						bearComment + "\t" +
+						
+						//new Date(timestamp).toLocaleTimeString() + "\t" +
+						
+						bearUpdated + "\t" +
+						
+						animalInSight + "\t" +
+						feedingForaging + "\t" +
+						fishingTechnique + "\t" +
+						foragingDetails + "\t" +
+						numberOfFishCaught + "\t" +
+						nonInteractive + "\t" +
+						bearBearInteractions + "\t" +
+						bearHumanInteractions + "\t" +
+						alertVigilance + "\t" +
+						actionOtherComment + "\t" +
+
+						Session.humans["1b"] + "\t" +
+						Session.humans["1a"] + "\t" +
+						Session.humans["4+"] + "\t" +
+						Session.humans["7a"] + "\t" +
+						Session.humans["7b"] + "\t" +
+						Session.humans["+1"] + "\t" +
+						Session.humans["1"] + "\t" +
+						Session.humans["4"] + "\t" +
+						Session.humans["7"] + "\t" +
+						Session.humans["7+"] + "\t" +
+						Session.humans["2+"] + "\t" +
+						Session.humans["2"] + "\t" +
+						Session.humans["5"] + "\t" +
+						Session.humans["8"] + "\t" +
+						Session.humans["8+"] + "\t" +
+						Session.humans["3+"] + "\t" +
+						Session.humans["3"] + "\t" +
+						Session.humans["6"] + "\t" +
+						Session.humans["9"] + "\t" +
+						Session.humans["9+"] + "\t" +
+						Session.humans["3b"] + "\t" +
+						Session.humans["3a"] + "\t" +
+						Session.humans["6+"] + "\t" +
+						Session.humans["9a"] + "\t" +
+						Session.humans["9b"] + "\t" +
+					
+						"aircraft" + "\t" +
+						"ATC" + "\t" +
+						"motorized boat" + "\t" +
+						"vehicle" + "\t" +
+						"official or agency boat" + "\t" +
+						"angling" + "\t" +
+						
+						"kayak/canoeing" + "\t" +
+						"hike/walking" + "\t" +
+						"running" + "\t" +
+						"picnic" + "\t" +
+						"photography" + "\t" +
+						"playing" + "\t" +
+						"wildlife viewing" + "\t" +
+						"biking" + "\t" +
+						"unobservable" + "\t" +
+						"other" + "\t" +
+						
+						"human behaviour (worst if in a group)" + "\t" +
+						humanComment + "\t" +
+						
+						studyAreaPhoto + "\t" +
+						generalComment;
+				
+				}
+			
+				data = data + "\n";
+			}
+			emailAttachments.push("base64:generalSurvey.csv//" + btoa(data));
+			
+			//emailAttachments.concat(pictureAttachments);
 			sendEmail(id, emailAttachments);
 
 		}

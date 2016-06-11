@@ -23,6 +23,10 @@ angular.module('app.services')
         active: '',
         resting: '',
 		
+		water_body: '',
+		water_level: '',
+		water_clarity: '',
+		
 		cloud_cover: '',
 		precipitation: '',
 		wind: '',
@@ -33,13 +37,15 @@ angular.module('app.services')
 		visibility: '',
 		obstruction: '',
 		
-		humans: {"1b" : "",	"1a" : "", "4p" : "", "7a" : "", "7b" : "", "1p" : "", "1" : "", "4" : "", "7" : "", "7p" : "", "2p" : "", "2" : "", "5" : "", "8" : "", "8p" : "", "3p" : "", "3" : "", "6" : "", "9" : "", "9p" : "", "3b" : "", "3a" : "", "6p" : "", "9a" : "", "9b" : ""},
+		humans: {"1b" : "",	"1a" : "", "4+" : "", "7a" : "", "7b" : "", "+1" : "", "1" : "", "4" : "", "7" : "", "7+" : "", "2+" : "", "2" : "", "5" : "", "8" : "", "8+" : "", "3+" : "", "3" : "", "6" : "", "9" : "", "9+" : "", "3b" : "", "3a" : "", "6+" : "", "9a" : "", "9b" : ""},
 		logs: [],
 		pictures: [],
 		foodSources: [],
 		sessionReady: 0,
 		logsReady: 0,
-		foodReady: 0
+		foodReady: 0,
+		maxFoodSources: 3,
+		maxBears: 10
     };
 
     //function to reset session
@@ -106,7 +112,8 @@ angular.module('app.services')
 						Session.lastName = '';
 						Session.nameResult = [];
 						Session.park = park;
-						Session.park_site = '';
+						Session.site = park_site;
+						Session.obsArea = observer_zone;
 						Session.viewingArea = protocol;
 						Session.viewingAreaOther = '';
 						Session.stationary = stationary;
@@ -141,12 +148,20 @@ angular.module('app.services')
             function(result) {
 				if (result.rows.length > 0) {
                 	for (var i = 0; i < result.rows.length; i++){
-						Session.foodSources.push(result.rows.item(i));	
+						with (result.rows.item(i)){
+							Session.foodSources.push({"food_source":food_source,"availability":availability,"comment":comment});
+							console.log(" food_source:"+food_source+" availability:"+availability + " comment:" + comment);
+						}
 	        		}
 					console.log("Food sources added to session object");
                 }else{
                 	console.log("No logs for this session")
-                }				
+                }		
+
+				while (Session.foodSources.length <= Session.maxFoodSources){
+					Session.foodSources.push({"food_source":"","availability":"","comment":""});
+					//reverse list?
+				}				
 				Session.foodReady = 1;
             },
             function(error) {
