@@ -1,4 +1,4 @@
-<ion-view style="" title="{{Bear.name}} Specifications">
+<ion-view style="" title="{{Bear.name}} Specifications" can-swipe-back="false">
 	<ion-nav-title>
 		<div width=100% class="dashboardHeader" ng-controller="timerControl">
 			<div class="row">
@@ -13,6 +13,13 @@
             </div>
 		</div>
 	</ion-nav-title>
+    <ion-nav-bar class="bar-stable">
+                    <ion-nav-back-button class="button-icon icon ion-ios-arrow-back">Cancel</ion-nav-back-button>
+        <ion-nav-buttons side="right">
+            <a class="button icon-left ion-log-out button-small button-assertive" ng-click = "showConfirm()">&nbsp;End Session</a>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    
     <ion-content class="has-header container" overflow-scroll="true" padding="true">
         <div class="spacer spacer-20"></div>
         <h2 class="center">Modify Bear Specifications</h2>
@@ -37,6 +44,11 @@
             </select>
             </label>
             
+            
+            <label style="" class="item item-input">
+                <span class="input-label">Visual Equipment Used</span>
+                <input placeholder="    right or left side, location, size, description" type="text" ng-model="tmpVAid">
+            </label>
             <ion-checkbox ng-model="tmpUStream">Urine Stream Observed</ion-checkbox>
             
             <div style="width: 283px; height: 22px;" class="spacer"></div>
@@ -62,7 +74,7 @@
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <ion-item style="" class="item-divider list-head">Other Specs</ion-item>
             <label style="" class="item item-select">
-            <span class="input-label">Size</span>
+            <span class="input-label">Size (regardless of gender)</span>
                 <select ng-model="tmpSize">
                     <option>Small</option>
                     <option>Medium</option>
@@ -114,6 +126,28 @@
                     <option>Other</option>                    
                 </select>
             </label>
+            
+            <label style="" class="item item-select">
+                <span class="input-label">Fur Condition</span>
+                <select ng-model="tmpFurCondition" >
+                    <option>Wet</option>
+                    <option>Dry</option>
+                </select>
+            </label>
+            
+            
+            <label style="" class="item item-select">
+                <span class="input-label">Fur Colour Variation</span>
+                <select ng-model="tmpFurCVariation" >
+                    <option>none</option>
+                    <option>Lighter Back</option>
+                    <option>Lighter Head</option>
+                    <option>Darker Legs</option>
+                    <option>Other</option>
+                </select>
+            </label>
+            
+            
             <div ng-show="bearFurColour == 'Other' ">
                 <label style="" class="item item-input">
                     <span class="input-label">Fur Colour</span>
@@ -139,25 +173,33 @@
                     <option>3rd YRLG</option>                                       
                 </select>
             </label>
+            <div style="width: 283px; height: 15px;" class="spacer"></div>
+
+            <ion-item style="" class="item-divider list-head">Select Cub Fur Colours</ion-item>
+                <div class = "row" style="flex-wrap: wrap;">
+                    <div class = "col">
+                                <ion-checkbox ng-model="tmpCFCBlonde">Blonde</ion-checkbox>
+                                <ion-checkbox ng-model="tmpCBCLightBrown">Light Brown</ion-checkbox>
+                                <ion-checkbox ng-model="tmpCFCBrown">Brown</ion-checkbox>
+                    </div>
+                    <div class = "col">
+                            <div class="item-text-wrap">
+                                <ion-checkbox ng-model="tmpCFCDarkBrown">Dark Brown</ion-checkbox>
+                                <ion-checkbox ng-model="tmpCFCOther">Other</ion-checkbox>
+                            </div>
+                    </div>
+                </div>
 
 
-            <label style="" class="item item-select">
-                <span class="input-label">Cub Fur colour</span>
-                <select ng-model="tmpCubFurColour" >
-                    <option>Blonde</option>
-                    <option>Light Brown</option>
-                    <option>brown</option>
-                    <option>Dark Brown</option>
-                    <option>Other</option>                    
-                </select>
-            </label>
-            <div style="width: 283px; height: 22px;" class="spacer"></div>
+
+
+            <div style="width: 283px; height: 35px;" class="spacer"></div>
             <label style="" class="item item-input">
                 <span class="input-label">Comment</span><textarea  ng-model="tmpComment"> </textarea>
             </label>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <div style="width: 283px; height: 22px;" class="spacer"></div>
-            <a style="" class="button button-balanced  button-block ion-android-checkbox-outline" ui-sref="tab.bearInfo" ng-click="updateBear(Bear.index, tmpName, tmpZone, tmpSize, tmpSpecies, tmpGender, tmpAge, tmpMarkDescription, tmpFurColour, tmpPawMeasured, tmpUStream, tmpCubs, tmpAccuracy, tmpCubAge, tmpCubFurColour, tmpComment)">&nbsp;Save changes</a>
+            <a style="" class="button button-balanced  button-block ion-android-checkbox-outline" ui-sref="tab.bearInfo" ng-click="updateBear(Bear.index, tmpName, tmpZone, tmpSize, tmpSpecies, tmpGender, tmpAge, tmpMarkDescription, tmpFurColour, tmpPawMeasured, tmpUStream, tmpCubs, tmpAccuracy, tmpCubAge, tmpCubFurColour, tmpComment, tmpVAid, tmpFurCondition, tmpFurCVariation,  tmpCFCBlonde, tmpCBCLightBrown, tmpCFCBrown, tmpCFCDarkBrown, tmpCFCOther)">&nbsp;Save changes</a>
             <a style="" class="button button-assertive  button-block  ion-backspace-outline" ui-sref="tab.bearInfo">&nbsp;Cancel</a>
         </form>
     </ion-content>
