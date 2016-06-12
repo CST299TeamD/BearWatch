@@ -466,7 +466,6 @@ angular.module('app.controllers')
 
                 //clear the other filed
                 $scope.other = '';
-                document.getElementById("other").reset();
             
                 //insert into log table
                 Bear.Log($scope.Session.id);
