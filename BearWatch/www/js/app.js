@@ -15,6 +15,11 @@ var debug = false;
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngIOS9UIWebViewPatch', 'ngMessages', 'chart.js'])
 
+.config(function($ionicConfigProvider) {
+           $ionicConfigProvider.views.swipeBackEnabled(false);
+           })
+
+
 .run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaFileTransfer, $cordovaGeolocation) {
   $ionicPlatform.ready(function() {
 
