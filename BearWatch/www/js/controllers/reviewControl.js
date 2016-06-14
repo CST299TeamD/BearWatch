@@ -666,7 +666,7 @@ angular.module('app.controllers')
 			console.log("...attempting to send email with " + emailAttachments.length + " attachments");
 			try{
 				$cordovaEmailComposer.isAvailable().then(function() {
-					$scope.mailProgress = "...Email is available";
+					console.log("...Email is available");
 					var email = {
 						//TODO - set proper email & mail contents
 						to: 'cobbsworth@outlook.com',
@@ -678,35 +678,16 @@ angular.module('app.controllers')
 					};
 
 					$cordovaEmailComposer.open(email).then(null, function () {
-					   //$scope.mailProgress = "...Email Cancelled";
+					   console.log("...Email Cancelled");
 					});
 				}, function () {
-				   $scope.mailProgress = "...Email is unavailable";
+				   console.log("...Email is unavailable");
 				});
 			} catch (exception){
-				$scope.mailProgress = exception.name + " ::: " + exception.message;
+				console.log(exception.name + " ::: " + exception.message);
 			}
+			console.log("email script finished.");
 		}
-
-		var attachCSVs = function(emailAttachments){
-
-			var csvContents;
-
-			csvContents = btoa($scope.siteIncidentalObservationsHeader + "\n" + $scope.siteIncidentalObservationsData);
-			emailAttachments.push('base64:SiteIncidentalObservations.csv//'+csvContents);
-		
-			csvContents = btoa($scope.generalSurveyHeader + "\n" + $scope.generalSurveyData);
-			emailAttachments.push('base64:GeneralSurvey.csv//'+csvContents);
-
-			csvContents = btoa($scope.blockInformationHeader + "\n" + $scope.blockInformationData);
-			emailAttachments.push('base64:blockInformation.csv//'+csvContents);
-
-			csvContents = btoa($scope.projectInformationHeader + "\n" + $scope.projectInformationData);
-			console.log("csvContents: "+$scope.projectInformationHeader + "\n" + $scope.projectInformationData);
-			emailAttachments.push('base64:ProjectInformation.csv//'+csvContents);
-		}
-		
-
-        
+      
 	}
 });
