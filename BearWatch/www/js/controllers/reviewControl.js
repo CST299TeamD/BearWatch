@@ -297,13 +297,13 @@ angular.module('app.controllers')
 		
 			data = "";
 			
-			var bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, lastBearComment, habituation, feedingForaging, nonInteractive, bearBearInteractions, bearHumanInteractions, studyAreaPhoto, fishingTechnique, foragingDetails, numberOfFishCaught, alertVigilance, actionOtherComment= "";
+			var bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, lastBearComment, habituation, feedingForaging, nonInteractive, bearBearInteractions, bearHumanInteractions, studyAreaPhoto, fishingTechnique, foragingDetails, numberOfFishCaught, alertVigilance, actionOtherComment, generalCommentType, otherPhotoLocation, aircraft, ATV, boat, vehicle, humanBehavior = "";
 				
 			for (var i = 0; i<Session.logs.length;i++){
 				//console.log("log start: "+i+"/"+Session.logs.length);
-													
+										
 				//values to reset
-				bearName = accuracy = accuracyComments = animalInSight = urineStreamObserved = bearZone = bearSpecies = count = size = sex = age = marks = colour = colourVariation = furWet = pawMeasure = cubs = ageOfCubs = cubFur = habituation = feedingForaging = nonInteractive = bearBearInteractions = bearHumanInteractions = bearComment = studyAreaPhoto = fishingTechnique = foragingDetails = numberOfFishCaught = alertVigilance = actionOtherComment= "";
+				bearName = accuracy = accuracyComments = animalInSight = urineStreamObserved = bearZone = bearSpecies = count = size = sex = age = marks = colour = colourVariation = furWet = pawMeasure = cubs = ageOfCubs = cubFur = habituation = feedingForaging = nonInteractive = bearBearInteractions = bearHumanInteractions = humanBearInteractions = bearComment = studyAreaPhoto = fishingTechnique = foragingDetails = numberOfFishCaught = alertVigilance = actionOtherComment = generalCommentType = otherPhotoLocation = aircraft = ATV = boat = vehicle = humanBehavior = "";
 				with (Session.logs[i]){
 					
 					//Handle Pictures
@@ -352,30 +352,32 @@ angular.module('app.controllers')
 						bearUpdated = "true";
 						bear = angular.fromJson(bear);
 						bearName = bear["name"];
-						accuracy = '';
-						accuracyComments = '';
-						animalInSight = '';
-						urineStreamObserved = '';
+						accuracy = bear["accuracy"];
+						accuracyComments = bear["vAid"]; //IS THIS CORRECT?
+						animalInSight = bear["inSight"];
+						urineStreamObserved = bear["uStream"];
 						bearZone = bear["zone"];
 						//habituation handled in behaviors
 						bearSpecies = bear["species"];
 						size = bear["size"];
-						if (parseInt(bear["cubs"]) != "NaN") {
-							count = 1+parseInt(bear["cubs"]);
-						} else {
-							count = 1;
-						};
+						count = parseInt(bear["cubs"] + 1) || 1;
 						sex = bear["gender"];
 						age = bear["age"];
 						colour = bear["furColour"];
-						colourVariation = "";
-						furWet = "";
+						colourVariation = bear["furCVariation"];
+						furWet = bear["furCondition"];
 						marks = bear["markDescription"];
 						pawMeasure = bear["pawMeasured"];
 						cubs = bear["cubs"];
 						ageOfCubs = bear["cubAge"];
-						cubFur = bear["cubFurColour"];
-						if (lastBearComment != bear["comment"]) {bearComment = lastBearComment = bear["comment"];}
+						cubFur = [];
+						if(bear["CFCBlonde"]) cubFur.push("Blonde");
+						if(bear["CBCLightBrown"]) cubFur.push("Light Brown");
+						if(bear["CFCBrown"]) cubFur.push("Brown");
+						if(bear["CFCDarkBrown"]) cubFur.push("Dark Brown");
+						if(bear["CFCOther"]) cubFur.push("Other");
+						
+						if (lastBearComment != bear["comment"]) bearComment = lastBearComment = bear["comment"];
 
 							
 						
@@ -387,8 +389,45 @@ angular.module('app.controllers')
 							nonInteractive,
 							bearBearInteractions,
 							bearHumanInteractions,
+							humanBearInteractions,
 							alertVigilance,
 							actionOtherComment = "";
+							
+							for (j=0;j<bear["behaviour"].length;j++){
+						//		console.log("\tBehaviour: "+bear["behaviour"][j].category);
+								
+								switch(bear["behaviour"][j].category){
+									case "Non-Interactive":
+										nonInteractive = bear["behaviour"][j].description;
+										break;
+									case "Habituation":
+										habituation = bear["behaviour"][j].description;
+										break;
+									case "Human-bear Interaction":
+										humanBearInteractions = bear["behaviour"][j].description;
+										break;
+									case "Bear-human Interaction":
+										bearHumanInteractions = bear["behaviour"][j].description;
+										break;
+									case "Bear-bear Interactive":
+										bearBearInteractions = bear["behaviour"][j].description;
+										break;
+									case "Feeding or Foraging":
+										feedingForaging = bear["behaviour"][j].description;
+										console.log("feedingForaging:" + feedingForaging);
+										if (feedingForaging == "fishing"){
+											
+										}
+										break;
+									case "Alert/Vigilance":
+										alertVigilance = bear["behaviour"][j].description;
+										break;
+									case "Other":
+										actionOtherComment = bear["behaviour"][j].description;
+										break;										
+								}
+	        							
+							}
 						/*
 						if (bear["behavior"] != "undefined" && bear["behavior"] != null){
 							var behavior = angular.fromJson(bear["behavior"]);
@@ -415,16 +454,43 @@ angular.module('app.controllers')
 						bearName, accuracy,	accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, size, sex, age, colour, colourVariation, furWet, marks, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, habituation, feedingForaging, fishingTechnique, foragingDetails, numberOfFishCaught, nonInteractive, bearBearInteractions, bearHumanInteractions, alertVigilance, actionOtherComment = "";
 					}
 					
-					//Handle human zones
+					//Handle humans
 					if (human_count != null){
 						var oldHumans = angular.fromJson(human_count);
-						for (j=0;j<oldHumans.length;j++){									
-							Session.humans[oldHumans[j]["zone"]] = oldHumans[j]["humans"];
+						for (j=0;j<oldHumans.length;j++){
+							if (oldHumans[j]["humans"] == null) {
+								Session.humans[oldHumans[j]["zone"]] = "";
+							} else {
+								Session.humans[oldHumans[j]["zone"]] = oldHumans[j]["humans"];
+							}
 						}
-						//stringify? console.log(oldHumans);
-						//console.log(humans);
+						if (motorized_name == "" || motorized_name == null) {
+						} else if (motorized_name.slice(0,3) == "ATV") {
+							ATV = motorized_action + " " + motorized_name.slice(4,5);
+						} else if (motorized_name.slice(0,4) == "Boat") {
+							boat = motorized_action + " " + motorized_name.slice(5,6);
+						} else if (motorized_name.slice(0,7) == "Vehicle") {
+							vehicle = motorized_action + " " + motorized_name.slice(8,9);
+						} else if (motorized_name.slice(0, 8) == "Aircraft") {
+							aircraft = motorized_action + " " + motorized_name.slice(9,10);
+						}
+						
+						var oldHumans = angular.fromJson(human_type);
+						for (j=0;j<oldHumans.length;j++){
+							if (oldHumans[j]["checked"] == true) {
+								Session.humanType[oldHumans[j]["type"]] = "Yes";
+							} else {
+								Session.humanType[oldHumans[j]["type"]] = "No";
+							}
+						}		
+						
+						//console.log("human other: " + human_other);
+						
+						humanBehavior = human_behavior;
 					}
 					
+					//Handle human types
+										
 					data = data +
 						Session.park + "\t" +
 						Session.site + "\t" +
@@ -454,7 +520,7 @@ angular.module('app.controllers')
 						Session.foodSources[2].comment + "\t" +
 						
 						Session.water_body + "\t" +
-						"Need to talk to Chris" + "\t" +
+						"TDL" + "\t" +
 						Session.water_level + "\t" +
 						Session.water_clarity + "\t" +
 						
@@ -503,6 +569,7 @@ angular.module('app.controllers')
 						nonInteractive + "\t" +
 						bearBearInteractions + "\t" +
 						bearHumanInteractions + "\t" +
+						humanBearInteractions + "\t" +
 						alertVigilance + "\t" +
 						actionOtherComment + "\t" +
 
@@ -532,29 +599,30 @@ angular.module('app.controllers')
 						Session.humans["9a"] + "\t" +
 						Session.humans["9b"] + "\t" +
 					
-						"aircraft" + "\t" +
-						"ATC" + "\t" +
-						"motorized boat" + "\t" +
-						"vehicle" + "\t" +
-						"official or agency boat" + "\t" +
-						"angling" + "\t" +
+						aircraft + "\t" +
+						ATV + "\t" +
+						boat + "\t" +
+						vehicle + "\t" +
 						
-						"kayak/canoeing" + "\t" +
-						"hike/walking" + "\t" +
-						"running" + "\t" +
-						"picnic" + "\t" +
-						"photography" + "\t" +
-						"playing" + "\t" +
-						"wildlife viewing" + "\t" +
-						"biking" + "\t" +
-						"unobservable" + "\t" +
-						"other" + "\t" +
+						Session.humanType['Angling'] + "\t" +
+						Session.humanType['Boating'] + "\t" +
+						Session.humanType['Hiking/Walking'] + "\t" +
+						Session.humanType['Running'] + "\t" +
+						Session.humanType['Picnicking'] + "\t" +
+						Session.humanType['Photography'] + "\t" +
+						Session.humanType['Playing'] + "\t" +
+						Session.humanType['Wildlife Viewing'] + "\t" +
+						Session.humanType['Biking'] + "\t" +
+						Session.humanType['Unobservable'] + "\t" +
+						Session.humanType['Other'] + "\t" +
 						
-						"human behaviour (worst if in a group)" + "\t" +
+						humanBehavior + "\t" +
 						humanComment + "\t" +
 						
 						studyAreaPhoto + "\t" +
-						generalComment;
+						otherPhotoLocation + "\t" +
+						generalComment + "\t" +
+						generalCommentType;
 				
 				}
 			

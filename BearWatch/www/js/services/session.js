@@ -37,7 +37,13 @@ angular.module('app.services')
 		visibility: '',
 		obstruction: '',
 		
-		humans: {"1b" : "",	"1a" : "", "4+" : "", "7a" : "", "7b" : "", "+1" : "", "1" : "", "4" : "", "7" : "", "7+" : "", "2+" : "", "2" : "", "5" : "", "8" : "", "8+" : "", "3+" : "", "3" : "", "6" : "", "9" : "", "9+" : "", "3b" : "", "3a" : "", "6+" : "", "9a" : "", "9b" : ""},
+		humans: {
+			"1b" : "",	"1a" : "", "4+" : "", "7a" : "", "7b" : "", "+1" : "", "1" : "", "4" : "", "7" : "", "7+" : "", "2+" : "", "2" : "", "5" : "", "8" : "", "8+" : "", "3+" : "", "3" : "", "6" : "", "9" : "", "9+" : "", "3b" : "", "3a" : "", "6+" : "", "9a" : "", "9b" : ""
+		},
+		humanType: {
+			'Angling':'No', 'Boating':'No', 'Hiking/Walking':'No', 'Running':'No', 'Picnicking':'No', 'Photography':'No', 'Playing':'No', 'Wildlife Viewing':'No', 'Biking':'No', 'Unobservable':'No', 'Other':'No'
+		},
+		
 		logs: [],
 		pictures: [],
 		foodSources: [],
