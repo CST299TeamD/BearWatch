@@ -62,7 +62,7 @@ angular.module('app.controllers')
 
 })
 
-.controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session, FBearSet, $ionicPopup, $location, $state, Human) {
+.controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session, FBearSet, $ionicPopup, $location, $state, Human, $ionicScrollDelegate) {
 	//global debug var
 	$scope.debug = debug;
 
@@ -138,6 +138,19 @@ angular.module('app.controllers')
 	var bearInsertResult = "Not Initialized";
 	$scope.bearInsertResult = bearInsertResult;
 	$scope.sIdInsertResult = sIdInsertResult;
+
+    //scroll top function
+    $scope.scrollDown = function(){
+        $scope.showHelp = true;
+        $ionicScrollDelegate.$getByHandle('newBearScroll').resize();
+        $ionicScrollDelegate.$getByHandle('newBearScroll').anchorScroll(true);
+        $ionicScrollDelegate.$getByHandle('newBearScroll').scrollBottom(true);
+    }
+
+    //hide help function
+    $scope.hideHelp = function() {
+        $scope.showHelp = false;
+    } 
 
 	//add bear with session id to bear table
 	$scope.addBear = function(){

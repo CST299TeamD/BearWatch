@@ -20,9 +20,19 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     
-    <ion-content class="has-header container" overflow-scroll="true" padding="true">
-        <div class="spacer spacer-20"></div>
-        <h2 class="center">Add new Bear</h2>
+    <ion-content class="has-header container" overflow-scroll="true" padding="true" delegate-handle="newBearScroll">
+
+        <div class="spacer spacer-10"></div>
+        <div class="row">
+            <div class="col col-33">
+            </div>
+            <div class="col col-33 text-center">
+                <h2>Add New Bear</h2>
+            </div>
+            <div class="col col-33 text-right">
+                <a ng-click="scrollDown()"><i class="ion-help-circled help"></i></a>
+            </div>
+        </div>
         <div ng-show="false">
             Session id : {{Session.id}} <br>
             Bear Index : {{Bear.index}} <br>
@@ -34,7 +44,7 @@
             Bear Age : {{Bear.age}} <br>
             Bear gender : {{Bear.gender}} <br>
             Bear Species : {{Bear.species}} <br>
-            MarkDescription : {{Bear.markDescription}} <br>
+            Mark Description : {{Bear.markDescription}} <br>
             Bear Fur Colour : {{Bear.furColour}} <br>
             Bear Paw Measure : {{Bear.pawMeasured}} <br>
             Bear Cubs : {{Bear.cubs}} <br>
@@ -42,7 +52,7 @@
             Bear Cubs Age : {{Bear.cubAge}} <br>
             Bear Comment : {{Bear.comment}} <br>
             <div ng-show="debug">
-                <br>Select session <br>
+                <br>Select Session<br>
                 Session id insert : {{sIdInsertResult}} <br>
                 <button ng-click="testInsert()">Insert Session Id</button>
                 <button ng-click="addBear()">Insert Bear</button><br>
@@ -240,6 +250,62 @@
             <a style="" class="button button-balanced  button-block ion-android-checkbox-outline" ng-click="addBear()">&nbsp; Save Bear</a>
             <a style="" class="button button-assertive  button-block  ion-backspace-outline" id="addNewBear-button21" ui-sref="tab.bear">&nbsp; Cancel</a>
         </form>
-                <div class="spacer spacer-40"></div>
+        <div class="spacer spacer-20"></div>
+
+        <!-- Help section-->
+        <div ng-model="showHelp" ng-show="showHelp" class="card">
+            <div class="container">
+                <div class="row border-bottom">
+                    <div class="col col-33">
+                    </div>
+                    <div class="col col-33 col-bottom text-center">
+                        <h3>Help Topics</h3> 
+                    </div>
+                    <div class="col col-33 col-center text-right">
+                        <a class="button button-icon icon ion-close-circled" ng-click="hideHelp()"></a>
+                    </div>
+                </div>
+                <div class="spacer spacer-10"></div>
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>General</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!genHelp, 'button button-small button-icon icon ion-ios-minus-outline':genHelp}" ng-click="genHelp=!genHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="genHelp" ng-show="genHelp" class="container">
+                    <div class="spacer spacer-10"></div>
+                    <p>Fill in the fields below with all available information pertaining to the observed bear.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Name of Bear</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!nameHelp, 'button button-small button-icon icon ion-ios-minus-outline':nameHelp}" ng-click="nameHelp=!nameHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="nameHelp" ng-show="nameHelp" class="container">
+                    <div class="spacer spacer-10"></div>
+                    <p>This field is automatically populated with bear1, bear2, etc., unless you add a name. For known, named, bears use names consistently. If you are not sure of the identification of a bear, you can leave this blank (it will automatically populate) and then return and change it if the id becomes clear.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Paw Measurement Taken</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!foodHelp, 'button button-small button-icon icon ion-ios-minus-outline':foodHelp}" ng-click="foodHelp=!foodHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="foodHelp" ng-show="foodHelp" class="container">
+                    <div class="spacer spacer-10"></div>                    
+                    <p>If you have the opportunity to measure a track, check this box. The measurements will not be collected in the application, but if necessary someone can track down the measurements in the local office. Follow the protocols in Herrero 1985.</p>
+                    <img src="img/paw_meas.png" alt="Paw Measure Picture" class="center">
+                    <div class="spacer spacer-10"></div>
+                </div>
+            </div>
+            <div class="spacer spacer-20"></div>            
+        </div><!--End Help-->
+
+        <div class="spacer spacer-40"></div>
     </ion-content>
 </ion-view>
