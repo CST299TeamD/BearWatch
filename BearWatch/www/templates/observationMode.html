@@ -1,5 +1,5 @@
 <ion-view title="Session Setup">
-    <ion-content class="has-header container" overflow-scroll="true" padding="true">
+    <ion-content class="has-header container" overflow-scroll="true" padding="true" delegate-handle="obsScroll">
         
         <div class="spacer spacer-10"></div>
         <div class="row">
@@ -9,7 +9,7 @@
                 <h2>Observation Settings</h2>
             </div>
             <div class="col col-33 text-right">
-                <a ng-click="showHelp=!showHelp"><i class="ion-help-circled help"></i></a>
+                <a ng-click="scrollDown()"><i class="ion-help-circled help"></i></a>
             </div>
         </div>
         <!--session setup progress-->
@@ -19,69 +19,6 @@
             <i class="ion-ios-circle-filled"></i>
         </div> 
         <div class="spacer spacer-20"></div>
-
-        <!-- Help section-->
-        <div ng-model="showHelp" ng-show="showHelp" class="card">
-            <div class="container">
-                <div class="row border-bottom">
-                    <div class="col col-33">
-                    </div>
-                    <div class="col col-33 col-bottom text-center">
-                        <h3>Help Topics</h3> 
-                    </div>
-                    <div class="col col-33 col-center text-right">
-                        <a class="button button-icon icon ion-close-circled" ng-click="showHelp = false"></a>
-                    </div>
-                </div>
-                <div class="spacer spacer-10"></div>
-                <div class="row item-divider expando-pane">
-                    <div class="col col-center"><h4>General</h4></div>
-                    <div class="col col-center text-right">
-                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!genHelp, 'button button-small button-icon icon ion-ios-minus-outline':genHelp}" ng-click="genHelp=!genHelp"></a>
-                    </div>
-                </div>
-                <div ng-model="genHelp" ng-show="genHelp" class="container">
-                    <div class="spacer spacer-10"></div>
-                    <p>Fill in the fields below in order to finish setting up your session, then press the Start Session button below to begin.</p>
-                    <div class="spacer spacer-10"></div>
-                </div>
-
-                <div class="row item-divider expando-pane">
-                    <div class="col col-center"><h4>Focal and Scan</h4></div>
-                    <div class="col col-center text-right">
-                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!focalHelp, 'button button-small button-icon icon ion-ios-minus-outline':focalHelp}" ng-click="focalHelp=!focalHelp"></a>
-                    </div>
-                </div>
-                <div ng-model="focalHelp" ng-show="focalHelp" class="container">
-                    <div class="spacer spacer-10"></div>                    
-                    <h3>Focal Sampling:</h3>
-                    <p>Observer focuses on 1 animal and records all behavioural observations during a specified time period – usually 1-4 hours. If the choices are a sow and cubs, always focus on the sow. This sampling technique allows the observer to concentrate on the behaviour of the chosen animal for the duration of the sampling period. Within the focal sampling session it is appropriate to scan at regular intervals and update the location and activities of other bears and humans.</p>
-                 
-                    <h3>Scan Sampling:</h3>
-                    <p>Observer uses predetermined scanning periods alternating with resting periods to record the behaviour of all bears and humans in a more general way than the focal scan. This allows for a snapshot of behaviour at regular intervals. Common sampling intervals are for 2 minutes every 10 or 15 minutes. </p>
-                    <div class="spacer spacer-10"></div>
-                </div>
-
-                <div class="row item-divider expando-pane">
-                    <div class="col col-center"><h4>Timers</h4></div>
-                    <div class="col col-center text-right">
-                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!timerlHelp, 'button button-small button-icon icon ion-ios-minus-outline':timerHelp}" ng-click="timerHelp=!timerHelp"></a>
-                    </div>
-                </div>
-                <div ng-model="timerHelp" ng-show="timerHelp" class="container">
-                    <div class="spacer spacer-10"></div>                    
-                    <h3>Focal:</h3>
-                    <p>Set this timer for the scheduled session length. This will not prevent ending the session at an earlier time, but is important when following a study design with statistical parameters.</p>
-                 
-
-                    <h3>Scanning:</h3>
-                    <p>Set the scheduled overall session length. Set the number of minutes you are planning to scan and the minutes for resting. For instance, if you plan to scan for 3 minutes every 15 minutes you would set the active time to 3 and the resting timer to 12.</p>
-                    <div class="spacer spacer-10"></div>
-                </div>
-
-            </div>
-            <div class="spacer spacer-20"></div>            
-        </div><!--End Help-->
 
         <form name="obsForm" novalidate  ng-submit="saveSession(obsForm)" class="list">
 
@@ -200,6 +137,70 @@
                 <a class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="tab.bear">Skip Validation</a>
             </div>
         </form><!--End obsForm-->
+
+        <div class="spacer spacer-20"></div>
+        <!-- Help section-->
+        <div ng-model="showHelp" ng-show="showHelp" class="card">
+            <div class="container">
+                <div class="row border-bottom">
+                    <div class="col col-33">
+                    </div>
+                    <div class="col col-33 col-bottom text-center">
+                        <h3>Help Topics</h3> 
+                    </div>
+                    <div class="col col-33 col-center text-right">
+                        <a class="button button-icon icon ion-close-circled" ng-click="hideHelp()"></a>
+                    </div>
+                </div>
+                <div class="spacer spacer-10"></div>
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>General</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!genHelp, 'button button-small button-icon icon ion-ios-minus-outline':genHelp}" ng-click="genHelp=!genHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="genHelp" ng-show="genHelp" class="container">
+                    <div class="spacer spacer-10"></div>
+                    <p>Fill in the fields below in order to finish setting up your session, then press the Start Session button below to begin.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Focal and Scan</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!focalHelp, 'button button-small button-icon icon ion-ios-minus-outline':focalHelp}" ng-click="focalHelp=!focalHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="focalHelp" ng-show="focalHelp" class="container">
+                    <div class="spacer spacer-10"></div>                    
+                    <h3>Focal Sampling:</h3>
+                    <p>Observer focuses on 1 animal and records all behavioural observations during a specified time period – usually 1-4 hours. If the choices are a sow and cubs, always focus on the sow. This sampling technique allows the observer to concentrate on the behaviour of the chosen animal for the duration of the sampling period. Within the focal sampling session it is appropriate to scan at regular intervals and update the location and activities of other bears and humans.</p>
+                 
+                    <h3>Scan Sampling:</h3>
+                    <p>Observer uses predetermined scanning periods alternating with resting periods to record the behaviour of all bears and humans in a more general way than the focal scan. This allows for a snapshot of behaviour at regular intervals. Common sampling intervals are for 2 minutes every 10 or 15 minutes. </p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Timers</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!timerlHelp, 'button button-small button-icon icon ion-ios-minus-outline':timerHelp}" ng-click="timerHelp=!timerHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="timerHelp" ng-show="timerHelp" class="container">
+                    <div class="spacer spacer-10"></div>                    
+                    <h3>Focal:</h3>
+                    <p>Set this timer for the scheduled session length. This will not prevent ending the session at an earlier time, but is important when following a study design with statistical parameters.</p>
+                 
+
+                    <h3>Scanning:</h3>
+                    <p>Set the scheduled overall session length. Set the number of minutes you are planning to scan and the minutes for resting. For instance, if you plan to scan for 3 minutes every 15 minutes you would set the active time to 3 and the resting timer to 12.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+            </div>
+            <div class="spacer spacer-20"></div>            
+        </div><!--End Help-->
         <div class="spacer spacer-40"></div>
     </ion-content>
 </ion-view>

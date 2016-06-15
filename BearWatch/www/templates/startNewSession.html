@@ -1,5 +1,5 @@
 <ion-view title="Session Setup">
-	<ion-content class="has-header container" overflow-scroll="true" padding="true">
+	<ion-content class="has-header container" overflow-scroll="true" padding="true" delegate-handle="startScroll">
         <div class="spacer spacer-10"></div>
         <div class="row">
             <div class="col col-33">
@@ -8,7 +8,7 @@
                 <h2>New Session</h2>
             </div>
             <div class="col col-33 text-right">
-                <a ng-click="showHelp=!showHelp"><i class="ion-help-circled help"></i></a>
+                <a ng-click="scrollDown()"><i class="ion-help-circled help"></i></a>
             </div>
         </div>
         <!--session setup progress-->
@@ -18,59 +18,6 @@
             <i class="ion-ios-circle-outline"></i>
         </div> 
         <div class="spacer spacer-20"></div>
-
-        <!-- Help section-->
-        <div ng-model="showHelp" ng-show="showHelp" class="card">
-            <div class="container">
-                <div class="row border-bottom">
-                    <div class="col col-33">
-                    </div>
-                    <div class="col col-33 col-bottom text-center">
-                        <h3>Help Topics</h3> 
-                    </div>
-                    <div class="col col-33 col-center text-right">
-                        <a class="button button-icon icon ion-close-circled" ng-click="showHelp = false"></a>
-                    </div>
-                </div>
-                <div class="spacer spacer-10"></div>
-                <div class="row item-divider expando-pane">
-                    <div class="col col-center"><h4>General</h4></div>
-                    <div class="col col-center text-right">
-                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!genHelp, 'button button-small button-icon icon ion-ios-minus-outline':genHelp}" ng-click="genHelp=!genHelp"></a>
-                    </div>
-                </div>
-                <div ng-model="genHelp" ng-show="genHelp" class="container">
-                    <div class="spacer spacer-10"></div>
-                    <p>Fill in the fields below in order to begin setting up your session.</p>
-                    <div class="spacer spacer-10"></div>
-                </div>
-
-                <div class="row item-divider expando-pane">
-                    <div class="col col-center"><h4>Zone Descriptions</h4></div>
-                    <div class="col col-center text-right">
-                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!zoneHelp, 'button button-small button-icon icon ion-ios-minus-outline':zoneHelp}" ng-click="zoneHelp=!zoneHelp"></a>
-                    </div>
-                </div>
-                <div ng-model="zoneHelp" ng-show="zoneHelp" class="container">
-                    <div class="spacer spacer-10"></div>
-                    <p>Zonation Schemes – Before you begin collecting data, define your surroundings in one of the available zonation schemes: river, estuary or terrestrial. Your location will the shaded zone that is most appropriate. The zones are approximately 100 m wide unless there are obvious breaks. Take the time to describe the zones well enough that someone else can use the same scheme from the same location. It is quite possible that all the zones in the scheme will not be visible so will not be part of your description. Save your description in a document outside of the application, for instance a WORD doc in Docs to Go.</p>
-                    
-                    <h3>River:</h3>
-                    <p>If you are on the shores of a river you will be in either zone 6 or zone 4. Those on river right (right side when facing downstream) will be in zone 6. Those on river left will be in zone 4. This zone will extend about 50 m on either side of you or to an obvious break in the landscape. Find something approximately 100 m beyond that break to define the zones to your right and left. It will be useful if the zones across the river have approximately the same breaks. The depth of the zone will be as far as you can see. The river itself will be zones 2+, 2, 5, 8 and 8+.</p>
-                    <p>If you are in a boat you will be in zone 5. The zones are defined relative to your current location and will therefore be shifting continuously (unless you are anchored). You will not be able to pre-define the zones, so use approximate distances. In a serpentine river it will be difficult to see beyond the 3 central zones on each shore and in the river.</p>
-
-                    <h3>Estuary:</h3>
-                    <p>In an estuary situation you may be either in a boat or on the shore. If you are in a boat, you will be in zone 6. As the boat moves, the zones will change. Zone 5 will be the visible water directly in front of you and approximately 100 m wide. Zone 4 will be the shoreline adjacent to the water. To the right and left there will be paired water and shoreline zones of approximately 100 m. Beyond that zone everything you can see is in the final paired zones on either side.</p>
-                    <p>If you are on the shore, you will be in zone 4. The zones are the same as those described for the boat, but they will be stable and therefore you will be able to describe them based on landscape breaks if that is helpful.</p>
-
-                    <h3>Terrestrial:</h3>
-                    <p>This schema is the most flexible. It is assumed that you are not moving during observations, but if you do, your zones will shift. You are always in zone 5. If you are mobile, try to use regular 100 m by 100 m zones. If you are stationary, you can define the zones in a way that makes sense to the landscape.</p>
-                    <p>This schema is the most flexible. Use it in any situation that is not obviously <strong>River</strong> or <strong>estuary</strong>. It is assumed that you are not moving during observations, but if you do, your zones will shift with you. You are always in zone 5. If you are mobile, try to use regular 100 m by 100 m zones. If you are stationary, you can define the zones in a way that makes sense to the landscape.</p>
-                    <div class="spacer spacer-10"></div>
-                </div>
-            </div>
-            <div class="spacer spacer-20"></div>            
-        </div><!--End Help-->
 
         <form name="startForm" novalidate  ng-submit="validate(startForm)" class="list">
 
@@ -271,6 +218,60 @@
         <div ng-show="true">
             <a class="button button-positive  button-block icon-right ion-android-arrow-forward" ui-sref="startNewSessionCont">Skip Validation</a>
         </div>
+        
+        <div class="spacer spacer-20"></div>
+        <!-- Help section-->
+        <div ng-model="showHelp" ng-show="showHelp" class="card">
+            <div class="container">
+                <div class="row border-bottom">
+                    <div class="col col-33">
+                    </div>
+                    <div class="col col-33 col-bottom text-center">
+                        <h3>Help Topics</h3> 
+                    </div>
+                    <div class="col col-33 col-center text-right">
+                        <a class="button button-icon icon ion-close-circled" ng-click="hideHelp()"></a>
+                    </div>
+                </div>
+                <div class="spacer spacer-10"></div>
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>General</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!genHelp, 'button button-small button-icon icon ion-ios-minus-outline':genHelp}" ng-click="genHelp=!genHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="genHelp" ng-show="genHelp" class="container">
+                    <div class="spacer spacer-10"></div>
+                    <p>Fill in the fields below in order to begin setting up your session.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Zone Descriptions</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!zoneHelp, 'button button-small button-icon icon ion-ios-minus-outline':zoneHelp}" ng-click="zoneHelp=!zoneHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="zoneHelp" ng-show="zoneHelp" class="container">
+                    <div class="spacer spacer-10"></div>
+                    <p>Zonation Schemes – Before you begin collecting data, define your surroundings in one of the available zonation schemes: river, estuary or terrestrial. Your location will the shaded zone that is most appropriate. The zones are approximately 100 m wide unless there are obvious breaks. Take the time to describe the zones well enough that someone else can use the same scheme from the same location. It is quite possible that all the zones in the scheme will not be visible so will not be part of your description. Save your description in a document outside of the application, for instance a WORD doc in Docs to Go.</p>
+                    
+                    <h3>River:</h3>
+                    <p>If you are on the shores of a river you will be in either zone 6 or zone 4. Those on river right (right side when facing downstream) will be in zone 6. Those on river left will be in zone 4. This zone will extend about 50 m on either side of you or to an obvious break in the landscape. Find something approximately 100 m beyond that break to define the zones to your right and left. It will be useful if the zones across the river have approximately the same breaks. The depth of the zone will be as far as you can see. The river itself will be zones 2+, 2, 5, 8 and 8+.</p>
+                    <p>If you are in a boat you will be in zone 5. The zones are defined relative to your current location and will therefore be shifting continuously (unless you are anchored). You will not be able to pre-define the zones, so use approximate distances. In a serpentine river it will be difficult to see beyond the 3 central zones on each shore and in the river.</p>
+
+                    <h3>Estuary:</h3>
+                    <p>In an estuary situation you may be either in a boat or on the shore. If you are in a boat, you will be in zone 6. As the boat moves, the zones will change. Zone 5 will be the visible water directly in front of you and approximately 100 m wide. Zone 4 will be the shoreline adjacent to the water. To the right and left there will be paired water and shoreline zones of approximately 100 m. Beyond that zone everything you can see is in the final paired zones on either side.</p>
+                    <p>If you are on the shore, you will be in zone 4. The zones are the same as those described for the boat, but they will be stable and therefore you will be able to describe them based on landscape breaks if that is helpful.</p>
+
+                    <h3>Terrestrial:</h3>
+                    <p>This schema is the most flexible. It is assumed that you are not moving during observations, but if you do, your zones will shift. You are always in zone 5. If you are mobile, try to use regular 100 m by 100 m zones. If you are stationary, you can define the zones in a way that makes sense to the landscape.</p>
+                    <p>This schema is the most flexible. Use it in any situation that is not obviously <strong>River</strong> or <strong>estuary</strong>. It is assumed that you are not moving during observations, but if you do, your zones will shift with you. You are always in zone 5. If you are mobile, try to use regular 100 m by 100 m zones. If you are stationary, you can define the zones in a way that makes sense to the landscape.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+            </div>
+            <div class="spacer spacer-20"></div>            
+        </div><!--End Help-->
 
         <div class="spacer spacer-40"></div>
 	   	</ion-content>

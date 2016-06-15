@@ -28,11 +28,23 @@ angular.module('app.controllers')
 	GPS.refresher();
 })
 
-.controller('startNewSessionCtrl', function($scope, Session, Park, $location, $state, $ionicNavBarDelegate) {
+.controller('startNewSessionCtrl', function($scope, Session, Park, $location, $state, $ionicNavBarDelegate, $ionicScrollDelegate) {
 	//global debug var
 	$scope.debug = debug;
     $ionicNavBarDelegate.showBackButton(true);
-            
+
+    //scroll top function
+    $scope.scrollDown = function(){
+        $scope.showHelp = true;
+        $ionicScrollDelegate.$getByHandle('startScroll').resize();
+        $ionicScrollDelegate.$getByHandle('startScroll').anchorScroll(true);
+        $ionicScrollDelegate.$getByHandle('startScroll').scrollBottom(true);
+    }
+
+    //hide help function
+    $scope.hideHelp = function() {
+        $scope.showHelp = false;
+    }            
 	
 	//global factory session object
 	$scope.Session = Session;
@@ -105,16 +117,42 @@ angular.module('app.controllers')
     }
 })
 
-.controller('startNewSessionContCtrl', function($scope, Enviro) {
+.controller('startNewSessionContCtrl', function($scope, Enviro, $ionicScrollDelegate) {
 	
 	//global factory environment object
 	$scope.Enviro = Enviro;
+
+	//scroll top function
+    $scope.scrollDown = function(){
+        $scope.showHelp = true;
+        $ionicScrollDelegate.$getByHandle('startContScroll').resize();
+        $ionicScrollDelegate.$getByHandle('startContScroll').anchorScroll(true);
+        $ionicScrollDelegate.$getByHandle('startContScroll').scrollBottom(true);
+    }
+
+    //hide help function
+    $scope.hideHelp = function() {
+        $scope.showHelp = false;
+    }
 			            
 })
 
-.controller('observationModeCtrl', function($scope, $cordovaSQLite, Session, Enviro, $location, $state, $ionicPopup) {
+.controller('observationModeCtrl', function($scope, $cordovaSQLite, Session, Enviro, $location, $state, $ionicPopup, $ionicScrollDelegate) {
 	//global debug var
 	$scope.debug = debug;	
+
+	//scroll top function
+    $scope.scrollDown = function(){
+        $scope.showHelp = true;
+        $ionicScrollDelegate.$getByHandle('obsScroll').resize();
+        $ionicScrollDelegate.$getByHandle('obsScroll').anchorScroll(true);
+        $ionicScrollDelegate.$getByHandle('obsScroll').scrollBottom(true);
+    }
+
+    //hide help function
+    $scope.hideHelp = function() {
+        $scope.showHelp = false;
+    }
 	
 	//global factory session/enviro objects
 	$scope.Session = Session;
