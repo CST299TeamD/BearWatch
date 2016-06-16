@@ -106,6 +106,7 @@ angular.module('app.controllers')
 	
 	//function to record motorized actions
 	$scope.recordMoto = function(motoType, action, description){
+		console.log("Recording Moto");
 
 		var time = new Date().toLocaleTimeString();
 		//object to hold motorized vehicle properties
@@ -150,6 +151,7 @@ angular.module('app.controllers')
 			//remove from active list
 			var index = $scope.activeVehicles.indexOf(motoType);
 			moto = $scope.activeVehicles[index];
+			moto.action = 'departed';
 			console.log(moto);
   			$scope.activeVehicles.splice(index, 1);
 		}

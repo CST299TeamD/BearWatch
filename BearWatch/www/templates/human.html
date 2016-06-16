@@ -135,11 +135,8 @@
                         </label>
                     </div>
                     <div class="col">                   
-                        <label ng-repeat="motoAction in motoActions">                                
-                            <button 
-                            ng-class="{'button button-balanced': motoAction == 'Passing through', 'button button-assertive': motoAction == 'Staying in area'}" 
-                            ng-click="recordMoto('Boat', motoAction, motoBoat.txt); motoBoat.checked = !motoBoat.checked">{{ motoAction }}</button>
-                        </label>
+                        <button class="button button-balanced" ng-click="recordMoto('Boat', motoAction, motoBoat.txt); motoBoat.checked = !motoBoat.checked">Passing through</button>
+                        <button class="button button-assertive" ng-click="recordMoto('Boat', motoAction, motoBoat.txt); motoBoat.checked = !motoBoat.checked">Staying in area</button>
                     </div>
                     <div class="spacer spacer-10"></div>
                 </div>
@@ -190,6 +187,7 @@
                 <span class="input-label">Behaviour</span>
                 <select ng-model="Human.behavior" ng-change="Human.save()">
                     <option selected disabled></option>
+                    <option>None</option>
                     <option>Quietly observing, minimal movement</option>
                     <option>Loud disturbance, minimal movement</option>
                     <option>Quietly observing, excessive movement</option>
