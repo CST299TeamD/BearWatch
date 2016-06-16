@@ -32,7 +32,7 @@ angular.module('app.controllers')
 		case "Terrestrial":
 			Human.zoneMatrix = [{zone: "1b", humans: ''}, {zone: "1a", humans: ''}, {zone: "4+", humans: ''}, {zone: "7a", humans: ''}, {zone: "7b", humans: ''}, {zone: "+1", humans: ''}, 
 			{zone: "1", humans: ''}, {zone: "4", humans: ''}, {zone:"7", humans:''}, {zone: "7+", humans: ''}, {zone: "2+", humans: ''}, {zone:"2", humans: ''}, {zone: "5", humans: ''}, 
-			{zone: "8", humans: ''}, {zone: "8+", humans: ''}, {zone: "3", humans: ''}, {zone: "3+", humans: ''}, {zone: "6", humans: ''}, {zone: "9", humans: ''}, {zone: "9+", humans: ''}, {zone: "3b", humans: ''}, {zone: "3a", humans: ''}, 
+			{zone: "8", humans: ''}, {zone: "8+", humans: ''}, {zone: "3+", humans: ''}, {zone: "3", humans: ''}, {zone: "6", humans: ''}, {zone: "9", humans: ''}, {zone: "9+", humans: ''}, {zone: "3b", humans: ''}, {zone: "3a", humans: ''}, 
 			{zone: "6+", humans: ''}, {zone: "9a", humans: ''}, {zone: "9b", humans:''}];
 			$scope.zoneImgURI = "img/terrestrial.png"
 			break;
@@ -62,8 +62,15 @@ angular.module('app.controllers')
 		}else{
 			$scope.modal.show();
 		}
-
 	};
+
+	//non-motorized save function 
+	$scope.nonMotoSave = function(name){
+		if(name == 'Other'){
+			Human.nonMotoOther = '';
+		}
+		Human.save();
+	}
 
 	//matrix modal
 	//modal function to confirm edit options
@@ -176,6 +183,13 @@ angular.module('app.controllers')
     //hide help function
     $scope.hideHelp = function() {
         $scope.showHelp = false;
+    }
+
+    $scope.humidSave = function(form, id){
+    	if(form.$valid) {
+    		console.log("enviro2Form Valid");
+	    	Enviro.save(id);
+	    }
     }
             
 	//function to add text box for "other" selections

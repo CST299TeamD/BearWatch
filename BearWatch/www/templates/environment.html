@@ -22,7 +22,7 @@
         <ion-nav-view animation="slide-left-right" ></ion-nav-view>
     </div>
     <ion-content class="has-header container" overflow-scroll="true" padding="true" delegate-handle="enviroScroll">
-        <form class="list">
+        <form class="list" name="enviro2Form" novalidate >
             <div class="spacer spacer-10"></div>
             <div class="row">
                 <div class="col col-33">
@@ -70,11 +70,11 @@
                     <span class="input-label">Water Clarity:</span>
                     <select ng-model="Enviro.waterClarity" ng-change="Enviro.save(Session.id)">
                         <option selected disabled></option>
-                        <option value="0">Sparkling clear</option>
-                        <option value="1">Water appears dull, slight discoloration</option>
-                        <option value="2">Bottom visible to approx. 3ft, but not distinct</option>
-                        <option value="3">Bottom visible to approx. 1ft, but not distinct</option>
-                        <option value="4">Cannot see bottom</option>
+                        <option>Sparkling clear</option>
+                        <option>Water appears dull, slight discoloration</option>
+                        <option>Bottom visible to approx. 3ft, but not distinct</option>
+                        <option>Bottom visible to approx. 1ft, but not distinct</option>
+                        <option>Cannot see bottom</option>
                     </select>
                 </label>
             </div><!--end water options-->
@@ -155,13 +155,24 @@
                 <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Enviro.save(Session.id)">&nbsp; Update</button>
             </div>
 
-            <div class="item item-input-inset">
+            <div class="item item-input-inset" ng-class="{ 'has-errors' : (enviro2Form.humid.$invalid), 'no-errors' : (submitted && enviro2Form.humid.$valid)}">
                 <label class="item item-input-wrapper">     
                     <span class="input-label">Humidity:</span>
-                    <input placeholder="0 - 100%" type="number" ng-model="Enviro.humid">
+                    <input placeholder='%' type="number" ng-model="Enviro.humid" name="humid" min="0" max="99"> 
                 </label>
-                <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Enviro.save(Session.id)">&nbsp; Update</button>
+                <button class="button button-balanced icon ion-ios-upload-outline" ng-click="humidSave(enviro2Form, Session.id)">&nbsp; Update</button>
             </div>
+
+            <div ng-show="enviro2Form.humid.$invalid" >
+                <div class="error-container">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        Cannot update - required humidity range is between 0% - 100%!
+                    </div>
+                  <div class="spacer spacer-10"></div>
+                </div>
+            </div>
+
             </div><!--end weather options-->
 
             <div class="spacer spacer-20"></div>      

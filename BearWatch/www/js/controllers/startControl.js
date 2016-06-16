@@ -117,7 +117,7 @@ angular.module('app.controllers')
     }
 })
 
-.controller('startNewSessionContCtrl', function($scope, Enviro, $ionicScrollDelegate) {
+.controller('startNewSessionContCtrl', function($scope, Enviro, $ionicScrollDelegate, $location, $state) {
 	
 	//global factory environment object
 	$scope.Enviro = Enviro;
@@ -133,6 +133,15 @@ angular.module('app.controllers')
     //hide help function
     $scope.hideHelp = function() {
         $scope.showHelp = false;
+    }
+
+    //validation function
+    $scope.validate = function(form){
+    	$scope.submitted = true;
+    	if(form.$valid) {
+    		console.log("Form Valid");
+	    	$state.go('observationMode');
+	    }
     }
 			            
 })
