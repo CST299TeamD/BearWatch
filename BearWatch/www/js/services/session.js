@@ -184,6 +184,7 @@ angular.module('app.services')
 						Session.comment = zone_comment;
 						Session.surveySched = survey_sched;
 						Session.observationMode = observation_mode;
+						Session.altMedia = alt_media;
 						Session.start_time = new Date(start_time).toLocaleTimeString();
 						Session.start_date = new Date(start_time).toLocaleDateString();
 						Session.finish_time = new Date(finish_time).toLocaleTimeString();
