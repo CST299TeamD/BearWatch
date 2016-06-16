@@ -4,6 +4,7 @@ angular.module('app.services')
     var Session =  { 
         id: '',
         firstName: '',
+		allNames: '',
         lastName: '',
         nameResult: [],
         park: '',
@@ -116,7 +117,8 @@ angular.module('app.services')
             	if (result.rows.length > 0) {
 					with(result.rows.item(0)){
 						Session.id = session_id;
-						Session.firstName = observers; //TDL - why are we storing firstname/lastname as a single field?
+						Session.firstName = (observers.split(","))[0];
+						Session.allNames = observers; //TDL - why are we storing firstname/lastname as a single field?
 						Session.lastName = '';
 						Session.nameResult = [];
 						Session.park = park;

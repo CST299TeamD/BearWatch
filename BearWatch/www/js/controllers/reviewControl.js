@@ -297,21 +297,55 @@ angular.module('app.controllers')
 		
 			data = "";
 			
-			var bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, habituation, feedingForaging, nonInteractive, bearBearInteractions, bearHumanInteractions, studyAreaPhoto, fishingTechnique, foragingDetails, numberOfFishCaught, alertVigilance, actionOtherComment, generalCommentType, otherPhotoLocation, aircraft, ATV, boat, vehicle, humanBehavior = "";
+			var 
+			bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, 
+			
+			studyAreaPhoto, generalCommentType, otherPhotoLocation, logTime, sessionDate,
+			
+			aircraft, ATV, boat, vehicle, humanBehavior, 
+			
+			habituation, feedingForaging, fishingTechnique, foragingDetails, numberOfFishCaught, nonInteractive, bearBearInteractions, bearHumanInteractions, humanBearInteractions, alertVigilance, actionOtherComment, fishingTechnique, foragingDetails, numberOfFishCaught = "";
+			
 			var lastBearComment = [];
 				
 			for (var i = 0; i<Session.logs.length;i++){
 				//console.log("log start: "+i+"/"+Session.logs.length);
 										
 				//values to reset
-				bearName = accuracy = accuracyComments = animalInSight = urineStreamObserved = bearZone = bearSpecies = count = size = sex = age = marks = colour = colourVariation = furWet = pawMeasure = cubs = ageOfCubs = cubFur = habituation = feedingForaging = nonInteractive = bearBearInteractions = bearHumanInteractions = humanBearInteractions = bearComment = studyAreaPhoto = fishingTechnique = foragingDetails = numberOfFishCaught = alertVigilance = actionOtherComment = generalCommentType = otherPhotoLocation = aircraft = ATV = boat = vehicle = humanBehavior = "";
+				bearName = accuracy = accuracyComments = animalInSight = urineStreamObserved = bearZone = bearSpecies = count = size = sex = age = marks = colour = colourVariation = furWet = pawMeasure = cubs = ageOfCubs = cubFur = bearComment =
+
+				studyAreaPhoto = generalCommentType = bearsInPhoto = otherPhotoLocation = logTime =
+			
+				aircraft = ATV = boat = vehicle = humanBehavior = 
+			
+				habituation = feedingForaging = fishingTechnique = foragingDetails = numberOfFishCaught = nonInteractive = bearBearInteractions = bearHumanInteractions = humanBearInteractions = alertVigilance = actionOtherComment = "";
+			
 				with (Session.logs[i]){
+					
+					logTime = new Date(timestamp);
+					sessionDate = (Session.start_date).split("/");
 					
 					//Handle Pictures
 					if (picture_data != null){
-						studyAreaPhoto = "picture"+i+".jpg";
+						
+						var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug","Sep", "Oct", "Nov", "Dec"];
+						//BearWatch_4321_Tweedsmuir-Park_9-Jun-2016_13-30-32.jpg
+						studyAreaPhoto = "BearWatch_" +
+								//(Session.park).trim.replace(/\s+/g, "-") + "_" +
+								(Session.park).trim().split(" ").join("-") + "_" +
+								sessionDate[1] + "-" +
+								monthNames[parseInt(sessionDate[0])-1] + "-" +
+								sessionDate[2] + "_" +
+								logTime.getHours() + "-" +
+								logTime.getMinutes() + "-" +
+								logTime.getSeconds() + ".jpg";
+						if (picture_subjects != null){
+							bearsInPhoto = picture_subjects;
+						}
+						
 						//logic to assign picture name to a "photo" field
-						pictureAttachments.push("base64:picture"+i+".jpg//" + picture_data);
+						pictureAttachments.push("base64:" + studyAreaPhoto + "//" + picture_data);
+											
 					}
 					
 					//Handle ongoing environmental variables
@@ -333,16 +367,18 @@ angular.module('app.controllers')
 					
 					//Handle Comments
 					if (comment != null && comment != "" && (comment != humanComment || comment != generalComment)){
+							generalCommentType = generalComment = humanComment = "";
 						if (comment_type.slice(0, 7) == "General"){
-							humanComment = "";
 							generalComment = comment;
+							generalCommentType = comment_type
 						} else if (comment_type.slice(0, 5) == "Human"){
 							humanComment = comment;
-							generalComment = "";	
+							generalCommentType = comment_type;					
 						}
 					} else {
 						humanComment = "";
-						generalComment = "";	
+						generalComment = "";
+						generalCommentType = "";	
 					}
 						
 
@@ -379,17 +415,6 @@ angular.module('app.controllers')
 
 							
 						
-							habituation,
-							feedingForaging,
-							fishingTechnique,
-							foragingDetails,
-							numberOfFishCaught,
-							nonInteractive,
-							bearBearInteractions,
-							bearHumanInteractions,
-							humanBearInteractions,
-							alertVigilance,
-							actionOtherComment = "";
 							
 							for (j=0;j<bear["behaviour"].length;j++){
 						//		console.log("\tBehaviour: "+bear["behaviour"][j].category);
@@ -495,6 +520,7 @@ angular.module('app.controllers')
 						Session.start_time + "\t" +
 						Session.finish_time + "\t" +
 						Session.firstName + "\t" +
+						Session.allNames + "\t" +
 						
 						utm_zone + "\t" +
 						easting + "\t" +
@@ -554,7 +580,7 @@ angular.module('app.controllers')
 						cubFur + "\t" +
 						bearComment + "\t" +
 						
-						new Date(timestamp).toLocaleTimeString() + "\t" +
+						logTime.toLocaleTimeString() + "\t" +
 						
 						animalInSight + "\t" +
 						feedingForaging + "\t" +
@@ -615,6 +641,7 @@ angular.module('app.controllers')
 						humanComment + "\t" +
 						
 						studyAreaPhoto + "\t" +
+						bearsInPhoto + "\t" +
 						otherPhotoLocation + "\t" +
 						generalComment + "\t" +
 						generalCommentType;
@@ -624,8 +651,9 @@ angular.module('app.controllers')
 				data = data + "\n";
 			}
 			emailAttachments.push("base64:generalSurvey.csv//" + btoa(data));
-			
-			//emailAttachments.concat(pictureAttachments);
+			console.log("stamp: "+logTime.toLocaleTimeString());
+			console.log("pictureAttachments: " +pictureAttachments);
+			emailAttachments.concat(pictureAttachments);
 			sendEmail(id, emailAttachments);
 
 		}
