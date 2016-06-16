@@ -44,13 +44,18 @@
                 </div>
             </div>
             <div ng-model="showZoneMatrix" ng-show="showZoneMatrix">
-                <div class="row flexi-div">
-                    <div class="col col-20" ng-repeat="zone in Human.zoneMatrix">
+                <div class="spacer spacer-10"></div>
+                <h3 class="center">Press the update button after each entry</h3>
+                <div class="row flexi-div center">
+                    <div ng-class="{'col col-20': (zone.zone != '6' || Session.zoneSchema != 'Estuary'), 'col': (zone.zone == '6' && Session.zoneSchema == 'Estuary')}" ng-repeat="zone in Human.zoneMatrix">
                         <label class="item item-input">
                             <span class="input-label">{{zone.zone}}: </span>
-                            <input placeholder="# Humans" type="number" ng-model="zone.humans" ng-change="Human.save()">
+                            <input placeholder="# Humans" type="number" ng-model="zone.humans">
                         </label>
                     </div>
+                </div>
+                <div class="center">
+                    <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Human.save()">&nbsp; Update</button>
                 </div>
             </div><!--end zoneMatrix-->
             
@@ -135,8 +140,11 @@
                         </label>
                     </div>
                     <div class="col">                   
-                        <button class="button button-balanced" ng-click="recordMoto('Boat', motoAction, motoBoat.txt); motoBoat.checked = !motoBoat.checked">Passing through</button>
-                        <button class="button button-assertive" ng-click="recordMoto('Boat', motoAction, motoBoat.txt); motoBoat.checked = !motoBoat.checked">Staying in area</button>
+                        <label ng-repeat="motoAction in motoActions">                                
+                            <button 
+                            ng-class="{'button button-balanced': motoAction == 'Passing through', 'button button-assertive': motoAction == 'Staying in area'}" 
+                            ng-click="recordMoto('Boat', motoAction, motoBoat.txt); motoBoat.checked = !motoBoat.checked">{{ motoAction }}</button>
+                        </label>
                     </div>
                     <div class="spacer spacer-10"></div>
                 </div>
@@ -236,7 +244,18 @@
                         <p>Any motorized vehicle (boat, vehicle, etc.) that is staying in the area, goes to the list on the screen. More than one item of each type can be logged. They will be given unique numbers as they are entered (boat 1, boat 2, etc.). When a motorized vehicle leaves, press the X to indicate it has gone. It will be removed from the list.</p>
                         <p>When a comment is updated it is time stamped and logged, but disappears from the screen.</p>
                         <div class="spacer spacer-10"></div>
-                    </div>                    
+                    </div>
+                    <div class="row item-divider expando-pane">
+                        <div class="col col-center"><h4>Human-Zone Matrix</h4></div>
+                        <div class="col col-center text-right">
+                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!matrixHelp, 'button button-small button-icon icon ion-ios-minus-outline':matrixHelp}" ng-click="matrixHelp=!matrixHelp"></a>
+                        </div>
+                    </div>
+                    <div ng-model="matrixHelp" ng-show="matrixHelp" class="container">
+                        <div class="spacer spacer-10"></div>
+                        <p>Any motorized vehicle (boat, vehicle, etc.) passing through is logged, but can’t be seen on the screen.</p>
+                        <div class="spacer spacer-10"></div>
+                    </div>                     
                 </div>
                 <div class="spacer spacer-20"></div>            
             </div><!--End Help-->
