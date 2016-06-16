@@ -149,6 +149,8 @@ angular.module('app.controllers')
 		}else{
 			//remove from active list
 			var index = $scope.activeVehicles.indexOf(motoType);
+			moto = $scope.activeVehicles[index];
+			console.log(moto);
   			$scope.activeVehicles.splice(index, 1);
 		}
 
