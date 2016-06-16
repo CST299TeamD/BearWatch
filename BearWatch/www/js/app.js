@@ -3,7 +3,7 @@
 //global variables
 var db;
 var db_error = false;
-var db_drop = false;
+var db_drop = true;
 
 //debugging
 var debug = false;
@@ -99,7 +99,6 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "easting           TEXT    , "
       + "comment           TEXT    , "
       + "comment_type      TEXT    , "      
-      + "water_body        TEXT    , "
       + "water_level       TEXT    , "
       + "water_clarity     TEXT    , "
       + "cloud_cover       TEXT    , "

@@ -5,7 +5,6 @@ angular.module('app.services')
     //Object properties
     var Enviro =  { 
         session_id: '',
-        waterBody: '',
         waterLevel: '',
         waterClarity: '',
         cloudCover: '',
@@ -27,7 +26,6 @@ angular.module('app.services')
     //function to reset enviro object
     Enviro.reset = function(){
         Enviro.session_id = '';
-        Enviro.waterBody = '';
         Enviro.waterLevel = '';
         Enviro.waterClarity = '';
         Enviro.cloudCover = '';
@@ -112,10 +110,10 @@ angular.module('app.services')
            
             $cordovaSQLite.execute(db, 
                 'INSERT INTO logs '
-                + '(timestamp, water_body, water_level, water_clarity, cloud_cover, precipitation, wind, wind_direction,'
+                + '(timestamp, water_level, water_clarity, cloud_cover, precipitation, wind, wind_direction,'
                 + ' temperature, humididty, visibility, obstruction, obstr_desc, noise_level, session_id, utm_zone, northing, easting)'
-                + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-                [new Date(), Enviro.waterBody, Enviro.waterLevel, Enviro.waterClarity, Enviro.cloudCover, Enviro.precipitation, 
+                + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+                [new Date(), Enviro.waterLevel, Enviro.waterClarity, Enviro.cloudCover, Enviro.precipitation, 
                 Enviro.wind, Enviro.windDirection, Enviro.temp, Enviro.humid, Enviro.visibility, Enviro.obscuredReason, Enviro.obscuredOther, 
                 Enviro.noiseLevel, id, GPS.utmZone, GPS.northing, GPS.easting])
             .then(function(result) {
