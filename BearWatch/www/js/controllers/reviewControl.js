@@ -546,7 +546,6 @@ angular.module('app.controllers')
 						Session.foodSources[2].comment + "\t" +
 						
 						Session.water_body + "\t" +
-						"TDL" + "\t" +
 						Session.water_level + "\t" +
 						Session.water_clarity + "\t" +
 						
