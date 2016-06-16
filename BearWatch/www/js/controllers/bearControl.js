@@ -470,6 +470,8 @@ angular.module('app.controllers')
                		    //start the new behaviour
                     	$scope.Bear.behaviour[n].description = desc;
                      	$scope.Bear.behaviour[n].time = curTime;
+                     	$scope.Bear.behaviour[n].endTime = '';
+               		    
                       	updated = true;
                    }
                 }
