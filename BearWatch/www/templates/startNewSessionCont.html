@@ -20,7 +20,7 @@
         </div> 
         <div class="spacer spacer-20"></div>
 
-        <form class="list">
+        <form name="enviroForm" novalidate  ng-submit="validate(enviroForm)" class="list">
 		<ion-item class="item-divider list-head">Water</ion-item>
             <label class="item item-select">
                 <span class="input-label">Water Body:</span>
@@ -116,15 +116,25 @@
 		            <option>WSW</option>
                     <option>ESE</option>					
                 </select>
-            </label>			
+            </label>
+
 			<label class="item item-input">
               <span class="input-label">Temperature:</span>
               <input placeholder="&#176;C" type="number" ng-model="Enviro.temp">
 			</label>
-            <label class="item item-input">
+            <label class="item item-input" ng-class="{ 'has-errors' : (enviroForm.humid.$invalid), 'no-errors' : (submitted && enviroForm.humid.$valid)}">
                 <span class="input-label">Humidity:</span>
-                <input placeholder="0 - 100%" type="number" ng-model="Enviro.humid">
+                <input placeholder="0 - 100%" type="number" ng-model="Enviro.humid" name="humid" min="0" max="99">
             </label>
+            <div ng-show="enviroForm.humid.$invalid" >
+                <div class="error-container">
+                    <div class="error">
+                        <i class="ion-alert-circled"></i> 
+                        Required humidity range is between 0% - 100%!
+                    </div>
+                  <div class="spacer spacer-10"></div>
+                </div>
+            </div>
             <div class="spacer spacer-20"></div>
             
 			<ion-item class="item-divider list-head">Area Visibility</ion-item>
@@ -221,8 +231,9 @@
                 </ion-item>
             </ion-list>            
             <div class="spacer spacer-20"></div>
+            <button class="button button-positive button-block icon-right ion-android-arrow-forward" type="submit">Next</button>
 			
-            <a class="button button-positive button-block icon-right ion-android-arrow-forward" id="newSessionObserverSVisibility-button33" ui-sref="observationMode">Next</a>
+            <a class="button button-positive button-block icon-right ion-android-arrow-forward" id="newSessionObserverSVisibility-button33" ui-sref="observationMode">Skip Validation</a>
         </form>
         <div class="spacer spacer-20"></div>
 
@@ -253,12 +264,30 @@
                 </div>
 
                 <div class="row item-divider expando-pane">
-                    <div class="col col-center"><h4>Weather Definitions</h4></div>
+                    <div class="col col-center"><h4>Water Definitions</h4></div>
                     <div class="col col-center text-right">
                         <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!waterHelp, 'button button-small button-icon icon ion-ios-minus-outline':waterHelp}" ng-click="waterHelp=!waterHelp"></a>
                     </div>
                 </div>
                 <div ng-model="waterHelp" ng-show="waterHelp" class="container">
+                    <div class="spacer spacer-10"></div>
+                    <h3>Water Level:</h3>
+                    <p>This information can be assessed by the observer, gleaned from locals, or checked with the real time hydrometric information collected by Environment Canada at selected river stations in BC.</p>
+                    <br/>
+                    <p><strong>Outside of Normal Bank:</strong> The river or lake has gone over its bank and potentially into a floodplain.</p>
+                    <p><strong>Normal for the Season:</strong> Rivers and lakes have seasonal fluctuations in flow and level. Choose this option if the water body is within the normal range for the season in which you are working.</p>
+                    <p><strong>Low for the Season:</strong> The river or lake is lower than usual for the season.</p>
+                    <p><strong>High/Mid/Low Tide:</strong> On an estuary be aware of the tide cycle. Choose the closest tide to the beginning of your session.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Weather Definitions</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!weatherHelp, 'button button-small button-icon icon ion-ios-minus-outline':weatherHelp}" ng-click="weatherHelp=!weatherHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="weatherHelp" ng-show="weatherHelp" class="container">
                     <div class="spacer spacer-10"></div>                    
                     <div class="center">
                         <h3>Wind (Beaufort Scale):</h3>

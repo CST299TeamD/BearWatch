@@ -22,6 +22,7 @@ angular.module('app.services')
         min: '',
         active: '',
         resting: '',
+        altMedia: '',
 		
 		water_body: '',
 		water_level: '',
@@ -75,6 +76,7 @@ angular.module('app.services')
         Session.min = '';
         Session.active = '';
         Session.resting = '';
+        Session.altMedia = '';
     }
     
     //function for saving session state
@@ -92,10 +94,10 @@ angular.module('app.services')
                   
         $cordovaSQLite.execute(db, 
             'INSERT INTO sessions '
-            + '(observers, park, park_site, protocol, stationary, zone_type, observer_zone, zone_comment, start_time, observation_mode, survey_sched)'
-            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            + '(observers, park, park_site, protocol, stationary, zone_type, observer_zone, zone_comment, start_time, observation_mode, survey_sched, alt_media)'
+            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
             [Session.nameResult.toString(), Session.park, Session.site, protocol, Session.stationary, Session.zoneSchema, 
-            Session.obsArea, Session.comment, time, Session.observationMode, Session.surveySched])
+            Session.obsArea, Session.comment, time, Session.observationMode, Session.surveySched, Session.altMedia])
         .then(function(result) {
             console.log("Session save success" + result.insertId);
             defer.resolve(result);            

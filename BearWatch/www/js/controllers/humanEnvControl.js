@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('humanCtrl', function($scope, $ionicModal, Session, Human) {
+.controller('humanCtrl', function($scope, $ionicModal, Session, Human, $ionicScrollDelegate) {
 
 	$scope.Session = Session;
 	$scope.Human = Human;
@@ -32,13 +32,27 @@ angular.module('app.controllers')
 		case "Terrestrial":
 			Human.zoneMatrix = [{zone: "1b", humans: ''}, {zone: "1a", humans: ''}, {zone: "4+", humans: ''}, {zone: "7a", humans: ''}, {zone: "7b", humans: ''}, {zone: "+1", humans: ''}, 
 			{zone: "1", humans: ''}, {zone: "4", humans: ''}, {zone:"7", humans:''}, {zone: "7+", humans: ''}, {zone: "2+", humans: ''}, {zone:"2", humans: ''}, {zone: "5", humans: ''}, 
-			{zone: "8", humans: ''}, {zone: "8+", humans: ''}, {zone: "3", humans: ''}, {zone: "3+", humans: ''}, {zone: "6", humans: ''}, {zone: "9", humans: ''}, {zone: "9+", humans: ''}, {zone: "3b", humans: ''}, {zone: "3a", humans: ''}, 
+			{zone: "8", humans: ''}, {zone: "8+", humans: ''}, {zone: "3+", humans: ''}, {zone: "3", humans: ''}, {zone: "6", humans: ''}, {zone: "9", humans: ''}, {zone: "9+", humans: ''}, {zone: "3b", humans: ''}, {zone: "3a", humans: ''}, 
 			{zone: "6+", humans: ''}, {zone: "9a", humans: ''}, {zone: "9b", humans:''}];
 			$scope.zoneImgURI = "img/terrestrial.png"
 			break;
 		default:
 			$scope.zoneImgURI = "img/pic_placeholder.png"
 	}
+
+	//scroll top function
+    $scope.scrollDown = function(){
+    	console.log("here");
+        $scope.showHelp = true;
+        $ionicScrollDelegate.$getByHandle('humanScroll').resize();
+        $ionicScrollDelegate.$getByHandle('humanScroll').anchorScroll(true);
+        $ionicScrollDelegate.$getByHandle('humanScroll').scrollBottom(true);
+    }
+
+    //hide help function
+    $scope.hideHelp = function() {
+        $scope.showHelp = false;
+    }
 
 	//function to show modal for initial zone-matrix population
 	var matrixCompleted = false;
@@ -48,8 +62,15 @@ angular.module('app.controllers')
 		}else{
 			$scope.modal.show();
 		}
-
 	};
+
+	//non-motorized save function 
+	$scope.nonMotoSave = function(name){
+		if(name == 'Other'){
+			Human.nonMotoOther = '';
+		}
+		Human.save();
+	}
 
 	//matrix modal
 	//modal function to confirm edit options
@@ -143,12 +164,33 @@ angular.module('app.controllers')
 
 })
 
-.controller('environmentCtrl', function($scope, Enviro, Session, $cordovaSQLite) {
+.controller('environmentCtrl', function($scope, Enviro, Session, $cordovaSQLite, $ionicScrollDelegate) {
 	$scope.debug = true;
 
 	//global factory enviro object
 	$scope.Enviro = Enviro;
 	$scope.Session = Session;
+
+	//scroll top function
+    $scope.scrollDown = function(){
+    	console.log("here");
+        $scope.showHelp = true;
+        $ionicScrollDelegate.$getByHandle('enviroScroll').resize();
+        $ionicScrollDelegate.$getByHandle('enviroScroll').anchorScroll(true);
+        $ionicScrollDelegate.$getByHandle('enviroScroll').scrollBottom(true);
+    }
+
+    //hide help function
+    $scope.hideHelp = function() {
+        $scope.showHelp = false;
+    }
+
+    $scope.humidSave = function(form, id){
+    	if(form.$valid) {
+    		console.log("enviro2Form Valid");
+	    	Enviro.save(id);
+	    }
+    }
             
 	//function to add text box for "other" selections
 	$scope.showNSCTextBox = function(selectModel, value){
