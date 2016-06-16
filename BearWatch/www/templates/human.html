@@ -95,7 +95,7 @@
                     <div class="col">                   
                         <label ng-repeat="motoAction in motoActions">                                
                             <button 
-                            ng-class="{'button button-balanced button-outline': motoAction == 'Passing through', 'button button-assertive button-outline': motoAction == 'Staying in area'}" 
+                            ng-class="{'button button-balanced': motoAction == 'Passing through', 'button button-assertive': motoAction == 'Staying in area'}" 
                             ng-click="recordMoto('Aircraft', motoAction, aircraft.txt); aircraft.checked = !aircraft.checked">{{ motoAction }}</button>
                         </label>
                     </div>
