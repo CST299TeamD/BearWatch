@@ -261,9 +261,10 @@ angular.module('app.controllers')
 		//construct the email with its attachments and send it to the email application
 		
 		//instantiate array which holds all email attachments
-		var emailAttachments = [];
+		var csvAttachments = [];
 		var pictureAttachments = [];
-
+		var emailAttachments = [];
+		
 		Session.sessionReady = Session.foodReady = Session.logsReady = 0;//not ready
 		try {
 			Session.load(id);
@@ -291,7 +292,15 @@ angular.module('app.controllers')
 			//construct Block Information sheet
 			//header = "Study Area Name\tBlock Label\tUTM Zone Block\tEasting Block\tNorthing Block";
 			data = Session.park + "\t" + Session.site + "\t" + Session.logs[0].utm_zone + "\t" + Session.logs[0].easting + "\t" + Session.logs[0].northing;
-			emailAttachments.push("base64:blockInformation.csv//" + btoa(data));
+			console.log("STATIONARY: "+Session.stationary);
+			if (Session.stationary == "Mobile"){
+				data = data + 
+					"\t" + Session.logs[Session.logs.length-1].utm_zone +
+					"\t" + Session.logs[Session.logs.length-1].easting +
+					"\t" + Session.logs[Session.logs.length-1].northing;
+			}
+			console.log("Block Information Sheet: " + data);
+			csvAttachments.push("base64:blockInformation.csv//" + btoa(data));
 
 			//construct General Survey sheet
 		
@@ -387,7 +396,7 @@ angular.module('app.controllers')
 						bear = angular.fromJson(bear);
 						bearName = bear["name"];
 						accuracy = bear["accuracy"];
-						accuracyComments = bear["vAid"]; //IS THIS CORRECT?
+						accuracyComments = bear["vAid"];
 						animalInSight = bear["inSight"];
 						urineStreamObserved = bear["uStream"];
 						bearZone = bear["zone"];
@@ -437,10 +446,6 @@ angular.module('app.controllers')
 										break;
 									case "Feeding or Foraging":
 										feedingForaging = bear["behaviour"][j].description;
-										console.log("feedingForaging:" + feedingForaging);
-										if (feedingForaging == "fishing"){
-											
-										}
 										break;
 									case "Alert/Vigilance":
 										alertVigilance = bear["behaviour"][j].description;
@@ -449,25 +454,22 @@ angular.module('app.controllers')
 										actionOtherComment = bear["behaviour"][j].description;
 										break;										
 								}
+								
 	        							
 							}
-						/*
-						if (bear["behavior"] != "undefined" && bear["behavior"] != null){
-							var behavior = angular.fromJson(bear["behavior"]);
-							var fishing = angular.fromJson(bear["fishing"]);
-							console.log("************************");
-							
-							feedingForaging
-							fishingTechnique
-							foragingDetails
-							numberOfFishCaught
-							nonInteractive
-							bearBearInteractions
-							bearHumanInteractions
-							alertVigilance
-							actionOtherComment
-							
-						}*/
+						
+								//console.log("bear[isFishing]:" + bear["isFishing"]);
+								
+								if (bear["isFishing"] == true){
+									feedingForaging = "Fishing";
+								
+									fishingTechnique = bear["fishingMethod"];
+									foragingDetails = bear["fishingSuboption"];
+									numberOfFishCaught = bear["tally"];
+									
+
+								}
+								
 						bear = "";
 					} else {
 						//no bear data this log
@@ -488,13 +490,15 @@ angular.module('app.controllers')
 						}
 						if (motorized_name == "" || motorized_name == null) {
 						} else if (motorized_name.slice(0,3) == "ATV") {
-							ATV = motorized_action + " " + motorized_name.slice(4,5);
+							
+							// motorized_desc + " " +
+							ATV = motorized_desc + " " + motorized_name.slice(4,5) + " " + motorized_action;
 						} else if (motorized_name.slice(0,4) == "Boat") {
-							boat = motorized_action + " " + motorized_name.slice(5,6);
+							boat = motorized_desc + " " + motorized_name.slice(5,6) + " " + motorized_action;
 						} else if (motorized_name.slice(0,7) == "Vehicle") {
-							vehicle = motorized_action + " " + motorized_name.slice(8,9);
+							vehicle = motorized_desc + " " + motorized_name.slice(8,9) + " " + motorized_action;
 						} else if (motorized_name.slice(0, 8) == "Aircraft") {
-							aircraft = motorized_action + " " + motorized_name.slice(9,10);
+							aircraft = motorized_desc + " " + motorized_name.slice(9,10) + " " + motorized_action;
 						}
 						
 						var oldHumans = angular.fromJson(human_type);
@@ -521,6 +525,7 @@ angular.module('app.controllers')
 						Session.finish_time + "\t" +
 						Session.firstName + "\t" +
 						Session.allNames + "\t" +
+						Session.surveySched + "\t" +
 						
 						utm_zone + "\t" +
 						easting + "\t" +
@@ -650,12 +655,23 @@ angular.module('app.controllers')
 			
 				data = data + "\n";
 			}
-			emailAttachments.push("base64:generalSurvey.csv//" + btoa(data));
+			csvAttachments.push("base64:generalSurvey.csv//" + btoa(data));
 			console.log("stamp: "+logTime.toLocaleTimeString());
-			console.log("pictureAttachments: " +pictureAttachments);
-			emailAttachments.concat(pictureAttachments);
+
+			
+			for (j=0;j<csvAttachments.length;j++){				
+				emailAttachments.push(csvAttachments[j]);
+			}
+			for (j=0;j<pictureAttachments.length;j++){						
+				emailAttachments.push(pictureAttachments[j]);
+			}
+			
+			for (j=0;j<emailAttachments.length;j++){				
+				console.log("Attachment " + j + ": " +emailAttachments[j].slice(0,30));
+			}
 			sendEmail(id, emailAttachments);
 
+			Session.reset();
 		}
 	
 		//Send (draft) email
@@ -663,13 +679,20 @@ angular.module('app.controllers')
 			console.log("...attempting to send email with " + emailAttachments.length + " attachments");
 			try{
 				$cordovaEmailComposer.isAvailable().then(function() {
+					var subjectText = 'Bear Watch Email Submission: ' + Session.park + " " + Session.firstName;
+					var bodyText = 'Session Details:' +
+									'<br>Park: '+ Session.park +
+									'<br>Site: '+ Session.site +
+									'<br>All Surveyors: '+ Session.allNames +
+									'<br>Sheet type: '+ Session.stationary +
+									'<br><br>This email was automatically generated by the Bear Watch Application.';
 					var email = {
-						//TODO - set proper email & mail contents
+						//TODO - set proper email to BCParksConservation@gov.bc.ca
 						to: 'cobbsworth@outlook.com',
 						cc: '',
 						attachments: emailAttachments,
-						subject: 'Cordova Email',
-						body: '',
+						subject: subjectText,
+						body: bodyText,
 						isHtml: true
 					};
 

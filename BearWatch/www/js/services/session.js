@@ -58,6 +58,59 @@ angular.module('app.services')
 
     //function to reset session
     Session.reset = function(){
+		        id = '';
+        firstName = '';
+		allNames = '';
+        lastName = '';
+        nameResult = [];
+        park = '';
+        site = '';
+        viewingArea = '';
+        viewingAreaOther = '';
+        stationary = '';
+        zoneSchema = '';
+        obsArea = '';
+        comment = '';
+        observationMode = '';
+        surveySched = '';
+        start_time = '';
+		finish_time = '';
+        hr = '';
+        min = '';
+        active = '';
+        resting = '';
+        altMedia = '';
+		
+		water_body = '';
+		water_level = '';
+		water_clarity = '';
+		
+		cloud_cover = '';
+		precipitation = '';
+		wind = '';
+		wind_direction = '';
+		temperature = '';
+		humididty = '';
+		noise_level = '';
+		visibility = '';
+		obstruction = '';
+		
+		humans: {
+			"1b" : "",	"1a" : "", "4+" : "", "7a" : "", "7b" : "", "+1" : "", "1" : "", "4" : "", "7" : "", "7+" : "", "2+" : "", "2" : "", "5" : "", "8" : "", "8+" : "", "3+" : "", "3" : "", "6" : "", "9" : "", "9+" : "", "3b" : "", "3a" : "", "6+" : "", "9a" : "", "9b" : ""
+		},
+		humanType: {
+			'Angling':'No', 'Boating':'No', 'Hiking/Walking':'No', 'Running':'No', 'Picnicking':'No', 'Photography':'No', 'Playing':'No', 'Wildlife Viewing':'No', 'Biking':'No', 'Unobservable':'No', 'Other':'No'
+		},
+		
+		logs = [];
+		pictures = [];
+		foodSources = [];
+		sessionReady = 0;
+		logsReady = 0;
+		foodReady = 0;
+		
+		
+		
         Session.id = '';
         Session.firstName = '';
         Session.lastName = '';
@@ -129,6 +182,7 @@ angular.module('app.services')
 						Session.stationary = stationary;
 						Session.zoneSchema = zone_type;
 						Session.comment = zone_comment;
+						Session.surveySched = survey_sched;
 						Session.observationMode = observation_mode;
 						Session.start_time = new Date(start_time).toLocaleTimeString();
 						Session.start_date = new Date(start_time).toLocaleDateString();
