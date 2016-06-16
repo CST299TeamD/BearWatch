@@ -7,7 +7,7 @@ angular.module('app.controllers')
 	$scope.showList = true;
 
 	//pie chart labels
-	$scope.ff_labels = ["Pursuit for Food", "Green Vegetation", "Berries", "Human Food", "Fishing"];
+	$scope.ff_labels = ["Pursuit for Food", "Green Vegetation", "Berries", "Human Food"];
 	$scope.ni_labels = ["Loafing/Resting", "Sleeping", "Walking", "Running"];
 	$scope.bbi_labels = ["Alert/Vigilance", "Playing", "Fighting", "Defense"];
 
@@ -50,7 +50,6 @@ angular.module('app.controllers')
 		var gVeg_total = 0;
 		var berries_total = 0;
 		var hFood_total = 0;
-		var fishn_total = 0;
 
 		//Non-interactive
 		var rest_total = 0;
@@ -94,9 +93,6 @@ angular.module('app.controllers')
 	        								case "Human Food":
 	        									hFood_total += total;
 	        									break;
-	        								case "Fishing":
-	        									fishn_total += total;
-	        									break;
 	        								case "Loafing/Resting":
 	        									rest_total += total;
 	        									break;
@@ -130,7 +126,7 @@ angular.module('app.controllers')
                 }else{
                 	console.log("No bear results");
                 }
-                $scope.ff_data = [Math.floor(fp_total/1000), Math.floor(gVeg_total/1000), Math.floor(berries_total/1000), Math.floor(hFood_total/1000), Math.floor(fishn_total/1000)];
+                $scope.ff_data = [Math.floor(fp_total/1000), Math.floor(gVeg_total/1000), Math.floor(berries_total/1000), Math.floor(hFood_total/1000)];
                 $scope.ni_data = [Math.floor(rest_total/1000), Math.floor(sleep_total/1000), Math.floor(walk_total/1000), Math.floor(run_total/1000)];
                 $scope.bbi_data = [Math.floor(alert_total/1000), Math.floor(play_total/1000), Math.floor(fight_total/1000), Math.floor(defend_total/1000)];
             },
@@ -501,6 +497,8 @@ angular.module('app.controllers')
 							aircraft = motorized_desc + " " + motorized_name.slice(9,10) + " " + motorized_action;
 						}
 						
+						console.log("motorized_action: " + motorized_action + " motorized_name: " + motorized_name);
+
 						var oldHumans = angular.fromJson(human_type);
 						for (j=0;j<oldHumans.length;j++){
 							if (oldHumans[j]["checked"] == true) {

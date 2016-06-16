@@ -30,6 +30,7 @@ angular.module('app.services')
 
 	//function to save human state in logs table
 	Human.save = function(){
+		console.log("Saving Human");
 		$cordovaSQLite.execute(db, 
             'INSERT INTO logs '
             + '(timestamp, session_id, human_count, motorized_name, motorized_action, motorized_desc, human_type, human_other, human_behavior,'
@@ -40,7 +41,6 @@ angular.module('app.services')
         .then(function(result) {
             console.log("Human save success" + result.insertId);
             Human.comment = '';
-        	Human.behavior = '';
         }, function(error) {
             console.log("Error on saving Human: " + error.message);
         });
