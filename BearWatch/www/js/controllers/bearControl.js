@@ -466,6 +466,7 @@ angular.module('app.controllers')
                    		//add end time to old behaviour
                    		$scope.Bear.behaviour[n].endTime = curTime;
                		    Bear.Log($scope.Session.id);
+                        console.log("logged change");
 
                		    //start the new behaviour
                     	$scope.Bear.behaviour[n].description = desc;

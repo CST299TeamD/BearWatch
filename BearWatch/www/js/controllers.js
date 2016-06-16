@@ -1,6 +1,6 @@
 angular.module('app.controllers', [])
 
-.controller('dashCtrl', function($scope, $ionicPopup, $state, $location, $cordovaSQLite, $ionicHistory, Session, Comment, Enviro, Human, Picture, Timer, Bear) {
+.controller('dashCtrl', function($scope, $ionicPopup, $state, $location, $cordovaSQLite, $ionicHistory, Session, Comment, Enviro, Human, Picture, Timer, Bear, GPS) {
 
    $scope.showConfirm = function() {
       var confirmPopup = $ionicPopup
@@ -12,6 +12,23 @@ angular.module('app.controllers', [])
       confirmPopup
       .then(function(res) {
          if(res) {
+            var time = new Date();
+            var utm = GPS.utmZone;
+            var east = GPS.easting;
+            var north = GPS.northing;
+            
+            $cordovaSQLite.execute(db,
+                                   'INSERT INTO logs '
+                                   + '(timestamp, session_id, utm_zone, northing, easting)'
+                                   + ' VALUES (?, ?, ?, ?, ?)',
+                                   [time, Session.id, utm, north, east])
+            .then(function(result) {
+                    console.log("end utm stuff Logged with log id - " + result.insertId);
+                  }, function(error) {
+                    console.log("Error on saving end utm: " + error.message);
+                
+                  });
+            
             console.log('Session ending!');
             $cordovaSQLite.execute(db, 
                'UPDATE sessions SET finish_time = ? WHERE session_id = ?', [new Date(), Session.id])
