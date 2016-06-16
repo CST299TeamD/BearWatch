@@ -297,7 +297,8 @@ angular.module('app.controllers')
 		
 			data = "";
 			
-			var bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, lastBearComment, habituation, feedingForaging, nonInteractive, bearBearInteractions, bearHumanInteractions, studyAreaPhoto, fishingTechnique, foragingDetails, numberOfFishCaught, alertVigilance, actionOtherComment, generalCommentType, otherPhotoLocation, aircraft, ATV, boat, vehicle, humanBehavior = "";
+			var bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, habituation, feedingForaging, nonInteractive, bearBearInteractions, bearHumanInteractions, studyAreaPhoto, fishingTechnique, foragingDetails, numberOfFishCaught, alertVigilance, actionOtherComment, generalCommentType, otherPhotoLocation, aircraft, ATV, boat, vehicle, humanBehavior = "";
+			var lastBearComment = [];
 				
 			for (var i = 0; i<Session.logs.length;i++){
 				//console.log("log start: "+i+"/"+Session.logs.length);
@@ -346,10 +347,7 @@ angular.module('app.controllers')
 						
 
 					//Handle bears
-					//console.log(bear);
-					var bearUpdated = "";
 					if (bear != null) {
-						bearUpdated = "true";
 						bear = angular.fromJson(bear);
 						bearName = bear["name"];
 						accuracy = bear["accuracy"];
@@ -377,7 +375,7 @@ angular.module('app.controllers')
 						if(bear["CFCDarkBrown"]) cubFur.push("Dark Brown");
 						if(bear["CFCOther"]) cubFur.push("Other");
 						
-						if (lastBearComment != bear["comment"]) bearComment = lastBearComment = bear["comment"];
+						if (lastBearComment[bear["id"]] != bear["comment"]) bearComment = lastBearComment[bear["id"]] = bear["comment"];
 
 							
 						
@@ -448,7 +446,6 @@ angular.module('app.controllers')
 						bear = "";
 					} else {
 						//no bear data this log
-						bearUpdated = "false";
 						bear = null;
 						count = "0";
 						bearName, accuracy,	accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, size, sex, age, colour, colourVariation, furWet, marks, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, habituation, feedingForaging, fishingTechnique, foragingDetails, numberOfFishCaught, nonInteractive, bearBearInteractions, bearHumanInteractions, alertVigilance, actionOtherComment = "";
@@ -557,9 +554,7 @@ angular.module('app.controllers')
 						cubFur + "\t" +
 						bearComment + "\t" +
 						
-						//new Date(timestamp).toLocaleTimeString() + "\t" +
-						
-						bearUpdated + "\t" +
+						new Date(timestamp).toLocaleTimeString() + "\t" +
 						
 						animalInSight + "\t" +
 						feedingForaging + "\t" +
@@ -634,39 +629,12 @@ angular.module('app.controllers')
 			sendEmail(id, emailAttachments);
 
 		}
-/*
-		var getPictures = function(sessionID){
-			//Add to pictures attachment array
-			var query = "SELECT log_id, picture_data FROM logs WHERE session_id = "+sessionID+" AND picture_data IS NOT NULL";
-			$cordovaSQLite.execute(db, query).then(
-				function(result) {
-					$scope.selectResult += "...Select successful! Rows length = " + result.rows.length;
-					if (result.rows.length > 0) {
-						$scope.fileName = "Select successful!";
-						var i=0;
-						while(i < result.rows.length){
-							$scope.selectResult += "...log_id: "+result.rows.item(i).log_id;
-							emailAttachments.push("base64:picture"+i+".jpg//" + result.rows.item(i).picture_data);
-							i++;
-						}
-					}					
-					$scope.pictureAttachmentsStatus = 1;
-				},
-				function(error) {
-					//TODO - GIVE USER FEEDBACK
-					console.log("Error on loading pictures: " + error.message);	
-					$scope.pictureAttachments = 2;
-				}
-			);
-		}
-*/
 	
 		//Send (draft) email
 		var sendEmail = function(sessionID, emailAttachments){
 			console.log("...attempting to send email with " + emailAttachments.length + " attachments");
 			try{
 				$cordovaEmailComposer.isAvailable().then(function() {
-					console.log("...Email is available");
 					var email = {
 						//TODO - set proper email & mail contents
 						to: 'cobbsworth@outlook.com',
@@ -678,7 +646,6 @@ angular.module('app.controllers')
 					};
 
 					$cordovaEmailComposer.open(email).then(null, function () {
-					   console.log("...Email Cancelled");
 					});
 				}, function () {
 				   console.log("...Email is unavailable");
@@ -686,7 +653,6 @@ angular.module('app.controllers')
 			} catch (exception){
 				console.log(exception.name + " ::: " + exception.message);
 			}
-			console.log("email script finished.");
 		}
       
 	}
