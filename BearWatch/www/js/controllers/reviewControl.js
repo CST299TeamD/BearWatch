@@ -497,6 +497,8 @@ angular.module('app.controllers')
 							aircraft = motorized_action + " " + motorized_name.slice(9,10);
 						}
 						
+						console.log("motorized_action: " + motorized_action + " motorized_name: " + motorized_name);
+
 						var oldHumans = angular.fromJson(human_type);
 						for (j=0;j<oldHumans.length;j++){
 							if (oldHumans[j]["checked"] == true) {
