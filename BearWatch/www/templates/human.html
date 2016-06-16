@@ -21,8 +21,21 @@
         </ion-nav-bar>
         <ion-nav-view animation="slide-left-right" ></ion-nav-view>
     </div>
-    <ion-content class="has-header container" overflow-scroll="true" padding="true">
+    <ion-content class="has-header container" overflow-scroll="true" padding="true" delegate-handle="humanScroll">
         <form class="list">
+            <div class="spacer spacer-10"></div>
+            <div class="row">
+                <div class="col col-33">
+                </div>
+                <div class="col col-33 text-center">
+                    <h2>Humans in Area</h2>
+                </div>
+                <div class="col col-33 text-right">
+                    <a ng-click="scrollDown()"><i class="ion-help-circled help"></i></a>
+                </div>
+            </div>            
+            
+            <div class="spacer spacer-20"></div>
             <div class="spacer spacer-20"></div>
             <div class="row item-divider expando-pane">
                 <div class="col col-center"><h4>Human-Zone Matrix</h4></div>
@@ -194,7 +207,40 @@
                 </label>
                 <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Human.save()">&nbsp; Update</button>
             </div>
-            <div class="spacer spacer-40"></div>
         </form>
+
+        <div class="spacer spacer-20"></div>
+
+            <!-- Help section-->
+            <div ng-model="showHelp" ng-show="showHelp" class="card">
+                <div class="container">
+                    <div class="row border-bottom">
+                        <div class="col col-33">
+                        </div>
+                        <div class="col col-33 col-bottom text-center">
+                            <h3>Help Topics</h3> 
+                        </div>
+                        <div class="col col-33 col-center text-right">
+                            <a class="button button-icon icon ion-close-circled" ng-click="hideHelp()"></a>
+                        </div>
+                    </div>
+                    <div class="spacer spacer-10"></div>
+                    <div class="row item-divider expando-pane">
+                        <div class="col col-center"><h4>General</h4></div>
+                        <div class="col col-center text-right">
+                            <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!genHelp, 'button button-small button-icon icon ion-ios-minus-outline':genHelp}" ng-click="genHelp=!genHelp"></a>
+                        </div>
+                    </div>
+                    <div ng-model="genHelp" ng-show="genHelp" class="container">
+                        <div class="spacer spacer-10"></div>
+                        <p>Any motorized vehicle (boat, vehicle, etc.) passing through is logged, but can’t be seen on the screen.</p>
+                        <p>Any motorized vehicle (boat, vehicle, etc.) that is staying in the area, goes to the list on the screen. More than one item of each type can be logged. They will be given unique numbers as they are entered (boat 1, boat 2, etc.). When a motorized vehicle leaves, press the X to indicate it has gone. It will be removed from the list.</p>
+                        <p>When a comment is updated it is time stamped and logged, but disappears from the screen.</p>
+                        <div class="spacer spacer-10"></div>
+                    </div>                    
+                </div>
+                <div class="spacer spacer-20"></div>            
+            </div><!--End Help-->
+            <div class="spacer spacer-40"></div>
       </ion-content>
 </ion-view>

@@ -3,7 +3,7 @@
 //global variables
 var db;
 var db_error = false;
-var db_drop = false;
+var db_drop = true;
 
 //debugging
 var debug = false;
@@ -52,6 +52,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "survey_sched      TEXT    , "
       + "start_time        TEXT    , "
       + "finish_time       TEXT    , "
+      + "alt_media         TEXT    , "
       + "observation_mode  TEXT);"
     ).then(function(result) {
         console.log("sessions table created");

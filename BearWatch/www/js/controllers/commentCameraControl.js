@@ -28,7 +28,7 @@ angular.module('app.controllers')
 	};
 })
 
-.controller('tabCameraCtrl', function($scope, $ionicPopup, Picture) {
+.controller('tabCameraCtrl', function($scope, $ionicPopup, Picture, Session) {
 	$scope.debug = debug;
 
 	//picture object

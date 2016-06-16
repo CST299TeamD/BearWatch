@@ -71,7 +71,7 @@
             <ion-item class="item-divider list-head">Location</ion-item>
             <div ng-class="{ 'has-errors' : (submitted && !parkChecked), 'no-errors' : (submitted && startForm.park.$valid && parkChecked)}">
     			<label ng-hide="parkChecked" class="item item-input">
-                    <span class="input-label">Park/Area:</span>
+                    <span class="input-label">Protected Area:</span>
                     <input name="park" type="text" ng-model="Session.park" ng-change="changePark()" required>
                 </label>
                 <ion-item ng-show="parkChecked" class="item item-button-right">
@@ -185,7 +185,7 @@
 
             <div ng-show="zoneList != ''" ng-hide="zoneList == ''">
                 <label class="item item-select" ng-class="{ 'has-errors' : (submitted && startForm.obsArea.$invalid), 'no-errors' : (submitted && startForm.obsArea.$valid)}">
-                    <span class="input-label">Observer Location ({{Session.zoneSchema}}):</span>
+                    <span class="input-label">Observer Location ({{Session.zoneSchema}}) (See Help):</span>
                     <select name="obsArea" ng-model="Session.obsArea" ng-required="zoneList != ''">
                         <option ng-repeat="z in zoneList">{{z}}</option>
                     </select>
@@ -243,6 +243,8 @@
                 <div ng-model="genHelp" ng-show="genHelp" class="container">
                     <div class="spacer spacer-10"></div>
                     <p>Fill in the fields below in order to begin setting up your session.</p>
+                    <p>All fields on this page must be filled in before you can proceed. Press +Add after entering your name and each subsequent name if appropriate.</p>
+                    <p>In the Protected Areas field, begin typing to bring up a list of protected areas with the letter sequence. Choose the name off the drop down list that appears. If you are not in a provincial protected area, choose the closest one off the list and put your exact location in the following field.</p>
                     <div class="spacer spacer-10"></div>
                 </div>
 
@@ -269,6 +271,19 @@
                     <p>This schema is the most flexible. Use it in any situation that is not obviously <strong>River</strong> or <strong>estuary</strong>. It is assumed that you are not moving during observations, but if you do, your zones will shift with you. You are always in zone 5. If you are mobile, try to use regular 100 m by 100 m zones. If you are stationary, you can define the zones in a way that makes sense to the landscape.</p>
                     <div class="spacer spacer-10"></div>
                 </div>
+
+                <div class="row item-divider expando-pane">
+                    <div class="col col-center"><h4>Movement During Observation</h4></div>
+                    <div class="col col-center text-right">
+                        <a ng-class="{'button button-small button-icon icon ion-ios-plus-outline':!stationaryHelp, 'button button-small button-icon icon ion-ios-minus-outline':stationaryHelp}" ng-click="stationaryHelp=!stationaryHelp"></a>
+                    </div>
+                </div>
+                <div ng-model="stationaryHelp" ng-show="stationaryHelp" class="container">
+                    <div class="spacer spacer-10"></div>
+                    <p>If you are on a boat or walking a route or transect, you will choose Mobile. If you are in a single location, including movements of up to 100 m, choose stationary.</p>
+                    <div class="spacer spacer-10"></div>
+                </div>
+
             </div>
             <div class="spacer spacer-20"></div>            
         </div><!--End Help-->

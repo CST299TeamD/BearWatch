@@ -13,7 +13,7 @@
             </div>
 		</div>
 	</ion-nav-title>
-    <div style="">
+    <div>
         <ion-nav-bar class="bar-stable">
             <ion-nav-buttons side="right">
                 <a class="button icon-left ion-log-out button-small button-assertive" ng-click = "showConfirm()">&nbsp;End Session</a>
@@ -29,7 +29,7 @@
         </div>
         <div class="spacer spacer-20"></div>
         
-        <form class="list" ng-show="imgURI !== undefined">
+        <div class="list" ng-show="imgURI !== undefined">
             <div class="row item-divider expando-pane">
                 <div class="col col-center"><h4>Subject(s) in Picture</h4></div>
                 <div class="col col-center text-right">
@@ -45,16 +45,30 @@
                 <span class="input-label">Comment:</span>
                 <input placeholder="Picture description" ng-model="Picture.comment" type="text" >
             </label>                
-        </form>
-        <div class="center">
-            <button ng-show="imgURI === undefined" ng-click="takePhoto()" class="button button-positive button-outline icon-left ion-ios-camera-outline" id="camera-button1">Take Picture</button>
+        </div>
+        <div ng-show="imgURI === undefined">
+            <div class="center">
+                <button ng-click="takePhoto()" class="button button-positive button-outline icon-left ion-ios-camera-outline" id="camera-button1">Take Picture</button>
+            </div>
+            <div class="spacer spacer-40"></div>
+
+            <ion-item class="item-divider list-head">Alternative Media</ion-item>
+            <ion-toggle ng-model="Session.otherMedia" toggle-class="toggle-balanced">Pictures Taken Using Other Camera/Media</ion-toggle>
+            <div ng-show="Session.otherMedia">
+                <div class="item item-input-inset">
+                    <label class="item item-input-wrapper">     
+                        <input type="text" placeholder="Describe Type and Location" ng-model="Session.extPicLoc"> </textarea>
+                    </label>
+                    <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Session.save()">&nbsp; Update</button>
+                </div>
+            </div>
         </div>
         <div class="button-bar" ng-show="imgURI !== undefined">
             <a ng-click="choosePhoto()" class="button button-balanced button-outline icon ion-archive">&nbsp; Record</a>
             <a ng-click="discardPhoto(true)" class="button button-assertive button-outline icon ion-trash-a">&nbsp; Discard</a>
         </div>
+        
         <div class="spacer spacer-40"></div>
-
 
         <div class="row item-divider expando-pane" ng-show="Picture.pictures.length > 0">
             <div class="col col-center"><h4>Session Pictures</h4></div>

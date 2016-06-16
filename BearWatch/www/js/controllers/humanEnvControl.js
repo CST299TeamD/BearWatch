@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('humanCtrl', function($scope, $ionicModal, Session, Human) {
+.controller('humanCtrl', function($scope, $ionicModal, Session, Human, $ionicScrollDelegate) {
 
 	$scope.Session = Session;
 	$scope.Human = Human;
@@ -39,6 +39,20 @@ angular.module('app.controllers')
 		default:
 			$scope.zoneImgURI = "img/pic_placeholder.png"
 	}
+
+	//scroll top function
+    $scope.scrollDown = function(){
+    	console.log("here");
+        $scope.showHelp = true;
+        $ionicScrollDelegate.$getByHandle('humanScroll').resize();
+        $ionicScrollDelegate.$getByHandle('humanScroll').anchorScroll(true);
+        $ionicScrollDelegate.$getByHandle('humanScroll').scrollBottom(true);
+    }
+
+    //hide help function
+    $scope.hideHelp = function() {
+        $scope.showHelp = false;
+    }
 
 	//function to show modal for initial zone-matrix population
 	var matrixCompleted = false;
@@ -143,12 +157,26 @@ angular.module('app.controllers')
 
 })
 
-.controller('environmentCtrl', function($scope, Enviro, Session, $cordovaSQLite) {
+.controller('environmentCtrl', function($scope, Enviro, Session, $cordovaSQLite, $ionicScrollDelegate) {
 	$scope.debug = true;
 
 	//global factory enviro object
 	$scope.Enviro = Enviro;
 	$scope.Session = Session;
+
+	//scroll top function
+    $scope.scrollDown = function(){
+    	console.log("here");
+        $scope.showHelp = true;
+        $ionicScrollDelegate.$getByHandle('enviroScroll').resize();
+        $ionicScrollDelegate.$getByHandle('enviroScroll').anchorScroll(true);
+        $ionicScrollDelegate.$getByHandle('enviroScroll').scrollBottom(true);
+    }
+
+    //hide help function
+    $scope.hideHelp = function() {
+        $scope.showHelp = false;
+    }
             
 	//function to add text box for "other" selections
 	$scope.showNSCTextBox = function(selectModel, value){
