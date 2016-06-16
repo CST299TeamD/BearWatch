@@ -451,6 +451,7 @@ angular.module('app.controllers')
                 //get the timestamp
                 var curTime = new Date();
                 var updated = false;
+
             
                 //turn off ongoing fishing session
                 if(type == "Feeding or Foraging") {
@@ -461,9 +462,17 @@ angular.module('app.controllers')
                 for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
                    //if the this type of behaviour is alredy going on then update description
                    if($scope.Bear.behaviour[n].category == type && type != 'Other') {
-                      $scope.Bear.behaviour[n].description = desc;
-                      $scope.Bear.behaviour[n].time = curTime;
-                      updated = true;
+
+                   		//add end time to old behaviour
+                   		$scope.Bear.behaviour[n].endTime = curTime;
+               		    Bear.Log($scope.Session.id);
+
+               		    //start the new behaviour
+                    	$scope.Bear.behaviour[n].description = desc;
+                     	$scope.Bear.behaviour[n].time = curTime;
+                     	$scope.Bear.behaviour[n].endTime = '';
+               		    
+                      	updated = true;
                    }
                 }
             
