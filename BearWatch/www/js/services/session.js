@@ -190,8 +190,8 @@ angular.module('app.services')
 						Session.finish_time = new Date(finish_time).toLocaleTimeString();
 						Session.hr = '';
 						Session.min = '';
-						Session.active = '';
-						Session.resting = '';
+						Session.active = active_time;
+						Session.resting = resting_time;
 						Session.loadLogs();
 						Session.loadFoodSources();
 					}

@@ -288,7 +288,7 @@ angular.module('app.controllers')
 			//construct Block Information sheet
 			//header = "Study Area Name\tBlock Label\tUTM Zone Block\tEasting Block\tNorthing Block";
 			data = Session.park + "\t" + Session.site + "\t" + Session.logs[0].utm_zone + "\t" + Session.logs[0].easting + "\t" + Session.logs[0].northing;
-			console.log("STATIONARY: "+Session.stationary);
+			
 			if (Session.stationary == "Mobile"){
 				data = data + 
 					"\t" + Session.logs[Session.logs.length-1].utm_zone +
@@ -328,7 +328,7 @@ angular.module('app.controllers')
 				with (Session.logs[i]){
 					
 					logTime = new Date(timestamp);
-					sessionDate = (Session.start_date).split("/");
+					//sessionDate = (Session.start_date).split("/");
 					
 					//Handle Pictures
 					if (picture_data != null){
@@ -338,9 +338,7 @@ angular.module('app.controllers')
 						studyAreaPhoto = "BearWatch_" +
 								//(Session.park).trim.replace(/\s+/g, "-") + "_" +
 								(Session.park).trim().split(" ").join("-") + "_" +
-								sessionDate[1] + "-" +
-								monthNames[parseInt(sessionDate[0])-1] + "-" +
-								sessionDate[2] + "_" +
+								Session.start_date + "_" +
 								logTime.getHours() + "-" +
 								logTime.getMinutes() + "-" +
 								logTime.getSeconds() + ".jpg";
@@ -524,6 +522,8 @@ angular.module('app.controllers')
 						Session.firstName + "\t" +
 						Session.allNames + "\t" +
 						Session.surveySched + "\t" +
+						Session.active + "\t" +
+						Session.resting + "\t" +
 						
 						utm_zone + "\t" +
 						easting + "\t" +
