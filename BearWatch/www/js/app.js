@@ -52,6 +52,8 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "survey_sched      TEXT    , "
       + "start_time        TEXT    , "
       + "finish_time       TEXT    , "
+      + "active_time       TEXT    , "
+      + "resting_time       TEXT    , "
       + "alt_media         TEXT    , "
       + "observation_mode  TEXT);"
     ).then(function(result) {
