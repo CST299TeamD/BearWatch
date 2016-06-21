@@ -88,7 +88,7 @@
 
             <!-- Search box for park names-->
             <label class="list" ng-show="Session.park.length > 0 && showList ">
-                <ion-item class="item-divider">Select Park</ion-item>
+                <ion-item class="item-divider">Select Protected Area</ion-item>
                 <div ng-repeat="park in parkNames | filter:Session.park | limitTo:4 ">
                     <ion-radio ng-model="Session.park" value="{{park}}" ng-click="parkSelected()" required>{{park}}</ion-radio>
                 </div>
@@ -107,7 +107,7 @@
 
             <!--Site-->
 			<label class="item item-input" ng-class="{ 'has-errors' : (submitted && startForm.site.$invalid), 'no-errors' : (submitted && startForm.site.$valid)}">
-                <span class="input-label">Site within Park/Area:</span>
+                <span class="input-label">Site Within Protected Area:</span>
                 <input name="site" type="text" ng-model="Session.site" required>
             </label>
             <div ng-show="submitted && startForm.site.$error" ng-messages="startForm.site.$error">
