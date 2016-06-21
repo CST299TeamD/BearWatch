@@ -60,7 +60,7 @@ angular.module('app.services')
 
     //function to reset session
     Session.reset = function(){
-		        id = '';
+		id = '';
         firstName = '';
 		allNames = '';
         firstNameInitials = '';
@@ -129,10 +129,10 @@ angular.module('app.services')
                   
         $cordovaSQLite.execute(db, 
             'INSERT INTO sessions '
-            + '(observers, park, park_site, protocol, stationary, zone_type, observer_zone, zone_comment, start_time, observation_mode, survey_sched, alt_media)'
-            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            + '(observers, park, park_site, protocol, stationary, zone_type, observer_zone, zone_comment, start_time, observation_mode, survey_sched, alt_media, active_time, resting_time)'
+            + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
             [Session.nameResult.toString(), Session.park, Session.site, protocol, Session.stationary, Session.zoneSchema, 
-            Session.obsArea, Session.comment, time, Session.observationMode, Session.surveySched, Session.altMedia])
+            Session.obsArea, Session.comment, time, Session.observationMode, Session.surveySched, Session.altMedia, Session.active, Session.resting])
         .then(function(result) {
             console.log("Session save success" + result.insertId);
             defer.resolve(result);            
