@@ -303,7 +303,7 @@ angular.module('app.controllers')
 			data = "";
 			
 			var 
-			bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, 
+			bearID, bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, 
 			
 			studyAreaPhoto, generalCommentType, logTime, sessionDate,
 			
@@ -317,7 +317,7 @@ angular.module('app.controllers')
 				//console.log("log start: "+i+"/"+Session.logs.length);
 										
 				//values to reset
-				bearName = accuracy = accuracyComments = animalInSight = urineStreamObserved = bearZone = bearSpecies = count = size = sex = age = marks = colour = colourVariation = furWet = pawMeasure = cubs = ageOfCubs = cubFur = bearComment =
+				bearID = bearName = accuracy = accuracyComments = animalInSight = urineStreamObserved = bearZone = bearSpecies = count = size = sex = age = marks = colour = colourVariation = furWet = pawMeasure = cubs = ageOfCubs = cubFur = bearComment =
 
 				studyAreaPhoto = generalCommentType = bearsInPhoto = logTime =
 			
@@ -388,6 +388,7 @@ angular.module('app.controllers')
 					//Handle bears
 					if (bear != null) {
 						bear = angular.fromJson(bear);
+						bearID = bear["id"];
 						bearName = bear["name"];
 						accuracy = bear["accuracy"];
 						accuracyComments = bear["vAid"];
@@ -564,6 +565,7 @@ angular.module('app.controllers')
 						Session.obstruction + "\t" +
 						Session.noise_level + "\t" +
 						
+						bearID + "\t" +
 						bearName + "\t" +						
 						accuracy + "\t" +
 						accuracyComments + "\t" +
