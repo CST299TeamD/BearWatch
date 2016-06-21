@@ -17,12 +17,13 @@ angular.module('app.services')
 
 	//function to reset Picture Object
 	Picture.reset = function(){
+		console.log("resetting pictures");
 		Picture.fileName = '';
-		subjects = [];
-		comment = '';
-		imgURI = '';
-		imgInfo = '';
-		pictures = [];
+		Picture.subjects = [];
+		Picture.comment = '';
+		Picture.imgURI = '';
+		Picture.imgInfo = '';
+		Picture.pictures = [];
 	};
 
 	//function to check if bears are already in picture subjects
