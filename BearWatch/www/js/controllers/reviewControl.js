@@ -392,7 +392,12 @@ angular.module('app.controllers')
 						accuracy = bear["accuracy"];
 						accuracyComments = bear["vAid"];
 						animalInSight = bear["inSight"];
-						urineStreamObserved = bear["uStream"];
+						if (bear["uStream"] == true){
+							urineStreamObserved = "Yes";
+						} else if (bear["uStream"] == false){
+							urineStreamObserved = "No";
+						} 
+							
 						bearZone = bear["zone"];
 						//habituation handled in behaviors
 						bearSpecies = bear["species"];
@@ -495,8 +500,7 @@ angular.module('app.controllers')
 							aircraft = motorized_desc + " " + motorized_name.slice(9,10) + " " + motorized_action;
 						}
 						
-						console.log("motorized_action: " + motorized_action + " motorized_name: " + motorized_name);
-
+						
 						var oldHumans = angular.fromJson(human_type);
 						for (j=0;j<oldHumans.length;j++){
 							if (oldHumans[j]["checked"] == true) {
@@ -519,8 +523,8 @@ angular.module('app.controllers')
 						Session.start_date + "\t" +	
 						Session.start_time + "\t" +
 						Session.finish_time + "\t" +
-						Session.firstName + "\t" +
-						Session.allNames + "\t" +
+						Session.firstNameInitials + "\t" +
+						Session.allNamesInitials + "\t" +
 						Session.surveySched + "\t" +
 						Session.active + "\t" +
 						Session.resting + "\t" +
@@ -545,7 +549,6 @@ angular.module('app.controllers')
 						Session.foodSources[2].availability + "\t" +
 						Session.foodSources[2].comment + "\t" +
 						
-						Session.water_body + "\t" +
 						Session.water_level + "\t" +
 						Session.water_clarity + "\t" +
 						
@@ -653,8 +656,7 @@ angular.module('app.controllers')
 				data = data + "\n";
 			}
 			csvAttachments.push("base64:generalSurvey.csv//" + btoa(data));
-			console.log("stamp: "+logTime.toLocaleTimeString());
-
+			
 			
 			for (j=0;j<csvAttachments.length;j++){				
 				emailAttachments.push(csvAttachments[j]);
@@ -663,12 +665,8 @@ angular.module('app.controllers')
 				emailAttachments.push(pictureAttachments[j]);
 			}
 			
-			for (j=0;j<emailAttachments.length;j++){				
-				console.log("Attachment " + j + ": " +emailAttachments[j].slice(0,30));
-			}
 			sendEmail(id, emailAttachments);
 
-			Session.reset();
 		}
 	
 		//Send (draft) email

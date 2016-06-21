@@ -5,6 +5,8 @@ angular.module('app.services')
         id: '',
         firstName: '',
 		allNames: '',
+        firstNameInitials: '',
+		allNamesInitials: '',
         lastName: '',
         nameResult: [],
         park: '',
@@ -61,6 +63,8 @@ angular.module('app.services')
 		        id = '';
         firstName = '';
 		allNames = '';
+        firstNameInitials = '';
+		allNamesInitials = '';
         lastName = '';
         nameResult = [];
         park = '';
@@ -108,30 +112,7 @@ angular.module('app.services')
 		sessionReady = 0;
 		logsReady = 0;
 		foodReady = 0;
-		
-		
-		
-        Session.id = '';
-        Session.firstName = '';
-        Session.lastName = '';
-        Session.nameResult = [];
-        Session.park = '';
-        Session.site = '';
-        Session.viewingArea = '';
-        Session.viewingAreaOther = '';
-        Session.stationary = '';
-        Session.zoneSchema = '';
-        Session.obsArea = '';
-        Session.comment = '';
-        Session.observationMode = '';
-        Session.surveySched = '';
-        Session.start_time = '';
-        Session.hr = '';
-        Session.min = '';
-        Session.active = '';
-        Session.resting = '';
-        Session.altMedia = '';
-    }
+	}
     
     //function for saving session state
     Session.save = function(){      
@@ -171,7 +152,7 @@ angular.module('app.services')
 					with(result.rows.item(0)){
 						Session.id = session_id;
 						Session.firstName = (observers.split(","))[0];
-						Session.allNames = observers; //TDL - why are we storing firstname/lastname as a single field?
+						Session.allNames = observers;
 						Session.lastName = '';
 						Session.nameResult = [];
 						Session.park = park;
@@ -194,6 +175,26 @@ angular.module('app.services')
 						Session.resting = resting_time;
 						Session.loadLogs();
 						Session.loadFoodSources();
+						
+						var allObservers;
+						allObservers = observers.split(",");
+						Session.firstNameInitials = allObservers[0].split(" ")[0].slice(0,1) +
+													" " + 
+													allObservers[0].split(" ")[1].slice(0,1);
+						Session.allNamesInitials = "";
+						for (var i = 0; i < allObservers.length; i++){
+							
+							Session.allNamesInitials = Session.allNamesInitials + allObservers[i].split(" ")[0].slice(0,1) + 
+							" " + 
+							allObservers[i].split(" ")[1].slice(0,1);
+							
+							if (i+1 < allObservers.length){
+								Session.allNamesInitials = Session.allNamesInitials + ", ";
+							}
+						}
+						
+						console.log("Session.firstNameInitials " + Session.firstNameInitials);
+						console.log("Session.allNamesInitials " + Session.allNamesInitials);
 					}
 					Session.sessionReady = 1;
                 }else{

@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('homeCtrl', function($scope, $ionicPopup, $location, $ionicNavBarDelegate) {
+.controller('homeCtrl', function($scope, $ionicPopup, $location, $ionicNavBarDelegate, Session) {
 	//global debug var
 	$scope.debug = debug;
     
@@ -18,9 +18,9 @@ angular.module('app.controllers')
         console.log('DB warning issued');
       });
     }
-
-   	//TODO:
-	//Clear session data on "new Session" click 
+	
+	
+	Session.reset();
 })
 
 //Activates the GPS
