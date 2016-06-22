@@ -119,6 +119,7 @@ angular.module('app.services')
 		
 		emailSubject = '';
 		emailBody = '';
+		console.log("Session clear");
 	}
     
     //function for saving session state
