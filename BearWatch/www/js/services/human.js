@@ -37,7 +37,7 @@ angular.module('app.services')
             + ' comment_type, comment, utm_zone, northing, easting)'
             + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
             [new Date(), Session.id, JSON.stringify(Human.zoneMatrix), Human.motoType, Human.motoAction, Human.motoDesc, 
-            JSON.stringify(Human.nonMoto), Human.nonMotoOther, Human.behavior, 'Human Comment', Human.comment, GPS.utmZone, GPS.northing, GPS.easting])
+            JSON.stringify(Human.nonMoto), Human.nonMotoOther, Human.behavior, 'Human', Human.comment, GPS.utmZone, GPS.northing, GPS.easting])
         .then(function(result) {
             console.log("Human save success" + result.insertId);
             Human.comment = '';
