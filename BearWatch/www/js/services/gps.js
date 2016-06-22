@@ -40,7 +40,7 @@ angular.module('app.services')
 			GPS.utmZone = '';
 		}
 
-		navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true, timeout: 5000, maximumAge: 0});
+		navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true, timeout: (30 * 1000), maximumAge: 0});
     }
 	
 	GPS.refresh();
