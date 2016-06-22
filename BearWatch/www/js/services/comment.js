@@ -23,45 +23,46 @@ angular.module('app.services')
     //add new comment to session and save to DB
     Comment.add = function(){
 
-        var comment = {};
-        var time = new Date();
+        if(Comment.text != ''){
+            var comment = {};
+            var time = new Date();
 
-        //check for edit
-        if(Comment.editComment != ''){
-            comment = Comment.editComment;
-            comment.text = Comment.text;
-            if(comment.id.indexOf('Updated') == -1){
-                comment.id += "-Updated";
+            //check for edit
+            if(Comment.editComment != ''){
+                comment = Comment.editComment;
+                comment.text = Comment.text;
+                if(comment.id.indexOf('Updated') == -1){
+                    comment.id += "-Updated";
+                }
+                Comment.editComment = '';
+            }else{
+                //create new comment
+                count ++;
+                comment = {
+                    id: 'General-' + count,
+                    timeStamp: time.toLocaleTimeString(),
+                    text: Comment.text
+                };
             }
-            Comment.editComment = '';
-        }else{
-            //create new comment
-            count ++;
-            comment = {
-                id: 'General-' + count,
-                timeStamp: time.toLocaleTimeString(),
-                text: Comment.text
-            };
+
+            //push to comment array
+            Comment.commentList.push(comment);
+
+            //log comment in DB
+            $cordovaSQLite.execute(db, 
+                'INSERT INTO logs '
+                + '(timestamp, session_id, comment_type, comment, utm_zone, northing, easting)'
+                + ' VALUES (?, ?, ?, ?, ?, ?, ?)', 
+                [time, Session.id, comment.id, comment.text, GPS.utmZone, GPS.northing, GPS.easting])
+            .then(function(result) {
+                console.log("Comment save success" + result.insertId);
+            }, function(error) {
+                console.log("Error on saving comment: " + error.message);
+            });
+
+            //clear comment field
+            Comment.text = '';
         }
-
-        //push to comment array
-        Comment.commentList.push(comment);
-
-        //log comment in DB
-        $cordovaSQLite.execute(db, 
-            'INSERT INTO logs '
-            + '(timestamp, session_id, comment_type, comment, utm_zone, northing, easting)'
-            + ' VALUES (?, ?, ?, ?, ?, ?, ?)', 
-            [time, Session.id, comment.id, comment.text, GPS.utmZone, GPS.northing, GPS.easting])
-        .then(function(result) {
-            console.log("Comment save success" + result.insertId);
-        }, function(error) {
-            console.log("Error on saving comment: " + error.message);
-        });
-
-        //clear comment field
-        Comment.text = '';
-
     };
 
     //edit comment and log new comment 
