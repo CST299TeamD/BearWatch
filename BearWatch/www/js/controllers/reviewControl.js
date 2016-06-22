@@ -343,9 +343,9 @@ angular.module('app.controllers')
 						//Format: BearWatch_Tweedsmuir-Park_9-Jun-2016_13-30-32.jpg
 						studyAreaPhoto = "BearWatch_" +
 								(Session.park).trim().split(" ").join("-") + "_" +
-								//logTime.getHours() + "-" +
-								//logTime.getHours() + "-" +
-								Session.start_date + "_" +
+								date.getYear() + "-" +
+								monthNames[date.getMonth()] + "-" +
+								date.getDay() + "_" +
 								logTime.getHours() + "-" +
 								logTime.getMinutes() + "-" +
 								logTime.getSeconds() + ".jpg";
