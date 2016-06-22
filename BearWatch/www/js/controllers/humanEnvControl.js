@@ -42,7 +42,6 @@ angular.module('app.controllers')
 
 	//scroll top function
     $scope.scrollDown = function(){
-    	console.log("here");
         $scope.showHelp = true;
         $ionicScrollDelegate.$getByHandle('humanScroll').resize();
         $ionicScrollDelegate.$getByHandle('humanScroll').anchorScroll(true);
@@ -227,7 +226,6 @@ angular.module('app.controllers')
 
     $scope.humidSave = function(form, id){
     	if(form.$valid) {
-    		console.log("enviro2Form Valid");
 	    	$scope.enviroSave(id);
 	    }
     }

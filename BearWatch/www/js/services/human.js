@@ -30,7 +30,6 @@ angular.module('app.services')
 
 	//function to save human state in logs table
 	Human.save = function(){
-		console.log("Saving Human");
 		var defer = $q.defer();
 
 		$cordovaSQLite.execute(db, 

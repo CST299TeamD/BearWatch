@@ -18,18 +18,16 @@ angular.module('app.controllers', [])
             var north = GPS.northing;
             
             $cordovaSQLite.execute(db,
-                                   'INSERT INTO logs '
-                                   + '(timestamp, session_id, utm_zone, northing, easting)'
-                                   + ' VALUES (?, ?, ?, ?, ?)',
-                                   [time, Session.id, utm, north, east])
+             'INSERT INTO logs '
+             + '(timestamp, session_id, utm_zone, northing, easting)'
+             + ' VALUES (?, ?, ?, ?, ?)',
+             [time, Session.id, utm, north, east])
             .then(function(result) {
                     //console.log(result);
                   }, function(error) {
                     console.log("Error Found: " + error);
-                
                   });
             
-            console.log('Session ending!');
             $cordovaSQLite.execute(db, 
                'UPDATE sessions SET finish_time = ? WHERE session_id = ?', [new Date(), Session.id])
             .then(function(result) {
