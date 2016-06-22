@@ -314,6 +314,8 @@ angular.module('app.controllers')
 			habituation, feedingForaging, fishingTechnique, foragingDetails, numberOfFishCaught, nonInteractive, bearBearInteractions, bearHumanInteractions, humanBearInteractions, alertVigilance, actionOtherComment, fishingTechnique, foragingDetails, numberOfFishCaught = "";
 			
 			var lastBearComment = [];
+			
+			var date = new Date(Session.start_date);
 				
 			for (var i = 0; i<Session.logs.length;i++){
 				//console.log("log start: "+i+"/"+Session.logs.length);
@@ -357,7 +359,6 @@ angular.module('app.controllers')
 					}
 					
 					//Handle ongoing environmental variables
-					if (water_body != null) Session.water_body = water_body;
 					if (water_level != null) Session.water_level = water_level;
 					if (water_clarity != null) Session.water_clarity = water_clarity;
 					
