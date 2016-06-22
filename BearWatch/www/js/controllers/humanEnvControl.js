@@ -20,17 +20,17 @@ angular.module('app.controllers')
 	//determine zone matrix and help image
 	switch(Session.zoneSchema){
 		case "Estuary":
-			Human.zoneMatrix = [{zone: "+1", humans: ''}, {zone: "1", humans: ''}, {zone: "4", humans: ''}, {zone:"7", humans:''}, {zone: "7+", humans: ''}, {zone: "2+", humans: ''}, 
+			Human.zoneMatrix = [{zone: "1+", humans: ''}, {zone: "1", humans: ''}, {zone: "4", humans: ''}, {zone:"7", humans:''}, {zone: "7+", humans: ''}, {zone: "2+", humans: ''}, 
 			{zone:"2", humans: ''}, {zone: "5", humans: ''}, {zone: "8", humans: ''}, {zone: "8+", humans: ''}, {zone: "6", humans: ''}];
 			$scope.zoneImgURI = "img/estuary.png"
 			break;
 		case "River":
-			Human.zoneMatrix = [{zone: "+1", humans: ''}, {zone: "1", humans: ''}, {zone: "4", humans: ''}, {zone:"7", humans:''}, {zone: "7+", humans: ''}, {zone: "2+", humans: ''}, 
+			Human.zoneMatrix = [{zone: "1+", humans: ''}, {zone: "1", humans: ''}, {zone: "4", humans: ''}, {zone:"7", humans:''}, {zone: "7+", humans: ''}, {zone: "2+", humans: ''}, 
 			{zone:"2", humans: ''}, {zone: "5", humans: ''}, {zone: "8", humans: ''}, {zone: "8+", humans: ''}, {zone: "3", humans: ''}, {zone: "3+", humans: ''}, {zone: "6", humans: ''}, {zone: "9", humans: ''}, {zone: "9+", humans: ''}];
 			$scope.zoneImgURI = "img/river.png"
 			break;
 		case "Terrestrial":
-			Human.zoneMatrix = [{zone: "1b", humans: ''}, {zone: "1a", humans: ''}, {zone: "4+", humans: ''}, {zone: "7a", humans: ''}, {zone: "7b", humans: ''}, {zone: "+1", humans: ''}, 
+			Human.zoneMatrix = [{zone: "1b", humans: ''}, {zone: "1a", humans: ''}, {zone: "4+", humans: ''}, {zone: "7a", humans: ''}, {zone: "7b", humans: ''}, {zone: "1+", humans: ''}, 
 			{zone: "1", humans: ''}, {zone: "4", humans: ''}, {zone:"7", humans:''}, {zone: "7+", humans: ''}, {zone: "2+", humans: ''}, {zone:"2", humans: ''}, {zone: "5", humans: ''}, 
 			{zone: "8", humans: ''}, {zone: "8+", humans: ''}, {zone: "3+", humans: ''}, {zone: "3", humans: ''}, {zone: "6", humans: ''}, {zone: "9", humans: ''}, {zone: "9+", humans: ''}, {zone: "3b", humans: ''}, {zone: "3a", humans: ''}, 
 			{zone: "6+", humans: ''}, {zone: "9a", humans: ''}, {zone: "9b", humans:''}];

@@ -3,7 +3,7 @@ angular.module('app.controllers')
 .controller('tabCommentCtrl', function($scope, Comment, $ionicPopup) {
 	$scope.Comment = Comment;
 
-	//function to verify user comment edit (may overwrite unsaved text field)
+	//function to verify user comment edit (may overwrite unsaved text field) 
 	$scope.editRequest = function (id){
 		if(Comment.text != '' && Comment.text != null){
 			var confirmPopup = $ionicPopup.confirm({

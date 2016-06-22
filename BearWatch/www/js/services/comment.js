@@ -9,7 +9,8 @@ angular.module('app.services')
     var Comment = {
         text: '',
         id: '',
-        commentList: []
+        commentList: [],
+        editComment: ''
     };
 
     //clear comment object function
@@ -21,17 +22,27 @@ angular.module('app.services')
 
     //add new comment to session and save to DB
     Comment.add = function(){
-        
-        //timestamp
+
+        var comment = {};
         var time = new Date();
 
-        //create new comment
-        count ++;
-        var comment = {
-            id: 'General-' + count,
-            timeStamp: time.toLocaleTimeString(),
-            text: Comment.text
-        };
+        //check for edit
+        if(Comment.editComment != ''){
+            comment = Comment.editComment;
+            comment.text = Comment.text;
+            if(comment.id.indexOf('Updated') == -1){
+                comment.id += "-Updated";
+            }
+            Comment.editComment = '';
+        }else{
+            //create new comment
+            count ++;
+            comment = {
+                id: 'General-' + count,
+                timeStamp: time.toLocaleTimeString(),
+                text: Comment.text
+            };
+        }
 
         //push to comment array
         Comment.commentList.push(comment);
@@ -53,7 +64,7 @@ angular.module('app.services')
 
     };
 
-    //edit comment and log new comment
+    //edit comment and log new comment 
     Comment.edit = function(id){
        console.log("Comment edit intiated " + id);
        //find comment object
@@ -68,6 +79,8 @@ angular.module('app.services')
         if(index > -1){
             console.log(Comment.text + " = " + Comment.commentList[index].text);
             Comment.text = Comment.commentList[index].text;
+            console.log(Comment.commentList[i]);
+            Comment.editComment = Comment.commentList[i];
             Comment.commentList.splice(index, 1);
         }else{
             console.log('no matching comment found');
@@ -78,8 +91,9 @@ angular.module('app.services')
     //clear comment and log deletion
     Comment.clear = function(id){
         
+        var newId = id;
         //timestamp
-        var time = new Date().toLocaleTimeString();
+        var time = new Date();
 
         //remove from Comment object
         var index = -1;
@@ -94,7 +108,8 @@ angular.module('app.services')
         }
 
         //log delete in DB
-        var commentId = id + '-Delete';
+        var commentId = id.split('-Updated')[0] + '-Deleted';
+        console.log(commentId);
         $cordovaSQLite.execute(db, 
             'INSERT INTO logs '
             + '(timestamp, session_id, comment_type, comment)'

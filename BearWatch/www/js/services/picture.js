@@ -99,7 +99,7 @@ angular.module('app.services')
 		$cordovaSQLite.execute(db, 
 			'INSERT INTO logs (timestamp, session_id, comment_type, comment, picture_subjects, picture_data, utm_zone, northing, easting)'
 		+ 	' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-			[new Date(), Session.id, 'picture-comment', Picture.comment, subjects.toString(), Picture.imgInfo, GPS.utmZone, GPS.northing, GPS.easting])
+			[new Date(), Session.id, 'Picture', Picture.comment, subjects.toString(), Picture.imgInfo, GPS.utmZone, GPS.northing, GPS.easting])
         .then(function(result) {
             console.log("Picture insert successful!");
             Picture.pictures.push({
