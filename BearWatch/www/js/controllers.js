@@ -35,7 +35,6 @@ angular.module('app.controllers', [])
             .then(function(result) {
                console.log("Session finish and save success");
                console.log(result);
-               $location.path("/ReviewList");
 
                //clean application
                Bear.reset();
@@ -47,6 +46,7 @@ angular.module('app.controllers', [])
 			         Timer.reset();
                $ionicHistory.clearHistory();
                $ionicHistory.clearCache();
+               $location.path("/ReviewList");
             }, function(error) {
                console.log("Error on saving: " + error.message);
             });
