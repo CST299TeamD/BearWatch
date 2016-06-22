@@ -114,9 +114,6 @@ angular.module('app.services')
 		Session.sessionReady = 0;
 		Session.logsReady = 0;
 		Session.foodReady = 0;
-		
-		console.log("Session clear");
-		console.log(Session.nameResult);
 	}
     
     //function for saving session state
@@ -139,11 +136,10 @@ angular.module('app.services')
             [Session.nameResult.toString(), Session.park, Session.site, protocol, Session.stationary, Session.zoneSchema, 
             Session.obsArea, Session.comment, time, Session.observationMode, Session.surveySched, Session.altMedia, Session.active, Session.resting])
         .then(function(result) {
-            console.log("Session save success" + result.insertId);
             defer.resolve(result);            
             Session.id = result.insertId;
         }, function(error) {
-            console.log("Error on saving: " + error.message);
+            console.log("Error Found: " + error);
             defer.reject(error);
         });
         return defer.promise;
@@ -193,17 +189,12 @@ angular.module('app.services')
 								Session.allNamesInitials = Session.allNamesInitials + ", ";
 							}
 						}
-						
-						console.log("Session.firstNameInitials " + Session.firstNameInitials);
-						console.log("Session.allNamesInitials " + Session.allNamesInitials);
 					}
 					Session.sessionReady = 1;
-                }else{
-                	console.log("No sessions found")
                 }
             },
             function(error) {
-                $scope.selectResult = "Error on loading: " + error.message;
+                console.log("Error Found: " + error);
             }
         );
 	}
@@ -217,22 +208,17 @@ angular.module('app.services')
                 	for (var i = 0; i < result.rows.length; i++){
 						with (result.rows.item(i)){
 							Session.foodSources.push({"food_source":food_source,"availability":availability,"comment":comment});
-							console.log(" food_source:"+food_source+" availability:"+availability + " comment:" + comment);
 						}
 	        		}
-					console.log("Food sources added to session object");
-                }else{
-                	console.log("No logs for this session")
-                }		
+                }	
 
 				while (Session.foodSources.length <= Session.maxFoodSources){
 					Session.foodSources.push({"food_source":"","availability":"","comment":""});
-					//reverse list?
 				}				
 				Session.foodReady = 1;
             },
             function(error) {
-                alert("Error on loading: " + error.message);
+                console.log("Error Found: " + error);
             }
         );
 	}
@@ -247,14 +233,11 @@ angular.module('app.services')
                 	for (var i = 0; i < result.rows.length; i++){
 						Session.logs.push(result.rows.item(i));	
 	        		}
-					console.log("Logs added to session object");
 					Session.logsReady = 1;
-                }else{
-                	console.log("No logs for this session")
                 }
             },
             function(error) {
-                alert("Error on loading: " + error.message);
+                console.log("Error Found: " + error);
             }
         );
 	}

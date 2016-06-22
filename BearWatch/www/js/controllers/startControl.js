@@ -1,8 +1,6 @@
 angular.module('app.controllers')
 
 .controller('homeCtrl', function($scope, $ionicPopup, $location, $ionicNavBarDelegate, Session) {
-	//global debug var
-	$scope.debug = debug;
     
     //hide back button
     $ionicNavBarDelegate.showBackButton(false);
@@ -27,8 +25,7 @@ angular.module('app.controllers')
 })
 
 .controller('startNewSessionCtrl', function($scope, Session, Park, $location, $state, $ionicNavBarDelegate, $ionicScrollDelegate) {
-	//global debug var
-	$scope.debug = debug;
+
     $ionicNavBarDelegate.showBackButton(true);
 
     //scroll top function
@@ -106,10 +103,8 @@ angular.module('app.controllers')
 
     //validation function
     $scope.validate = function(form){
-    	console.log("Submitting");
     	$scope.submitted = true;
     	if(form.$valid && $scope.parkChecked && Session.firstName == '' && Session.lastName == '' && Session.nameResult.length != 0) {
-    		console.log("Form Valid");
 	    	$state.go('startNewSessionCont');
 	    }
     }
@@ -137,7 +132,6 @@ angular.module('app.controllers')
     $scope.validate = function(form){
     	$scope.submitted = true;
     	if(form.$valid) {
-    		console.log("Form Valid");
 	    	$state.go('observationMode');
 	    }
     }
@@ -145,8 +139,6 @@ angular.module('app.controllers')
 })
 
 .controller('observationModeCtrl', function($scope, $cordovaSQLite, Session, Enviro, $location, $state, $ionicPopup, $ionicScrollDelegate, $ionicLoading, $timeout) {
-	//global debug var
-	$scope.debug = debug;	
 
 	//scroll top function
     $scope.scrollDown = function(){
@@ -177,7 +169,6 @@ angular.module('app.controllers')
 
 		//validate input
 		if(form.$valid && (Session.hr != undefined || Session.min != undefined) || Session.surveySched == 'Opportunistic') {
-    		console.log("Form Valid");
     		// Setup the loader
 			$ionicLoading.show({
 				template: '<h2>Updating</h2>',
@@ -204,7 +195,7 @@ angular.module('app.controllers')
 					});
 
 					alertPopup.then(function(res) {
-						console.log("saveSession error: " + error.message);
+						console.log("Error Found: " + error);
 					});
 				}
 			);

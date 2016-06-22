@@ -41,14 +41,13 @@ angular.module('app.services')
             [new Date(), Session.id, JSON.stringify(Human.zoneMatrix), Human.motoType, Human.motoAction, Human.motoDesc, 
             JSON.stringify(Human.nonMoto), Human.nonMotoOther, Human.behavior, 'Human', Human.comment, GPS.utmZone, GPS.northing, GPS.easting])
         .then(function(result) {
-            console.log("Human save success" + result.insertId);
             Human.comment = '';
             Human.motoType = '';
             Human.motoAction = '';
             Human.motoDesc = '';
             defer.resolve(result);
         }, function(error) {
-            console.log("Error on saving Human: " + error.message);
+            console.log("Error Found: " + error);
             defer.reject(error);
         });
         return defer.promise;

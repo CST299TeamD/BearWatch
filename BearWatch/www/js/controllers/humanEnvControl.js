@@ -69,7 +69,7 @@ angular.module('app.controllers')
 				$ionicLoading.hide();
 			}, 300);
 		}, function(err){
-			console.log("Human save error: " + err);
+			console.log("Error Found: " + err);
 		});
     }
 
@@ -92,6 +92,7 @@ angular.module('app.controllers')
 	}
 
 	//matrix modal
+
 	//modal function to confirm edit options
 	$ionicModal.fromTemplateUrl('templates/humanModal.html', {
 	    scope: $scope,
@@ -125,9 +126,9 @@ angular.module('app.controllers')
 	
 	//function to record motorized actions
 	$scope.recordMoto = function(motoType, action, description){
-		console.log("Recording Moto");
 
 		var time = new Date().toLocaleTimeString();
+
 		//object to hold motorized vehicle properties
 		var moto = {
 			action: action,
@@ -171,7 +172,6 @@ angular.module('app.controllers')
 			var index = $scope.activeVehicles.indexOf(motoType);
 			moto = $scope.activeVehicles[index];
 			moto.action = 'departed';
-			console.log(moto);
   			$scope.activeVehicles.splice(index, 1);
 		}
 
@@ -188,7 +188,6 @@ angular.module('app.controllers')
 })
 
 .controller('environmentCtrl', function($scope, Enviro, Session, $cordovaSQLite, $ionicScrollDelegate, $ionicLoading, $timeout) {
-	$scope.debug = true;
 
 	//global factory enviro object
 	$scope.Enviro = Enviro;
@@ -196,7 +195,6 @@ angular.module('app.controllers')
 
 	//scroll top function
     $scope.scrollDown = function(){
-    	console.log("here");
         $scope.showHelp = true;
         $ionicScrollDelegate.$getByHandle('enviroScroll').resize();
         $ionicScrollDelegate.$getByHandle('enviroScroll').anchorScroll(true);
@@ -223,7 +221,7 @@ angular.module('app.controllers')
 				$ionicLoading.hide();
 			}, 300);
 		}, function(err){
-			console.log("Enviro save error: " + err);
+			console.log("Error Found: " + err);
 		});
     }
 
@@ -250,53 +248,6 @@ angular.module('app.controllers')
 		} else {
 			$scope.obscured = false;
 		}
-	}
-
-	//logging test field
-	$scope.testSelect = function(){
-		$scope.insertResult = "Initialized: Session_id?:  " + Session.id;
-
-        $cordovaSQLite.execute(db, 'SELECT * FROM logs WHERE session_id = (?)', [Session.id])
-        .then(
-            function(result) {
-            	$scope.selectResult = "Logs = ";
-                if (result.rows.length > 0) {
-                	console.log("enviro results returned");
-                	for (var i = 0; i < result.rows.length; i++){
-	        			for(item in result.rows.item(i)){
-	        				$scope.selectResult += item + ": " + result.rows.item(i)[item] + ", ";
-	        			}
-	        			$scope.selectResult += "   *******New Entry******   ";
-	        		}
-                }else{
-                	console.log("No enviro results")
-                }
-            },
-            function(error) {
-                $scope.selectResult = "Error on loading: " + error.message;
-            }
-        );
-
-        $cordovaSQLite.execute(db, 'SELECT * FROM food_sources WHERE session_id = (?)', [Session.id])
-        .then(
-            function(result) {
-            	$scope.foodResult = "food sources = ";
-                if (result.rows.length > 0) {
-                	console.log("enviro results returned");
-                	for (var i = 0; i < result.rows.length; i++){
-	        			for(item in result.rows.item(i)){
-	        				$scope.foodResult += item + ": " + result.rows.item(i)[item] + ", ";
-	        			}
-	        			$scope.foodResult += "   *******New Entry******   ";
-	        		}
-                }else{
-                	console.log("No food source results")
-                }
-            },
-            function(error) {
-                $scope.selectResult = "Error on loading: " + error.message;
-            }
-        );
 	}
 
 });

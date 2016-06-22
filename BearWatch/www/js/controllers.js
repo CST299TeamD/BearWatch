@@ -23,9 +23,9 @@ angular.module('app.controllers', [])
                                    + ' VALUES (?, ?, ?, ?, ?)',
                                    [time, Session.id, utm, north, east])
             .then(function(result) {
-                    console.log("end utm stuff Logged with log id - " + result.insertId);
+                    //console.log(result);
                   }, function(error) {
-                    console.log("Error on saving end utm: " + error.message);
+                    console.log("Error Found: " + error);
                 
                   });
             
@@ -33,8 +33,7 @@ angular.module('app.controllers', [])
             $cordovaSQLite.execute(db, 
                'UPDATE sessions SET finish_time = ? WHERE session_id = ?', [new Date(), Session.id])
             .then(function(result) {
-               console.log("Session finish and save success");
-               console.log(result);
+               //console.log(result);
 
                //clean application
                Bear.reset();
@@ -48,11 +47,9 @@ angular.module('app.controllers', [])
                $ionicHistory.clearCache();
                $location.path("/ReviewList");
             }, function(error) {
-               console.log("Error on saving: " + error.message);
+               console.log("Error Found: " + error);
             });
-         } else {
-            console.log('Not sure!');
-         }
+         } 
       });
    }
 });

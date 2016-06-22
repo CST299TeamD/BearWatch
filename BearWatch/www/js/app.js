@@ -3,10 +3,6 @@
 //global variables
 var db;
 var db_error = false;
-var db_drop = false;
-
-//debugging
-var debug = false;
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -22,20 +18,10 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
 
 .run(function($ionicPlatform, $cordovaSQLite, $cordovaCamera, $cordovaFile, $cordovaEmailComposer, $cordovaFileTransfer, $cordovaGeolocation) {
   $ionicPlatform.ready(function() {
-
-    console.log(angular.version);
-
-    //drop tables for debugging
-    if(db_drop == true) {
-      $cordovaSQLite.deleteDB({name:"bear_watch.db", location:'default'});
-    }
     
 
     //setup database schema
     db = $cordovaSQLite.openDB({name:"bear_watch.db", location:'default'});
-    console.log("Database open");
-
-    /****** Storage Tables ******/
 
     //sessions table
     $cordovaSQLite.execute(db, 
@@ -57,10 +43,10 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "alt_media         TEXT    , "
       + "observation_mode  TEXT);"
     ).then(function(result) {
-        console.log("sessions table created");
+        //console.log(result);
     }, function(error) {
-        console.log("Error on sessions: " + error.message);
         db_error = true;
+        console.log("Error Found: " + error);
     });
 
     //bear table
@@ -84,10 +70,10 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "session_id        INTEGER , "
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
     ).then(function(result) {
-        console.log("bears table created");
+        //console.log(result);
     }, function(error) {
-        console.log("Error on bears: " + error.message);
         db_error = true;
+        console.log("Error Found: " + error);
     });
 
 
@@ -131,10 +117,10 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "FOREIGN KEY(bear_id) REFERENCES bears(bear_id),"      
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
     ).then(function(result) {
-        console.log("logs table created");
+        //console.log(result);
     }, function(error) {
-        console.log("Error on logs: " + error.message);
         db_error = true;
+        console.log("Error Found: " + error);
     });
 
     //food sources table
@@ -147,10 +133,10 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.routes', 'a
       + "session_id        INTEGER , "
       + "FOREIGN KEY(session_id) REFERENCES sessions(session_id));"
     ).then(function(result) {
-        console.log("food_sources table created");
+        //console.log(result);
     }, function(error) {
-        console.log("Error on food_sources: " + error.message);
         db_error = true;
+        console.log("Error Found: " + error);
     });
 
     //Prevent the native UIScrollView from moving when an input is focused

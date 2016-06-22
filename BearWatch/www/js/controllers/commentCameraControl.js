@@ -10,7 +10,6 @@ angular.module('app.controllers')
 				title: 'Edit Comment',
 				template: '<h1>Warning</h1> <p>Text detected in comment field. Editing this comment will overwrite unsaved text, are you sure?</p>',
 				cssClass: 'commentPopup'
-
 			});
 
 		   confirmPopup.then(function(res) {
@@ -29,14 +28,12 @@ angular.module('app.controllers')
 })
 
 .controller('tabCameraCtrl', function($scope, $ionicPopup, Picture, Session, $ionicLoading, $timeout) {
-	$scope.debug = debug;
 
 	//picture object
 	$scope.Picture = Picture;
             
 	//function for taking picture using device camera
-	$scope.takePhoto = function () {
-		
+	$scope.takePhoto = function () {		
 		Picture.take().then(function(result){
 			console.log("Photo taken");
 			$scope.imgURI = result.imgURI;
@@ -47,8 +44,7 @@ angular.module('app.controllers')
 	};
 	
 	//save photo to session - TODO: Session id, timestamp, GPS
-	$scope.choosePhoto = function () {
-		
+	$scope.choosePhoto = function () {	
 		$scope.insertResult = "Initialized";
 		// Setup the loader
 		$ionicLoading.show({
@@ -65,7 +61,7 @@ angular.module('app.controllers')
 				$ionicLoading.hide();
 			}, 300);
 		}, function(err){
-			console.log("Photo save error: " + err);
+			console.log("Error Found: " + err);
 		});
 	};
 
@@ -80,14 +76,10 @@ angular.module('app.controllers')
 
 		   confirmPopup.then(function(res) {
 				if(res) {
-					console.log('Photo edit confirmed');
 					$scope.imgURI = Picture.edit(id);
-				} else {
-					console.log('Photo edit aborted');
 				}
 			});
 		}else{
-			console.log('Here we go - Photo edit ' + id);
 			$scope.imgURI = Picture.edit(id);
 		}
 	};
@@ -99,16 +91,12 @@ angular.module('app.controllers')
 				title: 'Discard Photo',
 				template: 'Delete photo and associated data, are you sure?</p>',
 				cssClass: 'commentPopup'
-
 			});
 
 		   confirmPopup.then(function(res) {
 				if(res) {
-					console.log('Photo discard confirmed');
 					$scope.imgURI = undefined;
 					Picture.clear();
-				} else {
-					console.log('Photo discard aborted');
 				}
 			});
 		}else{
@@ -124,17 +112,12 @@ angular.module('app.controllers')
 			title: 'Delete Photo',
 			template: '<p>Delete photo and associated data, are you sure?</p>',
 			cssClass: 'commentPopup'
-
 		});
 
 	   confirmPopup.then(function(res) {
 			if(res) {
-				console.log('Photo edit confirmed');
 				Picture.clear(id);
-			} else {
-				console.log('Photo edit aborted');
 			}
 		});
 	};
-
 });
