@@ -176,7 +176,7 @@ angular.module('app.controllers')
 		$scope.submitted = true;
 
 		//validate input
-		if(form.$valid && (Session.hr != undefined || Session.min != undefined)) {
+		if(form.$valid && (Session.hr != undefined || Session.min != undefined) || Session.surveySched == 'Opportunistic') {
     		console.log("Form Valid");
     		// Setup the loader
 			$ionicLoading.show({
