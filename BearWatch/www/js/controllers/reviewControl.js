@@ -129,6 +129,8 @@ angular.module('app.controllers')
                 $scope.ff_data = [Math.floor(fp_total/1000), Math.floor(gVeg_total/1000), Math.floor(berries_total/1000), Math.floor(hFood_total/1000)];
                 $scope.ni_data = [Math.floor(rest_total/1000), Math.floor(sleep_total/1000), Math.floor(walk_total/1000), Math.floor(run_total/1000)];
                 $scope.bbi_data = [Math.floor(alert_total/1000), Math.floor(play_total/1000), Math.floor(fight_total/1000), Math.floor(defend_total/1000)];
+
+                console.log($scope.ff_data);
             },
             function(error) {
                 $scope.selectResult = "Error bear select: " + error.message;
