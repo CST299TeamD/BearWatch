@@ -63,8 +63,7 @@ angular.module('app.controllers')
 })
 
 .controller('addBearCtrl', function($scope, $cordovaSQLite, Bear, BearList, Session, FBearSet, $ionicPopup, $location, $state, Human, $ionicScrollDelegate) {
-	//global debug var
-	$scope.debug = debug;
+
 
 	//get the factory objects
 	$scope.Session = Session;
