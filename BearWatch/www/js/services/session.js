@@ -115,8 +115,6 @@ angular.module('app.services')
 		Session.logsReady = 0;
 		Session.foodReady = 0;
 		
-		Session.emailSubject = '';
-		Session.emailBody = '';
 		console.log("Session clear");
 		console.log(Session.nameResult);
 	}
