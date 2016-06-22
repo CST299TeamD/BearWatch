@@ -55,9 +55,9 @@ angular.module('app.services')
                 + ' VALUES (?, ?, ?, ?, ?, ?, ?)', 
                 [time, Session.id, comment.id, comment.text, GPS.utmZone, GPS.northing, GPS.easting])
             .then(function(result) {
-                console.log("Comment save success" + result.insertId);
+                //console.log(result.insertId);
             }, function(error) {
-                console.log("Error on saving comment: " + error.message);
+                console.log("Error Found: " + error);
             });
 
             //clear comment field
@@ -67,26 +67,20 @@ angular.module('app.services')
 
     //edit comment and log new comment 
     Comment.edit = function(id){
-       console.log("Comment edit intiated " + id);
+
        //find comment object
         var index = -1;
         for(i = 0; i < Comment.commentList.length; i++) {
             if (Comment.commentList[i].id == id) {
-                console.log("comment found");
                 index = i;
                 break;
             }
         }
         if(index > -1){
-            console.log(Comment.text + " = " + Comment.commentList[index].text);
             Comment.text = Comment.commentList[index].text;
-            console.log(Comment.commentList[i]);
             Comment.editComment = Comment.commentList[i];
             Comment.commentList.splice(index, 1);
-        }else{
-            console.log('no matching comment found');
         }
-
     };
 
     //clear comment and log deletion
@@ -117,9 +111,9 @@ angular.module('app.services')
             + ' VALUES (?, ?, ?, ?)', 
             [time, Session.id, commentId, ''])
         .then(function(result) {
-            console.log("Comment delete log success" + result.insertId);
+            //console.log(result.insertId);
         }, function(error) {
-            console.log("Error on comment delete log: " + error.message);
+            console.log("Error Found: " + error);
         });
     };
 

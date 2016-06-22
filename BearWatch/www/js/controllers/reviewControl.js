@@ -123,17 +123,13 @@ angular.module('app.controllers')
 	        				}
 	        			}
 	        		}
-                }else{
-                	console.log("No bear results");
                 }
                 $scope.ff_data = [(Math.floor(fp_total/1000)/60), (Math.floor(gVeg_total/1000)/60), (Math.floor(berries_total/1000)/60), (Math.floor(hFood_total/1000)/60)];
                 $scope.ni_data = [(Math.floor(rest_total/1000)/60), (Math.floor(sleep_total/1000)/60), (Math.floor(walk_total/1000)/60), (Math.floor(run_total/1000)/60)];
                 $scope.bbi_data = [(Math.floor(alert_total/1000)/60), (Math.floor(play_total/1000)/60), (Math.floor(fight_total/1000)/60), (Math.floor(defend_total/1000)/60)];
-
-                console.log($scope.ff_data);
             },
             function(error) {
-                $scope.selectResult = "Error bear select: " + error.message;
+                $scope.selectResult = "Error Found: " + error;
             }
         );
 
@@ -153,12 +149,10 @@ angular.module('app.controllers')
 
 	//function to remove session info from DB
 	$scope.removeSession = function(id){
-		console.log(id);
 		var confirmPopup = $ionicPopup.confirm({
 			title: 'Delete Session',
 			template: '<h1>Warning</h1> <p>This will permanently remove all data associated with this session, are you sure?</p>',
 			cssClass: 'commentPopup'
-
 		});
 
 	   confirmPopup.then(function(res) {
@@ -181,75 +175,27 @@ angular.module('app.controllers')
 												$state.go($state.current, {}, {reload: true});
 								            },
 								            function(error) {
-								                $scope.selectResult = "Error on food_sources delete: " + error.message;
+								                console.log("Error Found: " + error);
 								            }
 								        );
 						            },
 						            function(error) {
-						                $scope.selectResult = "Error on logs delete: " + error.message;
+						                console.log("Error Found: " + error);
 						            }
 						        );
 				            },
 				            function(error) {
-				                $scope.selectResult = "Error on bears delete: " + error.message;
+				                console.log("Error Found: " + error);
 				            }
 				        );
 		            },
 		            function(error) {
-		                $scope.selectResult = "Error on session delete: " + error.message;
+		                console.log("Error Found: " + error);
 		            }
 		        );
 			} 
 		});
 	};
-	
-	//logging test field
-	var id = '';
-	$scope.testSelect = function(){
-		$scope.insertResult = "Initialized: Session_id?:  " + id;
-
-        $cordovaSQLite.execute(db, 'SELECT * FROM logs WHERE session_id = (?)', [id])
-        .then(
-            function(result) {
-            	$scope.selectResult = "Logs = ";
-                if (result.rows.length > 0) {
-                	console.log("enviro results returned");
-                	for (var i = 0; i < result.rows.length; i++){
-	        			for(item in result.rows.item(i)){
-	        				$scope.selectResult += item + ": " + result.rows.item(i)[item] + ", ";
-	        			}
-	        			$scope.selectResult += "   *******New Entry******   ";
-	        		}
-                }else{
-                	console.log("No enviro results")
-                }
-            },
-            function(error) {
-                $scope.selectResult = "Error on loading: " + error.message;
-            }
-        );
-
-        $cordovaSQLite.execute(db, 'SELECT * FROM food_sources WHERE session_id = (?)', [id])
-        .then(
-            function(result) {
-            	$scope.foodResult = "food sources = ";
-                if (result.rows.length > 0) {
-                	console.log("enviro results returned");
-                	for (var i = 0; i < result.rows.length; i++){
-	        			for(item in result.rows.item(i)){
-	        				$scope.foodResult += item + ": " + result.rows.item(i)[item] + ", ";
-	        			}
-	        			$scope.foodResult += "   *******New Entry******   ";
-	        		}
-                }else{
-                	console.log("No food source results")
-                }
-            },
-            function(error) {
-                $scope.selectResult = "Error on loading: " + error.message;
-            }
-        );
-	}
 	
 	//Function to mail with attachments
 	$scope.reviewSendPicture = function(id) {

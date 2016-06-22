@@ -77,10 +77,10 @@ angular.module('app.services')
         $cordovaSQLite.execute(db, 'DELETE FROM food_sources WHERE food_source_id = (?)', [id])
         .then(
             function(result) {
-                console.log("Food source removed from DB");
+                //console.log(result);
             },
             function(error) {
-                console.log("Error removing food source: " + error.message);
+                console.log("Error Found: " + error);
             }
         );
 
@@ -108,7 +108,6 @@ angular.module('app.services')
         var defer = $q.defer();
 
         if(id != ''){
-            console.log("Enviro Save activated! id=" + id);
            
             $cordovaSQLite.execute(db, 
                 'INSERT INTO logs '
@@ -119,14 +118,11 @@ angular.module('app.services')
                 Enviro.wind, Enviro.windDirection, Enviro.temp, Enviro.humid, Enviro.visibility, Enviro.obscuredReason, Enviro.obscuredOther, 
                 Enviro.noiseLevel, id, GPS.utmZone, GPS.northing, GPS.easting])
             .then(function(result) {
-                console.log("Enviro save success" + result.insertId);
                 defer.resolve(result);
             }, function(error) {
-                console.log("Error on saving: " + error.message);
+                console.log("Error Found: " + error);
                 defer.reject(error);
             });
-
-            console.log("#in foodSources: " + Enviro.foodSources.length);
 
             for(var i=0; i < Enviro.foodSources.length; i++){ 
                 if(Enviro.foodSources[i].id == '' ){
@@ -134,7 +130,7 @@ angular.module('app.services')
                 }
             }
         }else{
-            defer.reject("Session Id Required to Save Enviro");
+            defer.reject("Session Id Required to Save Enviro Object");
         }
         return defer.promise;        
     };
@@ -147,10 +143,9 @@ angular.module('app.services')
             + ' VALUES (?, ?, ?, ?)', 
             [ Enviro.foodSources[i].src, Enviro.foodSources[i].avail, Enviro.foodSources[i].desc, id])
         .then(function(result) {
-            console.log("Food_source save success: " + Enviro.foodSources[i].src);
             Enviro.foodSources[i].id = result.insertId;
         }, function(error) {
-            console.log("Error on saving: " + error.message);
+            console.log("Error Found: " + error);
         });
     }
     

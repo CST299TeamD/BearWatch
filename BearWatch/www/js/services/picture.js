@@ -17,7 +17,6 @@ angular.module('app.services')
 
 	//function to reset Picture Object
 	Picture.reset = function(){
-		console.log("resetting pictures");
 		Picture.fileName = '';
 		Picture.subjects = [];
 		Picture.comment = '';
@@ -32,7 +31,6 @@ angular.module('app.services')
 		console.log("checking for subject with id: " + id);
 	    for (i = 0; i < list.length; i++) {
 	        if (list[i].id == id) {
-	        	console.log("Bear subject found");
 	            return true;
 	        }
 	    }
@@ -47,7 +45,6 @@ angular.module('app.services')
 		//update subject list for checkbox values
 		Picture.subjects = [];		
 		for(bear in BearList.add){
-			console.log("bear list value: " + BearList.add[bear].name);
 			var bearObj = {id: BearList.add[bear].id, name: BearList.add[bear].name, selected: false};
 			Picture.subjects.push(bearObj);
 		}
@@ -58,14 +55,11 @@ angular.module('app.services')
 			sourceType: Camera.PictureSourceType.CAMERA,
 			allowEdit: true,
 			encodingType: Camera.EncodingType.JPEG,
-			//targetWidth: 300,
-			//targetHeight: 300,
 			popoverOptions: CameraPopoverOptions,
 			saveToPhotoAlbum: false
 		};
 
 		$cordovaCamera.getPicture(options).then(function (imageData) {
-			console.log("picture success");
 			Picture.imgURI = "data:image/jpeg;base64," + imageData;
 			Picture.imgInfo = imageData;
 			count ++;
@@ -73,7 +67,7 @@ angular.module('app.services')
 			defer.resolve(Picture);
 		}, function (err) {
 			// An error occured
-			console.log("Camera error: " + err);
+			console.log("Error Found: " + err);
 			defer.reject(err);
 		});
 
@@ -93,8 +87,6 @@ angular.module('app.services')
 			}
 		}
 
-		console.log("Subjects: " + subjects.toString());
-
 		//Save picture & data to logs table
 		$cordovaSQLite.execute(db, 
 			'INSERT INTO logs (timestamp, session_id, comment_type, comment, picture_subjects, picture_data, utm_zone, northing, easting)'
@@ -113,7 +105,7 @@ angular.module('app.services')
             });
             defer.resolve(result);
         }, function(error) {
-            console.log("Error on saving: " + error.message);
+            console.log("Error Found: " + error);
             defer.reject(error);
         });
 
@@ -122,7 +114,6 @@ angular.module('app.services')
 
 	//function to clear picture results
 	Picture.clear = function (id){
-		console.log("picture id: " + id);
 		
 		//remove log from table if is was passed
 		if(id !== undefined){
@@ -142,9 +133,9 @@ angular.module('app.services')
 	        //remove from DB
 	        $cordovaSQLite.execute(db, 'DELETE FROM logs WHERE log_id = (?)',[id])
 	        .then(function(result) {
-	            console.log("Picture delete successful");
+	            //console.log(result);
 	        }, function(error) {
-	            console.log("Error on picture delete: " + error.message);
+	            console.log("Error Found: " + error);
 	        });
 		}
 		Picture.fileName = '';
@@ -171,7 +162,6 @@ angular.module('app.services')
             //update subject list with any added bears		
 			for(bear in BearList.add){
 				if(!Picture.subjectsContain(BearList.add[bear].id, Picture.pictures[i].subjects)){
-					console.log("bear list value: " + BearList.add[bear].name);
 					var bearObj = {id: BearList.add[bear].id, name: BearList.add[bear].name, selected: false};
 					Picture.pictures[i].subjects.push(bearObj);
 				}
@@ -188,9 +178,9 @@ angular.module('app.services')
 			//remove from DB
 	        $cordovaSQLite.execute(db, 'DELETE FROM logs WHERE log_id = (?)',[id])
 	        .then(function(result) {
-	            console.log("Picture delete successful");
+	            //console.log(result);
 	        }, function(error) {
-	            console.log("Error on picture delete: " + error.message);
+	            console.log("Error Found: " + error);
 	        });
 
 			return Picture.imgURI ;
