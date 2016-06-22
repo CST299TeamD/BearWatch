@@ -25,12 +25,10 @@ angular.module('app.controllers')
 	        			}
 	        			$scope.sessionList.push(session);
 	        		}
-	            }else{
-	            	console.log("No sessions returned");
 	            }
 	        },
 	        function(error) {
-	            console.log("Error on sessions SELECT: " + error.message);
+	            console.log("Error Found: " + error.message);
 	        }
 	    );
 	});
@@ -39,7 +37,7 @@ angular.module('app.controllers')
 	$scope.displaySession = function(session){
 		//db test var - remove for production
 		id = session.session_id;
-		console.log("new display, id: " + id);
+
 
 		$scope.openSession = session;
 
@@ -170,7 +168,6 @@ angular.module('app.controllers')
 										$cordovaSQLite.execute(db, 'DELETE FROM food_sources WHERE session_id = (?)', [id])
 								        .then(
 								            function(result) {
-												console.log("session delete success");
 												$scope.showList = !$scope.showList;
 												$state.go($state.current, {}, {reload: true});
 								            },
@@ -213,7 +210,6 @@ angular.module('app.controllers')
 		try {
 			Session.load(id);
 		} catch(err) {
-			console.log("An exception occurred and was caught");
 			alert("Unable to load session from SQLiteDatabase. Error:\n" + err.message);
 			Session.sessionReady = 2;
 		}
@@ -243,7 +239,7 @@ angular.module('app.controllers')
 					"\t" + Session.logs[Session.logs.length-1].easting +
 					"\t" + Session.logs[Session.logs.length-1].northing;
 			}
-			console.log("Block Information Sheet: " + data);
+
 			csvAttachments.push("base64:blockInformation.csv//" + btoa(data));
 
 			//construct General Survey sheet
@@ -618,7 +614,7 @@ angular.module('app.controllers')
 	
 		//Send (draft) email
 		var sendEmail = function(emailAttachments){
-			console.log("...attempting to send email with " + emailAttachments.length + " attachments");
+
 			try{
 				$cordovaEmailComposer.isAvailable().then(function() {
 					var email = {
@@ -634,10 +630,10 @@ angular.module('app.controllers')
 					$cordovaEmailComposer.open(email).then(null, function () {
 					});
 				}, function () {
-				   console.log("...Email is unavailable");
+
 				});
 			} catch (exception){
-				console.log(exception.name + " ::: " + exception.message);
+				console.log("Error Found: " + exception.name + " ::: " + exception.message);
 			}
 		}
       
