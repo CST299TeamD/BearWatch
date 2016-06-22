@@ -41,6 +41,9 @@ angular.module('app.services')
         .then(function(result) {
             console.log("Human save success" + result.insertId);
             Human.comment = '';
+            Human.motoType = '';
+            Human.motoAction = '';
+            Human.motoDesc = '';
         }, function(error) {
             console.log("Error on saving Human: " + error.message);
         });
