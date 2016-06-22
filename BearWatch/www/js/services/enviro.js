@@ -105,6 +105,8 @@ angular.module('app.services')
     //function for saving environment state
     Enviro.save = function(id){ 
         //session must be comeplete before saving environment info
+        var defer = $q.defer();
+
         if(id != ''){
             console.log("Enviro Save activated! id=" + id);
            
@@ -118,8 +120,10 @@ angular.module('app.services')
                 Enviro.noiseLevel, id, GPS.utmZone, GPS.northing, GPS.easting])
             .then(function(result) {
                 console.log("Enviro save success" + result.insertId);
+                defer.resolve(result);
             }, function(error) {
                 console.log("Error on saving: " + error.message);
+                defer.reject(error);
             });
 
             console.log("#in foodSources: " + Enviro.foodSources.length);
@@ -129,7 +133,10 @@ angular.module('app.services')
                     Enviro.saveFood(id, i)
                 }
             }
-        }        
+        }else{
+            defer.reject("Session Id Required to Save Enviro");
+        }
+        return defer.promise;        
     };
 
     //function to save food source and give db object

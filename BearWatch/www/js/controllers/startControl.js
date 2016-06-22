@@ -144,7 +144,7 @@ angular.module('app.controllers')
 			            
 })
 
-.controller('observationModeCtrl', function($scope, $cordovaSQLite, Session, Enviro, $location, $state, $ionicPopup, $ionicScrollDelegate) {
+.controller('observationModeCtrl', function($scope, $cordovaSQLite, Session, Enviro, $location, $state, $ionicPopup, $ionicScrollDelegate, $ionicLoading, $timeout) {
 	//global debug var
 	$scope.debug = debug;	
 
@@ -178,11 +178,23 @@ angular.module('app.controllers')
 		//validate input
 		if(form.$valid && (Session.hr != undefined || Session.min != undefined)) {
     		console.log("Form Valid");
+    		// Setup the loader
+			$ionicLoading.show({
+				template: '<h2>Updating</h2>',
+				content: 'Loading',
+				animation: 'fade-in',
+				showBackdrop: false,
+				maxWidth: 200,
+				showDelay: 0
+			});
     		//save session THEN save environment using session id
 			Session.save()
 			.then(
 				function(result){
 					Enviro.save(result.insertId);
+					$timeout(function () {
+						$ionicLoading.hide();
+					}, 300);
 					$state.go('tab.bear');
 				}, 
 				function(error){

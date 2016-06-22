@@ -1,6 +1,6 @@
 angular.module('app.services')
 
-.factory('Human', function($cordovaSQLite, Session, GPS){
+.factory('Human', function($cordovaSQLite, Session, GPS, $q){
 	var Human = {
 		zoneMatrix: [],
 		behavior: '',
@@ -31,6 +31,8 @@ angular.module('app.services')
 	//function to save human state in logs table
 	Human.save = function(){
 		console.log("Saving Human");
+		var defer = $q.defer();
+
 		$cordovaSQLite.execute(db, 
             'INSERT INTO logs '
             + '(timestamp, session_id, human_count, motorized_name, motorized_action, motorized_desc, human_type, human_other, human_behavior,'
@@ -44,9 +46,12 @@ angular.module('app.services')
             Human.motoType = '';
             Human.motoAction = '';
             Human.motoDesc = '';
+            defer.resolve(result);
         }, function(error) {
             console.log("Error on saving Human: " + error.message);
+            defer.reject(error);
         });
+        return defer.promise;
 	};
 
 	//return human object

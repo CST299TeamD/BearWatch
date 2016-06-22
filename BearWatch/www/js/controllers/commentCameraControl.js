@@ -28,7 +28,7 @@ angular.module('app.controllers')
 	};
 })
 
-.controller('tabCameraCtrl', function($scope, $ionicPopup, Picture, Session, $ionicLoading) {
+.controller('tabCameraCtrl', function($scope, $ionicPopup, Picture, Session, $ionicLoading, $timeout) {
 	$scope.debug = debug;
 
 	//picture object
@@ -52,6 +52,7 @@ angular.module('app.controllers')
 		$scope.insertResult = "Initialized";
 		// Setup the loader
 		$ionicLoading.show({
+			template: '<h2>Updating</h2>',
 			content: 'Loading',
 			animation: 'fade-in',
 			showBackdrop: false,
@@ -60,7 +61,9 @@ angular.module('app.controllers')
 		});
 		Picture.save().then(function(result){
 			$scope.discardPhoto(false);
-			$ionicLoading.hide();
+			$timeout(function () {
+				$ionicLoading.hide();
+			}, 300);
 		}, function(err){
 			console.log("Photo save error: " + err);
 		});
@@ -73,7 +76,6 @@ angular.module('app.controllers')
 				title: 'Edit Photo',
 				template: '<h1>Warning</h1> <p>Unsaved photo detected. Editing this this will overwrite unsaved text, are you sure?</p>',
 				cssClass: 'commentPopup'
-
 			});
 
 		   confirmPopup.then(function(res) {

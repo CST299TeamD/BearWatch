@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('humanCtrl', function($scope, $ionicModal, Session, Human, $ionicScrollDelegate, $ionicLoading) {
+.controller('humanCtrl', function($scope, $ionicModal, Session, Human, $ionicScrollDelegate, $ionicLoading, $timeout) {
 
 	$scope.Session = Session;
 	$scope.Human = Human;
@@ -54,6 +54,25 @@ angular.module('app.controllers')
         $scope.showHelp = false;
     }
 
+    $scope.humanSave = function(){
+    	// Setup the loader
+		$ionicLoading.show({
+			template: '<h2>Updating</h2>',
+			content: 'Loading',
+			animation: 'fade-in',
+			showBackdrop: false,
+			maxWidth: 200,
+			showDelay: 0
+		});
+		Human.save().then(function(result){
+			$timeout(function () {
+				$ionicLoading.hide();
+			}, 300);
+		}, function(err){
+			console.log("Human save error: " + err);
+		});
+    }
+
 	//function to show modal for initial zone-matrix population
 	var matrixCompleted = false;
 	$scope.showMatrix = function(){
@@ -69,7 +88,7 @@ angular.module('app.controllers')
 		if(name == 'Other'){
 			Human.nonMotoOther = '';
 		}
-		Human.save();
+		$scope.humanSave();
 	}
 
 	//matrix modal
@@ -97,7 +116,7 @@ angular.module('app.controllers')
 	$scope.matrixSave = function(){
 		$scope.modal.hide();
 		matrixCompleted = true;
-		Human.save();
+		$scope.humanSave();
 	}
 	
 	//motorized observation button list
@@ -160,7 +179,7 @@ angular.module('app.controllers')
 		Human.motoType = moto.name;
 		Human.motoAction = moto.action;
 		Human.motoDesc = moto.desc;
-		Human.save();
+		$scope.humanSave();
 
 		//add to model
 		$scope.moto = moto;
@@ -168,7 +187,7 @@ angular.module('app.controllers')
 
 })
 
-.controller('environmentCtrl', function($scope, Enviro, Session, $cordovaSQLite, $ionicScrollDelegate) {
+.controller('environmentCtrl', function($scope, Enviro, Session, $cordovaSQLite, $ionicScrollDelegate, $ionicLoading, $timeout) {
 	$scope.debug = true;
 
 	//global factory enviro object
@@ -189,10 +208,29 @@ angular.module('app.controllers')
         $scope.showHelp = false;
     }
 
+    $scope.enviroSave = function(id){
+    	// Setup the loader
+		$ionicLoading.show({
+			template: '<h2>Updating</h2>',
+			content: 'Loading',
+			animation: 'fade-in',
+			showBackdrop: false,
+			maxWidth: 200,
+			showDelay: 0
+		});
+		Enviro.save(id).then(function(result){
+			$timeout(function () {
+				$ionicLoading.hide();
+			}, 300);
+		}, function(err){
+			console.log("Enviro save error: " + err);
+		});
+    }
+
     $scope.humidSave = function(form, id){
     	if(form.$valid) {
     		console.log("enviro2Form Valid");
-	    	Enviro.save(id);
+	    	$scope.enviroSave(id);
 	    }
     }
             

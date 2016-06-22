@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="center">
-                    <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Human.save()">&nbsp; Update</button>
+                    <button class="button button-balanced icon ion-ios-upload-outline" ng-click="humanSave()">&nbsp; Update</button>
                 </div>
             </div><!--end zoneMatrix-->
             
@@ -185,7 +185,7 @@
                     <label class="item item-input-wrapper">     
                         <input placeholder="Describe Other" type="text" ng-model="Human.nonMotoOther">
                     </label>
-                    <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Human.save()">&nbsp; Update</button>
+                    <button class="button button-balanced icon ion-ios-upload-outline" ng-click="humanSave()">&nbsp; Update</button>
                 </div>
             </div>
                         
@@ -193,7 +193,7 @@
             <ion-item class="item-divider list-head">Human Behaviour (worst in group)</ion-item>
             <label class="item item-select">
                 <span class="input-label">Behaviour</span>
-                <select ng-model="Human.behavior" ng-change="Human.save()">
+                <select ng-model="Human.behavior" ng-change="humanSave()">
                     <option selected disabled></option>
                     <option>None</option>
                     <option>Quietly observing, minimal movement</option>
@@ -212,7 +212,7 @@
                     <span class="input-label">Comment:</span>
                     <input type="text" placeholder="activities/interactions" ng-model="Human.comment"> </textarea>
                 </label>
-                <button class="button button-balanced icon ion-ios-upload-outline" ng-click="Human.save()">&nbsp; Update</button>
+                <button class="button button-balanced icon ion-ios-upload-outline" ng-click="humanSave()">&nbsp; Update</button>
             </div>
         </form>
 
