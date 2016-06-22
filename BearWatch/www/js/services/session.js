@@ -27,7 +27,6 @@ angular.module('app.services')
         resting: '',
         altMedia: '',
 		
-		water_body: '',
 		water_level: '',
 		water_clarity: '',
 		
@@ -63,63 +62,63 @@ angular.module('app.services')
 
     //function to reset session
     Session.reset = function(){
-		id = '';
-        firstName = '';
-		allNames = '';
-        firstNameInitials = '';
-		allNamesInitials = '';
-        lastName = '';
-        nameResult = [];
-        park = '';
-        site = '';
-        viewingArea = '';
-        viewingAreaOther = '';
-        stationary = '';
-        zoneSchema = '';
-        obsArea = '';
-        comment = '';
-        observationMode = '';
-        surveySched = '';
-        start_time = '';
-		finish_time = '';
-        hr = '';
-        min = '';
-        active = '';
-        resting = '';
-        altMedia = '';
+		Session.id = '';
+        Session.firstName = '';
+		Session.allNames = '';
+        Session.firstNameInitials = '';
+		Session.allNamesInitials = '';
+        Session.lastName = '';
+        Session.nameResult = [];
+        Session.park = '';
+        Session.site = '';
+        Session.viewingArea = '';
+        Session.viewingAreaOther = '';
+        Session.stationary = '';
+        Session.zoneSchema = '';
+        Session.obsArea = '';
+        Session.comment = '';
+        Session.observationMode = '';
+        Session.surveySched = '';
+        Session.start_time = '';
+		Session.finish_time = '';
+        Session.hr = '';
+        Session.min = '';
+        Session.active = '';
+        Session.resting = '';
+        Session.altMedia = '';
 		
-		water_body = '';
-		water_level = '';
-		water_clarity = '';
+		Session.water_level = '';
+		Session.water_clarity = '';
 		
-		cloud_cover = '';
-		precipitation = '';
-		wind = '';
-		wind_direction = '';
-		temperature = '';
-		humididty = '';
-		noise_level = '';
-		visibility = '';
-		obstruction = '';
+		Session.cloud_cover = '';
+		Session.precipitation = '';
+		Session.wind = '';
+		Session.wind_direction = '';
+		Session.temperature = '';
+		Session.humididty = '';
+		Session.noise_level = '';
+		Session.visibility = '';
+		Session.obstruction = '';
 		
-		humans = {
+		Session.humans = {
 			"1b" : "",	"1a" : "", "4+" : "", "7a" : "", "7b" : "", "1+" : "", "1" : "", "4" : "", "7" : "", "7+" : "", "2+" : "", "2" : "", "5" : "", "8" : "", "8+" : "", "3+" : "", "3" : "", "6" : "", "9" : "", "9+" : "", "3b" : "", "3a" : "", "6+" : "", "9a" : "", "9b" : ""
 		};
 		
-		humanType = {
+		Session.humanType = {
 			'Angling':'No', 'Boating':'No', 'Hiking/Walking':'No', 'Running':'No', 'Picnicking':'No', 'Photography':'No', 'Playing':'No', 'Wildlife Viewing':'No', 'Biking':'No', 'Unobservable':'No', 'Other':'No'
 		};
 		
-		logs = [];
-		pictures = [];
-		foodSources = [];
-		sessionReady = 0;
-		logsReady = 0;
-		foodReady = 0;
+		Session.logs = [];
+		Session.pictures = [];
+		Session.foodSources = [];
+		Session.sessionReady = 0;
+		Session.logsReady = 0;
+		Session.foodReady = 0;
 		
-		emailSubject = '';
-		emailBody = '';
+		Session.emailSubject = '';
+		Session.emailBody = '';
 		console.log("Session clear");
+		console.log(Session.nameResult);
 	}
     
     //function for saving session state
