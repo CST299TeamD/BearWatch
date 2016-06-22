@@ -340,12 +340,12 @@ angular.module('app.controllers')
 						//logic to assign picture name //TDL monthnames may not be used
 						var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug","Sep", "Oct", "Nov", "Dec"];
 						//	BearWatch_Tweedsmuir-Park_June 21, 2016_22-24-37.jpg
-						//Format: BearWatch_Tweedsmuir-Park_9-Jun-2016_13-30-32.jpg
+						//Format: BearWatch_Tweedsmuir-Park_2016-Jun-9_13-30-32.jpg
 						studyAreaPhoto = "BearWatch_" +
 								(Session.park).trim().split(" ").join("-") + "_" +
-								date.getYear() + "-" +
-								monthNames[date.getMonth()] + "-" +
-								date.getDay() + "_" +
+								date.getUTCFullYear() + "-" +
+								monthNames[date.getUTCMonth()] + "-" +
+								date.getUTCDate() + "_" +
 								logTime.getHours() + "-" +
 								logTime.getMinutes() + "-" +
 								logTime.getSeconds() + ".jpg";
