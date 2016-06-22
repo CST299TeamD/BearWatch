@@ -307,7 +307,7 @@ angular.module('app.controllers')
 			var 
 			bearID, bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, 
 		
-			studyAreaPhoto, commentType, generalCommentType, bearsInPhoto, logTime, sessionDate, humanComment,
+			studyAreaPhoto, commentType, generalComment, generalCommentType, bearsInPhoto, logTime, sessionDate, humanComment,
 			
 			aircraft, ATV, boat, vehicle, humanBehavior,
 			
@@ -323,7 +323,7 @@ angular.module('app.controllers')
 				//values to reset
 				bearID = bearName = accuracy = accuracyComments = animalInSight = urineStreamObserved = bearZone = bearSpecies = count = size = sex = age = marks = colour = colourVariation = furWet = pawMeasure = cubs = ageOfCubs = cubFur = bearComment =
 
-				studyAreaPhoto = generalCommentType = humanComment = bearsInPhoto = logTime =
+				studyAreaPhoto = generalComment = generalCommentType = humanComment = bearsInPhoto = logTime =
 			
 				aircraft = ATV = boat = vehicle = humanBehavior = 
 			
