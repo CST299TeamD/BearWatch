@@ -19,8 +19,6 @@ angular.module('app.controllers')
       });
     }
 	
-	
-	Session.reset();
 })
 
 //Activates the GPS

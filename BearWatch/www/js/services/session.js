@@ -55,7 +55,10 @@ angular.module('app.services')
 		logsReady: 0,
 		foodReady: 0,
 		maxFoodSources: 3,
-		maxBears: 10
+		maxBears: 10,
+		
+		emailSubject: '',
+		emailBody: ''
     };
 
     //function to reset session
