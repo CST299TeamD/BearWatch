@@ -307,7 +307,7 @@ angular.module('app.controllers')
 			var 
 			bearID, bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, 
 			
-			studyAreaPhoto, generalCommentType, logTime, sessionDate,
+			studyAreaPhoto, commentType, generalCommentType, logTime, sessionDate,
 			
 			aircraft, ATV, boat, vehicle, humanBehavior, 
 			
@@ -321,7 +321,7 @@ angular.module('app.controllers')
 				//values to reset
 				bearID = bearName = accuracy = accuracyComments = animalInSight = urineStreamObserved = bearZone = bearSpecies = count = size = sex = age = marks = colour = colourVariation = furWet = pawMeasure = cubs = ageOfCubs = cubFur = bearComment =
 
-				studyAreaPhoto = generalCommentType = bearsInPhoto = logTime =
+				studyAreaPhoto = commentType = generalCommentType = bearsInPhoto = logTime =
 			
 				aircraft = ATV = boat = vehicle = humanBehavior = 
 			
@@ -338,7 +338,6 @@ angular.module('app.controllers')
 						var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug","Sep", "Oct", "Nov", "Dec"];
 						//BearWatch_4321_Tweedsmuir-Park_9-Jun-2016_13-30-32.jpg
 						studyAreaPhoto = "BearWatch_" +
-								//(Session.park).trim.replace(/\s+/g, "-") + "_" +
 								(Session.park).trim().split(" ").join("-") + "_" +
 								Session.start_date + "_" +
 								logTime.getHours() + "-" +
@@ -350,7 +349,6 @@ angular.module('app.controllers')
 						
 						//logic to assign picture name to a "photo" field
 						pictureAttachments.push("base64:" + studyAreaPhoto + "//" + picture_data);
-											
 					}
 					
 					//Handle ongoing environmental variables
@@ -372,11 +370,12 @@ angular.module('app.controllers')
 					
 					//Handle Comments
 					if (comment != null && comment != "" && (comment != humanComment || comment != generalComment)){
-							generalCommentType = generalComment = humanComment = "";
-						if (comment_type.slice(0, 7) == "General"){
+						commentType = comment_type.split("-")[0];
+						
+						if (commentType == "General" || commentType == "Picture"){
 							generalComment = comment;
-							generalCommentType = comment_type
-						} else if (comment_type.slice(0, 5) == "Human"){
+							generalCommentType = comment_type;
+						} else if (commentType == "Human"){
 							humanComment = comment;
 							generalCommentType = comment_type;					
 						}
@@ -385,7 +384,6 @@ angular.module('app.controllers')
 						generalComment = "";
 						generalCommentType = "";	
 					}
-						
 
 					//Handle bears
 					if (bear != null) {
@@ -402,7 +400,6 @@ angular.module('app.controllers')
 						} 
 							
 						bearZone = bear["zone"];
-						//habituation handled in behaviors
 						bearSpecies = bear["species"];
 						size = bear["size"];
 						count = parseInt(bear["cubs"] + 1) || 1;
@@ -421,15 +418,8 @@ angular.module('app.controllers')
 						if(bear["CFCBrown"]) cubFur.push("Brown");
 						if(bear["CFCDarkBrown"]) cubFur.push("Dark Brown");
 						if(bear["CFCOther"]) cubFur.push("Other");
-						
 						if (lastBearComment[bear["id"]] != bear["comment"]) bearComment = lastBearComment[bear["id"]] = bear["comment"];
-
-							
-						
-							
 							for (j=0;j<bear["behaviour"].length;j++){
-						//		console.log("\tBehaviour: "+bear["behaviour"][j].category);
-								
 								switch(bear["behaviour"][j].category){
 									case "Non-Interactive":
 										nonInteractive = bear["behaviour"][j].description;
@@ -456,22 +446,14 @@ angular.module('app.controllers')
 										actionOtherComment = bear["behaviour"][j].description;
 										break;										
 								}
-								
-	        							
 							}
-						
-								//console.log("bear[isFishing]:" + bear["isFishing"]);
-								
-								if (bear["isFishing"] == true){
-									feedingForaging = "Fishing";
-								
-									fishingTechnique = bear["fishingMethod"];
-									foragingDetails = bear["fishingSuboption"];
-									numberOfFishCaught = bear["tally"];
-									
-
-								}
-								
+							if (bear["isFishing"] == true){
+								feedingForaging = "Fishing";
+								fishingTechnique = bear["fishingMethod"];
+								foragingDetails = bear["fishingSuboption"];
+								numberOfFishCaught = bear["tally"];
+							}
+							
 						bear = "";
 					} else {
 						//no bear data this log
@@ -608,7 +590,7 @@ angular.module('app.controllers')
 						Session.humans["4+"] + "\t" +
 						Session.humans["7a"] + "\t" +
 						Session.humans["7b"] + "\t" +
-						Session.humans["+1"] + "\t" +
+						Session.humans["1+"] + "\t" +
 						Session.humans["1"] + "\t" +
 						Session.humans["4"] + "\t" +
 						Session.humans["7"] + "\t" +

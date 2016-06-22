@@ -42,7 +42,7 @@ angular.module('app.services')
 		obstruction: '',
 		
 		humans: {
-			"1b" : "",	"1a" : "", "4+" : "", "7a" : "", "7b" : "", "+1" : "", "1" : "", "4" : "", "7" : "", "7+" : "", "2+" : "", "2" : "", "5" : "", "8" : "", "8+" : "", "3+" : "", "3" : "", "6" : "", "9" : "", "9+" : "", "3b" : "", "3a" : "", "6+" : "", "9a" : "", "9b" : ""
+			"1b" : "",	"1a" : "", "4+" : "", "7a" : "", "7b" : "", "1+" : "", "1" : "", "4" : "", "7" : "", "7+" : "", "2+" : "", "2" : "", "5" : "", "8" : "", "8+" : "", "3+" : "", "3" : "", "6" : "", "9" : "", "9+" : "", "3b" : "", "3a" : "", "6+" : "", "9a" : "", "9b" : ""
 		},
 		humanType: {
 			'Angling':'No', 'Boating':'No', 'Hiking/Walking':'No', 'Running':'No', 'Picnicking':'No', 'Photography':'No', 'Playing':'No', 'Wildlife Viewing':'No', 'Biking':'No', 'Unobservable':'No', 'Other':'No'
@@ -100,7 +100,7 @@ angular.module('app.services')
 		obstruction = '';
 		
 		humans = {
-			"1b" : "",	"1a" : "", "4+" : "", "7a" : "", "7b" : "", "+1" : "", "1" : "", "4" : "", "7" : "", "7+" : "", "2+" : "", "2" : "", "5" : "", "8" : "", "8+" : "", "3+" : "", "3" : "", "6" : "", "9" : "", "9+" : "", "3b" : "", "3a" : "", "6+" : "", "9a" : "", "9b" : ""
+			"1b" : "",	"1a" : "", "4+" : "", "7a" : "", "7b" : "", "1+" : "", "1" : "", "4" : "", "7" : "", "7+" : "", "2+" : "", "2" : "", "5" : "", "8" : "", "8+" : "", "3+" : "", "3" : "", "6" : "", "9" : "", "9+" : "", "3b" : "", "3a" : "", "6+" : "", "9a" : "", "9b" : ""
 		};
 		humanType = {
 			'Angling':'No', 'Boating':'No', 'Hiking/Walking':'No', 'Running':'No', 'Picnicking':'No', 'Photography':'No', 'Playing':'No', 'Wildlife Viewing':'No', 'Biking':'No', 'Unobservable':'No', 'Other':'No'
@@ -112,6 +112,9 @@ angular.module('app.services')
 		sessionReady = 0;
 		logsReady = 0;
 		foodReady = 0;
+		
+		emailSubject = '';
+		emailBody = '';
 	}
     
     //function for saving session state
