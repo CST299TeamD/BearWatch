@@ -52,7 +52,7 @@ angular.module('app.services')
                         } catch(er){}
                     }
                 } catch(err) {
-                    console.log("No ongoing behaviour");
+                    console.log("Error Found: " + err);
                 }
          
             }
@@ -86,7 +86,7 @@ angular.module('app.services')
          Bear.comment = '';
          BearList.add = [];
          FBearSet.isFocalPresent = '';
-         console.log("Bear reset");
+
          
     }
     //diffrent zones for locations
@@ -112,11 +112,9 @@ angular.module('app.services')
                         + ' VALUES (?, ?, ?, ?, ?, ?, ?)',
                         [time, sessionId, Bear.id, bearlog, utm, north, east])
         .then(function(result) {
-            console.log("bear Logged with log id - " + result.insertId);
-            console.log(Bear);
             defer.resolve(result);
         }, function(error) {
-            console.log("Error on saving comment: " + error.message);
+            console.log("Error Found: " + error);
             defer.reject(error);
               
         });

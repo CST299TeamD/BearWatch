@@ -326,10 +326,8 @@ angular.module('app.controllers')
                     $scope.BearList.add[Bear.index].behaviour = [];
                     $scope.Bear.behaviour = [];
                     $scope.Bear.isFishing = false;
-                    //console.log("Is bear in shight? false");
                 } else {
                     $scope.BearList.add[Bear.index].inSight = true;
-                    //console.log("Is bear in shight? true");
                 }
                 Bear.Log($scope.Session.id);
             }
@@ -466,8 +464,7 @@ angular.module('app.controllers')
                    		//add end time to old behaviour
                    		$scope.Bear.behaviour[n].endTime = curTime;
                		    Bear.Log($scope.Session.id);
-                        console.log("logged change");
-
+            
                		    //start the new behaviour
                     	$scope.Bear.behaviour[n].description = desc;
                      	$scope.Bear.behaviour[n].time = curTime;
@@ -502,7 +499,6 @@ angular.module('app.controllers')
                 var index = -1;
 
                 for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
-                    console.log("Passed Desc " + desc + " and array desc "+ $scope.Bear.behaviour[n].description);
                     if($scope.Bear.behaviour[n].category == cat && $scope.Bear.behaviour[n].description == desc) {
                         index = n;
                     }
@@ -511,7 +507,6 @@ angular.module('app.controllers')
                 //if unable to find index drop descreption
                 if(index == -1){
                     for(var n = 0; n < $scope.Bear.behaviour.length; n++) {
-                        console.log("Passed Desc " + desc + " and array desc "+ $scope.Bear.behaviour[n].description);
                         if($scope.Bear.behaviour[n].category == cat) {
                             index = n;
                         }
@@ -528,10 +523,9 @@ angular.module('app.controllers')
                     .then(
                           function(result){
                             $scope.Bear.behaviour.splice(index, 1);
-                            console.log("index " + index + " removed");
                           },
                           function(error){
-                            console.log("error in geting rid of behaviour");
+                            console.log("Error Found: " + error);
                           }
                     );
                 }
@@ -602,7 +596,7 @@ angular.module('app.controllers')
     //update bear specs
 	$scope.updateBear = function(index, name, zone, size, species, gender, age, markDescription, furColour, pawMeasured, uStream, cubs, accuracy, cubAge, cubFurColour, comment, vAid, furCondition, furCVariation, CFCBlonde, CBCLightBrown, CFCBrown, CFCDarkBrown, CFCOther){
        
-        console.log(CFCBlonde +" "+ CBCLightBrown +" "+ CFCBrown +" "+ CFCDarkBrown +" "+ CFCOther);
+
             
         //update Bear in bear array
         $scope.BearList.add[index].name = name;
