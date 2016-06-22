@@ -306,12 +306,8 @@ angular.module('app.controllers')
 			
 			var 
 			bearID, bearName, accuracy, accuracyComments, animalInSight, urineStreamObserved, bearZone, bearSpecies, count, size, sex, age, marks, colour, colourVariation, furWet, pawMeasure, cubs, ageOfCubs, cubFur, bearComment, 
-			
-<<<<<<< HEAD
-			studyAreaPhoto, generalCommentType, logTime, sessionDate,
-=======
+		
 			studyAreaPhoto, commentType, generalCommentType, bearsInPhoto, logTime, sessionDate,
->>>>>>> 9a5ed7149ad32b6cc0c4f8d0da05e5c413eb9616
 			
 			aircraft, ATV, boat, vehicle, humanBehavior, 
 			
@@ -377,16 +373,12 @@ angular.module('app.controllers')
 					
 					//Handle Comments
 					if (comment != null && comment != "" && (comment != humanComment || comment != generalComment)){
-<<<<<<< HEAD
-							generalCommentType = generalComment = humanComment = "";
-						if (comment_type.slice(0, 7) == "General"){
-=======
+						generalCommentType = generalComment = humanComment = "";
 						commentType = comment_type.split("-")[0];
 						if (commentType == "General" || commentType == "Picture"){
->>>>>>> 9a5ed7149ad32b6cc0c4f8d0da05e5c413eb9616
 							generalComment = comment;
 							generalCommentType = comment_type
-						} else if (comment_type.slice(0, 5) == "Human"){
+						} else if (commentType == "Human"){
 							humanComment = comment;
 							generalCommentType = comment_type;					
 						}
@@ -430,53 +422,42 @@ angular.module('app.controllers')
 						
 						if (lastBearComment[bear["id"]] != bear["comment"]) bearComment = lastBearComment[bear["id"]] = bear["comment"];
 
+						for (j=0;j<bear["behaviour"].length;j++){
 							
-						
-							
-							for (j=0;j<bear["behaviour"].length;j++){
-						//		console.log("\tBehaviour: "+bear["behaviour"][j].category);
-								
-								switch(bear["behaviour"][j].category){
-									case "Non-Interactive":
-										nonInteractive = bear["behaviour"][j].description;
-										break;
-									case "Habituation":
-										habituation = bear["behaviour"][j].description;
-										break;
-									case "Human-bear Interaction":
-										humanBearInteractions = bear["behaviour"][j].description;
-										break;
-									case "Bear-human Interaction":
-										bearHumanInteractions = bear["behaviour"][j].description;
-										break;
-									case "Bear-bear Interactive":
-										bearBearInteractions = bear["behaviour"][j].description;
-										break;
-									case "Feeding or Foraging":
-										feedingForaging = bear["behaviour"][j].description;
-										break;
-									case "Alert/Vigilance":
-										alertVigilance = bear["behaviour"][j].description;
-										break;
-									case "Other":
-										actionOtherComment = bear["behaviour"][j].description;
-										break;										
-								}
-								
-	        							
+							switch(bear["behaviour"][j].category){
+								case "Non-Interactive":
+									nonInteractive = bear["behaviour"][j].description;
+									break;
+								case "Habituation":
+									habituation = bear["behaviour"][j].description;
+									break;
+								case "Human-bear Interaction":
+									humanBearInteractions = bear["behaviour"][j].description;
+									break;
+								case "Bear-human Interaction":
+									bearHumanInteractions = bear["behaviour"][j].description;
+									break;
+								case "Bear-bear Interactive":
+									bearBearInteractions = bear["behaviour"][j].description;
+									break;
+								case "Feeding or Foraging":
+									feedingForaging = bear["behaviour"][j].description;
+									break;
+								case "Alert/Vigilance":
+									alertVigilance = bear["behaviour"][j].description;
+									break;
+								case "Other":
+									actionOtherComment = bear["behaviour"][j].description;
+									break;										
 							}
-						
-								//console.log("bear[isFishing]:" + bear["isFishing"]);
-								
-								if (bear["isFishing"] == true){
-									feedingForaging = "Fishing";
-								
-									fishingTechnique = bear["fishingMethod"];
-									foragingDetails = bear["fishingSuboption"];
-									numberOfFishCaught = bear["tally"];
-									
-
-								}
+						}
+					
+						if (bear["isFishing"] == true){
+							feedingForaging = "Fishing";							
+							fishingTechnique = bear["fishingMethod"];
+							foragingDetails = bear["fishingSuboption"];
+							numberOfFishCaught = bear["tally"];
+						}
 								
 						bear = "";
 					} else {
@@ -514,7 +495,6 @@ angular.module('app.controllers')
 							aircraft = motorized_desc + " " + motorized_name.slice(9,10) + " " + motorized_action;
 						}
 						
-						
 						var oldHumans = angular.fromJson(human_type);
 						for (j=0;j<oldHumans.length;j++){
 							if (oldHumans[j]["checked"] == true) {
@@ -522,15 +502,11 @@ angular.module('app.controllers')
 							} else {
 								Session.humanType[oldHumans[j]["type"]] = "No";
 							}
-						}		
-						
-						//console.log("human other: " + human_other);
-						
+						}					
 						humanBehavior = human_behavior;
 					}
 					
 					//Handle human types
-										
 					data = data +
 						Session.park + "\t" +
 						Session.site + "\t" +
@@ -619,7 +595,7 @@ angular.module('app.controllers')
 						Session.humans["4+"] + "\t" +
 						Session.humans["7a"] + "\t" +
 						Session.humans["7b"] + "\t" +
-						Session.humans["+1"] + "\t" +
+						Session.humans["1+"] + "\t" +
 						Session.humans["1"] + "\t" +
 						Session.humans["4"] + "\t" +
 						Session.humans["7"] + "\t" +
