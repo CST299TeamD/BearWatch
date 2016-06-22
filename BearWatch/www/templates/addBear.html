@@ -33,37 +33,8 @@
                 <a ng-click="scrollDown()"><i class="ion-help-circled help"></i></a>
             </div>
         </div>
-        <div ng-show="false">
-            Session id : {{Session.id}} <br>
-            Bear Index : {{Bear.index}} <br>
-            Bear id : {{Bear.id}} <br>
-            Is focal bear : {{Bear.isFocal}} <br>
-            Bear Name : {{Bear.name}} <br>
-            Zone : {{Bear.zone}} <br>
-            Bear Size : {{Bear.size}} <br>
-            Bear Age : {{Bear.age}} <br>
-            Bear gender : {{Bear.gender}} <br>
-            Bear Species : {{Bear.species}} <br>
-            Mark Description : {{Bear.markDescription}} <br>
-            Bear Fur Colour : {{Bear.furColour}} <br>
-            Bear Paw Measure : {{Bear.pawMeasured}} <br>
-            Bear Cubs : {{Bear.cubs}} <br>
-            Bear Cubs Fur Colour ; {{Bear.cubFurColour}} <br>
-            Bear Cubs Age : {{Bear.cubAge}} <br>
-            Bear Comment : {{Bear.comment}} <br>
-            <div ng-show="debug">
-                <br>Select Session<br>
-                Session id insert : {{sIdInsertResult}} <br>
-                <button ng-click="testInsert()">Insert Session Id</button>
-                <button ng-click="addBear()">Insert Bear</button><br>
-                Adding bear Result : {{bearInsertResult}}
-                <br><br>
-                <button ng-click="testSessionId()">Select from bears table</button><br>
-                Number of rows in bears table : {{ numret }} <br>
-                Result : {{result}} <br>
-            </div>
+        
 
-        </div>
         <form style="" class="list">
             <div style="width: 283px; height: 22px;" class="spacer"></div>
             <ion-item style="" class="item-divider list-head" ng-show="FBearSet.isFocalPresent == ''&& Session.observationMode == 'Focal' ">Bear Type</ion-item>
