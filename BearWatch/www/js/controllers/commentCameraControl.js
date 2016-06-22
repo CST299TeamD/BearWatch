@@ -28,7 +28,7 @@ angular.module('app.controllers')
 	};
 })
 
-.controller('tabCameraCtrl', function($scope, $ionicPopup, Picture, Session) {
+.controller('tabCameraCtrl', function($scope, $ionicPopup, Picture, Session, $ionicLoading) {
 	$scope.debug = debug;
 
 	//picture object
@@ -50,9 +50,17 @@ angular.module('app.controllers')
 	$scope.choosePhoto = function () {
 		
 		$scope.insertResult = "Initialized";
-
+		// Setup the loader
+		$ionicLoading.show({
+			content: 'Loading',
+			animation: 'fade-in',
+			showBackdrop: false,
+			maxWidth: 200,
+			showDelay: 0
+		});
 		Picture.save().then(function(result){
 			$scope.discardPhoto(false);
+			$ionicLoading.hide();
 		}, function(err){
 			console.log("Photo save error: " + err);
 		});

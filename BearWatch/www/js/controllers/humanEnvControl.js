@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('humanCtrl', function($scope, $ionicModal, Session, Human, $ionicScrollDelegate) {
+.controller('humanCtrl', function($scope, $ionicModal, Session, Human, $ionicScrollDelegate, $ionicLoading) {
 
 	$scope.Session = Session;
 	$scope.Human = Human;
