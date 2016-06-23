@@ -104,7 +104,6 @@ angular.module('app.services')
 
         //log delete in DB
         var commentId = id.split('-Updated')[0] + '-Deleted';
-        console.log(commentId);
         $cordovaSQLite.execute(db, 
             'INSERT INTO logs '
             + '(timestamp, session_id, comment_type, comment)'

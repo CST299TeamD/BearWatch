@@ -28,7 +28,6 @@ angular.module('app.services')
 	//function to check if bears are already in picture subjects
 	Picture.subjectsContain = function(id, list){
 		var i;
-		console.log("checking for subject with id: " + id);
 	    for (i = 0; i < list.length; i++) {
 	        if (list[i].id == id) {
 	            return true;
@@ -93,7 +92,6 @@ angular.module('app.services')
 		+ 	' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
 			[new Date(), Session.id, 'Picture', Picture.comment, subjects.toString(), Picture.imgInfo, GPS.utmZone, GPS.northing, GPS.easting])
         .then(function(result) {
-            console.log("Picture insert successful!");
             Picture.pictures.push({
             	id: result.insertId, 
             	fileName: Picture.fileName, 

@@ -9,7 +9,7 @@ angular.module('app.controllers')
 	//pie chart labels
 	$scope.ff_labels = ["Pursuit for Food", "Green Vegetation", "Berries", "Human Food"];
 	$scope.ni_labels = ["Loafing/Resting", "Sleeping", "Walking", "Running"];
-	$scope.bbi_labels = ["Alert/Vigilance", "Playing", "Fighting", "Defense"];
+	$scope.bbi_labels = ["Playing", "Fighting", "Defense"];
 
 	//function to populate sessions list
 	$scope.sessionList = [];
@@ -37,7 +37,6 @@ angular.module('app.controllers')
 	$scope.displaySession = function(session){
 		//db test var - remove for production
 		id = session.session_id;
-
 
 		$scope.openSession = session;
 
@@ -124,10 +123,10 @@ angular.module('app.controllers')
                 }
                 $scope.ff_data = [(Math.floor(fp_total/1000)/60), (Math.floor(gVeg_total/1000)/60), (Math.floor(berries_total/1000)/60), (Math.floor(hFood_total/1000)/60)];
                 $scope.ni_data = [(Math.floor(rest_total/1000)/60), (Math.floor(sleep_total/1000)/60), (Math.floor(walk_total/1000)/60), (Math.floor(run_total/1000)/60)];
-                $scope.bbi_data = [(Math.floor(alert_total/1000)/60), (Math.floor(play_total/1000)/60), (Math.floor(fight_total/1000)/60), (Math.floor(defend_total/1000)/60)];
+                $scope.bbi_data = [(Math.floor(play_total/1000)/60), (Math.floor(fight_total/1000)/60), (Math.floor(defend_total/1000)/60)];
             },
             function(error) {
-                $scope.selectResult = "Error Found: " + error;
+                $scope.selectResult = "Error bear select: " + error.message;
             }
         );
 
@@ -260,7 +259,6 @@ angular.module('app.controllers')
 			var date = new Date(Session.start_date);
 				
 			for (var i = 0; i<Session.logs.length;i++){
-				//console.log("log start: "+i+"/"+Session.logs.length);
 										
 				//values to reset
 				bearID = bearName = accuracy = accuracyComments = animalInSight = urineStreamObserved = bearZone = bearSpecies = count = size = sex = age = marks = colour = colourVariation = furWet = pawMeasure = cubs = ageOfCubs = cubFur = bearComment =
@@ -618,8 +616,7 @@ angular.module('app.controllers')
 			try{
 				$cordovaEmailComposer.isAvailable().then(function() {
 					var email = {
-						//TODO - set proper email to BCParksConservation@gov.bc.ca
-						to: 'cobbsworth@outlook.com',
+						to: 'BCParksConservation@gov.bc.ca',
 						cc: '',
 						attachments: emailAttachments,
 						subject: Session.emailSubject,

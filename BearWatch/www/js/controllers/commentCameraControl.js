@@ -14,14 +14,10 @@ angular.module('app.controllers')
 
 		   confirmPopup.then(function(res) {
 				if(res) {
-					console.log('Comment edit confirmed');
 					Comment.edit(id);
-				} else {
-					console.log('Comment edit aborted');
 				}
 			});
 		}else{
-			console.log('Here we go - Comment edit ' + id);
 			Comment.edit(id);
 		}
 	};
@@ -35,11 +31,10 @@ angular.module('app.controllers')
 	//function for taking picture using device camera
 	$scope.takePhoto = function () {		
 		Picture.take().then(function(result){
-			console.log("Photo taken");
 			$scope.imgURI = result.imgURI;
 		}, function (err) {
 			// An error occured
-			console.log("Camera error: " + err);
+			console.log("Error Found: " + err);
 		});
 	};
 	
